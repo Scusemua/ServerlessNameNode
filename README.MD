@@ -1,3 +1,1 @@
-# ServerlessMDS
-
-### Serverless Name Node
+# ServerlessMDS - Serverless Name Node
