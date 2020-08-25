@@ -1,7 +1,6 @@
-package com.gmail.benrcarver.Fission.Server.Common;
+package com.gmail.benrcarver.Fission.Common;
 
 import com.gmail.benrcarver.Fission.Protocol.HdfsServerConstants.NodeType;
-import com.gmail.benrcarver.Fission.ServerlessNameNode.NameNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

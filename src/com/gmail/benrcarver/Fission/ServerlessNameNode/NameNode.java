@@ -10,22 +10,17 @@ import com.gmail.benrcarver.Fission.Protocol.HdfsServerConstants.StartupOption;
 
 import static com.gmail.benrcarver.Fission.Protocol.HdfsServerConstants.RollingUpgradeStartupOption;
 
-import com.gmail.benrcarver.Fission.Server.Common.StorageInfo;
+import com.gmail.benrcarver.Fission.Common.StorageInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.management.ObjectName;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.net.InetSocketAddress;
 import java.net.URI;
 import java.security.PrivilegedExceptionAction;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.Arrays;
 
 public class NameNode {
     public static final Logger LOG = LoggerFactory.getLogger(NameNode.class.getName());
