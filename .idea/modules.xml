@@ -3,6 +3,12 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ServerlessNameNode.iml" filepath="$PROJECT_DIR$/ServerlessNameNode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs/hadoop-hdfs.iml" filepath="$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs/hadoop-hdfs.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs-client/hadoop-hdfs-client.iml" filepath="$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs-client/hadoop-hdfs-client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs-project.iml" filepath="$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs-project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hops-leader-election/hops-leader-election.iml" filepath="$PROJECT_DIR$/hops-leader-election/hops-leader-election.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hops-metadata-dal/hops-metadata-dal.iml" filepath="$PROJECT_DIR$/hops-metadata-dal/hops-metadata-dal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hops-metadata-dal-impl-ndb/hops-metadata-dal-impl-ndb.iml" filepath="$PROJECT_DIR$/hops-metadata-dal-impl-ndb/hops-metadata-dal-impl-ndb.iml" />
     </modules>
   </component>
 </project>
