@@ -6,20 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="hops-leader-election" />
+        <module name="hops-metadata-dal-impl-ndb" />
+        <module name="hadoop-hdfs" />
+        <module name="hadoop-common-project" />
+        <module name="hadoop-annotations" />
+        <module name="hadoop-common" />
         <module name="hadoop-hdfs-client" />
         <module name="hadoop-hdfs-project" />
         <module name="hops-metadata-dal" />
-        <module name="hops-leader-election" />
-        <module name="hops-metadata-dal-impl-ndb" />
-      </profile>
-      <profile name="Annotation profile for ServerlessNameNode" enabled="true">
-        <sourceOutputDir name="../../hadoop-hdfs/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../hadoop-hdfs/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="hadoop-hdfs" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="hadoop-annotations" target="1.8" />
+      <module name="hadoop-common" target="1.8" />
+      <module name="hadoop-common-project" target="1.8" />
       <module name="hadoop-hdfs" target="1.8" />
       <module name="hadoop-hdfs-client" target="1.8" />
       <module name="hadoop-hdfs-project" target="1.8" />

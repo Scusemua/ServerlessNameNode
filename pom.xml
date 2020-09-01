@@ -9,8 +9,7 @@
         <module>hadoop-hdfs-project</module>
         <module>hops-metadata-dal-impl-ndb</module>
         <module>hops-metadata-dal</module>
-        <module>hadoop-hdfs</module>
-        <module>hadoop-hdfs-client</module>
+        <module>hadoop-common-project</module>
     </modules>
 
     <properties>

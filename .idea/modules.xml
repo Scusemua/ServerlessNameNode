@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ServerlessNameNode.iml" filepath="$PROJECT_DIR$/ServerlessNameNode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hadoop-common-project/hadoop-annotations/hadoop-annotations.iml" filepath="$PROJECT_DIR$/hadoop-common-project/hadoop-annotations/hadoop-annotations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hadoop-common-project/hadoop-common/hadoop-common.iml" filepath="$PROJECT_DIR$/hadoop-common-project/hadoop-common/hadoop-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hadoop-common-project/hadoop-common-project.iml" filepath="$PROJECT_DIR$/hadoop-common-project/hadoop-common-project.iml" />
       <module fileurl="file://$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs/hadoop-hdfs.iml" filepath="$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs/hadoop-hdfs.iml" />
       <module fileurl="file://$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs-client/hadoop-hdfs-client.iml" filepath="$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs-client/hadoop-hdfs-client.iml" />
       <module fileurl="file://$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs-project.iml" filepath="$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs-project.iml" />

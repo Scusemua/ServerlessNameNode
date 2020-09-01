@@ -4,6 +4,10 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs/pom.xml" />
+        <option value="$PROJECT_DIR$/hadoop-common-project/hadoop-common/pom.xml" />
+        <option value="$PROJECT_DIR$/hadoop-common-project/hadoop-annotations/pom.xml" />
+        <option value="$PROJECT_DIR$/hadoop-hdfs-project/hadoop-hdfs-client/pom.xml" />
       </list>
     </option>
   </component>
