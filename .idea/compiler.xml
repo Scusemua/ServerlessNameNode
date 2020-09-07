@@ -7,13 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="hops-leader-election" />
-        <module name="hops-metadata-dal-impl-ndb" />
         <module name="hadoop-hdfs" />
-        <module name="hadoop-common-project" />
         <module name="hadoop-annotations" />
         <module name="hadoop-common" />
         <module name="hadoop-hdfs-client" />
-        <module name="hadoop-hdfs-project" />
         <module name="hops-metadata-dal" />
       </profile>
     </annotationProcessing>

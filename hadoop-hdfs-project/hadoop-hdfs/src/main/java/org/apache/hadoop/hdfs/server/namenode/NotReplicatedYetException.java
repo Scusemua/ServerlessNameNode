@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package namenode;
+package org.apache.hadoop.hdfs.server.namenode;
 
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;

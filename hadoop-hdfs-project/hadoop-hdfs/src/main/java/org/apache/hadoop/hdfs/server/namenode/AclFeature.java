@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package namenode;
+package org.apache.hadoop.hdfs.server.namenode;
 
 import java.util.Collections;
 import java.util.List;

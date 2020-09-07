@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package namenode;
+package org.apache.hadoop.hdfs.server.namenode;
 
 /**
  * An object that allows you to set a limit on a stream.  This limit

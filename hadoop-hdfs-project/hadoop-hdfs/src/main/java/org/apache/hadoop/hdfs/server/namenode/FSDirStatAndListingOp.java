@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package namenode;
+package org.apache.hadoop.hdfs.server.namenode;
 
 import io.hops.metadata.hdfs.entity.INodeIdentifier;
 import io.hops.transaction.handler.HDFSOperationType;

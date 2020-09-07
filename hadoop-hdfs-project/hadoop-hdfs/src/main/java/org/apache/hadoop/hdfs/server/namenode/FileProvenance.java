@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package namenode;
+package org.apache.hadoop.hdfs.server.namenode;
 
 import io.hops.common.Pair;
 import io.hops.exception.StorageException;

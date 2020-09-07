@@ -8,7 +8,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <artifactId>hadoop-hdfs</artifactId>
 
@@ -33,6 +33,18 @@
         <dependency>
             <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
             <artifactId>hops-leader-election</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
+            <artifactId>hadoop-hdfs-client</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
+            <artifactId>hops-metadata-dal</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
