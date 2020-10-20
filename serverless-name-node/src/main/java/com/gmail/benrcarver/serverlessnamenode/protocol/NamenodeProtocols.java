@@ -1,4 +1,8 @@
 package com.gmail.benrcarver.serverlessnamenode.protocol;
 
-public interface NamenodeProtocols {
+/**
+ * The full set of RPC methods implemented by the Namenode.
+ */
+public interface NamenodeProtocols
+    extends ClientProtocol {
 }

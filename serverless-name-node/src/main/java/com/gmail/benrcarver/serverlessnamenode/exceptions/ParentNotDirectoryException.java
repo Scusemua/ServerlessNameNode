@@ -1,4 +1,4 @@
-package com.gmail.benrcarver.serverlessnamenode;
+package com.gmail.benrcarver.serverlessnamenode.exceptions;
 
 import java.io.IOException;
 
