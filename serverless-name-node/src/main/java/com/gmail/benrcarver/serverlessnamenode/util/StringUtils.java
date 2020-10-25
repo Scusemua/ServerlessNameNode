@@ -1,12 +1,68 @@
 package com.gmail.benrcarver.serverlessnamenode.util;
 
-import java.util.Locale;
+import java.util.*;
 
 public class StringUtils {
+
+    final public static String[] emptyStringArray = {};
+    final public static char COMMA = ',';
+    final public static String COMMA_STR = ",";
+    final public static char ESCAPE_CHAR = '\\';
 
     /** The same as String.format(Locale.ENGLISH, format, objects). */
     public static String format(final String format, final Object... objects) {
         return String.format(Locale.ENGLISH, format, objects);
+    }
+
+    /**
+     * Splits a comma or newline separated value <code>String</code>, trimming
+     * leading and trailing whitespace on each value.
+     *
+     * @param str a comma or newline separated <code>String</code> with values,
+     *            may be null
+     * @return an array of <code>String</code> values, empty array if null String
+     *         input
+     */
+    public static String[] getTrimmedStrings(String str){
+        if (null == str || str.trim().isEmpty()) {
+            return emptyStringArray;
+        }
+
+        return str.trim().split("\\s*[,\n]\\s*");
+    }
+
+    /**
+     * Splits a comma separated value <code>String</code>, trimming leading and
+     * trailing whitespace on each value. Duplicate and empty values are removed.
+     *
+     * @param str a comma separated <String> with values, may be null
+     * @return a <code>Collection</code> of <code>String</code> values, empty
+     *         Collection if null String input
+     */
+    public static Collection<String> getTrimmedStringCollection(String str){
+        Set<String> set = new LinkedHashSet<String>(
+                Arrays.asList(getTrimmedStrings(str)));
+        set.remove("");
+        return set;
+    }
+
+    /**
+     * Given an array of bytes it will convert the bytes to a hex string
+     * representation of the bytes
+     * @param bytes
+     * @param start start index, inclusively
+     * @param end end index, exclusively
+     * @return hex string representation of the byte array
+     */
+    public static String byteToHexString(byte[] bytes, int start, int end) {
+        if (bytes == null) {
+            throw new IllegalArgumentException("bytes == null");
+        }
+        StringBuilder s = new StringBuilder();
+        for(int i = start; i < end; i++) {
+            s.append(format("%02x", bytes[i]));
+        }
+        return s.toString();
     }
 
     /**

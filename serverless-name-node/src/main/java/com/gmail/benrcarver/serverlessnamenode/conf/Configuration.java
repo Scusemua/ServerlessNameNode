@@ -1,16 +1,29 @@
 package com.gmail.benrcarver.serverlessnamenode.conf;
 
+import com.gmail.benrcarver.serverlessnamenode.fs.CommonConfigurationKeys;
+import com.gmail.benrcarver.serverlessnamenode.io.Text;
 import com.gmail.benrcarver.serverlessnamenode.io.Writable;
+import com.gmail.benrcarver.serverlessnamenode.io.WritableUtils;
+import com.gmail.benrcarver.serverlessnamenode.util.StringInterner;
+import com.gmail.benrcarver.serverlessnamenode.util.StringUtils;
+import com.google.common.base.Preconditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.commons.collections.map.UnmodifiableMap;
+import org.codehaus.stax2.XMLStreamReader2;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import java.io.*;
 import java.lang.ref.WeakReference;
+import java.net.URL;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static com.sun.scenario.Settings.set;
 
 public class Configuration implements Iterable<Map.Entry<String,String>>,
         Writable {
@@ -30,6 +43,11 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
     private static boolean restrictSystemPropsDefault = false;
     private boolean restrictSystemProps = restrictSystemPropsDefault;
     private boolean allowNullValueProperties = false;
+
+    private static final int MAX_SUBST = 20;
+
+    private static final int SUB_START_IDX = 0;
+    private static final int SUB_END_IDX = SUB_START_IDX + 1;
 
     /**
      * Sentinel value to store negative cache results in {@link #CACHE_CLASSES}.
@@ -142,12 +160,6 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
             CACHE_CLASSES = new WeakHashMap<ClassLoader, Map<String, WeakReference<Class<?>>>>();
 
     /**
-     * Sentinel value to store negative cache results in {@link #CACHE_CLASSES}.
-     */
-    private static final Class<?> NEGATIVE_CACHE_SENTINEL =
-            NegativeCacheSentinel.class;
-
-    /**
      * Stores the mapping of key to the resource which modifies or loads
      * the key most recently. Created lazily to avoid wasting memory.
      */
@@ -162,8 +174,8 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
         Properties props = getProps();
         WritableUtils.writeVInt(out, props.size());
         for(Map.Entry<Object, Object> item: props.entrySet()) {
-            org.apache.hadoop.io.Text.writeString(out, (String) item.getKey());
-            org.apache.hadoop.io.Text.writeString(out, (String) item.getValue());
+            Text.writeString(out, (String) item.getKey());
+            Text.writeString(out, (String) item.getValue());
             WritableUtils.writeCompressedStringArray(out, updatingResource != null ?
                     updatingResource.get(item.getKey()) : null);
         }
@@ -174,8 +186,8 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
         clear();
         int size = WritableUtils.readVInt(in);
         for(int i=0; i < size; ++i) {
-            String key = org.apache.hadoop.io.Text.readString(in);
-            String value = org.apache.hadoop.io.Text.readString(in);
+            String key = Text.readString(in);
+            String value = Text.readString(in);
             set(key, value);
             String sources[] = WritableUtils.readCompressedStringArray(in);
             if (sources != null) {
@@ -195,6 +207,677 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
     public void clear() {
         getProps().clear();
         getOverlay().clear();
+    }
+
+    /**
+     * A pending addition to the global set of deprecated keys.
+     */
+    public static class DeprecationDelta {
+        private final String key;
+        private final String[] newKeys;
+        private final String customMessage;
+
+        DeprecationDelta(String key, String[] newKeys, String customMessage) {
+            Preconditions.checkNotNull(key);
+            Preconditions.checkNotNull(newKeys);
+            Preconditions.checkArgument(newKeys.length > 0);
+            this.key = key;
+            this.newKeys = newKeys;
+            this.customMessage = customMessage;
+        }
+
+        public DeprecationDelta(String key, String newKey, String customMessage) {
+            this(key, new String[] { newKey }, customMessage);
+        }
+
+        public DeprecationDelta(String key, String newKey) {
+            this(key, new String[] { newKey }, null);
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public String[] getNewKeys() {
+            return newKeys;
+        }
+
+        public String getCustomMessage() {
+            return customMessage;
+        }
+    }
+
+    /**
+     * Class to keep the information about the keys which replace the deprecated
+     * ones.
+     *
+     * This class stores the new keys which replace the deprecated keys and also
+     * gives a provision to have a custom message for each of the deprecated key
+     * that is being replaced. It also provides method to get the appropriate
+     * warning message which can be logged whenever the deprecated key is used.
+     */
+    private static class DeprecatedKeyInfo {
+        private final String[] newKeys;
+        private final String customMessage;
+        private final AtomicBoolean accessed = new AtomicBoolean(false);
+
+        DeprecatedKeyInfo(String[] newKeys, String customMessage) {
+            this.newKeys = newKeys;
+            this.customMessage = customMessage;
+        }
+
+        private final String getWarningMessage(String key) {
+            return getWarningMessage(key, null);
+        }
+
+        /**
+         * Method to provide the warning message. It gives the custom message if
+         * non-null, and default message otherwise.
+         * @param key the associated deprecated key.
+         * @param source the property source.
+         * @return message that is to be logged when a deprecated key is used.
+         */
+        private String getWarningMessage(String key, String source) {
+            String warningMessage;
+            if(customMessage == null) {
+                StringBuilder message = new StringBuilder(key);
+                if (source != null) {
+                    message.append(" in " + source);
+                }
+                message.append(" is deprecated. Instead, use ");
+                for (int i = 0; i < newKeys.length; i++) {
+                    message.append(newKeys[i]);
+                    if(i != newKeys.length-1) {
+                        message.append(", ");
+                    }
+                }
+                warningMessage = message.toString();
+            }
+            else {
+                warningMessage = customMessage;
+            }
+            return warningMessage;
+        }
+
+        boolean getAndSetAccessed() {
+            return accessed.getAndSet(true);
+        }
+
+        public void clearAccessed() {
+            accessed.set(false);
+        }
+    }
+
+    /**
+     * The set of all keys which are deprecated.
+     *
+     * DeprecationContext objects are immutable.
+     */
+    private static class DeprecationContext {
+        /**
+         * Stores the deprecated keys, the new keys which replace the deprecated keys
+         * and custom message(if any provided).
+         */
+        private final Map<String, DeprecatedKeyInfo> deprecatedKeyMap;
+
+        /**
+         * Stores a mapping from superseding keys to the keys which they deprecate.
+         */
+        private final Map<String, String> reverseDeprecatedKeyMap;
+
+        /**
+         * Create a new DeprecationContext by copying a previous DeprecationContext
+         * and adding some deltas.
+         *
+         * @param other   The previous deprecation context to copy, or null to start
+         *                from nothing.
+         * @param deltas  The deltas to apply.
+         */
+        @SuppressWarnings("unchecked")
+        DeprecationContext(DeprecationContext other, DeprecationDelta[] deltas) {
+            HashMap<String, DeprecatedKeyInfo> newDeprecatedKeyMap =
+                    new HashMap<String, DeprecatedKeyInfo>();
+            HashMap<String, String> newReverseDeprecatedKeyMap =
+                    new HashMap<String, String>();
+            if (other != null) {
+                for (Map.Entry<String, DeprecatedKeyInfo> entry :
+                        other.deprecatedKeyMap.entrySet()) {
+                    newDeprecatedKeyMap.put(entry.getKey(), entry.getValue());
+                }
+                for (Map.Entry<String, String> entry :
+                        other.reverseDeprecatedKeyMap.entrySet()) {
+                    newReverseDeprecatedKeyMap.put(entry.getKey(), entry.getValue());
+                }
+            }
+            for (DeprecationDelta delta : deltas) {
+                if (!newDeprecatedKeyMap.containsKey(delta.getKey())) {
+                    DeprecatedKeyInfo newKeyInfo =
+                            new DeprecatedKeyInfo(delta.getNewKeys(), delta.getCustomMessage());
+                    newDeprecatedKeyMap.put(delta.key, newKeyInfo);
+                    for (String newKey : delta.getNewKeys()) {
+                        newReverseDeprecatedKeyMap.put(newKey, delta.key);
+                    }
+                }
+            }
+            this.deprecatedKeyMap =
+                    UnmodifiableMap.decorate(newDeprecatedKeyMap);
+            this.reverseDeprecatedKeyMap =
+                    UnmodifiableMap.decorate(newReverseDeprecatedKeyMap);
+        }
+
+        Map<String, DeprecatedKeyInfo> getDeprecatedKeyMap() {
+            return deprecatedKeyMap;
+        }
+
+        Map<String, String> getReverseDeprecatedKeyMap() {
+            return reverseDeprecatedKeyMap;
+        }
+    }
+
+    /**
+     * Checks for the presence of the property <code>name</code> in the
+     * deprecation map. Returns the first of the list of new keys if present
+     * in the deprecation map or the <code>name</code> itself. If the property
+     * is not presently set but the property map contains an entry for the
+     * deprecated key, the value of the deprecated key is set as the value for
+     * the provided property name.
+     *
+     * @param deprecations deprecation context
+     * @param name the property name
+     * @return the first property in the list of properties mapping
+     *         the <code>name</code> or the <code>name</code> itself.
+     */
+    private String[] handleDeprecation(DeprecationContext deprecations,
+                                       String name) {
+        if (null != name) {
+            name = name.trim();
+        }
+        // Initialize the return value with requested name
+        String[] names = new String[]{name};
+        // Deprecated keys are logged once and an updated names are returned
+        DeprecatedKeyInfo keyInfo = deprecations.getDeprecatedKeyMap().get(name);
+        if (keyInfo != null) {
+            if (!keyInfo.getAndSetAccessed()) {
+                logDeprecation(keyInfo.getWarningMessage(name));
+            }
+            // Override return value for deprecated keys
+            names = keyInfo.newKeys;
+        }
+        // If there are no overlay values we can return early
+        Properties overlayProperties = getOverlay();
+        if (overlayProperties.isEmpty()) {
+            return names;
+        }
+        // Update properties and overlays with reverse lookup values
+        for (String n : names) {
+            String deprecatedKey = deprecations.getReverseDeprecatedKeyMap().get(n);
+            if (deprecatedKey != null && !overlayProperties.containsKey(n)) {
+                String deprecatedValue = overlayProperties.getProperty(deprecatedKey);
+                if (deprecatedValue != null) {
+                    getProps().setProperty(n, deprecatedValue);
+                    overlayProperties.setProperty(n, deprecatedValue);
+                }
+            }
+        }
+        return names;
+    }
+
+    private void handleDeprecation() {
+        LOG.debug("Handling deprecation for all properties in config...");
+        DeprecationContext deprecations = deprecationContext.get();
+        Set<Object> keys = new HashSet<Object>();
+        keys.addAll(getProps().keySet());
+        for (Object item: keys) {
+            LOG.debug("Handling deprecation for " + (String)item);
+            handleDeprecation(deprecations, (String)item);
+        }
+    }
+
+    private static DeprecationDelta[] defaultDeprecations =
+            new DeprecationDelta[] {
+                    new DeprecationDelta("topology.script.file.name",
+                            CommonConfigurationKeys.NET_TOPOLOGY_SCRIPT_FILE_NAME_KEY),
+                    new DeprecationDelta("topology.script.number.args",
+                            CommonConfigurationKeys.NET_TOPOLOGY_SCRIPT_NUMBER_ARGS_KEY),
+                    new DeprecationDelta("hadoop.configured.node.mapping",
+                            CommonConfigurationKeys.NET_TOPOLOGY_CONFIGURED_NODE_MAPPING_KEY),
+                    new DeprecationDelta("topology.node.switch.mapping.impl",
+                            CommonConfigurationKeys.NET_TOPOLOGY_NODE_SWITCH_MAPPING_IMPL_KEY),
+                    new DeprecationDelta("dfs.df.interval",
+                            CommonConfigurationKeys.FS_DF_INTERVAL_KEY),
+                    new DeprecationDelta("fs.default.name",
+                            CommonConfigurationKeys.FS_DEFAULT_NAME_KEY),
+                    new DeprecationDelta("dfs.umaskmode",
+                            CommonConfigurationKeys.FS_PERMISSIONS_UMASK_KEY),
+                    new DeprecationDelta("dfs.nfs.exports.allowed.hosts",
+                            CommonConfigurationKeys.NFS_EXPORTS_ALLOWED_HOSTS_KEY)
+            };
+
+    /**
+     * The global DeprecationContext.
+     */
+    private static AtomicReference<DeprecationContext> deprecationContext =
+            new AtomicReference<DeprecationContext>(
+                    new DeprecationContext(null, defaultDeprecations));
+
+    /**
+     * This is a manual implementation of the following regex
+     * "\\$\\{[^\\}\\$\u0020]+\\}". It can be 15x more efficient than
+     * a regex matcher as demonstrated by HADOOP-11506. This is noticeable with
+     * Hadoop apps building on the assumption Configuration#get is an O(1)
+     * hash table lookup, especially when the eval is a long string.
+     *
+     * @param eval a string that may contain variables requiring expansion.
+     * @return a 2-element int array res such that
+     * eval.substring(res[0], res[1]) is "var" for the left-most occurrence of
+     * ${var} in eval. If no variable is found -1, -1 is returned.
+     */
+    private static int[] findSubVariable(String eval) {
+        int[] result = {-1, -1};
+
+        int matchStart;
+        int leftBrace;
+
+        // scanning for a brace first because it's less frequent than $
+        // that can occur in nested class names
+        //
+        match_loop:
+        for (matchStart = 1, leftBrace = eval.indexOf('{', matchStart);
+            // minimum left brace position (follows '$')
+             leftBrace > 0
+                     // right brace of a smallest valid expression "${c}"
+                     && leftBrace + "{c".length() < eval.length();
+             leftBrace = eval.indexOf('{', matchStart)) {
+            int matchedLen = 0;
+            if (eval.charAt(leftBrace - 1) == '$') {
+                int subStart = leftBrace + 1; // after '{'
+                for (int i = subStart; i < eval.length(); i++) {
+                    switch (eval.charAt(i)) {
+                        case '}':
+                            if (matchedLen > 0) { // match
+                                result[SUB_START_IDX] = subStart;
+                                result[SUB_END_IDX] = subStart + matchedLen;
+                                break match_loop;
+                            }
+                            // fall through to skip 1 char
+                        case ' ':
+                        case '$':
+                            matchStart = i + 1;
+                            continue match_loop;
+                        default:
+                            matchedLen++;
+                    }
+                }
+                // scanned from "${"  to the end of eval, and no reset via ' ', '$':
+                //    no match!
+                break match_loop;
+            } else {
+                // not a start of a variable
+                //
+                matchStart = leftBrace + 1;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Attempts to repeatedly expand the value {@code expr} by replacing the
+     * left-most substring of the form "${var}" in the following precedence order
+     * <ol>
+     *   <li>by the value of the environment variable "var" if defined</li>
+     *   <li>by the value of the Java system property "var" if defined</li>
+     *   <li>by the value of the configuration key "var" if defined</li>
+     * </ol>
+     *
+     * If var is unbounded the current state of expansion "prefix${var}suffix" is
+     * returned.
+     * <p>
+     * This function also detects self-referential substitutions, i.e.
+     * <pre>
+     *   {@code
+     *   foo.bar = ${foo.bar}
+     *   }
+     * </pre>
+     * If a cycle is detected then the original expr is returned. Loops
+     * involving multiple substitutions are not detected.
+     *
+     * @param expr the literal value of a config key
+     * @return null if expr is null, otherwise the value resulting from expanding
+     * expr using the algorithm above.
+     * @throws IllegalArgumentException when more than
+     * {@link Configuration#MAX_SUBST} replacements are required
+     */
+    private String substituteVars(String expr) {
+        if (expr == null) {
+            return null;
+        }
+        String eval = expr;
+        for(int s = 0; s < MAX_SUBST; s++) {
+            final int[] varBounds = findSubVariable(eval);
+            if (varBounds[SUB_START_IDX] == -1) {
+                return eval;
+            }
+            final String var = eval.substring(varBounds[SUB_START_IDX],
+                    varBounds[SUB_END_IDX]);
+            String val = null;
+            if (!restrictSystemProps) {
+                try {
+                    if (var.startsWith("env.") && 4 < var.length()) {
+                        String v = var.substring(4);
+                        int i = 0;
+                        for (; i < v.length(); i++) {
+                            char c = v.charAt(i);
+                            if (c == ':' && i < v.length() - 1 && v.charAt(i + 1) == '-') {
+                                val = getenv(v.substring(0, i));
+                                if (val == null || val.length() == 0) {
+                                    val = v.substring(i + 2);
+                                }
+                                break;
+                            } else if (c == '-') {
+                                val = getenv(v.substring(0, i));
+                                if (val == null) {
+                                    val = v.substring(i + 1);
+                                }
+                                break;
+                            }
+                        }
+                        if (i == v.length()) {
+                            val = getenv(v);
+                        }
+                    } else {
+                        val = getProperty(var);
+                    }
+                } catch (SecurityException se) {
+                    LOG.warn("Unexpected SecurityException in Configuration", se);
+                }
+            }
+            if (val == null) {
+                val = getRaw(var);
+            }
+            if (val == null) {
+                return eval; // return literal ${var}: var is unbound
+            }
+
+            final int dollar = varBounds[SUB_START_IDX] - "${".length();
+            final int afterRightBrace = varBounds[SUB_END_IDX] + "}".length();
+            final String refVar = eval.substring(dollar, afterRightBrace);
+
+            // detect self-referential values
+            if (val.contains(refVar)) {
+                return expr; // return original expression if there is a loop
+            }
+
+            // substitute
+            eval = eval.substring(0, dollar)
+                    + val
+                    + eval.substring(afterRightBrace);
+        }
+        throw new IllegalStateException("Variable substitution depth too large: "
+                + MAX_SUBST + " " + expr);
+    }
+
+    String getenv(String name) {
+        return System.getenv(name);
+    }
+
+    String getProperty(String key) {
+        return System.getProperty(key);
+    }
+
+    /**
+     * Get the value of the <code>name</code> property as a trimmed <code>String</code>,
+     * <code>null</code> if no such property exists.
+     * If the key is deprecated, it returns the value of
+     * the first key which replaces the deprecated key and is not null
+     *
+     * Values are processed for <a href="#VariableExpansion">variable expansion</a>
+     * before being returned.
+     *
+     * @param name the property name.
+     * @return the value of the <code>name</code> or its replacing property,
+     *         or null if no such property exists.
+     */
+    public String getTrimmed(String name) {
+        String value = get(name);
+
+        if (null == value) {
+            return null;
+        } else {
+            return value.trim();
+        }
+    }
+
+    /**
+     * Get the value of the <code>name</code> property as a trimmed <code>String</code>,
+     * <code>defaultValue</code> if no such property exists.
+     * See @{Configuration#getTrimmed} for more details.
+     *
+     * @param name          the property name.
+     * @param defaultValue  the property default value.
+     * @return              the value of the <code>name</code> or defaultValue
+     *                      if it is not set.
+     */
+    public String getTrimmed(String name, String defaultValue) {
+        String ret = getTrimmed(name);
+        return ret == null ? defaultValue : ret;
+    }
+
+    /**
+     * Get the value of the <code>name</code> property, without doing
+     * <a href="#VariableExpansion">variable expansion</a>.If the key is
+     * deprecated, it returns the value of the first key which replaces
+     * the deprecated key and is not null.
+     *
+     * @param name the property name.
+     * @return the value of the <code>name</code> property or
+     *         its replacing property and null if no such property exists.
+     */
+    public String getRaw(String name) {
+        String[] names = handleDeprecation(deprecationContext.get(), name);
+        String result = null;
+        for(String n : names) {
+            result = getProps().getProperty(n);
+        }
+        return result;
+    }
+
+    /**
+     * Get the value of the <code>name</code> property, <code>null</code> if
+     * no such property exists. If the key is deprecated, it returns the value of
+     * the first key which replaces the deprecated key and is not null.
+     *
+     * Values are processed for <a href="#VariableExpansion">variable expansion</a>
+     * before being returned.
+     *
+     * @param name the property name, will be trimmed before get value.
+     * @return the value of the <code>name</code> or its replacing property,
+     *         or null if no such property exists.
+     */
+    public String get(String name) {
+        String[] names = handleDeprecation(deprecationContext.get(), name);
+        String result = null;
+        for(String n : names) {
+            result = substituteVars(getProps().getProperty(n));
+        }
+        return result;
+    }
+
+    /**
+     * Get the comma delimited values of the <code>name</code> property as
+     * a collection of <code>String</code>s, trimmed of the leading and trailing whitespace.
+     * If no such property is specified then empty <code>Collection</code> is returned.
+     *
+     * @param name property name.
+     * @return property value as a collection of <code>String</code>s, or empty <code>Collection</code>
+     */
+    public Collection<String> getTrimmedStringCollection(String name) {
+        String valueString = get(name);
+        if (null == valueString) {
+            Collection<String> empty = new ArrayList<String>();
+            return empty;
+        }
+        return StringUtils.getTrimmedStringCollection(valueString);
+    }
+
+    /**
+     * Add tags defined in HADOOP_TAGS_SYSTEM, HADOOP_TAGS_CUSTOM.
+     * @param prop
+     */
+    public void addTags(Properties prop) {
+        // Get all system tags
+        try {
+            if (prop.containsKey(CommonConfigurationKeys.HADOOP_TAGS_SYSTEM)) {
+                String systemTags = prop.getProperty(CommonConfigurationKeys
+                        .HADOOP_TAGS_SYSTEM);
+                TAGS.addAll(Arrays.asList(systemTags.split(",")));
+            }
+            // Get all custom tags
+            if (prop.containsKey(CommonConfigurationKeys.HADOOP_TAGS_CUSTOM)) {
+                String customTags = prop.getProperty(CommonConfigurationKeys
+                        .HADOOP_TAGS_CUSTOM);
+                TAGS.addAll(Arrays.asList(customTags.split(",")));
+            }
+
+            if (prop.containsKey(CommonConfigurationKeys.HADOOP_SYSTEM_TAGS)) {
+                String systemTags = prop.getProperty(CommonConfigurationKeys
+                        .HADOOP_SYSTEM_TAGS);
+                TAGS.addAll(Arrays.asList(systemTags.split(",")));
+            }
+            // Get all custom tags
+            if (prop.containsKey(CommonConfigurationKeys.HADOOP_CUSTOM_TAGS)) {
+                String customTags = prop.getProperty(CommonConfigurationKeys
+                        .HADOOP_CUSTOM_TAGS);
+                TAGS.addAll(Arrays.asList(customTags.split(",")));
+            }
+
+        } catch (Exception ex) {
+            LOG.trace("Error adding tags in configuration", ex);
+        }
+
+    }
+
+    private void loadResources(Properties properties,
+                               ArrayList<Resource> resources,
+                               boolean quiet) {
+        if(loadDefaults) {
+            for (String resource : defaultResources) {
+                loadResource(properties, new Resource(resource, false), quiet);
+            }
+        }
+
+        for (int i = 0; i < resources.size(); i++) {
+            Resource ret = loadResource(properties, resources.get(i), quiet);
+            if (ret != null) {
+                resources.set(i, ret);
+            }
+        }
+        this.addTags(properties);
+    }
+
+    private static class ParsedItem {
+        String name;
+        String key;
+        String value;
+        boolean isFinal;
+        String[] sources;
+
+        ParsedItem(String name, String key, String value,
+                   boolean isFinal, String[] sources) {
+            this.name = name;
+            this.key = key;
+            this.value = value;
+            this.isFinal = isFinal;
+            this.sources = sources;
+        }
+    }
+
+    private void overlay(Properties to, Properties from) {
+        for (Map.Entry<Object, Object> entry: from.entrySet()) {
+            to.put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    /**
+     * Print a warning if a property with a given name already exists with a
+     * different value
+     */
+    private void checkForOverride(Properties properties, String name, String attr, String value) {
+        String propertyValue = properties.getProperty(attr);
+        if (propertyValue != null && !propertyValue.equals(value)) {
+            LOG.warn(name + ":an attempt to override final parameter: " + attr
+                    + ";  Ignoring.");
+        }
+    }
+
+    private void loadProperty(Properties properties, String name, String attr,
+                              String value, boolean finalParameter, String[] source) {
+        if (value != null || allowNullValueProperties) {
+            if (value == null) {
+                value = DEFAULT_STRING_CHECK;
+            }
+            if (!finalParameters.contains(attr)) {
+                properties.setProperty(attr, value);
+                if (source != null) {
+                    putIntoUpdatingResource(attr, source);
+                }
+            } else {
+                // This is a final parameter so check for overrides.
+                checkForOverride(this.properties, name, attr, value);
+                if (this.properties != properties) {
+                    checkForOverride(properties, name, attr, value);
+                }
+            }
+        }
+        if (finalParameter && attr != null) {
+            finalParameters.add(attr);
+        }
+    }
+
+    private Resource loadResource(Properties properties,
+                                  Resource wrapper, boolean quiet) {
+        String name = UNKNOWN_RESOURCE;
+        try {
+            Object resource = wrapper.getResource();
+            name = wrapper.getName();
+            boolean returnCachedProperties = false;
+
+            if (resource instanceof InputStream) {
+                returnCachedProperties = true;
+            } else if (resource instanceof Properties) {
+                overlay(properties, (Properties)resource);
+            }
+
+            XMLStreamReader2 reader = getStreamReader(wrapper, quiet);
+            if (reader == null) {
+                if (quiet) {
+                    return null;
+                }
+                throw new RuntimeException(resource + " not found");
+            }
+            Properties toAddTo = properties;
+            if(returnCachedProperties) {
+                toAddTo = new Properties();
+            }
+
+            List<ParsedItem> items = new Parser(reader, wrapper, quiet).parse();
+            for (ParsedItem item : items) {
+                loadProperty(toAddTo, item.name, item.key, item.value,
+                        item.isFinal, item.sources);
+            }
+            reader.close();
+
+            if (returnCachedProperties) {
+                overlay(properties, toAddTo);
+                return new Resource(toAddTo, name, wrapper.isParserRestricted());
+            }
+            return null;
+        } catch (IOException e) {
+            LOG.error("error parsing conf " + name, e);
+            throw new RuntimeException(e);
+        } catch (XMLStreamException e) {
+            LOG.error("error parsing conf " + name, e);
+            throw new RuntimeException(e);
+        }
     }
 
     protected synchronized Properties getProps() {
@@ -269,6 +952,283 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
         } else {
             // cache hit
             return clazz;
+        }
+    }
+
+    private void putIntoUpdatingResource(String key, String[] value) {
+        Map<String, String[]> localUR = updatingResource;
+        if (localUR == null) {
+            synchronized (this) {
+                localUR = updatingResource;
+                if (localUR == null) {
+                    updatingResource = localUR = new ConcurrentHashMap<>(8);
+                }
+            }
+        }
+        localUR.put(key, value);
+    }
+
+    /**
+     * Parser to consume SAX stream of XML elements from a Configuration.
+     */
+    private class Parser {
+        private final XMLStreamReader2 reader;
+        private final Resource wrapper;
+        private final String name;
+        private final String[] nameSingletonArray;
+        private final boolean isRestricted;
+        private final boolean quiet;
+
+        DeprecationContext deprecations = deprecationContext.get();
+
+        private StringBuilder token = new StringBuilder();
+        private String confName = null;
+        private String confValue = null;
+        private String confInclude = null;
+        private String confTag = null;
+        private boolean confFinal = false;
+        private boolean fallbackAllowed = false;
+        private boolean fallbackEntered = false;
+        private boolean parseToken = false;
+        private List<String> confSource = new ArrayList<>();
+        private List<ParsedItem> results = new ArrayList<>();
+
+        Parser(XMLStreamReader2 reader,
+               Resource wrapper,
+               boolean quiet) {
+            this.reader = reader;
+            this.wrapper = wrapper;
+            this.name = wrapper.getName();
+            this.nameSingletonArray = new String[]{ name };
+            this.isRestricted = wrapper.isParserRestricted();
+            this.quiet = quiet;
+
+        }
+
+        List<ParsedItem> parse() throws IOException, XMLStreamException {
+            while (reader.hasNext()) {
+                parseNext();
+            }
+            return results;
+        }
+
+        private void handleStartElement() throws XMLStreamException, IOException {
+            switch (reader.getLocalName()) {
+                case "property":
+                    handleStartProperty();
+                    break;
+
+                case "name":
+                case "value":
+                case "final":
+                case "source":
+                case "tag":
+                    parseToken = true;
+                    token.setLength(0);
+                    break;
+                case "include":
+                    handleInclude();
+                    break;
+                case "fallback":
+                    fallbackEntered = true;
+                    break;
+                case "configuration":
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void handleStartProperty() {
+            confName = null;
+            confValue = null;
+            confFinal = false;
+            confTag = null;
+            confSource.clear();
+
+            // First test for short format configuration
+            int attrCount = reader.getAttributeCount();
+            for (int i = 0; i < attrCount; i++) {
+                String propertyAttr = reader.getAttributeLocalName(i);
+                if ("name".equals(propertyAttr)) {
+                    confName = StringInterner.weakIntern(
+                            reader.getAttributeValue(i));
+                } else if ("value".equals(propertyAttr)) {
+                    confValue = StringInterner.weakIntern(
+                            reader.getAttributeValue(i));
+                } else if ("final".equals(propertyAttr)) {
+                    confFinal = "true".equals(reader.getAttributeValue(i));
+                } else if ("source".equals(propertyAttr)) {
+                    confSource.add(StringInterner.weakIntern(
+                            reader.getAttributeValue(i)));
+                } else if ("tag".equals(propertyAttr)) {
+                    confTag = StringInterner
+                            .weakIntern(reader.getAttributeValue(i));
+                }
+            }
+        }
+
+        private void handleInclude() throws XMLStreamException, IOException {
+            // Determine href for xi:include
+            confInclude = null;
+            int attrCount = reader.getAttributeCount();
+            List<ParsedItem> items;
+            for (int i = 0; i < attrCount; i++) {
+                String attrName = reader.getAttributeLocalName(i);
+                if ("href".equals(attrName)) {
+                    confInclude = reader.getAttributeValue(i);
+                }
+            }
+            if (confInclude == null) {
+                return;
+            }
+            if (isRestricted) {
+                throw new RuntimeException("Error parsing resource " + wrapper
+                        + ": XInclude is not supported for restricted resources");
+            }
+            // Determine if the included resource is a classpath resource
+            // otherwise fallback to a file resource
+            // xi:include are treated as inline and retain current source
+            URL include = getResource(confInclude);
+            if (include != null) {
+                Resource classpathResource = new Resource(include, name,
+                        wrapper.isParserRestricted());
+                // This is only called recursively while the lock is already held
+                // by this thread, but synchronizing avoids a findbugs warning.
+                synchronized (Configuration.this) {
+                    XMLStreamReader2 includeReader =
+                            getStreamReader(classpathResource, quiet);
+                    if (includeReader == null) {
+                        throw new RuntimeException(classpathResource + " not found");
+                    }
+                    items = new Parser(includeReader, classpathResource, quiet).parse();
+                }
+            } else {
+                URL url;
+                try {
+                    url = new URL(confInclude);
+                    url.openConnection().connect();
+                } catch (IOException ioe) {
+                    File href = new File(confInclude);
+                    if (!href.isAbsolute()) {
+                        // Included resources are relative to the current resource
+                        File baseFile = new File(name).getParentFile();
+                        href = new File(baseFile, href.getPath());
+                    }
+                    if (!href.exists()) {
+                        // Resource errors are non-fatal iff there is 1 xi:fallback
+                        fallbackAllowed = true;
+                        return;
+                    }
+                    url = href.toURI().toURL();
+                }
+                Resource uriResource = new Resource(url, name,
+                        wrapper.isParserRestricted());
+                // This is only called recursively while the lock is already held
+                // by this thread, but synchronizing avoids a findbugs warning.
+                synchronized (Configuration.this) {
+                    XMLStreamReader2 includeReader =
+                            getStreamReader(uriResource, quiet);
+                    if (includeReader == null) {
+                        throw new RuntimeException(uriResource + " not found");
+                    }
+                    items = new Parser(includeReader, uriResource, quiet).parse();
+                }
+            }
+            results.addAll(items);
+        }
+
+        void handleEndElement() throws IOException {
+            String tokenStr = token.toString();
+            switch (reader.getLocalName()) {
+                case "name":
+                    if (token.length() > 0) {
+                        confName = StringInterner.weakIntern(tokenStr.trim());
+                    }
+                    break;
+                case "value":
+                    if (token.length() > 0) {
+                        confValue = StringInterner.weakIntern(tokenStr);
+                    }
+                    break;
+                case "final":
+                    confFinal = "true".equals(tokenStr);
+                    break;
+                case "source":
+                    confSource.add(StringInterner.weakIntern(tokenStr));
+                    break;
+                case "tag":
+                    if (token.length() > 0) {
+                        confTag = StringInterner.weakIntern(tokenStr);
+                    }
+                    break;
+                case "include":
+                    if (fallbackAllowed && !fallbackEntered) {
+                        throw new IOException("Fetch fail on include for '"
+                                + confInclude + "' with no fallback while loading '"
+                                + name + "'");
+                    }
+                    fallbackAllowed = false;
+                    fallbackEntered = false;
+                    break;
+                case "property":
+                    handleEndProperty();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void handleEndProperty() {
+            if (confName == null || (!fallbackAllowed && fallbackEntered)) {
+                return;
+            }
+            String[] confSourceArray;
+            if (confSource.isEmpty()) {
+                confSourceArray = nameSingletonArray;
+            } else {
+                confSource.add(name);
+                confSourceArray = confSource.toArray(new String[confSource.size()]);
+            }
+
+            // Read tags and put them in propertyTagsMap
+            if (confTag != null) {
+                readTagFromConfig(confTag, confName, confValue, confSourceArray);
+            }
+
+            DeprecatedKeyInfo keyInfo =
+                    deprecations.getDeprecatedKeyMap().get(confName);
+
+            if (keyInfo != null) {
+                keyInfo.clearAccessed();
+                for (String key : keyInfo.newKeys) {
+                    // update new keys with deprecated key's value
+                    results.add(new ParsedItem(
+                            name, key, confValue, confFinal, confSourceArray));
+                }
+            } else {
+                results.add(new ParsedItem(name, confName, confValue, confFinal,
+                        confSourceArray));
+            }
+        }
+
+        void parseNext() throws IOException, XMLStreamException {
+            switch (reader.next()) {
+                case XMLStreamConstants.START_ELEMENT:
+                    handleStartElement();
+                    break;
+                case XMLStreamConstants.CHARACTERS:
+                    if (parseToken) {
+                        char[] text = reader.getTextCharacters();
+                        token.append(text, reader.getTextStart(), reader.getTextLength());
+                    }
+                    break;
+                case XMLStreamConstants.END_ELEMENT:
+                    handleEndElement();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

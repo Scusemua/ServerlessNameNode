@@ -255,7 +255,6 @@ public class HdfsFileStatus {
      * FileStatus reference will not contain a valid Path until it is resolved
      * by this method.
      * @param defaultUri FileSystem to fully qualify HDFS path.
-     * @param parent Parent path of this element.
      * @return Reference to this instance.
      */
     public final FileStatus makeQualified(URI defaultUri, Path path) {
