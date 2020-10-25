@@ -1,5 +1,8 @@
 package com.gmail.benrcarver.serverlessnamenode.io;
 
+import com.gmail.benrcarver.serverlessnamenode.conf.Configuration;
+import com.gmail.benrcarver.serverlessnamenode.util.ReflectionUtils;
+
 import java.io.*;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;

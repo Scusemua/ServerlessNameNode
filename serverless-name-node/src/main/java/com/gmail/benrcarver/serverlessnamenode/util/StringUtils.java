@@ -1,5 +1,7 @@
 package com.gmail.benrcarver.serverlessnamenode.util;
 
+import com.google.common.base.Preconditions;
+
 import java.util.*;
 
 public class StringUtils {
@@ -29,6 +31,73 @@ public class StringUtils {
         }
 
         return str.trim().split("\\s*[,\n]\\s*");
+    }
+
+    /**
+     * Converts all of the characters in this String to lower case with
+     * Locale.ENGLISH.
+     *
+     * @param str  string to be converted
+     * @return     the str, converted to lowercase.
+     */
+    public static String toLowerCase(String str) {
+        return str.toLowerCase(Locale.ENGLISH);
+    }
+
+    /**
+     * Converts all of the characters in this String to upper case with
+     * Locale.ENGLISH.
+     *
+     * @param str  string to be converted
+     * @return     the str, converted to uppercase.
+     */
+    public static String toUpperCase(String str) {
+        return str.toUpperCase(Locale.ENGLISH);
+    }
+
+    /**
+     * <p>Checks if the String contains only unicode letters.</p>
+     *
+     * <p><code>null</code> will return <code>false</code>.
+     * An empty String (length()=0) will return <code>true</code>.</p>
+     *
+     * <pre>
+     * StringUtils.isAlpha(null)   = false
+     * StringUtils.isAlpha("")     = true
+     * StringUtils.isAlpha("  ")   = false
+     * StringUtils.isAlpha("abc")  = true
+     * StringUtils.isAlpha("ab2c") = false
+     * StringUtils.isAlpha("ab-c") = false
+     * </pre>
+     *
+     * @param str  the String to check, may be null
+     * @return <code>true</code> if only contains letters, and is non-null
+     */
+    public static boolean isAlpha(String str) {
+        if (str == null) {
+            return false;
+        }
+        int sz = str.length();
+        for (int i = 0; i < sz; i++) {
+            if (!Character.isLetter(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Compare strings locale-freely by using String#equalsIgnoreCase.
+     *
+     * @param s1  Non-null string to be converted
+     * @param s2  string to be converted
+     * @return     the str, converted to uppercase.
+     */
+    public static boolean equalsIgnoreCase(String s1, String s2) {
+        Preconditions.checkNotNull(s1);
+        // don't check non-null against s2 to make the semantics same as
+        // s1.equals(s2)
+        return s1.equalsIgnoreCase(s2);
     }
 
     /**

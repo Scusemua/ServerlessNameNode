@@ -1,6 +1,10 @@
 package com.gmail.benrcarver.serverlessnamenode.fs.permission;
 
+import com.gmail.benrcarver.serverlessnamenode.conf.Configuration;
+import com.gmail.benrcarver.serverlessnamenode.fs.CommonConfigurationKeys;
+import com.gmail.benrcarver.serverlessnamenode.fs.FileStatus;
 import com.gmail.benrcarver.serverlessnamenode.io.Writable;
+import com.gmail.benrcarver.serverlessnamenode.io.WritableFactories;
 import com.gmail.benrcarver.serverlessnamenode.io.WritableFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -304,7 +308,7 @@ public class FsPermission implements Writable, Serializable,
      * Returns true if there is also an ACL (access control list).
      *
      * @return boolean true if there is also an ACL (access control list).
-     * @deprecated Get acl bit from the {@link org.apache.hadoop.fs.FileStatus}
+     * @deprecated Get acl bit from the {@link FileStatus}
      * object.
      */
     @Deprecated
@@ -316,7 +320,7 @@ public class FsPermission implements Writable, Serializable,
     /**
      * Returns true if the file is encrypted or directory is in an encryption zone
      * @deprecated Get encryption bit from the
-     * {@link org.apache.hadoop.fs.FileStatus} object.
+     * {@link FileStatus} object.
      */
     @Deprecated
     public boolean getEncryptedBit() {
@@ -325,7 +329,7 @@ public class FsPermission implements Writable, Serializable,
 
     /**
      * Returns true if the file or directory is erasure coded.
-     * @deprecated Get ec bit from the {@link org.apache.hadoop.fs.FileStatus}
+     * @deprecated Get ec bit from the {@link FileStatus}
      * object.
      */
     @Deprecated

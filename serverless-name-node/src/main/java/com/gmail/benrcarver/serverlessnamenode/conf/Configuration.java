@@ -12,8 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.apache.commons.collections.map.UnmodifiableMap;
 import org.codehaus.stax2.XMLStreamReader2;
 
+import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import java.io.*;
 import java.lang.ref.WeakReference;
 import java.net.URL;
@@ -22,6 +24,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+
+import com.ctc.wstx.api.ReaderConfig;
+import com.ctc.wstx.io.StreamBootstrapper;
+import com.ctc.wstx.io.SystemId;
+import com.ctc.wstx.stax.WstxInputFactory;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 
 import static com.sun.scenario.Settings.set;
 
@@ -371,6 +380,393 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
 
         Map<String, String> getReverseDeprecatedKeyMap() {
             return reverseDeprecatedKeyMap;
+        }
+    }
+
+    /**
+     * Adds a set of deprecated keys to the global deprecations.
+     *
+     * This method is lockless.  It works by means of creating a new
+     * DeprecationContext based on the old one, and then atomically swapping in
+     * the new context.  If someone else updated the context in between us reading
+     * the old context and swapping in the new one, we try again until we win the
+     * race.
+     *
+     * @param deltas   The deprecations to add.
+     */
+    public static void addDeprecations(DeprecationDelta[] deltas) {
+        DeprecationContext prev, next;
+        do {
+            prev = deprecationContext.get();
+            next = new DeprecationContext(prev, deltas);
+        } while (!deprecationContext.compareAndSet(prev, next));
+    }
+
+    /**
+     * Adds the deprecated key to the global deprecation map.
+     * It does not override any existing entries in the deprecation map.
+     * This is to be used only by the developers in order to add deprecation of
+     * keys, and attempts to call this method after loading resources once,
+     * would lead to <tt>UnsupportedOperationException</tt>
+     *
+     * If a key is deprecated in favor of multiple keys, they are all treated as
+     * aliases of each other, and setting any one of them resets all the others
+     * to the new value.
+     *
+     * If you have multiple deprecation entries to add, it is more efficient to
+     * use #addDeprecations(DeprecationDelta[] deltas) instead.
+     *
+     * @param key
+     * @param newKeys
+     * @param customMessage
+     * @deprecated use {@link #addDeprecation(String key, String newKey,
+            String customMessage)} instead
+     */
+    @Deprecated
+    public static void addDeprecation(String key, String[] newKeys,
+                                      String customMessage) {
+        addDeprecations(new DeprecationDelta[] {
+                new DeprecationDelta(key, newKeys, customMessage)
+        });
+    }
+
+    /**
+     * Adds the deprecated key to the global deprecation map.
+     * It does not override any existing entries in the deprecation map.
+     * This is to be used only by the developers in order to add deprecation of
+     * keys, and attempts to call this method after loading resources once,
+     * would lead to <tt>UnsupportedOperationException</tt>
+     *
+     * If you have multiple deprecation entries to add, it is more efficient to
+     * use #addDeprecations(DeprecationDelta[] deltas) instead.
+     *
+     * @param key
+     * @param newKey
+     * @param customMessage
+     */
+    public static void addDeprecation(String key, String newKey,
+                                      String customMessage) {
+        addDeprecation(key, new String[] {newKey}, customMessage);
+    }
+
+    /**
+     * Adds the deprecated key to the global deprecation map when no custom
+     * message is provided.
+     * It does not override any existing entries in the deprecation map.
+     * This is to be used only by the developers in order to add deprecation of
+     * keys, and attempts to call this method after loading resources once,
+     * would lead to <tt>UnsupportedOperationException</tt>
+     *
+     * If a key is deprecated in favor of multiple keys, they are all treated as
+     * aliases of each other, and setting any one of them resets all the others
+     * to the new value.
+     *
+     * If you have multiple deprecation entries to add, it is more efficient to
+     * use #addDeprecations(DeprecationDelta[] deltas) instead.
+     *
+     * @param key Key that is to be deprecated
+     * @param newKeys list of keys that take up the values of deprecated key
+     * @deprecated use {@link #addDeprecation(String key, String newKey)} instead
+     */
+    @Deprecated
+    public static void addDeprecation(String key, String[] newKeys) {
+        addDeprecation(key, newKeys, null);
+    }
+
+    /**
+     * Adds the deprecated key to the global deprecation map when no custom
+     * message is provided.
+     * It does not override any existing entries in the deprecation map.
+     * This is to be used only by the developers in order to add deprecation of
+     * keys, and attempts to call this method after loading resources once,
+     * would lead to <tt>UnsupportedOperationException</tt>
+     *
+     * If you have multiple deprecation entries to add, it is more efficient to
+     * use #addDeprecations(DeprecationDelta[] deltas) instead.
+     *
+     * @param key Key that is to be deprecated
+     * @param newKey key that takes up the value of deprecated key
+     */
+    public static void addDeprecation(String key, String newKey) {
+        addDeprecation(key, new String[] {newKey}, null);
+    }
+
+    /**
+     * checks whether the given <code>key</code> is deprecated.
+     *
+     * @param key the parameter which is to be checked for deprecation
+     * @return <code>true</code> if the key is deprecated and
+     *         <code>false</code> otherwise.
+     */
+    public static boolean isDeprecated(String key) {
+        return deprecationContext.get().getDeprecatedKeyMap().containsKey(key);
+    }
+
+    private static String getDeprecatedKey(String key) {
+        return deprecationContext.get().getReverseDeprecatedKeyMap().get(key);
+    }
+
+    private static DeprecatedKeyInfo getDeprecatedKeyInfo(String key) {
+        return deprecationContext.get().getDeprecatedKeyMap().get(key);
+    }
+
+    void logDeprecation(String message) {
+        LOG_DEPRECATION.info(message);
+    }
+
+    /**
+     * Returns alternative names (non-deprecated keys or previously-set deprecated keys)
+     * for a given non-deprecated key.
+     * If the given key is deprecated, return null.
+     *
+     * @param name property name.
+     * @return alternative names.
+     */
+    private String[] getAlternativeNames(String name) {
+        String altNames[] = null;
+        DeprecatedKeyInfo keyInfo = null;
+        DeprecationContext cur = deprecationContext.get();
+        String depKey = cur.getReverseDeprecatedKeyMap().get(name);
+        if(depKey != null) {
+            keyInfo = cur.getDeprecatedKeyMap().get(depKey);
+            if(keyInfo.newKeys.length > 0) {
+                if(getProps().containsKey(depKey)) {
+                    //if deprecated key is previously set explicitly
+                    List<String> list = new ArrayList<String>();
+                    list.addAll(Arrays.asList(keyInfo.newKeys));
+                    list.add(depKey);
+                    altNames = list.toArray(new String[list.size()]);
+                }
+                else {
+                    altNames = keyInfo.newKeys;
+                }
+            }
+        }
+        return altNames;
+    }
+
+    /**
+     * Load a class by name.
+     *
+     * @param name the class name.
+     * @return the class object.
+     * @throws ClassNotFoundException if the class is not found.
+     */
+    public Class<?> getClassByName(String name) throws ClassNotFoundException {
+        Class<?> ret = getClassByNameOrNull(name);
+        if (ret == null) {
+            throw new ClassNotFoundException("Class " + name + " not found");
+        }
+        return ret;
+    }
+
+    /**
+     * Get the value of the <code>name</code> property
+     * as an array of <code>Class</code>.
+     * The value of the property specifies a list of comma separated class names.
+     * If no such property is specified, then <code>defaultValue</code> is
+     * returned.
+     *
+     * @param name the property name.
+     * @param defaultValue default value.
+     * @return property value as a <code>Class[]</code>,
+     *         or <code>defaultValue</code>.
+     */
+    public Class<?>[] getClasses(String name, Class<?> ... defaultValue) {
+        String valueString = getRaw(name);
+        if (null == valueString) {
+            return defaultValue;
+        }
+        String[] classnames = getTrimmedStrings(name);
+        try {
+            Class<?>[] classes = new Class<?>[classnames.length];
+            for(int i = 0; i < classnames.length; i++) {
+                classes[i] = getClassByName(classnames[i]);
+            }
+            return classes;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Get the comma delimited values of the <code>name</code> property as
+     * an array of <code>String</code>s, trimmed of the leading and trailing whitespace.
+     * If no such property is specified then an empty array is returned.
+     *
+     * @param name property name.
+     * @return property value as an array of trimmed <code>String</code>s,
+     *         or empty array.
+     */
+    public String[] getTrimmedStrings(String name) {
+        String valueString = get(name);
+        return StringUtils.getTrimmedStrings(valueString);
+    }
+
+    /**
+     * Get the value of the <code>name</code> property as a <code>Class</code>.
+     * If no such property is specified, then <code>defaultValue</code> is
+     * returned.
+     *
+     * @param name the class name.
+     * @param defaultValue default value.
+     * @return property value as a <code>Class</code>,
+     *         or <code>defaultValue</code>.
+     */
+    public Class<?> getClass(String name, Class<?> defaultValue) {
+        String valueString = getTrimmed(name);
+        if (valueString == null)
+            return defaultValue;
+        try {
+            return getClassByName(valueString);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Get the value of the <code>name</code> property as a <code>Class</code>
+     * implementing the interface specified by <code>xface</code>.
+     *
+     * If no such property is specified, then <code>defaultValue</code> is
+     * returned.
+     *
+     * An exception is thrown if the returned class does not implement the named
+     * interface.
+     *
+     * @param name the class name.
+     * @param defaultValue default value.
+     * @param xface the interface implemented by the named class.
+     * @return property value as a <code>Class</code>,
+     *         or <code>defaultValue</code>.
+     */
+    public <U> Class<? extends U> getClass(String name,
+                                           Class<? extends U> defaultValue,
+                                           Class<U> xface) {
+        try {
+            Class<?> theClass = getClass(name, defaultValue);
+            if (theClass != null && !xface.isAssignableFrom(theClass))
+                throw new RuntimeException(theClass+" not "+xface.getName());
+            else if (theClass != null)
+                return theClass.asSubclass(xface);
+            else
+                return null;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Get the value of the <code>name</code> property as a <code>List</code>
+     * of objects implementing the interface specified by <code>xface</code>.
+     *
+     * An exception is thrown if any of the classes does not exist, or if it does
+     * not implement the named interface.
+     *
+     * @param name the property name.
+     * @param xface the interface implemented by the classes named by
+     *        <code>name</code>.
+     * @return a <code>List</code> of objects implementing <code>xface</code>.
+     */
+    @SuppressWarnings("unchecked")
+    public <U> List<U> getInstances(String name, Class<U> xface) {
+        List<U> ret = new ArrayList<U>();
+        Class<?>[] classes = getClasses(name);
+        for (Class<?> cl: classes) {
+            if (!xface.isAssignableFrom(cl)) {
+                throw new RuntimeException(cl + " does not implement " + xface);
+            }
+            ret.add((U)ReflectionUtils.newInstance(cl, this));
+        }
+        return ret;
+    }
+
+    /**
+     * Set the value of the <code>name</code> property to the name of a
+     * <code>theClass</code> implementing the given interface <code>xface</code>.
+     *
+     * An exception is thrown if <code>theClass</code> does not implement the
+     * interface <code>xface</code>.
+     *
+     * @param name property name.
+     * @param theClass property value.
+     * @param xface the interface implemented by the named class.
+     */
+    public void setClass(String name, Class<?> theClass, Class<?> xface) {
+        if (!xface.isAssignableFrom(theClass))
+            throw new RuntimeException(theClass+" not "+xface.getName());
+        set(name, theClass.getName());
+    }
+
+    /**
+     * Set the <code>value</code> of the <code>name</code> property. If
+     * <code>name</code> is deprecated or there is a deprecated name associated to it,
+     * it sets the value to both names. Name will be trimmed before put into
+     * configuration.
+     *
+     * @param name property name.
+     * @param value property value.
+     */
+    public void set(String name, String value) {
+        set(name, value, null);
+    }
+
+    /**
+     * Set the <code>value</code> of the <code>name</code> property. If
+     * <code>name</code> is deprecated, it also sets the <code>value</code> to
+     * the keys that replace the deprecated key. Name will be trimmed before put
+     * into configuration.
+     *
+     * @param name property name.
+     * @param value property value.
+     * @param source the place that this configuration value came from
+     * (For debugging).
+     * @throws IllegalArgumentException when the value or name is null.
+     */
+    public void set(String name, String value, String source) {
+        Preconditions.checkArgument(
+                name != null,
+                "Property name must not be null");
+        Preconditions.checkArgument(
+                value != null,
+                "The value of property %s must not be null", name);
+        name = name.trim();
+        DeprecationContext deprecations = deprecationContext.get();
+        if (deprecations.getDeprecatedKeyMap().isEmpty()) {
+            getProps();
+        }
+        getOverlay().setProperty(name, value);
+        getProps().setProperty(name, value);
+        String newSource = (source == null ? "programmatically" : source);
+
+        if (!isDeprecated(name)) {
+            putIntoUpdatingResource(name, new String[] {newSource});
+            String[] altNames = getAlternativeNames(name);
+            if(altNames != null) {
+                for(String n: altNames) {
+                    if(!n.equals(name)) {
+                        getOverlay().setProperty(n, value);
+                        getProps().setProperty(n, value);
+                        putIntoUpdatingResource(n, new String[] {newSource});
+                    }
+                }
+            }
+        }
+        else {
+            String[] names = handleDeprecation(deprecationContext.get(), name);
+            String altSource = "because " + name + " is deprecated";
+            for(String n : names) {
+                getOverlay().setProperty(n, value);
+                getProps().setProperty(n, value);
+                putIntoUpdatingResource(n, new String[] {altSource});
+            }
+        }
+    }
+
+    void logDeprecationOnce(String name, String source) {
+        DeprecatedKeyInfo keyInfo = getDeprecatedKeyInfo(name);
+        if (keyInfo != null && !keyInfo.getAndSetAccessed()) {
+            LOG_DEPRECATION.info(keyInfo.getWarningMessage(name, source));
         }
     }
 
@@ -831,6 +1227,53 @@ public class Configuration implements Iterable<Map.Entry<String,String>>,
         if (finalParameter && attr != null) {
             finalParameters.add(attr);
         }
+    }
+
+    private XMLStreamReader parse(InputStream is, String systemIdStr,
+                                  boolean restricted) throws IOException, XMLStreamException {
+        if (!quietmode) {
+            LOG.debug("parsing input stream " + is);
+        }
+        if (is == null) {
+            return null;
+        }
+        SystemId systemId = SystemId.construct(systemIdStr);
+        ReaderConfig readerConfig = XML_INPUT_FACTORY.createPrivateConfig();
+        if (restricted) {
+            readerConfig.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+        }
+        return XML_INPUT_FACTORY.createSR(readerConfig, systemId,
+                StreamBootstrapper.getInstance(null, systemId, is), false, true);
+    }
+
+    private XMLStreamReader2 getStreamReader(Resource wrapper, boolean quiet)
+            throws XMLStreamException, IOException {
+        Object resource = wrapper.getResource();
+        boolean isRestricted = wrapper.isParserRestricted();
+        XMLStreamReader2 reader = null;
+        if (resource instanceof URL) {                  // an URL resource
+            reader  = (XMLStreamReader2)parse((URL)resource, isRestricted);
+        } else if (resource instanceof String) {        // a CLASSPATH resource
+            URL url = getResource((String)resource);
+            reader = (XMLStreamReader2)parse(url, isRestricted);
+        } else if (resource instanceof Path) {          // a file resource
+            // Can't use FileSystem API or we get an infinite loop
+            // since FileSystem uses Configuration API.  Use java.io.File instead.
+            File file = new File(((Path)resource).toUri().getPath())
+                    .getAbsoluteFile();
+            if (file.exists()) {
+                if (!quiet) {
+                    LOG.debug("parsing File " + file);
+                }
+                reader = (XMLStreamReader2)parse(new BufferedInputStream(
+                                new FileInputStream(file)), ((Path)resource).toString(),
+                        isRestricted);
+            }
+        } else if (resource instanceof InputStream) {
+            reader = (XMLStreamReader2)parse((InputStream)resource, null,
+                    isRestricted);
+        }
+        return reader;
     }
 
     private Resource loadResource(Properties properties,

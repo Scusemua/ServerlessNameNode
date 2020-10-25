@@ -1,6 +1,7 @@
 package com.gmail.benrcarver.serverlessnamenode.fs;
 
 import com.gmail.benrcarver.serverlessnamenode.fs.permission.FsPermission;
+import com.gmail.benrcarver.serverlessnamenode.fs.protocolPB.PBHelper;
 import com.gmail.benrcarver.serverlessnamenode.io.Writable;
 
 import java.io.DataInput;

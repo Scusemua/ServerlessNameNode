@@ -268,7 +268,7 @@ public class CommonConfigurationKeys extends CommonConfigurationKeysPublic {
     public static final int HA_FC_CLI_CHECK_TIMEOUT_DEFAULT = 20000;
 
     /** Static user web-filter properties.
-     * See {@link StaticUserWebFilter}.
+     * See StaticUserWebFilter.
      */
     public static final String HADOOP_HTTP_STATIC_USER =
             "hadoop.http.staticuser.user";
@@ -377,12 +377,10 @@ public class CommonConfigurationKeys extends CommonConfigurationKeysPublic {
     /** Raw coder factory for the RS default codec. */
     public static final String IO_ERASURECODE_CODEC_RS_DEFAULT_RAWCODER_KEY =
             "io.erasurecode.codec.rs-default.rawcoder";
-    public static final String IO_ERASURECODE_CODEC_RS_DEFAULT_RAWCODER_DEFAULT =
-            RSRawErasureCoderFactory.class.getCanonicalName();
+    //public static final String IO_ERASURECODE_CODEC_RS_DEFAULT_RAWCODER_DEFAULT = RSRawErasureCoderFactory.class.getCanonicalName();
 
     /** Raw coder factory for the XOR codec. */
     public static final String IO_ERASURECODE_CODEC_XOR_RAWCODER_KEY =
             "io.erasurecode.codec.xor.rawcoder";
-    public static final String IO_ERASURECODE_CODEC_XOR_RAWCODER_DEFAULT =
-            XORRawErasureCoderFactory.class.getCanonicalName();
+    //public static final String IO_ERASURECODE_CODEC_XOR_RAWCODER_DEFAULT = XORRawErasureCoderFactory.class.getCanonicalName();
 }

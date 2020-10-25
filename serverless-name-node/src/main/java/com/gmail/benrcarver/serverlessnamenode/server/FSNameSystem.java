@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class FSNameSystem implements NameSystem {
+    public static final Log LOG = LogFactory.getLog(FSNameSystem.class);
 
     // Block pool ID used by this namenode
     // HOP made it final and now its value is read from the config file. all

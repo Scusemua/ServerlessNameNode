@@ -1,7 +1,10 @@
 package com.gmail.benrcarver.serverlessnamenode.protocol;
 
+import com.gmail.benrcarver.serverlessnamenode.fs.FileEncryptionInfo;
 import com.gmail.benrcarver.serverlessnamenode.fs.FileStatus;
 import com.gmail.benrcarver.serverlessnamenode.fs.Path;
+import com.gmail.benrcarver.serverlessnamenode.fs.permission.FsPermission;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtilClient;
 
 import java.net.URI;
 
@@ -44,7 +47,7 @@ public class HdfsFileStatus {
      * @param owner the owner of the path
      * @param group the group of the path
      * @param path the local name in java UTF8 encoding the same as that in-memory
-     * @param fileid the inode id of the file
+     * @param fileId the inode id of the file
      * @param feInfo the file's encryption info
      */
     public HdfsFileStatus(long length, boolean isdir, int block_replication,
@@ -271,6 +274,4 @@ public class HdfsFileStatus {
     public final byte getStoragePolicy() {
         return storagePolicy;
     }
-}
-
 }
