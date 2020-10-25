@@ -4,7 +4,6 @@ import com.gmail.benrcarver.serverlessnamenode.exceptions.HadoopIllegalArgumentE
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
 import java.io.InvalidObjectException;
 import java.io.ObjectInputValidation;
 import java.io.Serializable;
@@ -485,19 +484,6 @@ public class Path implements Comparable, Serializable, ObjectInputValidation {
         }
         return depth;
     }
-
-    /**
-     * Returns a qualified path object for the FileSystem's working
-     * directory.
-     *
-     * @param fs the target FileSystem
-     * @return a qualified path object for the FileSystem's working directory
-     * @deprecated use {@link #makeQualified(URI, Path)}
-     */
-    /*@Deprecated
-    public Path makeQualified(FileSystem fs) {
-        return makeQualified(fs.getUri(), fs.getWorkingDirectory());
-    }*/
 
     /**
      * Returns a qualified path object.

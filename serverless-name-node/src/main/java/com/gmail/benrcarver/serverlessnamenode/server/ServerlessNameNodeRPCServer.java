@@ -21,6 +21,7 @@ import static com.gmail.benrcarver.serverlessnamenode.util.HdfsServerConstants.M
 public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
     // Dependencies from other parts of NN.
     protected final ServerlessNameNode nameNode;
+    protected FSNameSystem namesystem;
 
     private static final Logger LOG = ServerlessNameNode.LOG;
     private static final Logger stateChangeLog = ServerlessNameNode.stateChangeLog;

@@ -17,6 +17,10 @@ public class ServerlessNameNode {
 
     }
 
+    public long getLeCurrentId() {
+        return 0;
+    }
+
     /**
      * Returns whether the NameNode is completely started
      */
