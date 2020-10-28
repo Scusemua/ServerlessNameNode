@@ -32,7 +32,7 @@ import java.io.IOException;
 @InterfaceStability.Unstable
 public class PermissionStatus implements Writable {
   static final WritableFactory FACTORY = new WritableFactory() {
-    @Override
+    //@Override
     public Writable newInstance() { return new PermissionStatus(); }
   };
   static {                                      // register a ctor
@@ -72,14 +72,14 @@ public class PermissionStatus implements Writable {
   /** Return permission */
   public FsPermission getPermission() {return permission;}
 
-  @Override
+  //@Override
   public void readFields(DataInput in) throws IOException {
     username = Text.readString(in, Text.DEFAULT_MAX_LEN);
     groupname = Text.readString(in, Text.DEFAULT_MAX_LEN);
     permission = FsPermission.read(in);
   }
 
-  @Override
+  //@Override
   public void write(DataOutput out) throws IOException {
     write(out, username, groupname, permission);
   }

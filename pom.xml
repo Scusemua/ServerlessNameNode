@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>hops-leader-election</module>
-        <module>hadoop-hdfs-project</module>
         <module>hops-metadata-dal-impl-ndb</module>
         <module>hops-metadata-dal</module>
         <module>hadoop-common-project</module>
+        <module>serverless-name-node</module>
+        <module>hadoop-maven-plugins</module>
     </modules>
 
     <properties>
