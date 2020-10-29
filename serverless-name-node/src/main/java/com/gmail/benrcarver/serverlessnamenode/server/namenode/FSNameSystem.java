@@ -9,6 +9,7 @@ import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.security.UserGroupInformation;
+import org.apache.hadoop.security.token.delegation.DelegationKey;
 import org.apache.hadoop.security.token.delegation.web.DelegationTokenManager;
 import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenSecretManager;
 import org.apache.hadoop.util.Daemon;
@@ -412,6 +413,40 @@ public class FSNameSystem implements NameSystem {
                         cmd, src, dst, status);
             }
         }
+    }
+
+    @Override
+    public boolean isInSafeMode() throws IOException {
+        // safeMode is volatile, and may be set to null at any time
+        SafeModeInfo safeMode = safeMode();
+        if (safeMode == null) {
+            if(inSafeMode.get()){
+                new SafeModeInfo().leave();
+            }
+            forceReadTheSafeModeFromDB.set(false);
+            return false;
+        }
+        if(safeMode.isOn() && !isLeader()){
+            safeMode.tryToHelpToGetOut();
+        }
+        inSafeMode.set(safeMode.isOn());
+        return safeMode.isOn();
+    }
+
+    /**
+     * Log the updateMasterKey operation to edit logs
+     *
+     * @param key
+     *     new delegation key.
+     */
+    public void logUpdateMasterKey(DelegationKey key) throws IOException {
+
+        assert !isInSafeMode() :
+                "this should never be called while in safe mode, since we stop " +
+                        "the DT manager before entering safe mode!";
+        // No need to hold FSN lock since we don't access any internal
+        // structures, and this is stopped before the FSN shuts itself
+        // down, etc.
     }
 
     void renameTo(final String src, final String dst,
