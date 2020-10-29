@@ -4,7 +4,6 @@ import com.gmail.benrcarver.serverlessnamenode.exceptions.ParentNotDirectoryExce
 import com.gmail.benrcarver.serverlessnamenode.exceptions.DSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.NSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
-import com.gmail.benrcarver.serverlessnamenode.exceptions.UnresolvedLinkException;
 import com.gmail.benrcarver.serverlessnamenode.protocol.NamenodeProtocols;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.Path;

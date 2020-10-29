@@ -9,6 +9,7 @@ import com.gmail.benrcarver.serverlessnamenode.hops.transaction.handler.HDFSOper
 import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.protocol.ClientProtocol;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.rpc.Status;
 import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import io.hops.metadata.hdfs.dal.SafeBlocksDataAccess;
@@ -19,6 +20,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.permission.FsPermission;
+import org.apache.hadoop.fs.permission.PermissionStatus;
 import org.apache.hadoop.ipc.RetriableException;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.security.token.delegation.DelegationKey;
@@ -529,6 +532,46 @@ public class FSNameSystem implements NameSystem {
                 return null;
             }
         }.handle();
+    }
+
+    public void processIncrementalBlockReport(DatanodeRegistration nodeReg, StorageReceivedDeletedBlocks r)
+            throws IOException {
+        blockManager.processIncrementalBlockReport(nodeReg, r);
+    }
+
+    PermissionStatus createFsOwnerPermissions(FsPermission permission) {
+        return new PermissionStatus(fsOwner.getShortUserName(), superGroup,
+                permission);
+    }
+
+    @Override
+    public void checkSuperuserPrivilege() throws AccessControlException {
+        if (isPermissionEnabled) {
+            FSPermissionChecker pc = getPermissionChecker();
+            pc.checkSuperuserPrivilege();
+        }
+    }
+
+    /**
+     * Check to see if we have exceeded the limit on the number
+     * of inodes.
+     */
+    void checkFsObjectLimit() throws IOException {
+        if (maxFsObjects != 0 &&
+                maxFsObjects <= dir.totalInodes() + getBlocksTotal()) {
+            throw new IOException("Exceeded the configured number of objects " +
+                    maxFsObjects + " in the filesystem.");
+        }
+    }
+
+    //This is for testing purposes only
+    @VisibleForTesting
+    boolean isImageLoaded() {
+        return imageLoaded;
+    }
+    // exposed for unit tests
+    protected void setImageLoaded(boolean flag) {
+        imageLoaded = flag;
     }
 
     void renameTo(final String src, final String dst,

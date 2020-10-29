@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.security.AccessControlException;
 import java.util.Set;
 
-public interface NameSystem {
+public interface NameSystem extends SafeMode {
     /**
      * Is this name system running?
      */
