@@ -1,10 +1,10 @@
-package com.gmail.benrcarver.serverlessnamenode.hops.metadata;
+package io.hops;
 
 import com.gmail.benrcarver.serverlessnamenode.hops.common.CountersQueue;
 import com.gmail.benrcarver.serverlessnamenode.hops.transaction.handler.HDFSOperationType;
 import com.gmail.benrcarver.serverlessnamenode.server.namenode.FSNameSystem;
 import com.gmail.benrcarver.serverlessnamenode.server.namenode.SafeModeInfo;
-import com.gmail.benrcarver.serverlessnamenode.util.HdfsServerConstants;
+import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
 import com.google.common.math.IntMath;
 import com.google.common.math.LongMath;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -178,7 +178,7 @@ public class HdfsVariables {
         }.handle();
     }
 
-    public static void setSafeModeInfo(final SafeModeInfo safeModeInfo, final long reached) throws
+    public static void setSafeModeInfo(final FSNameSystem.SafeModeInfo safeModeInfo, final long reached) throws
             IOException {
         new LightWeightRequestHandler(HDFSOperationType.SET_SAFE_MODE_INFO) {
             @Override

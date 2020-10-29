@@ -1,4 +1,4 @@
-package com.gmail.benrcarver.serverlessnamenode.hops.resolvingcache;
+package io.hops;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsConstantsClient;

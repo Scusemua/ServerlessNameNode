@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.security.AccessControlException;
 
-import static com.gmail.benrcarver.serverlessnamenode.util.HdfsServerConstants.MAX_PATH_DEPTH;
-import static com.gmail.benrcarver.serverlessnamenode.util.HdfsServerConstants.MAX_PATH_LENGTH;
+import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants.MAX_PATH_DEPTH;
+import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants.MAX_PATH_LENGTH;
 
 public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
     // Dependencies from other parts of NN.

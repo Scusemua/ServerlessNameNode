@@ -1,6 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.util.HdfsServerConstants;
+import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -142,8 +142,8 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains:annotations:13.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10" level="project" />
-    <orderEntry type="library" name="Maven: dnsjava:dnsjava:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: com.gmail.benrcarver.ServerlessNameNode:hadoop-annotations:3.2.0.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: dnsjava:dnsjava:3.3.1" level="project" />
+    <orderEntry type="module" module-name="hadoop-annotations" />
     <orderEntry type="library" name="Maven: com.amazonaws:aws-lambda-java-core:1.2.0" level="project" />
   </component>
 </module>

@@ -1,4 +1,4 @@
-package com.gmail.benrcarver.serverlessnamenode.hops.transaction.handler;
+package io.hops.transaction.handler;
 
 import io.hops.transaction.handler.RequestHandler;
 

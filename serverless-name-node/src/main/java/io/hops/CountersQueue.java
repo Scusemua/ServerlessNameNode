@@ -1,4 +1,4 @@
-package com.gmail.benrcarver.serverlessnamenode.hops.common;
+package io.hops;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
