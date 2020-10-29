@@ -13,16 +13,23 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.rpc.Status;
 import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import io.hops.metadata.hdfs.dal.SafeBlocksDataAccess;
+import io.hops.transaction.handler.HDFSOperationType;
+import io.hops.transaction.handler.HopsTransactionalRequestHandler;
 import io.hops.transaction.handler.LightWeightRequestHandler;
+import io.hops.transaction.lock.LockFactory;
+import io.hops.transaction.lock.TransactionLockTypes;
+import io.hops.transaction.lock.TransactionLocks;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.fs.permission.PermissionStatus;
 import org.apache.hadoop.ipc.RetriableException;
+import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.security.token.delegation.DelegationKey;
 import org.apache.hadoop.security.token.delegation.web.DelegationTokenManager;
@@ -32,7 +39,6 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.security.AccessControlException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -646,6 +652,72 @@ public class FSNameSystem implements NameSystem {
 
         logAuditEvent(true, "rename (options=" + Arrays.toString(options) +
                 ")", src, dst, auditStat);
+    }
+
+    public PathInformation getPathExistingINodesFromDB(final String path,
+                                                       final boolean doCheckOwner, final FsAction ancestorAccess,
+                                                       final FsAction parentAccess, final FsAction access,
+                                                       final FsAction subAccess) throws IOException{
+        HopsTransactionalRequestHandler handler =
+                new HopsTransactionalRequestHandler(HDFSOperationType.SUBTREE_PATH_INFO) {
+                    @Override
+                    public void acquireLock(TransactionLocks locks) throws IOException {
+                        LockFactory lf = LockFactory.getInstance();
+                        INodeLock il = lf.getINodeLock(TransactionLockTypes.INodeLockType.READ_COMMITTED,
+                                TransactionLockTypes.INodeResolveType.PATH, path)
+                                .setNameNodeID(nameNode.getId())
+                                .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes())
+                                .skipReadingQuotaAttr(!dir.isQuotaEnabled());
+                        locks.add(il).add(lf.getBlockLock()); // blk lock only if file
+                        locks.add(lf.getAcesLock());
+                    }
+
+                    @Override
+                    public Object performTask() throws IOException {
+                        FSPermissionChecker pc = getPermissionChecker();
+                        byte[][] pathComponents = INode.getPathComponents(path);
+                        INodesInPath iip = dir.getExistingPathINodes(pathComponents);
+                        if (isPermissionEnabled && !pc.isSuperUser()) {
+                            dir.checkPermission(pc, iip, doCheckOwner, ancestorAccess, parentAccess, access, subAccess, false);
+                        }
+
+                        boolean isDir = false;
+
+                        QuotaCounts usage = new QuotaCounts.Builder().build();
+                        QuotaCounts quota = new QuotaCounts.Builder().build();
+                        INode leafInode = iip.getLastINode();
+                        if(leafInode != null){  // complete path resolved
+                            if(leafInode instanceof INodeFile ||  leafInode instanceof INodeSymlink){
+                                isDir = false;
+                                //do ns and ds counts for file only
+                                leafInode.computeQuotaUsage(getBlockManager().getStoragePolicySuite(), usage);
+                            } else{
+                                isDir =true;
+                                if(leafInode instanceof INodeDirectory && dir.isQuotaEnabled()){
+                                    DirectoryWithQuotaFeature q = ((INodeDirectory) leafInode).getDirectoryWithQuotaFeature();
+                                    if (q != null) {
+                                        quota = q.getQuota();
+                                    } else {
+                                        quota = leafInode.getQuotaCounts();
+                                    }
+                                }
+                            }
+                        }
+
+                        //Get acls
+                        List[] acls = new List[iip.length()];
+                        for (int i = 0; i < iip.length() ; i++){
+                            if (iip.getINode(i) != null){
+                                AclFeature aclFeature = INodeAclHelper.getAclFeature(iip.getINode(i));
+                                acls[i] = aclFeature != null ? aclFeature.getEntries() : null;
+                            }
+                        }
+
+                        return new PathInformation(path, pathComponents,
+                                iip,isDir, quota, usage, acls);
+                    }
+                };
+        return (PathInformation)handler.handle(this);
     }
 
     /**

@@ -17,13 +17,10 @@ import io.hops.transaction.lock.TransactionLockTypes;
 import io.hops.transaction.lock.TransactionLocks;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.hadoop.fs.FileAlreadyExistsException;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.fs.UnresolvedLinkException;
+import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.util.Time;
 
-import org.apache.hadoop.fs.Options;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
@@ -341,7 +338,7 @@ class FSDirRenameOp {
     /**
      * The new rename which has the POSIX semantic.
      */
-    static Map.Entry<BlocksMapUpdateInfo, HdfsFileStatus> renameToInt(
+    static Map.Entry<INode.BlocksMapUpdateInfo, HdfsFileStatus> renameToInt(
             FSDirectory fsd, final String srcArg, final String dstArg,
             Options.Rename... options)
             throws IOException {
@@ -358,7 +355,7 @@ class FSDirRenameOp {
 
         byte[][] srcComponents = FSDirectory.getPathComponentsForReservedPath(src);
         byte[][] dstComponents = FSDirectory.getPathComponentsForReservedPath(dst);
-        BlocksMapUpdateInfo collectedBlocks = new BlocksMapUpdateInfo();
+        INode.BlocksMapUpdateInfo collectedBlocks = new INode.BlocksMapUpdateInfo();
         src = fsd.resolvePath(pc, src, srcComponents);
         dst = fsd.resolvePath(pc, dst, dstComponents);
         HdfsFileStatus resultingStat = renameTo(fsd, pc, src, dst, collectedBlocks, options);
@@ -369,10 +366,10 @@ class FSDirRenameOp {
 
     /**
      * @see {@link #unprotectedRenameTo(FSDirectory, String, String, INodesInPath,
-     * INodesInPath, long, BlocksMapUpdateInfo, Options.Rename...)}
+     * INodesInPath, long, INode.BlocksMapUpdateInfo, Options.Rename...)}
      */
     static HdfsFileStatus renameTo(FSDirectory fsd, FSPermissionChecker pc, String src,
-                                   String dst, BlocksMapUpdateInfo collectedBlocks,
+                                   String dst, INode.BlocksMapUpdateInfo collectedBlocks,
                                    Options.Rename... options) throws IOException {
         if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
             ServerlessNameNode.stateChangeLog.debug("DIR* FSDirectory.renameTo: " + src + " to "
@@ -401,7 +398,7 @@ class FSDirRenameOp {
      * @return whether a file/directory gets overwritten in the dst path
      */
     static RenameResult unprotectedRenameTo(FSDirectory fsd, String src, String dst, long timestamp,
-                                            BlocksMapUpdateInfo collectedBlocks, Options.Rename... options)
+                                            INode.BlocksMapUpdateInfo collectedBlocks, Options.Rename... options)
             throws IOException {
         boolean overwrite = options != null
                 && Arrays.asList(options).contains(Options.Rename.OVERWRITE);
