@@ -358,9 +358,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>io.hops.metadata</groupId>
+      <groupId>com.gmail.benrcarver.ServerlessNameNode.metadata</groupId>
       <artifactId>hops-metadata-dal</artifactId>
-      <version>LATEST</version>
+      <version>1.0-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <dependency>
@@ -398,11 +398,23 @@
       <version>LATEST</version>
     </dependency>
     <dependency>
+      <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
+      <artifactId>hadoop-annotations</artifactId>
+      <version>3.2.0.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
+      <artifactId>hadoop-annotations</artifactId>
+      <version>3.2.0.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <!--<dependency>
       <groupId>com.logicalclocks</groupId>
       <artifactId>service-discovery-client</artifactId>
-      <!--<version>${sd-client.version}</version>-->
+      &lt;!&ndash;<version>${sd-client.version}</version>&ndash;&gt;
       <version>LATEST</version>
-    </dependency>
+    </dependency>-->
   </dependencies>
 
   <build>
@@ -431,7 +443,7 @@
     </resources>
     <plugins>
       <plugin>
-        <groupId>io.hops</groupId>
+        <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
         <artifactId>hadoop-maven-plugins</artifactId>
         <executions>
           <execution>
@@ -764,7 +776,7 @@
             </executions>
           </plugin>
           <plugin>
-            <groupId>io.hops</groupId>
+            <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
             <artifactId>hadoop-maven-plugins</artifactId>
             <executions>
               <execution>
@@ -1087,7 +1099,7 @@
       <build>
         <plugins>
           <plugin>
-            <groupId>io.hops</groupId>
+            <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
             <artifactId>hadoop-maven-plugins</artifactId>
             <executions>
               <execution>

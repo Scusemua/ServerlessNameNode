@@ -1,10 +1,10 @@
 package com.gmail.benrcarver.serverlessnamenode.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.fs.FileEncryptionInfo;
-import com.gmail.benrcarver.serverlessnamenode.fs.FileStatus;
-import com.gmail.benrcarver.serverlessnamenode.fs.Path;
-import com.gmail.benrcarver.serverlessnamenode.fs.permission.FsPermission;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtilClient;
+import org.apache.hadoop.fs.FileEncryptionInfo;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.permission.FsPermission;
 
 import java.net.URI;
 

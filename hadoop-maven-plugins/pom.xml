@@ -17,11 +17,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>io.hops</groupId>
+    <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
     <artifactId>ServerlessNameNode</artifactId>
-    <version>3.2.0.0-SNAPSHOT</version>
-    <relativePath>../ServerlessNameNode</relativePath>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
+  <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
   <artifactId>hadoop-maven-plugins</artifactId>
   <packaging>maven-plugin</packaging>
   <name>Apache Hadoop Maven Plugins</name>
@@ -57,15 +58,18 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
+      <version>LATEST</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
+      <version>LATEST</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-shade-plugin</artifactId>
-      <version>${maven-shade-plugin.version}</version>
+      <!--<version>${maven-shade-plugin.version}</version>-->
+      <version>3.2.0</version>
       <scope>provided</scope>
       <exclusions>
         <!-- shade conflicts with itself and other maven internals so we simply

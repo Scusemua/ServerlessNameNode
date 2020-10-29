@@ -1,7 +1,7 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.fs.CommonConfigurationKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsClientConfigKeys;
+import org.apache.hadoop.fs.CommonConfigurationKeys;
 
 import java.util.concurrent.TimeUnit;
 

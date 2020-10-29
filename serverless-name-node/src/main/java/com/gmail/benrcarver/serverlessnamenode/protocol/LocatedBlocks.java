@@ -1,5 +1,8 @@
 package com.gmail.benrcarver.serverlessnamenode.protocol;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
+import org.apache.hadoop.fs.FileEncryptionInfo;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;

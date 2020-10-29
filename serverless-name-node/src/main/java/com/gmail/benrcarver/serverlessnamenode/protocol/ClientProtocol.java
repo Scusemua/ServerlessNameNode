@@ -5,7 +5,7 @@ import com.gmail.benrcarver.serverlessnamenode.exceptions.DSQuotaExceededExcepti
 import com.gmail.benrcarver.serverlessnamenode.exceptions.NSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.UnresolvedLinkException;
-import com.gmail.benrcarver.serverlessnamenode.fs.Options;
+import org.apache.hadoop.fs.Options;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

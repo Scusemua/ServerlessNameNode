@@ -16,6 +16,12 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <aws.java.sdk.version>2.13.54</aws.java.sdk.version>
+
+        <!-- ProtocolBuffer version, used to verify the protoc version and -->
+        <!-- define the protobuf JAR version                               -->
+        <protobuf.version>2.5.0</protobuf.version>
+        <!--suppress UnresolvedMavenProperty -->
+        <protoc.path>${env.HADOOP_PROTOC_PATH}</protoc.path>
     </properties>
 
     <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>

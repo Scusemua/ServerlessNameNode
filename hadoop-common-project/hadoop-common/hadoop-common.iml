@@ -9,6 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/java" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -107,7 +108,8 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.20" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.bouncycastle:bcprov-jdk15on:1.66" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.66" level="project" />
-    <orderEntry type="library" name="Maven: io.hops.metadata:hops-metadata-dal:LATEST" level="project" />
+    <orderEntry type="library" name="Maven: com.gmail.benrcarver.ServerlessNameNode.metadata:hops-metadata-dal:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-simplekdc:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-client:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerby-config:2.0.1" level="project" />
@@ -141,7 +143,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.4.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10" level="project" />
     <orderEntry type="library" name="Maven: dnsjava:dnsjava:3.3.0" level="project" />
-    <orderEntry type="library" name="Maven: com.logicalclocks:service-discovery-client:LATEST" level="project" />
+    <orderEntry type="library" name="Maven: com.gmail.benrcarver.ServerlessNameNode:hadoop-annotations:3.2.0.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.amazonaws:aws-lambda-java-core:1.2.0" level="project" />
   </component>
 </module>

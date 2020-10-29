@@ -1,11 +1,19 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.conf.Configuration;
-import com.gmail.benrcarver.serverlessnamenode.fs.BlockLocation;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsClientConfigKeys;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.web.WebHdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.util.StringUtils;
+import com.gmail.benrcarver.serverlessnamenode.protocol.LocatedBlock;
+import com.gmail.benrcarver.serverlessnamenode.protocol.LocatedBlocks;
 import com.google.common.base.Charsets;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Maps;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.BlockLocation;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.net.NetUtils;
+import org.apache.hadoop.net.NodeBase;
+import org.apache.hadoop.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

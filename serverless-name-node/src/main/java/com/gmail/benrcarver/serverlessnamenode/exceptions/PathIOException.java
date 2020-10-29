@@ -1,7 +1,5 @@
 package com.gmail.benrcarver.serverlessnamenode.exceptions;
 
-import com.gmail.benrcarver.serverlessnamenode.fs.Path;
-
 import java.io.IOException;
 
 /**

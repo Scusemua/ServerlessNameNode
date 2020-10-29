@@ -1,6 +1,5 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.web;
 
-import com.gmail.benrcarver.serverlessnamenode.io.Text;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
 
 public class WebHdfsConstants {

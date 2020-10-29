@@ -1,8 +1,8 @@
 package com.gmail.benrcarver.serverlessnamenode.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.io.Writable;
-import com.gmail.benrcarver.serverlessnamenode.io.WritableFactories;
-import com.gmail.benrcarver.serverlessnamenode.io.WritableFactory;
+import org.apache.hadoop.io.Writable;
+import org.apache.hadoop.io.WritableFactories;
+import org.apache.hadoop.io.WritableFactory;
 
 import java.io.DataInput;
 import java.io.DataOutput;

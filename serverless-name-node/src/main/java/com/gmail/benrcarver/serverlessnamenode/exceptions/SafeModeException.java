@@ -1,6 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.exceptions;
 
-import com.gmail.benrcarver.serverlessnamenode.server.SafeModeInfo;
+import com.gmail.benrcarver.serverlessnamenode.server.namenode.SafeModeInfo;
 
 import java.io.IOException;
 
