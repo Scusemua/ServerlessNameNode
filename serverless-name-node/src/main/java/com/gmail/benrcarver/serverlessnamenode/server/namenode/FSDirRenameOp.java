@@ -3,15 +3,20 @@ package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.FSLimitException;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockStoragePolicySuite;
+import com.google.common.base.Preconditions;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
+import io.hops.metadata.hdfs.entity.EncodingStatus;
 import io.hops.metadata.hdfs.entity.INodeIdentifier;
 import io.hops.metadata.hdfs.entity.INodeMetadataLogEntry;
 import io.hops.metadata.hdfs.entity.SubTreeOperation;
 import io.hops.transaction.EntityManager;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
+import io.hops.transaction.lock.INodeLock;
 import io.hops.transaction.lock.LockFactory;
 import io.hops.transaction.lock.TransactionLockTypes;
 import io.hops.transaction.lock.TransactionLocks;
@@ -19,6 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.FsAction;
+import org.apache.hadoop.util.ChunkedArrayList;
 import org.apache.hadoop.util.Time;
 
 import java.io.FileNotFoundException;
@@ -522,8 +528,8 @@ class FSDirRenameOp {
             @Override
             public void acquireLock(TransactionLocks locks) throws IOException {
                 LockFactory lf = LockFactory.getInstance();
-                INodeLock il = lf.getRenameINodeLock(INodeLockType.WRITE_ON_TARGET_AND_PARENT,
-                        INodeResolveType.PATH, src, dst)
+                INodeLock il = lf.getRenameINodeLock(TransactionLockTypes.INodeLockType.WRITE_ON_TARGET_AND_PARENT,
+                        TransactionLockTypes.INodeResolveType.PATH, src, dst)
                         .setNameNodeID(fsd.getFSNamesystem().getNamenodeId())
                         .setActiveNameNodes(fsd.getFSNamesystem().getNameNode().getActiveNameNodes().getActiveNodes());
                 if (isUsingSubTreeLocks) {
@@ -552,7 +558,7 @@ class FSDirRenameOp {
                 }
                 locks.add(lf.getAcesLock());
 
-                for (Rename op : options) {
+                for (Options.Rename op : options) {
                     if (op == Options.Rename.OVERWRITE) {
                         locks.add(lf.getAllUsedHashBucketsLock());
                     }
@@ -592,7 +598,7 @@ class FSDirRenameOp {
                 BlockStoragePolicySuite bsps = fsd.getBlockStoragePolicySuite();
 
                 for (Options.Rename op : options) {
-                    if (op == Rename.KEEP_ENCODING_STATUS) {
+                    if (op == Options.Rename.KEEP_ENCODING_STATUS) {
                         INodesInPath srcInodesInPath = fsd.getINodesInPath(src, false);
                         INodesInPath dstInodesInPath = fsd.getINodesInPath(dst, false);
                         INode srcNode = srcIIP.getLastINode();
@@ -872,7 +878,7 @@ class FSDirRenameOp {
         boolean cleanDst(BlockStoragePolicySuite bsps)
                 throws QuotaExceededException, IOException {
             Preconditions.checkState(oldDstChild != null);
-            BlocksMapUpdateInfo collectedBlocks = new BlocksMapUpdateInfo();
+            INode.BlocksMapUpdateInfo collectedBlocks = new INode.BlocksMapUpdateInfo();
             List<INode> removedINodes = new ChunkedArrayList<>();
             final boolean filesDeleted;
 

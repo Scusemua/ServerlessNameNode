@@ -7,6 +7,7 @@ import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsConstantsClient;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsProtos;
 import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockStoragePolicy;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockStoragePolicySuite;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Lists;
 import com.google.protobuf.InvalidProtocolBufferException;

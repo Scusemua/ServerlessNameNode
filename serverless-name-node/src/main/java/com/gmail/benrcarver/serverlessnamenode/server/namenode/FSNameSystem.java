@@ -1,7 +1,9 @@
 package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsClientConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hops.common.CountersQueue;
 import com.gmail.benrcarver.serverlessnamenode.hops.metadata.HdfsStorageFactory;
 import com.gmail.benrcarver.serverlessnamenode.hops.metadata.HdfsVariables;
@@ -9,9 +11,11 @@ import com.gmail.benrcarver.serverlessnamenode.hops.transaction.handler.HDFSOper
 import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.protocol.ClientProtocol;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
+import com.gmail.benrcarver.serverlessnamenode.server.common.StorageInfo;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.rpc.Status;
 import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
+import io.hops.HdfsVariables;
 import io.hops.metadata.hdfs.dal.SafeBlocksDataAccess;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
@@ -23,18 +27,21 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FsServerDefaults;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.fs.permission.PermissionStatus;
 import org.apache.hadoop.ipc.RetriableException;
+import org.apache.hadoop.net.NetworkTopology;
 import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.security.token.delegation.DelegationKey;
 import org.apache.hadoop.security.token.delegation.web.DelegationTokenManager;
 import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenSecretManager;
 import org.apache.hadoop.util.Daemon;
+import org.apache.hadoop.util.DataChecksum;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
@@ -138,13 +145,13 @@ public class FSNameSystem implements NameSystem {
     private final long resourceRecheckInterval;
 
     // The actual resource checker instance.
-    //NameNodeResourceChecker nnResourceChecker;
+    NameNodeResourceChecker nnResourceChecker;
 
     private final int maxDBTries;
 
-    //private final FsServerDefaults serverDefaults;
+    private final FsServerDefaults serverDefaults;
     private final boolean supportAppends;
-    //private final ReplaceDatanodeOnFailure dtpReplaceDatanodeOnFailure;
+    private final HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure dtpReplaceDatanodeOnFailure;
 
     private AtomicBoolean inSafeMode = new AtomicBoolean(false); // safe mode information
 
@@ -313,7 +320,7 @@ public class FSNameSystem implements NameSystem {
                     conf.getBoolean(DFS_SUPPORT_APPEND_KEY, DFS_SUPPORT_APPEND_DEFAULT);
             LOG.info("Append Enabled: " + supportAppends);
 
-            this.dtpReplaceDatanodeOnFailure = ReplaceDatanodeOnFailure.get(conf);
+            this.dtpReplaceDatanodeOnFailure = HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure.get(conf);
 
 
             // For testing purposes, allow the DT secret manager to be started regardless
@@ -481,10 +488,10 @@ public class FSNameSystem implements NameSystem {
 
     /**
      * @throws RetriableException
-     *           If 1) The NameNode is in SafeMode, 2) HA is enabled, and 3)
-     *           NameNode is in active state
+     *           If 1) The ServerlessNameNode is in SafeMode, 2) HA is enabled, and 3)
+     *           ServerlessNameNode is in active state
      * @throws SafeModeException
-     *           Otherwise if NameNode is in SafeMode.
+     *           Otherwise if ServerlessNameNode is in SafeMode.
      */
     private void checkNameNodeSafeMode(String errorMsg)
             throws RetriableException, SafeModeException, IOException {
@@ -936,28 +943,28 @@ public class FSNameSystem implements NameSystem {
 
         private void leaveInternal() throws IOException {
             long timeInSafeMode = now() - startTime;
-            NameNode.stateChangeLog.info(
+            ServerlessNameNode.stateChangeLog.info(
                     "STATE* Leaving safe mode after " + timeInSafeMode / 1000 + " secs");
-            NameNode.getNameNodeMetrics().setSafeModeTime((int) timeInSafeMode);
+            ServerlessNameNode.getNameNodeMetrics().setSafeModeTime((int) timeInSafeMode);
 
             //Log the following only once (when transitioning from ON -> OFF)
             if (reached() >= 0) {
-                NameNode.stateChangeLog.info("STATE* Safe mode is OFF");
+                ServerlessNameNode.stateChangeLog.info("STATE* Safe mode is OFF");
             }
             if(isLeader()){
                 HdfsVariables.exitSafeMode();
             }
             final NetworkTopology nt =
                     blockManager.getDatanodeManager().getNetworkTopology();
-            NameNode.stateChangeLog.info(
+            ServerlessNameNode.stateChangeLog.info(
                     "STATE* Network topology has " + nt.getNumOfRacks() + " racks and " +
                             nt.getNumOfLeaves() + " datanodes");
-            NameNode.stateChangeLog.info("STATE* UnderReplicatedBlocks has " +
+            ServerlessNameNode.stateChangeLog.info("STATE* UnderReplicatedBlocks has " +
                     blockManager.numOfUnderReplicatedBlocks() + " blocks");
 
             startSecretManagerIfNecessary();
             // If startup has not yet completed, end safemode phase.
-            StartupProgress prog = NameNode.getStartupProgress();
+            StartupProgress prog = ServerlessNameNode.getStartupProgress();
             if (prog.getStatus(Phase.SAFEMODE) != Status.COMPLETE) {
                 prog.endStep(Phase.SAFEMODE, STEP_AWAITING_REPORTED_BLOCKS);
                 prog.endPhase(Phase.SAFEMODE);
@@ -1000,7 +1007,7 @@ public class FSNameSystem implements NameSystem {
         }
 
         /**
-         * This NameNode tries to help the cluster to get out of safe mode by
+         * This ServerlessNameNode tries to help the cluster to get out of safe mode by
          * updating the safe block count.
          * This call will trigger the @link{SafeModeMonitor} if it's not already
          * started.
@@ -1116,7 +1123,7 @@ public class FSNameSystem implements NameSystem {
 
                 // Report startup progress only if we haven't completed startup yet.
                 //todo this will not work with multiple NN
-                StartupProgress prog = NameNode.getStartupProgress();
+                StartupProgress prog = ServerlessNameNode.getStartupProgress();
                 if (prog.getStatus(Phase.SAFEMODE) != Status.COMPLETE) {
                     if (this.awaitingReportedBlocksCounter == null) {
                         this.awaitingReportedBlocksCounter = prog.getCounter(Phase.SAFEMODE,
@@ -1254,7 +1261,7 @@ public class FSNameSystem implements NameSystem {
             if (!rightNow && (curTime - lastStatusReport < 20 * 1000)) {
                 return;
             }
-            NameNode.stateChangeLog.error(msg + " \n" + getTurnOffTip());
+            ServerlessNameNode.stateChangeLog.error(msg + " \n" + getTurnOffTip());
             lastStatusReport = curTime;
         }
 
@@ -1343,7 +1350,7 @@ public class FSNameSystem implements NameSystem {
                 LOG.debug("Adjusting safe blocks, added " + added +" blocks");
             }
 
-            StartupProgress prog = NameNode.getStartupProgress();
+            StartupProgress prog = ServerlessNameNode.getStartupProgress();
             if (prog.getStatus(Phase.SAFEMODE) != Status.COMPLETE) {
                 if (this.awaitingReportedBlocksCounter == null) {
                     this.awaitingReportedBlocksCounter = prog.getCounter(Phase.SAFEMODE,

@@ -4,6 +4,7 @@ import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.AclException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.util.LongBitFormat;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsConstantsClient;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockStoragePolicySuite;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.metadata.common.FinderType;
