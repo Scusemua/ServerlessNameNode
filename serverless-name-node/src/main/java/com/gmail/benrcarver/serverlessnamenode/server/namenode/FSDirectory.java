@@ -1,15 +1,39 @@
 package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
+import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
+import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsConstantsClient;
+import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
+import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsProtos;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockStoragePolicy;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.Lists;
+import com.google.protobuf.InvalidProtocolBufferException;
+import io.hops.HdfsStorageFactory;
+import io.hops.exception.StorageException;
+import io.hops.exception.TransactionContextException;
+import io.hops.metadata.hdfs.dal.DirectoryWithQuotaFeatureDataAccess;
+import io.hops.metadata.hdfs.dal.INodeDataAccess;
+import io.hops.metadata.hdfs.entity.EncryptionZone;
+import io.hops.metadata.hdfs.entity.INodeIdentifier;
+import io.hops.transaction.EntityManager;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
+import io.hops.transaction.handler.LightWeightRequestHandler;
 import io.hops.transaction.lock.LockFactory;
+import io.hops.transaction.lock.TransactionLockTypes;
+import io.hops.transaction.lock.TransactionLocks;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.crypto.CipherSuite;
+import org.apache.hadoop.crypto.CryptoProtocolVersion;
+import org.apache.hadoop.fs.*;
+import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.fs.permission.FsPermission;
+import org.apache.hadoop.fs.permission.PermissionStatus;
+import org.apache.hadoop.fs.protocolPB.PBHelper;
 import org.apache.hadoop.io.file.tfile.ByteArray;
+import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +52,8 @@ import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.DFS_QUO
 import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.DFS_QUOTA_BY_STORAGETYPE_ENABLED_KEY;
 import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.DFS_STORAGE_POLICY_ENABLED_DEFAULT;
 import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.DFS_STORAGE_POLICY_ENABLED_KEY;
+import static com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.CRYPTO_XATTR_ENCRYPTION_ZONE;
+import static com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.CRYPTO_XATTR_FILE_ENCRYPTION_INFO;
 
 /**
  * Both FSDirectory and FSNameSystem manage the state of the namespace.
@@ -66,7 +92,7 @@ public class FSDirectory implements Closeable {
     private final boolean isPermissionEnabled;
     /**
      * Support for ACLs is controlled by a configuration flag. If the
-     * configuration flag is false, then the NameNode will reject all
+     * configuration flag is false, then the ServerlessNameNode will reject all
      * ACL-related operations.
      */
     private final boolean aclsEnabled;
@@ -183,12 +209,12 @@ public class FSDirectory implements Closeable {
 
         this.inodeXAttrsLimit = inodeXAttrs;
 
-        NameNode.LOG.info("The maximum number of xattrs per inode is set to " + inodeXAttrsLimit);
+        ServerlessNameNode.LOG.info("The maximum number of xattrs per inode is set to " + inodeXAttrsLimit);
 
         int threshold =
                 conf.getInt(DFSConfigKeys.DFS_NAMENODE_NAME_CACHE_THRESHOLD_KEY,
                         DFSConfigKeys.DFS_NAMENODE_NAME_CACHE_THRESHOLD_DEFAULT);
-        NameNode.LOG
+        ServerlessNameNode.LOG
                 .info("Caching file names occuring more than " + threshold + " times");
         nameCache = new NameCache<>(threshold);
 
@@ -279,13 +305,13 @@ public class FSDirectory implements Closeable {
         newiip = addINode(existing, newNode);
 
         if (newiip == null) {
-            NameNode.stateChangeLog.info("DIR* addFile: failed to add " +
+            ServerlessNameNode.stateChangeLog.info("DIR* addFile: failed to add " +
                     existing.getPath() + "/" + localName);
             return null;
         }
 
-        if (NameNode.stateChangeLog.isDebugEnabled()) {
-            NameNode.stateChangeLog.debug("DIR* addFile: " + localName + " is added");
+        if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+            ServerlessNameNode.stateChangeLog.debug("DIR* addFile: " + localName + " is added");
         }
         return newiip;
     }
@@ -319,8 +345,8 @@ public class FSDirectory implements Closeable {
         fileINode.getFileUnderConstructionFeature().setLastBlockId(blockInfo.getBlockId());
         fileINode.setHasBlocks(true);
 
-        if (NameNode.stateChangeLog.isDebugEnabled()) {
-            NameNode.stateChangeLog.debug(
+        if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+            ServerlessNameNode.stateChangeLog.debug(
                     "DIR* FSDirectory.addBlock: " + path + " with " + block +
                             " block is added to the in-memory " + "file system");
         }
@@ -347,8 +373,8 @@ public class FSDirectory implements Closeable {
         }
         getBlockManager().removeBlockFromMap(block);
 
-        if (NameNode.stateChangeLog.isDebugEnabled()) {
-            NameNode.stateChangeLog.debug(
+        if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+            ServerlessNameNode.stateChangeLog.debug(
                     "DIR* FSDirectory.removeReplica: " + path + " with " + block +
                             " block is removed from the file system");
         }
@@ -516,7 +542,7 @@ public class FSDirectory implements Closeable {
         try {
             updateCount(inodesInPath, numOfINodes, counts, false);
         } catch (QuotaExceededException e) {
-            NameNode.LOG.warn("FSDirectory.updateCountNoQuotaCheck - unexpected ", e);
+            ServerlessNameNode.LOG.warn("FSDirectory.updateCountNoQuotaCheck - unexpected ", e);
         }
     }
 
@@ -609,7 +635,7 @@ public class FSDirectory implements Closeable {
         // fill up the inodes in the path from this inode to root
         for (int i = 0; i < depth; i++) {
             if (inode == null) {
-                NameNode.stateChangeLog.warn("Could not get full path." +
+                ServerlessNameNode.stateChangeLog.warn("Could not get full path." +
                         " Corresponding file might have deleted already.");
                 return null;
             }
@@ -697,7 +723,7 @@ public class FSDirectory implements Closeable {
                 throw e;
             } else {
                 // Do not throw if edits log is still being processed
-                NameNode.LOG.error("ERROR in FSDirectory.verifyINodeName", e);
+                ServerlessNameNode.LOG.error("ERROR in FSDirectory.verifyINodeName", e);
             }
         }
     }
@@ -721,7 +747,7 @@ public class FSDirectory implements Closeable {
                 throw e;
             } else {
                 // Do not throw if edits log is still being processed
-                NameNode.LOG.error("FSDirectory.verifyMaxDirItems: "
+                ServerlessNameNode.LOG.error("FSDirectory.verifyMaxDirItems: "
                         + e.getLocalizedMessage());
             }
         }
@@ -764,7 +790,7 @@ public class FSDirectory implements Closeable {
                 throw (e);
             }
             // log pre-existing paths that exceed limits
-            NameNode.LOG
+            ServerlessNameNode.LOG
                     .error("FSDirectory.verifyFsLimits - " + e.getLocalizedMessage());
         }
     }
@@ -853,7 +879,7 @@ public class FSDirectory implements Closeable {
         try {
             return addLastINode(existing, inode, counts, false, false);
         } catch (QuotaExceededException e) {
-            NameNode.LOG.warn("FSDirectory.addChildNoQuotaCheck - unexpected", e);
+            ServerlessNameNode.LOG.warn("FSDirectory.addChildNoQuotaCheck - unexpected", e);
         }
         return null;
     }
@@ -956,7 +982,7 @@ public class FSDirectory implements Closeable {
      * @return true if on the block boundary or false if recovery is need
      */
     boolean unprotectedTruncate(INodesInPath iip, long newLength,
-                                BlocksMapUpdateInfo collectedBlocks,
+                                INode.BlocksMapUpdateInfo collectedBlocks,
                                 long mtime, QuotaCounts delta) throws IOException {
         INodeFile file = iip.getLastINode().asFile();
 
@@ -1063,7 +1089,7 @@ public class FSDirectory implements Closeable {
 //          path.append(n.getLocalName());
 //        }
 //
-//        NameNode.LOG.warn("Quota violation in image for " + path +
+//        ServerlessNameNode.LOG.warn("Quota violation in image for " + path +
 //            " (Namespace quota : " + oldQuota.get(Quota.NAMESPACE) +
 //            " consumed : " + counts.nsCount + ")" +
 //            " (Diskspace quota : " + oldQuota.get(Quota.DISKSPACE) +
@@ -1171,8 +1197,8 @@ public class FSDirectory implements Closeable {
             return null;
         } else if(encryptionZone.getPath() == null
                 || encryptionZone.getPath().isEmpty()) {
-            if (NameNode.LOG.isDebugEnabled()) {
-                NameNode.LOG.debug("Encryption zone " +
+            if (ServerlessNameNode.LOG.isDebugEnabled()) {
+                ServerlessNameNode.LOG.debug("Encryption zone " +
                         encryptionZone.getPath() + " does not have a valid path.");
             }
         }
@@ -1185,7 +1211,7 @@ public class FSDirectory implements Closeable {
                 CRYPTO_XATTR_FILE_ENCRYPTION_INFO);
 
         if (fileXAttr == null) {
-            NameNode.LOG.warn("Could not find encryption XAttr for file " +
+            ServerlessNameNode.LOG.warn("Could not find encryption XAttr for file " +
                     inode.getFullPathName() + " in encryption zone " +
                     encryptionZone.getPath());
             return null;
@@ -1356,8 +1382,8 @@ public class FSDirectory implements Closeable {
             path.append(Path.SEPARATOR).append(
                     DFSUtil.bytes2String(pathComponents[i]));
         }
-        if (NameNode.LOG.isDebugEnabled()) {
-            NameNode.LOG.debug("Resolved path is " + path);
+        if (ServerlessNameNode.LOG.isDebugEnabled()) {
+            ServerlessNameNode.LOG.debug("Resolved path is " + path);
         }
         return path.toString();
     }
@@ -1467,7 +1493,7 @@ public class FSDirectory implements Closeable {
                                         PBHelper.convert(ezProto.getCryptoProtocolVersion()),
                                         ezProto.getKeyName());
                             } catch (InvalidProtocolBufferException e) {
-                                NameNode.LOG.warn("Error parsing protocol buffer of " +
+                                ServerlessNameNode.LOG.warn("Error parsing protocol buffer of " +
                                         "EZ XAttr " + xattr.getName());
                             }
                         }
@@ -1654,7 +1680,7 @@ public class FSDirectory implements Closeable {
             throws AccessControlException {
         try {
             return new FSPermissionChecker(fsOwnerShortUserName, supergroup,
-                    NameNode.getRemoteUser());
+                    ServerlessNameNode.getRemoteUser());
         } catch (IOException ioe) {
             throw new AccessControlException(ioe);
         }

@@ -564,6 +564,61 @@ public class FSNameSystem implements NameSystem {
         }
     }
 
+    FSPermissionChecker getPermissionChecker()
+            throws AccessControlException {
+        return dir.getPermissionChecker();
+    }
+
+    /**
+     * Start services required in active state
+     *
+     * @throws IOException
+     */
+    void startActiveServices() throws IOException {
+        startingActiveService = true;
+        LOG.info("Starting services required for active state");
+        LOG.info("Catching up to latest edits from old active before " + "taking over writer role in edits logs");
+        try {
+            blockManager.getDatanodeManager().markAllDatanodesStale();
+
+            // Only need to re-process the queue, If not in SafeMode.
+            if (!isInSafeMode()) {
+                LOG.info("Reprocessing replication and invalidation queues");
+                initializeReplQueues();
+            } else {
+                if (isLeader()) {
+                    // the node is starting and directly leader, this means that no NN was alive before
+                    HdfsVariables.resetMisReplicatedIndex();
+                }
+            }
+
+            leaseManager.startMonitor();
+            startSecretManagerIfNecessary();
+
+            //ResourceMonitor required only at ActiveNN. See HDFS-2914
+            this.nnrmthread = new Daemon(new NameNodeResourceMonitor());
+            nnrmthread.start();
+
+            if(isRetryCacheEnabled) {
+                this.retryCacheCleanerThread = new Daemon(new RetryCacheCleaner());
+                this.retryCacheCleanerThread.setName("Retry Cache Cleaner");
+                retryCacheCleanerThread.start();
+            }
+
+            if (erasureCodingEnabled) {
+                erasureCodingManager.activate();
+            }
+
+            if (cacheManager != null) {
+                cacheManager.startMonitorThread();
+            }
+//      blockManager.getDatanodeManager().setShouldSendCachingCommands(true);
+        } finally {
+            startingActiveService = false;
+            checkSafeMode();
+        }
+    }
+
     //This is for testing purposes only
     @VisibleForTesting
     boolean isImageLoaded() {

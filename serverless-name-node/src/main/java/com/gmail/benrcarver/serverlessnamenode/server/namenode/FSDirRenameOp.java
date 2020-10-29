@@ -13,6 +13,8 @@ import io.hops.transaction.EntityManager;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
 import io.hops.transaction.lock.LockFactory;
+import io.hops.transaction.lock.TransactionLockTypes;
+import io.hops.transaction.lock.TransactionLocks;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.fs.FileAlreadyExistsException;
@@ -21,6 +23,7 @@ import org.apache.hadoop.fs.UnresolvedLinkException;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.util.Time;
 
+import org.apache.hadoop.fs.Options;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
@@ -236,7 +239,7 @@ class FSDirRenameOp {
             public void acquireLock(TransactionLocks locks) throws IOException {
                 LockFactory lf = LockFactory.getInstance();
                 INodeLock il = lf.getLegacyRenameINodeLock(
-                        INodeLockType.WRITE_ON_TARGET_AND_PARENT, INodeResolveType.PATH, src, dst)
+                        TransactionLockTypes.INodeLockType.WRITE_ON_TARGET_AND_PARENT, TransactionLockTypes.INodeResolveType.PATH, src, dst)
                         .setNameNodeID(fsd.getFSNamesystem().getNamenodeId())
                         .setActiveNameNodes(fsd.getFSNamesystem().getNameNode().getActiveNameNodes().getActiveNodes())
                         .skipReadingQuotaAttr(!fsd.isQuotaEnabled());
@@ -247,14 +250,14 @@ class FSDirRenameOp {
                         .add(lf.getBlockLock())
                         .add(lf.getBlockRelated(LockFactory.BLK.RE, LockFactory.BLK.UC, LockFactory.BLK.IV, LockFactory.BLK.CR, LockFactory.BLK.ER, LockFactory.BLK.PE, LockFactory.BLK.UR));
                 if (!isUsingSubTreeLocks) {
-                    locks.add(lf.getLeaseLockAllPaths(LockType.WRITE,
+                    locks.add(lf.getLeaseLockAllPaths(TransactionLockTypes.LockType.WRITE,
                             fsd.getFSNamesystem().getLeaseCreationLockRows()))
-                            .add(lf.getLeasePathLock(LockType.READ_COMMITTED));
+                            .add(lf.getLeasePathLock(TransactionLockTypes.LockType.READ_COMMITTED));
                 } else {
-                    locks.add(lf.getLeaseLockAllPaths(LockType.READ_COMMITTED,
+                    locks.add(lf.getLeaseLockAllPaths(TransactionLockTypes.LockType.READ_COMMITTED,
                             fsd.getFSNamesystem().getLeaseCreationLockRows()))
-                            .add(lf.getLeasePathLock(LockType.READ_COMMITTED, src)).
-                            add(lf.getSubTreeOpsLock(LockType.WRITE, fsd.getFSNamesystem().getSubTreeLockPathPrefix(src), false));
+                            .add(lf.getLeasePathLock(TransactionLockTypes.LockType.READ_COMMITTED, src)).
+                            add(lf.getSubTreeOpsLock(TransactionLockTypes.LockType.WRITE, fsd.getFSNamesystem().getSubTreeLockPathPrefix(src), false));
                 }
                 if (fsd.isQuotaEnabled()) {
                     locks.add(lf.getQuotaUpdateLock(true, src, dst));
@@ -537,18 +540,18 @@ class FSDirRenameOp {
                     locks.add(lf.getQuotaUpdateLock(true, src, dst));
                 }
                 if (!isUsingSubTreeLocks) {
-                    locks.add(lf.getLeaseLockAllPaths(LockType.WRITE,
+                    locks.add(lf.getLeaseLockAllPaths(TransactionLockTypes.LockType.WRITE,
                             fsd.getFSNamesystem().getLeaseCreationLockRows()))
-                            .add(lf.getLeasePathLock(LockType.READ_COMMITTED));
+                            .add(lf.getLeasePathLock(TransactionLockTypes.LockType.READ_COMMITTED));
                 } else {
-                    locks.add(lf.getLeaseLockAllPaths(LockType.WRITE,
+                    locks.add(lf.getLeaseLockAllPaths(TransactionLockTypes.LockType.WRITE,
                             fsd.getFSNamesystem().getLeaseCreationLockRows()))
-                            .add(lf.getLeasePathLock(LockType.WRITE, src)).
-                            add(lf.getSubTreeOpsLock(LockType.WRITE, fsd.
+                            .add(lf.getLeasePathLock(TransactionLockTypes.LockType.WRITE, src)).
+                            add(lf.getSubTreeOpsLock(TransactionLockTypes.LockType.WRITE, fsd.
                                     getFSNamesystem().getSubTreeLockPathPrefix(src), false));
                 }
                 if (fsd.getFSNamesystem().isErasureCodingEnabled()) {
-                    locks.add(lf.getEncodingStatusLock(LockType.WRITE, dst));
+                    locks.add(lf.getEncodingStatusLock(TransactionLockTypes.LockType.WRITE, dst));
                 }
                 locks.add(lf.getAcesLock());
 

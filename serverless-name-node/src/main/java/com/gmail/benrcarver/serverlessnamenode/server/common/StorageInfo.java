@@ -1,5 +1,8 @@
 package com.gmail.benrcarver.serverlessnamenode.server.common;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LayoutVersion;
 import com.gmail.benrcarver.serverlessnamenode.hops.metadata.HdfsVariables;
 import com.gmail.benrcarver.serverlessnamenode.hops.transaction.handler.HDFSOperationType;
@@ -7,6 +10,7 @@ import com.google.common.base.Joiner;
 import io.hops.exception.StorageException;
 import io.hops.metadata.common.entity.Variable;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
+import io.hops.transaction.lock.LockFactory;
 import io.hops.transaction.lock.TransactionLockTypes;
 import io.hops.transaction.lock.TransactionLocks;
 import org.apache.commons.logging.Log;
@@ -21,6 +25,9 @@ import java.util.SortedSet;
 import java.util.UUID;
 
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.NodeType;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.net.DNS;
+import org.apache.hadoop.util.Time;
 
 /**
  * Common class for storage information.
