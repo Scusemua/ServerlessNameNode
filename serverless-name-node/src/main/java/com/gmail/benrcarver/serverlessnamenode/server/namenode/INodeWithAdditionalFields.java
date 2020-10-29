@@ -2,6 +2,7 @@ package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
 import com.google.common.base.Preconditions;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
@@ -16,7 +17,7 @@ import org.apache.hadoop.fs.permission.PermissionStatus;
 
 import java.io.IOException;
 
-abstract class INodeWithAdditionalFields extends INode {
+public abstract class INodeWithAdditionalFields extends INode {
 
     /** The inode id */
     final protected long id;

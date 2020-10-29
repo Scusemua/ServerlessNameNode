@@ -2,6 +2,7 @@ package io.hops.transaction.lock;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
+import io.hops.metadata.hdfs.entity.INodeIdentifier;
 import org.apache.hadoop.conf.Configuration;
 
 import java.util.ArrayList;
