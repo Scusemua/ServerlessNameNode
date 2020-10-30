@@ -1,17 +1,31 @@
 package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.AclException;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.util.LongBitFormat;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
+import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsConstantsClient;
 import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockStoragePolicySuite;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.primitives.SignedBytes;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.metadata.common.FinderType;
+import io.hops.metadata.hdfs.entity.EncodingStatus;
+import io.hops.metadata.hdfs.entity.FileProvenanceEntry;
+import io.hops.metadata.hdfs.entity.INodeIdentifier;
+import io.hops.metadata.hdfs.entity.INodeMetadataLogEntry;
+import io.hops.transaction.EntityManager;
 import org.apache.hadoop.fs.ContentSummary;
+import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.fs.permission.PermissionStatus;
+import org.apache.hadoop.util.ChunkedArrayList;
 import org.apache.hadoop.util.LightWeightGSet;
+import org.apache.hadoop.util.StringUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -402,12 +416,6 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
      * @param bsps Block storage policy suite to calculate intended storage type usage
      * @param blockStoragePolicyId block storage policy id of the current INode
      * @param counts The subtree counts for returning.
-     * @param useCache Whether to use cached quota usage. Note that
-     *                 {@link WithName} node never uses cache for its subtree.
-     * @param lastSnapshotId {@link Snapshot#CURRENT_STATE_ID} indicates the
-     *                       computation is in the current tree. Otherwise the id
-     *                       indicates the computation range for a
-     *                       {@link WithName} node.
      * @return The same objects as the counts parameter.
      */
     abstract QuotaCounts computeQuotaUsage( BlockStoragePolicySuite bsps,  byte blockStoragePolicyId, QuotaCounts counts)
@@ -1080,12 +1088,12 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
     public abstract INode cloneInode() throws IOException;
 
     @Override
-    public void setNext(LinkedElement next) {
+    public void setNext(LightWeightGSet.LinkedElement next) {
         this.next = next;
     }
 
     @Override
-    public LinkedElement getNext() {
+    public LightWeightGSet.LinkedElement getNext() {
         return next;
     }
 

@@ -2,6 +2,7 @@ package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.DistributedFileSystem;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.FSLimitException;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;

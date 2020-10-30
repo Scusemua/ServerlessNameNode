@@ -6,6 +6,8 @@ import com.gmail.benrcarver.serverlessnamenode.exceptions.HadoopIllegalArgumentE
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.protocol.NamenodeProtocols;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
+import io.hops.leader_election.node.ActiveNode;
+import io.hops.leader_election.node.SortedActiveNodeList;
 import org.apache.hadoop.fs.Trash;
 import org.apache.hadoop.util.ExitUtil.ExitException;
 import io.hops.HdfsStorageFactory;
@@ -34,6 +36,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.security.PrivilegedExceptionAction;
+import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
@@ -52,6 +55,8 @@ public class ServerlessNameNode {
     private JvmPauseMonitor pauseMonitor;
 
     private static final String NAMENODE_HTRACE_PREFIX = "namenode.htrace.";
+
+    protected LeaderElection leaderElection;
 
     protected FSNameSystem namesystem;
     protected final Configuration conf;
@@ -366,6 +371,32 @@ public class ServerlessNameNode {
 
     public long getLeCurrentId() {
         return 0;
+    }
+
+    public static boolean isNameNodeAlive(Collection<ActiveNode> activeNamenodes,
+                                          long namenodeId) {
+        if (activeNamenodes == null) {
+            // We do not know yet, be conservative
+            return true;
+        }
+
+        for (ActiveNode namenode : activeNamenodes) {
+            if (namenode.getId() == namenodeId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public SortedActiveNodeList getActiveNameNodes() {
+        return leaderElection.getActiveNamenodes();
+    }
+
+    /**
+     * Returns the id of this namenode
+     */
+    public long getId() {
+        return leaderElection.getCurrentId();
     }
 
     /**

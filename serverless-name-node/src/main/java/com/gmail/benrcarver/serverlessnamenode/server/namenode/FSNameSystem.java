@@ -11,15 +11,24 @@ import com.gmail.benrcarver.serverlessnamenode.hops.transaction.handler.HDFSOper
 import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.protocol.ClientProtocol;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.DatanodeStorageInfo;
 import com.gmail.benrcarver.serverlessnamenode.server.common.StorageInfo;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.rpc.Status;
 import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import io.hops.HdfsVariables;
+import io.hops.exception.StorageException;
+import io.hops.exception.TransactionContextException;
+import io.hops.leader_election.node.ActiveNode;
+import io.hops.metadata.hdfs.dal.OngoingSubTreeOpsDataAccess;
 import io.hops.metadata.hdfs.dal.SafeBlocksDataAccess;
+import io.hops.metadata.hdfs.entity.INodeIdentifier;
+import io.hops.metadata.hdfs.entity.SubTreeOperation;
+import io.hops.transaction.EntityManager;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
 import io.hops.transaction.handler.LightWeightRequestHandler;
+import io.hops.transaction.lock.INodeLock;
 import io.hops.transaction.lock.LockFactory;
 import io.hops.transaction.lock.TransactionLockTypes;
 import io.hops.transaction.lock.TransactionLocks;
@@ -53,6 +62,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
+import static org.apache.commons.io.IOUtils.close;
 import static org.apache.hadoop.ipc.Server.getRemoteIp;
 import static org.apache.hadoop.ipc.Server.getRemoteUser;
 
@@ -194,7 +204,7 @@ public class FSNameSystem implements NameSystem {
 
     //Add delay for file system operations. Used only for testing
     private boolean isTestingSTO = false;
-    //private ThreadLocal<Times> delays = new ThreadLocal<Times>();
+    private ThreadLocal<Times> delays = new ThreadLocal<Times>();
     long delayBeforeSTOFlag = 0; //This parameter can not be more than TxInactiveTimeout: 1.2 sec
     long delayAfterBuildingTree=0;
 
@@ -355,6 +365,94 @@ public class FSNameSystem implements NameSystem {
             LOG.error(getClass().getSimpleName() + " initialization failed.", e);
             close();
             throw e;
+        }
+    }
+
+    /**
+     * Unlock a subtree in the filesystem tree.
+     *
+     * @param path
+     *    the root of the subtree
+     * @throws IOException
+     */
+    @VisibleForTesting
+    void  unlockSubtreeInternal(final String path, final long ignoreStoInodeId) throws IOException {
+        new HopsTransactionalRequestHandler(HDFSOperationType.RESET_SUBTREE_LOCK) {
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = LockFactory.getInstance();
+                INodeLock il = (INodeLock)lf.getINodeLock( TransactionLockTypes.INodeLockType.WRITE, TransactionLockTypes.INodeResolveType.PATH, path)
+                        .setNameNodeID(nameNode.getId())
+                        .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes())
+                        .skipReadingQuotaAttr(!dir.isQuotaEnabled())
+                        .setIgnoredSTOInodes(ignoreStoInodeId)
+                        .enableHierarchicalLocking(conf.getBoolean(DFSConfigKeys.DFS_SUBTREE_HIERARCHICAL_LOCKING_KEY,
+                                DFSConfigKeys.DFS_SUBTREE_HIERARCHICAL_LOCKING_KEY_DEFAULT));
+                locks.add(il);
+                locks.add(lf.getSubTreeOpsLock(TransactionLockTypes.LockType.WRITE, getSubTreeLockPathPrefix(path), false));
+            }
+
+            @Override
+            public Object performTask() throws IOException {
+                INodesInPath inodesInPath = dir.getINodesInPath(path, false);
+                INode inode = inodesInPath.getLastINode();
+                if (inode != null && inode.isSTOLocked()) {
+                    inode.setSubtreeLocked(false);
+                    EntityManager.update(inode);
+                }
+                SubTreeOperation subTreeOp = EntityManager.find(SubTreeOperation.Finder.ByPath, getSubTreeLockPathPrefix(
+                        path));
+                EntityManager.remove(subTreeOp);
+                return null;
+            }
+        }.handle(this);
+    }
+
+    void setAsyncLockRemoval(final String path) throws IOException {
+        LightWeightRequestHandler handler = new LightWeightRequestHandler(
+                HDFSOperationType.SET_ASYNC_SUBTREE_RECOVERY_FLAG) {
+            @Override
+            public Object performTask() throws IOException {
+                OngoingSubTreeOpsDataAccess<SubTreeOperation> dataAccess =
+                        (OngoingSubTreeOpsDataAccess) HdfsStorageFactory.getDataAccess(OngoingSubTreeOpsDataAccess.class);
+                SubTreeOperation op = dataAccess.findByPath(getSubTreeLockPathPrefix(path));
+                if (op != null && op.getAsyncLockRecoveryTime() == 0) { // set the flag if not already set
+                    op.setAsyncLockRecoveryTime(System.currentTimeMillis());
+                    List<SubTreeOperation> modified = new ArrayList<SubTreeOperation>();
+                    modified.add(op);
+                    dataAccess.prepare(Collections.EMPTY_LIST, Collections.EMPTY_LIST, modified);
+                }
+                return null;
+            }
+        };
+        handler.handle();
+    }
+
+    @VisibleForTesting
+    void unlockSubtree(final String path, final long ignoreStoInodeId) throws IOException {
+        try{
+            unlockSubtreeInternal(path, ignoreStoInodeId);
+        }catch(Exception e ){
+            //Unable to remove the lock. setting the async removal flag
+            setAsyncLockRemoval(path);
+            throw e;
+        }
+    }
+
+    public void delayAfterBbuildingTree(String message) {
+        //Only for testing
+        if (isTestingSTO) {
+            Times time = delays.get();
+            if (time == null){
+                time = saveTimes();
+            }
+            try {
+                LOG.debug("Testing STO. "+message+" Sleeping for " + time.delayAfterBuildingTree);
+                Thread.sleep(time.delayAfterBuildingTree);
+                LOG.debug("Testing STO. "+message+" Waking up from sleep of " + time.delayAfterBuildingTree);
+            } catch (InterruptedException e) {
+                LOG.warn(e);
+            }
         }
     }
 
@@ -562,6 +660,206 @@ public class FSNameSystem implements NameSystem {
         if (isPermissionEnabled) {
             FSPermissionChecker pc = getPermissionChecker();
             pc.checkSuperuserPrivilege();
+        }
+    }
+
+    /**
+     * Lock a subtree of the filesystem tree.
+     * Locking a subtree prevents it from any concurrent write operations.
+     *
+     * @param path
+     *    the root of the subtree to be locked
+     * @return
+     *  the inode representing the root of the subtree
+     * @throws IOException
+     */
+    public INodeIdentifier lockSubtree(final String path, SubTreeOperation.Type stoType) throws
+            IOException {
+        return lockSubtreeAndCheckOwnerAndParentPermission(path, false, null, stoType);
+    }
+
+    /**
+     * Lock a subtree of the filesystem tree and ensure that the client has
+     * sufficient permissions. Locking a subtree prevents it from any concurrent
+     * write operations.
+     *
+     * @param path
+     *    the root of the subtree to be locked
+     * @param doCheckOwner
+     *    whether or not to check the owner
+     * @param ancestorAccess
+     *    the requested ancestor access
+     * @param parentAccess
+     *    the requested parent access
+     * @param access
+     *    the requested access
+     * @param subAccess
+     *    the requested sub access
+     * @return
+     *  the inode representing the root of the subtree
+     * @throws IOException
+     */
+    @VisibleForTesting
+    INodeIdentifier lockSubtreeAndCheckOwnerAndParentPermission(final String path,
+                                                                final boolean doCheckOwner,
+                                                                final FsAction parentAccess,
+                                                                final SubTreeOperation.Type stoType) throws IOException {
+
+        if(path.compareTo("/")==0){
+            return null;
+        }
+
+        return (INodeIdentifier) new HopsTransactionalRequestHandler(
+                HDFSOperationType.SET_SUBTREE_LOCK) {
+
+            @Override
+            public void setUp() throws IOException {
+                super.setUp();
+                if(LOG.isDebugEnabled()) {
+                    LOG.debug("About to lock \"" + path + "\"");
+                }
+            }
+
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = LockFactory.getInstance();
+                INodeLock il = lf.getINodeLock( TransactionLockTypes.INodeLockType.WRITE, TransactionLockTypes.INodeResolveType.PATH, path);
+                il.setNameNodeID(nameNode.getId()).setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes())
+                        .skipReadingQuotaAttr(!dir.isQuotaEnabled())
+                        .enableHierarchicalLocking(conf.getBoolean(DFSConfigKeys.DFS_SUBTREE_HIERARCHICAL_LOCKING_KEY,
+                                DFSConfigKeys.DFS_SUBTREE_HIERARCHICAL_LOCKING_KEY_DEFAULT));
+                locks.add(il).
+                        //READ_COMMITTED because it is index scan and hierarchical locking for inodes is sufficient
+                                add(lf.getSubTreeOpsLock(TransactionLockTypes.LockType.READ_COMMITTED,
+                                getSubTreeLockPathPrefix(path), true)); // it is
+                locks.add(lf.getAcesLock());
+            }
+
+            @Override
+            public Object performTask() throws IOException {
+                FSPermissionChecker pc = getPermissionChecker();
+                INodesInPath iip = dir.getINodesInPath(path, false);
+                if (isPermissionEnabled && !pc.isSuperUser()) {
+                    dir.checkPermission(pc, iip, doCheckOwner, null, parentAccess, null, null,
+                            true);
+                }
+
+                INode inode = iip.getLastINode();
+
+                if (inode != null && inode.isDirectory() &&
+                        !inode.isRoot()) { // never lock the fs root
+                    checkSubTreeLocks(getSubTreeLockPathPrefix(path));
+                    inode.setSubtreeLocked(true);
+                    inode.setSubtreeLockOwner(getNamenodeId());
+                    EntityManager.update(inode);
+                    if(LOG.isDebugEnabled()) {
+                        LOG.debug("Lock the INode with sub tree lock flag. Path: \"" + path + "\" "
+                                + " id: " + inode.getId()
+                                + " pid: " + inode.getParentId() + " name: " + inode.getLocalName());
+                    }
+
+                    EntityManager.update(new SubTreeOperation(getSubTreeLockPathPrefix(path),
+                            inode.getId() ,nameNode.getId(), stoType,
+                            System.currentTimeMillis(), pc.getUser()));
+                    INodeIdentifier iNodeIdentifier =  new INodeIdentifier(inode.getId(),
+                            inode.getParentId(),
+                            inode.getLocalName(), inode.getPartitionId());
+                    iNodeIdentifier.setDepth(inode.myDepth());
+                    iNodeIdentifier.setStoragePolicy(inode.getStoragePolicyID());
+                    //Wait before commit. Only for testing
+                    delayBeforeSTOFlag(stoType.toString());
+                    return  iNodeIdentifier;
+                }else{
+                    if(LOG.isInfoEnabled()) {
+                        LOG.info("No component was locked in the path using sub tree flag. "
+                                + "Path: \"" + path + "\"");
+                    }
+                    return null;
+                }
+            }
+        }.handle(this);
+    }
+
+    /**
+     * check for sub tree locks in the descendant tree
+     * @return number of active operations in the descendant tree
+     */
+    private void checkSubTreeLocks(String path) throws TransactionContextException,
+            StorageException, RetriableException{
+        List<SubTreeOperation> ops = (List<SubTreeOperation>)
+                EntityManager.findList(SubTreeOperation.Finder.ByPathPrefix,
+                        path);  // THIS RETURNS ONLY ONE SUBTREE OP IN THE CHILD TREE. INCREASE THE LIMIT IN IMPL LAYER IF NEEDED
+        Set<Long> activeNameNodeIds = new HashSet<>();
+        for(ActiveNode node:nameNode.getActiveNameNodes().getActiveNodes()){
+            activeNameNodeIds.add(node.getId());
+        }
+
+        for(SubTreeOperation op : ops){
+            if(activeNameNodeIds.contains(op.getNameNodeId())){
+                throw new RetriableException("At least one ongoing " +
+                        "subtree operation on the descendants of this subtree, e.g., Path: "+op.getPath()
+                        +" Operation: "+op.getOpType()+" NameNodeId: "+ op.getNameNodeId());
+            }else{ // operation started by a dead namenode.
+                //TODO: what if the activeNameNodeIds does not contain all new namenode ids
+                //An operation belonging to new namenode might be considered dead
+                //handle this my maintaining a list of dead namenodes.
+                EntityManager.remove(op);
+            }
+        }
+    }
+
+    /**
+     * adds / at the end of the path
+     * suppose /aa/bb is locked and we want to lock an other folder /a.
+     * when we search for all prefixes "/a" it will return subtree ops in other
+     * folders i.e /aa*. By adding / in the end of the path solves the problem
+     * @param path
+     * @return /path + "/"
+     */
+    String getSubTreeLockPathPrefix(String path){
+        String subTreeLockPrefix = path;
+        if(!subTreeLockPrefix.endsWith("/")){
+            subTreeLockPrefix+="/";
+        }
+        return subTreeLockPrefix;
+    }
+
+    public void setDelayBeforeSTOFlag(long delay){
+        if(isTestingSTO)
+            this.delayBeforeSTOFlag = delay;
+    }
+
+    public void setDelayAfterBuildingTree(long delay){
+        if (isTestingSTO)
+            this.delayAfterBuildingTree = delay;
+    }
+
+    public Times saveTimes() {
+        if (isTestingSTO) {
+            delays.remove();
+            Times times = new Times(delayBeforeSTOFlag, delayAfterBuildingTree);
+            delays.set(times);
+            return times;
+        } else {
+            return null;
+        }
+    }
+
+
+    public void delayBeforeSTOFlag(String message) {
+        if (isTestingSTO) {
+            //Only for testing
+            Times time = delays.get();
+            if (time == null){
+                time = saveTimes();
+            }
+            try {
+                LOG.debug("Testing STO. "+message+" Sleeping for " + time.delayBeforeSTOFlag);
+                Thread.sleep(time.delayBeforeSTOFlag);
+                LOG.debug("Testing STO. "+message+" Waking up from sleep of " + time.delayBeforeSTOFlag);
+            } catch (InterruptedException e) {
+                LOG.warn(e);
+            }
         }
     }
 
@@ -1408,6 +1706,16 @@ public class FSNameSystem implements NameSystem {
          */
         int blockThreshold() throws IOException {
             return HdfsVariables.getBlockThreshold();
+        }
+    }
+
+    private class Times {
+        long delayBeforeSTOFlag = 0; //This parameter can not be more than TxInactiveTimeout: 1.2 sec
+        long delayAfterBuildingTree = 0;
+
+        public Times(long delayBeforeSTOFlag, long delayAfterBuildingTree) {
+            this.delayBeforeSTOFlag = delayBeforeSTOFlag;
+            this.delayAfterBuildingTree = delayAfterBuildingTree;
         }
     }
 }
