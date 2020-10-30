@@ -1,9 +1,12 @@
 package com.gmail.benrcarver.serverlessnamenode.server.blockmanagement;
 
+import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
+import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.BlockUCState;
+import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.ReplicaState;
+import com.gmail.benrcarver.serverlessnamenode.server.namenode.ServerlessNameNode;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
-import io.hops.metadata.hdfs.entity.ReplicaUnderConstruction;
 import io.hops.transaction.EntityManager;
 
 import java.io.IOException;
@@ -164,7 +167,7 @@ public class BlockInfoContiguousUnderConstruction extends BlockInfoContiguous {
         for (ReplicaUnderConstruction r : replicas) {
             if (genStamp != r.getGenerationStamp()) {
                 r.getExpectedStorageLocation(datanodeMgr).removeBlock(this);
-                NameNode.blockStateChangeLog.info("BLOCK* Removing stale replica "
+                ServerlessNameNode.blockStateChangeLog.info("BLOCK* Removing stale replica "
                         + "from location: {} for block {}", r.getStorageId(), r.getBlockId());
             }
         }
@@ -203,7 +206,7 @@ public class BlockInfoContiguousUnderConstruction extends BlockInfoContiguous {
         List<ReplicaUnderConstruction> replicas = getExpectedReplicas();
         setBlockRecoveryId(recoveryId);
         if (replicas.isEmpty()) {
-            NameNode.blockStateChangeLog.warn(
+            ServerlessNameNode.blockStateChangeLog.warn(
                     "BLOCK*" + " BlockInfoUnderConstruction.initLeaseRecovery:" +
                             " No blocks found, lease removed.");
         }
@@ -246,7 +249,7 @@ public class BlockInfoContiguousUnderConstruction extends BlockInfoContiguous {
             primaryDn.addBlockToBeRecovered(this);
             primary.setChosenAsPrimary(true);
             update(primary);
-            NameNode.blockStateChangeLog.info(
+            ServerlessNameNode.blockStateChangeLog.info(
                     "BLOCK* {} recovery started, primary={}", this, primary);
         }
     }

@@ -1,5 +1,6 @@
 package io.hops;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hops.common.CountersQueue;
 import com.gmail.benrcarver.serverlessnamenode.hops.transaction.handler.HDFSOperationType;
 import com.gmail.benrcarver.serverlessnamenode.server.namenode.FSNameSystem;
@@ -22,13 +23,12 @@ import java.util.Map;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.metadata.Variables;
-import io.hops.metadata.common.entity.ArrayVariable;
-import io.hops.metadata.common.entity.IntVariable;
-import io.hops.metadata.common.entity.LongVariable;
-import io.hops.metadata.common.entity.Variable;
+import io.hops.metadata.common.entity.*;
 import io.hops.metadata.hdfs.dal.VariableDataAccess;
 import io.hops.transaction.handler.LightWeightRequestHandler;
+import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.logging.Log;
+import org.apache.hadoop.conf.Configuration;
 
 public class HdfsVariables {
     private interface Handler{

@@ -16,6 +16,7 @@ import com.gmail.benrcarver.serverlessnamenode.server.common.StorageInfo;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.rpc.Status;
 import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
+import io.hops.HdfsStorageFactory;
 import io.hops.HdfsVariables;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
