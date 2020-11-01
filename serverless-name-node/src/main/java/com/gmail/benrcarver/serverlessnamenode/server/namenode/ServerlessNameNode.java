@@ -1,21 +1,22 @@
 package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.StartupOption;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.protocol.NamenodeProtocols;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BRTrackingService;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
-import io.hops.leader_election.node.ActiveNode;
-import io.hops.leader_election.node.SortedActiveNodeList;
-import org.apache.hadoop.fs.Trash;
-import org.apache.hadoop.util.ExitUtil.ExitException;
+import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.StartupOption;
 import io.hops.HdfsStorageFactory;
 import io.hops.HdfsVariables;
+import io.hops.leader_election.node.ActiveNode;
+import io.hops.leader_election.node.SortedActiveNodeList;
 import io.hops.security.HopsUGException;
 import io.hops.security.UsersGroups;
 import io.hops.transaction.handler.RequestHandler;
+import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Trash;
 import org.apache.hadoop.ha.ServiceFailedException;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.net.NetUtils;
@@ -23,12 +24,11 @@ import org.apache.hadoop.security.SecurityUtil;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.tracing.TraceUtils;
 import org.apache.hadoop.tracing.TracerConfigurationManager;
+import org.apache.hadoop.util.ExitUtil.ExitException;
 import org.apache.hadoop.util.JvmPauseMonitor;
 import org.apache.htrace.core.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.apache.hadoop.util.ExitUtil.terminate;
 
 import javax.management.ObjectName;
 import java.io.IOException;
@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
+import static org.apache.hadoop.util.ExitUtil.terminate;
 
 public class ServerlessNameNode {
 
@@ -256,6 +257,14 @@ public class ServerlessNameNode {
         }
     }
 
+    public boolean isLeader() {
+        if (leaderElection != null) {
+            return leaderElection.isLeader();
+        } else {
+            return false;
+        }
+    }
+
     static void initMetrics(Configuration conf, HdfsServerConstants.NamenodeRole role) {
         // metrics = NameNodeMetrics.create(conf, role);
     }
@@ -270,6 +279,13 @@ public class ServerlessNameNode {
                 LOG.debug("Setting " + FS_DEFAULT_NAME_KEY + " to " + defaultUri.toString());
             }
         }
+    }
+
+    /**
+     * @return NameNode RPC address
+     */
+    public InetSocketAddress getNameNodeAddress() {
+        return rpcServer.getRpcAddress();
     }
 
     public NamenodeProtocols getRpcServer() {

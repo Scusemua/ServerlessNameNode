@@ -8,15 +8,19 @@ import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsConstantsClient;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
 import com.gmail.benrcarver.serverlessnamenode.protocol.LocatedBlock;
 import com.gmail.benrcarver.serverlessnamenode.protocol.LocatedBlocks;
+import com.google.common.base.Charsets;
 import io.hops.metadata.hdfs.entity.INodeIdentifier;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
 import io.hops.transaction.lock.INodeLock;
 import io.hops.transaction.lock.LockFactory;
+import io.hops.transaction.lock.LockFactory.BLK;
+import io.hops.transaction.lock.TransactionLockTypes;
 import io.hops.transaction.lock.TransactionLocks;
 import org.apache.hadoop.fs.ContentSummary;
 import org.apache.hadoop.fs.DirectoryListingStartAfterNotFoundException;
 import org.apache.hadoop.fs.FileEncryptionInfo;
+import org.apache.hadoop.fs.InvalidPathException;
 import org.apache.hadoop.fs.permission.AclEntry;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.fs.permission.FsPermission;
@@ -58,7 +62,7 @@ class FSDirStatAndListingOp {
             @Override
             public void acquireLock(TransactionLocks locks) throws IOException {
                 LockFactory lf = LockFactory.getInstance();
-                INodeLock il = lf.getINodeLock(INodeLockType.READ, INodeResolveType.PATH_AND_IMMEDIATE_CHILDREN, src)
+                INodeLock il = lf.getINodeLock(TransactionLockTypes.INodeLockType.READ, TransactionLockTypes.INodeResolveType.PATH_AND_IMMEDIATE_CHILDREN, src)
                         .setNameNodeID(fsd.getFSNamesystem().getNameNode().getId())
                         .setActiveNameNodes(fsd.getFSNamesystem().getNameNode().getActiveNameNodes().getActiveNodes())
                         .skipReadingQuotaAttr(true);
@@ -113,7 +117,7 @@ class FSDirStatAndListingOp {
             @Override
             public void acquireLock(TransactionLocks locks) throws IOException {
                 LockFactory lf = LockFactory.getInstance();
-                INodeLock il = lf.getINodeLock(INodeLockType.READ, INodeResolveType.PATH, src)
+                INodeLock il = lf.getINodeLock(TransactionLockTypes.INodeLockType.READ, TransactionLockTypes.INodeResolveType.PATH, src)
                         .resolveSymLink(resolveLink).setNameNodeID(fsd.getFSNamesystem().getNameNode().getId())
                         .setActiveNameNodes(fsd.getFSNamesystem().getNameNode().getActiveNameNodes().getActiveNodes())
                         .skipReadingQuotaAttr(true);
@@ -150,7 +154,7 @@ class FSDirStatAndListingOp {
             @Override
             public void acquireLock(TransactionLocks locks) throws IOException {
                 LockFactory lf = LockFactory.getInstance();
-                INodeLock il = lf.getINodeLock(INodeLockType.READ,INodeResolveType.PATH, src)
+                INodeLock il = lf.getINodeLock(TransactionLockTypes.INodeLockType.READ, TransactionLockTypes.INodeResolveType.PATH, src)
                         .setNameNodeID(fsd.getFSNamesystem().getNameNode().getId())
                         .setActiveNameNodes(fsd.getFSNamesystem().getNameNode().getActiveNameNodes().getActiveNodes());
                 locks.add(il);

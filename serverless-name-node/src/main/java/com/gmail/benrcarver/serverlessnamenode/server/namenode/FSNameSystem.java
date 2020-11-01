@@ -5,14 +5,17 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.XAttrHelper;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsClientConfigKeys;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.AlreadyBeingCreatedException;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.FsPermissionExtension;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.delegation.DelegationTokenIdentifier;
 import com.gmail.benrcarver.serverlessnamenode.protocol.*;
-import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockManager;
-import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.DatanodeStatistics;
-import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.DatanodeStorageInfo;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.*;
+import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
 import com.gmail.benrcarver.serverlessnamenode.server.common.StorageInfo;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
 import com.google.rpc.Status;
 import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import io.hops.HdfsStorageFactory;
@@ -24,14 +27,10 @@ import io.hops.exception.LockUpgradeException;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.leader_election.node.ActiveNode;
-import io.hops.metadata.hdfs.dal.INodeDataAccess;
-import io.hops.metadata.hdfs.dal.OngoingSubTreeOpsDataAccess;
-import io.hops.metadata.hdfs.dal.SafeBlocksDataAccess;
-import io.hops.metadata.hdfs.entity.EncodingStatus;
-import io.hops.metadata.hdfs.entity.FileProvenanceEntry;
-import io.hops.metadata.hdfs.entity.INodeIdentifier;
-import io.hops.metadata.hdfs.entity.SubTreeOperation;
+import io.hops.metadata.hdfs.dal.*;
+import io.hops.metadata.hdfs.entity.*;
 import io.hops.transaction.EntityManager;
+import io.hops.transaction.handler.EncodingStatusOperationType;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
 import io.hops.transaction.handler.LightWeightRequestHandler;
@@ -48,15 +47,17 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
-import org.apache.hadoop.fs.permission.FsAction;
-import org.apache.hadoop.fs.permission.FsPermission;
-import org.apache.hadoop.fs.permission.PermissionStatus;
+import org.apache.hadoop.fs.permission.*;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.ipc.NotALeaderException;
 import org.apache.hadoop.ipc.ProtobufRpcEngine;
 import org.apache.hadoop.ipc.RetriableException;
 import org.apache.hadoop.metrics2.annotation.Metric;
 import org.apache.hadoop.net.NetworkTopology;
 import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.UserGroupInformation;
+import org.apache.hadoop.security.UserGroupInformation.AuthenticationMethod;
+import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.security.token.delegation.DelegationKey;
 import org.apache.hadoop.security.token.delegation.web.DelegationTokenManager;
 import org.apache.hadoop.util.Daemon;
@@ -101,8 +102,8 @@ public class FSNameSystem implements NameSystem {
     private final List<AuditLogger> auditLoggers;
 
     /**
-     * Logger for audit events, noting successful FSNamesystem operations. Emits
-     * to FSNamesystem.audit at INFO. Each event causes a set of tab-separated
+     * Logger for audit events, noting successful FSNameSystem operations. Emits
+     * to FSNameSystem.audit at INFO. Each event causes a set of tab-separated
      * <code>key=value</code> pairs to be written for the following properties:
      * <code>
      * ugi=&lt;ugi in RPC&gt;
@@ -243,7 +244,7 @@ public class FSNameSystem implements NameSystem {
     private final int leaseCreationLockRows;
 
     /**
-     * Create an FSNamesystem.
+     * Create an FSNameSystem.
      *
      * @param conf
      *     configurationappendFileHopFS
@@ -430,6 +431,91 @@ public class FSNameSystem implements NameSystem {
                 return null;
             }
         }.handle(this);
+    }
+
+    /**
+     * @return true if delegation token operation is allowed
+     */
+    private boolean isAllowedDelegationTokenOp() throws IOException {
+        AuthenticationMethod authMethod = getConnectionAuthenticationMethod();
+        if (UserGroupInformation.isSecurityEnabled() &&
+                (authMethod != AuthenticationMethod.KERBEROS) &&
+                (authMethod != AuthenticationMethod.KERBEROS_SSL) &&
+                (authMethod != AuthenticationMethod.CERTIFICATE)) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Returns authentication method used to establish the connection
+     *
+     * @return AuthenticationMethod used to establish connection
+     * @throws IOException
+     */
+    private AuthenticationMethod getConnectionAuthenticationMethod()
+            throws IOException {
+        UserGroupInformation ugi = getRemoteUser();
+        AuthenticationMethod authMethod = ugi.getAuthenticationMethod();
+        if (authMethod == AuthenticationMethod.PROXY) {
+            authMethod = ugi.getRealUser().getAuthenticationMethod();
+        }
+        return authMethod;
+    }
+
+    /**
+     * @param renewer
+     * @return Token<DelegationTokenIdentifier>
+     * @throws IOException
+     */
+    Token<DelegationTokenIdentifier> getDelegationToken(final Text renewer)
+            throws IOException {
+        //FIXME This does not seem to be persisted
+        HopsTransactionalRequestHandler getDelegationTokenHandler =
+                new HopsTransactionalRequestHandler(
+                        HDFSOperationType.GET_DELEGATION_TOKEN) {
+                    @Override
+                    public void acquireLock(TransactionLocks locks) throws IOException {
+
+                    }
+
+                    @Override
+                    public Object performTask() throws IOException {
+                        Token<DelegationTokenIdentifier> token;
+                        checkNameNodeSafeMode("Cannot issue delegation token");
+                        if (!isAllowedDelegationTokenOp()) {
+                            throw new IOException(
+                                    "Delegation Token can be issued only with kerberos or web authentication");
+                        }
+                        if (dtSecretManager == null || !dtSecretManager.isRunning()) {
+                            LOG.warn("trying to get DT with no secret manager running");
+                            return null;
+                        }
+
+                        UserGroupInformation ugi = getRemoteUser();
+                        String user = ugi.getUserName();
+                        Text owner = new Text(user);
+                        Text realUser = null;
+                        if (ugi.getRealUser() != null) {
+                            realUser = new Text(ugi.getRealUser().getUserName());
+                        }
+                        DelegationTokenIdentifier dtId =
+                                new DelegationTokenIdentifier(owner, renewer, realUser);
+                        token = new Token<>(dtId, dtSecretManager);
+                        long expiryTime = dtSecretManager.getTokenExpiryTime(dtId);
+                        return token;
+                    }
+                };
+        return (Token<DelegationTokenIdentifier>) getDelegationTokenHandler
+                .handle(this);
+    }
+
+    /**
+     * @return Whether the namenode is transitioning to active state and is in the
+     *         middle of the {@link #startActiveServices()}
+     */
+    public boolean inTransitionToActive() {
+        return startingActiveService;
     }
 
     INode getInode(final long id) throws IOException {
@@ -798,6 +884,212 @@ public class FSNameSystem implements NameSystem {
                 return null;
             }
         }.handle();
+    }
+
+    /**
+     * Move a file that is being written to be immutable.
+     *
+     * @param src
+     *     The filename
+     * @param lease
+     *     The lease for the client creating the file
+     * @param recoveryLeaseHolder
+     *     reassign lease to this holder if the last block
+     *     needs recovery; keep current holder if null.
+     * @return true  if file has been successfully finalized and closed or
+     * false if block recovery has been initiated. Since the lease owner
+     * has been changed and logged, caller should call logSync().
+     * @throws AlreadyBeingCreatedException
+     *     if file is waiting to achieve minimal
+     *     replication;<br>
+     *     RecoveryInProgressException if lease recovery is in progress.<br>
+     *     IOException in case of an error.
+     */
+    boolean internalReleaseLease(Lease lease, String src, INodesInPath iip,
+                                 String recoveryLeaseHolder)
+            throws IOException {
+        LOG.info("Recovering " + lease + ", src=" + src);
+        assert !isInSafeMode();
+
+        final INodeFile pendingFile = iip.getLastINode().asFile();
+        int nrBlocks = pendingFile.numBlocks();
+        BlockInfoContiguous[] blocks = pendingFile.getBlocks();
+
+        int nrCompleteBlocks;
+        BlockInfoContiguous curBlock = null;
+        for (nrCompleteBlocks = 0; nrCompleteBlocks < nrBlocks; nrCompleteBlocks++) {
+            curBlock = blocks[nrCompleteBlocks];
+            if (!curBlock.isComplete()) {
+                break;
+            }
+            assert blockManager.checkMinReplication(curBlock) :
+                    "A COMPLETE block is not minimally replicated in " + src;
+        }
+
+        // If there are no incomplete blocks associated with this file,
+        // then reap lease immediately and close the file.
+        if (nrCompleteBlocks == nrBlocks) {
+            finalizeINodeFileUnderConstruction(src, pendingFile);
+            ServerlessNameNode.stateChangeLog.warn("BLOCK*" +
+                    " internalReleaseLease: All existing blocks are COMPLETE," +
+                    " lease removed, file closed.");
+            return true;  // closed!
+        }
+
+        // Only the last and the penultimate blocks may be in non COMPLETE state.
+        // If the penultimate block is not COMPLETE, then it must be COMMITTED.
+        if (nrCompleteBlocks < nrBlocks - 2 || nrCompleteBlocks == nrBlocks - 2 &&
+                curBlock != null &&
+                curBlock.getBlockUCState() != HdfsServerConstants.BlockUCState.COMMITTED) {
+            final String message = "DIR* NameSystem.internalReleaseLease: " +
+                    "attempt to release a create lock on " + src +
+                    " but file is already closed.";
+            ServerlessNameNode.stateChangeLog.warn(message);
+            throw new IOException(message);
+        }
+
+        // The last block is not COMPLETE, and
+        // that the penultimate block if exists is either COMPLETE or COMMITTED
+        final BlockInfoContiguous lastBlock = pendingFile.getLastBlock();
+        HdfsServerConstants.BlockUCState lastBlockState = lastBlock.getBlockUCState();
+        BlockInfoContiguous penultimateBlock = pendingFile.getPenultimateBlock();
+        // If penultimate block doesn't exist then its minReplication is met
+        boolean penultimateBlockMinReplication = penultimateBlock == null ? true :
+                blockManager.checkMinReplication(penultimateBlock);
+
+        switch (lastBlockState) {
+            case COMPLETE:
+                assert false : "Already checked that the last block is incomplete";
+                break;
+            case COMMITTED:
+                // Close file if committed blocks are minimally replicated
+                if (penultimateBlockMinReplication &&
+                        blockManager.checkMinReplication(lastBlock)) {
+                    finalizeINodeFileUnderConstruction(src, pendingFile);
+                    ServerlessNameNode.stateChangeLog.warn("BLOCK*" +
+                            " internalReleaseLease: Committed blocks are minimally replicated," +
+                            " lease removed, file closed.");
+                    return true;  // closed!
+                }
+                // Cannot close file right now, since some blocks
+                // are not yet minimally replicated.
+                // This may potentially cause infinite loop in lease recovery
+                // if there are no valid replicas on data-nodes.
+                String message = "DIR* NameSystem.internalReleaseLease: " +
+                        "Failed to release lease for file " + src +
+                        ". Committed blocks are waiting to be minimally replicated." +
+                        " Try again later.";
+                ServerlessNameNode.stateChangeLog.warn(message);
+                throw new AlreadyBeingCreatedException(message);
+            case UNDER_CONSTRUCTION:
+            case UNDER_RECOVERY:
+                final BlockInfoContiguousUnderConstruction uc =
+                        (BlockInfoContiguousUnderConstruction) lastBlock;
+                // determine if last block was intended to be truncated
+                Block recoveryBlock = uc.getTruncateBlock();
+                boolean truncateRecovery = recoveryBlock != null;
+                boolean copyOnTruncate = truncateRecovery &&
+                        recoveryBlock.getBlockId() != uc.getBlockId();
+                assert !copyOnTruncate ||
+                        recoveryBlock.getBlockId() < uc.getBlockId() &&
+                                recoveryBlock.getGenerationStamp() < uc.getGenerationStamp() &&
+                                recoveryBlock.getNumBytes() > uc.getNumBytes() :
+                        "wrong recoveryBlock";
+                // setup the last block locations from the blockManager if not known
+                if (uc.getNumExpectedLocations() == 0) {
+                    uc.setExpectedLocations(blockManager.getStorages(lastBlock));
+                }
+
+                if (uc.getNumExpectedLocations() == 0 && uc.getNumBytes() == 0) {
+                    // There is no datanode reported to this block.
+                    // may be client have crashed before writing data to pipeline.
+                    // This blocks doesn't need any recovery.
+                    // We can remove this block and close the file.
+                    pendingFile.removeLastBlock(lastBlock);
+                    finalizeINodeFileUnderConstruction(src, pendingFile);
+                    ServerlessNameNode.stateChangeLog.warn("BLOCK* internalReleaseLease: "
+                            + "Removed empty last block and closed file.");
+                    return true;
+                }
+                // start recovery of the last block for this file
+                long blockRecoveryId = pendingFile.nextGenerationStamp();
+                lease = reassignLease(lease, src, recoveryLeaseHolder, pendingFile);
+                if(copyOnTruncate) {
+                    uc.setGenerationStamp(blockRecoveryId);
+                } else if(truncateRecovery) {
+                    recoveryBlock.setGenerationStampNoPersistance(blockRecoveryId);
+                }
+                uc.initializeBlockRecovery(blockRecoveryId, getBlockManager().getDatanodeManager());
+                leaseManager.renewLease(lease);
+                // Cannot close file right now, since the last block requires recovery.
+                // This may potentially cause infinite loop in lease recovery
+                // if there are no valid replicas on data-nodes.
+                ServerlessNameNode.stateChangeLog.warn("DIR* NameSystem.internalReleaseLease: " +
+                        "File " + src + " has not been closed." +
+                        " Lease recovery is in progress. " +
+                        "RecoveryId = " + blockRecoveryId + " for block " + lastBlock);
+                break;
+        }
+        return false;
+    }
+
+    private Lease reassignLease(Lease lease, String src, String newHolder,
+                                INodeFile pendingFile)
+            throws StorageException, TransactionContextException {
+        if (newHolder == null) {
+            return lease;
+        }
+        return reassignLeaseInternal(lease, src, newHolder, pendingFile);
+    }
+
+    private Lease reassignLeaseInternal(Lease lease, String src, String newHolder,
+                                        INodeFile pendingFile)
+            throws StorageException, TransactionContextException {
+        pendingFile.getFileUnderConstructionFeature().setClientName(newHolder);
+        return leaseManager.reassignLease(lease, src, newHolder);
+    }
+
+    private void finalizeINodeFileUnderConstruction(String src,
+                                                    INodeFile pendingFile)
+            throws IOException {
+        boolean skipReplicationCheck = false;
+        if (pendingFile.getStoragePolicyID() == HdfsConstants.DB_STORAGE_POLICY_ID){
+            skipReplicationCheck = true;
+        }
+
+        finalizeINodeFileUnderConstructionInternal(src, pendingFile, skipReplicationCheck);
+    }
+
+    private void finalizeINodeFileUnderConstructionInternal(String src,
+                                                            INodeFile pendingFile, boolean skipReplicationChecks)
+            throws IOException {
+        FileUnderConstructionFeature uc = pendingFile.getFileUnderConstructionFeature();
+        Preconditions.checkArgument(uc != null);
+        leaseManager.removeLease(uc.getClientName(), src);
+
+        // close file and persist block allocations for this file
+        pendingFile.toCompleteFile(now());
+        closeFile(src, pendingFile);
+        pendingFile.logProvenanceEvent(getNamenodeId(), FileProvenanceEntry.Operation.append());
+
+        if (!skipReplicationChecks) {
+            blockManager.checkReplication(pendingFile);
+        }
+    }
+
+    /**
+     * Close file.
+     * @param path
+     * @param file
+     */
+    private void closeFile(String path, INodeFile file) throws IOException {
+        // file is closed
+        if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+            ServerlessNameNode.stateChangeLog.debug("closeFile: "
+                    +path+" with "+ file.getBlocks().length
+                    +" blocks is persisted to the file system");
+        }
+        file.logMetadataEvent(INodeMetadataLogEntry.Operation.Add);
     }
 
     boolean isAuditEnabled() {
@@ -1498,6 +1790,148 @@ public class FSNameSystem implements NameSystem {
         boolean updateAccessTime = isAccessTimeSupported() && !isInSafeMode()
                 && now > inode.getAccessTime() + getAccessTimePrecision();
         return new GetBlockLocationsResult(updateAccessTime, blocks);
+    }
+
+    /**
+     * Remove the status of an erasure-coded file.
+     *
+     * @param encodingStatus
+     *    the status of the file
+     * @throws IOException
+     */
+    public void removeEncodingStatus(final EncodingStatus encodingStatus)
+            throws IOException {
+        // All referring inodes are already deleted. No more lock necessary.
+        LightWeightRequestHandler removeHandler =
+                new LightWeightRequestHandler(EncodingStatusOperationType.DELETE) {
+                    @Override
+                    public Object performTask() throws IOException {
+                        BlockChecksumDataAccess blockChecksumDataAccess =
+                                (BlockChecksumDataAccess) io.hops.metadata.HdfsStorageFactory
+                                        .getDataAccess(BlockChecksumDataAccess.class);
+                        EncodingStatusDataAccess encodingStatusDataAccess =
+                                (EncodingStatusDataAccess) io.hops.metadata.HdfsStorageFactory
+                                        .getDataAccess(EncodingStatusDataAccess.class);
+                        blockChecksumDataAccess.deleteAll(encodingStatus.getInodeId());
+                        blockChecksumDataAccess
+                                .deleteAll(encodingStatus.getParityInodeId());
+                        encodingStatusDataAccess.delete(encodingStatus);
+                        return null;
+                    }
+                };
+        removeHandler.handle();
+    }
+
+    /**
+     * Remove the status of an erasure-coded file.
+     *
+     * @param path
+     *    the path of the file
+     * @param encodingStatus
+     *    the status of the file
+     * @throws IOException
+     */
+    public void removeEncodingStatus(final String path,
+                                     final EncodingStatus encodingStatus) throws IOException {
+        new HopsTransactionalRequestHandler(
+                HDFSOperationType.DELETE_ENCODING_STATUS) {
+
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = LockFactory.getInstance();
+                INodeLock il = lf.getINodeLock(INodeLockType.WRITE, INodeResolveType.PATH, path)
+                        .setNameNodeID(nameNode.getId())
+                        .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes());
+                locks.add(il)
+                        .add(lf.getEncodingStatusLock(LockType.WRITE, path));
+            }
+
+            @Override
+            public Object performTask() throws IOException {
+                EntityManager.remove(encodingStatus);
+                return null;
+            }
+        }.handle();
+    }
+
+    // rename was successful. If any part of the renamed subtree had
+    // files that were being written to, update with new filename.
+    void unprotectedChangeLease(String src, String dst)
+            throws StorageException, TransactionContextException {
+        leaseManager.changeLease(src, dst);
+    }
+
+    public ExecutorService getFSOperationsExecutor() {
+        return fsOperationsExecutor;
+    }
+
+    /**
+     * Remove the indicated file from namespace.
+     *
+     * @see ClientProtocol#delete(String, boolean) for detailed description and
+     * description of exceptions
+     */
+    public boolean delete(String src, boolean recursive)
+            throws IOException {
+        //only for testing
+        saveTimes();
+
+        if(!nameNode.isLeader() && dir.isQuotaEnabled()){
+            throw new NotALeaderException("Quota enabled. Delete operation can only be performed on a " +
+                    "leader namenode");
+        }
+
+        boolean ret = false;
+        try {
+            checkNameNodeSafeMode("Cannot delete " + src);
+            ret = FSDirDeleteOp.delete(
+                    this, src, recursive);
+        } catch (AccessControlException e) {
+            logAuditEvent(false, "delete", src);
+            throw e;
+        }
+        logAuditEvent(true, "delete", src);
+        return ret;
+    }
+
+    QuotaUpdateManager getQuotaUpdateManager() {
+        return quotaUpdateManager;
+    }
+
+    /** @return the FSDirectory. */
+    public FSDirectory getFSDirectory() {
+        return dir;
+    }
+
+    public List<AclEntry> calculateNearestDefaultAclForSubtree(final PathInformation pathInfo) throws IOException {
+        for (int i = pathInfo.getPathInodeAcls().length-1; i > -1 ; i--){
+            List<AclEntry> aclEntries = pathInfo.getPathInodeAcls()[i];
+            if (aclEntries == null){
+                continue;
+            }
+
+            List<AclEntry> onlyDefaults = new ArrayList<>();
+            for (AclEntry aclEntry : aclEntries) {
+                if (aclEntry.getScope().equals(AclEntryScope.DEFAULT)){
+                    onlyDefaults.add(aclEntry);
+                }
+            }
+
+            if (!onlyDefaults.isEmpty()){
+                return onlyDefaults;
+            }
+        }
+        return new ArrayList<>();
+    }
+
+    public byte calculateNearestinheritedStoragePolicy(final PathInformation pathInfo) throws IOException {
+        for (int i = pathInfo.getINodesInPath().length() - 1; i > -1; i--) {
+            byte storagePolicy = pathInfo.getINodesInPath().getINode(i).getLocalStoragePolicyID();
+            if (storagePolicy != HdfsConstantsClient.BLOCK_STORAGE_POLICY_ID_UNSPECIFIED) {
+                return storagePolicy;
+            }
+        }
+        return HdfsConstantsClient.BLOCK_STORAGE_POLICY_ID_UNSPECIFIED;
     }
 
     /**

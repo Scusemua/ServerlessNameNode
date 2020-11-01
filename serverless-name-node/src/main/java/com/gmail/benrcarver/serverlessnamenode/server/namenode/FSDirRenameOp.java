@@ -116,8 +116,8 @@ class FSDirRenameOp {
      * @param src source path
      * @param dst destination path
      * @return true if rename succeeds; false otherwise
-     * @deprecated See {@link #renameToInt(FSDirectory, String, String,
-     * boolean, Options.Rename...)}
+     * @deprecated See renameToInt(FSDirectory, String, String,
+     * boolean, Options.Rename...)
      */
     @Deprecated
     @SuppressWarnings("deprecation")
