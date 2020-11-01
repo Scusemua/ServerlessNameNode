@@ -1,34 +1,30 @@
 package io.hops;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hops.common.CountersQueue;
-import com.gmail.benrcarver.serverlessnamenode.hops.transaction.handler.HDFSOperationType;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.FSNameSystem;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.SafeModeInfo;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.security.token.block.BlockKey;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.RollingUpgradeInfo;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
+import com.gmail.benrcarver.serverlessnamenode.server.common.StorageInfo;
+import com.gmail.benrcarver.serverlessnamenode.server.namenode.FSNameSystem;
 import com.google.common.math.IntMath;
 import com.google.common.math.LongMath;
 import com.google.protobuf.InvalidProtocolBufferException;
+import io.hops.exception.StorageException;
+import io.hops.exception.TransactionContextException;
+import io.hops.metadata.common.entity.*;
+import io.hops.metadata.hdfs.dal.VariableDataAccess;
+import io.hops.transaction.handler.HDFSOperationType;
+import io.hops.transaction.handler.LightWeightRequestHandler;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.commons.logging.Log;
+import org.apache.hadoop.conf.Configuration;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import io.hops.exception.StorageException;
-import io.hops.exception.TransactionContextException;
-import io.hops.metadata.Variables;
-import io.hops.metadata.common.entity.*;
-import io.hops.metadata.hdfs.dal.VariableDataAccess;
-import io.hops.transaction.handler.LightWeightRequestHandler;
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.commons.logging.Log;
-import org.apache.hadoop.conf.Configuration;
+import java.util.*;
 
 public class HdfsVariables {
     private interface Handler{

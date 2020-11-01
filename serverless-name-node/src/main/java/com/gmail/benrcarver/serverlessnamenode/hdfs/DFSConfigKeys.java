@@ -1,6 +1,7 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsClientConfigKeys;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockPlacementPolicyDefault;
 import org.apache.hadoop.fs.CommonConfigurationKeys;
 
 import java.util.concurrent.TimeUnit;
@@ -481,7 +482,7 @@ public class DFSConfigKeys extends CommonConfigurationKeys {
     public static final long    DFS_BLOCK_ACCESS_TOKEN_LIFETIME_DEFAULT = 600L;
 
     public static final String  DFS_BLOCK_REPLICATOR_CLASSNAME_KEY = "dfs.block.replicator.classname";
-    //public static final Class<BlockPlacementPolicyDefault> DFS_BLOCK_REPLICATOR_CLASSNAME_DEFAULT = BlockPlacementPolicyDefault.class;
+    public static final Class<BlockPlacementPolicyDefault> DFS_BLOCK_REPLICATOR_CLASSNAME_DEFAULT = BlockPlacementPolicyDefault.class;
     public static final String  DFS_REPLICATION_MAX_KEY = "dfs.replication.max";
     public static final int     DFS_REPLICATION_MAX_DEFAULT = 512;
 

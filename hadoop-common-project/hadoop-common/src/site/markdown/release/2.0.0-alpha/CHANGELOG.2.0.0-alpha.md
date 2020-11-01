@@ -179,7 +179,7 @@
 | [HDFS-2526](https://issues.apache.org/jira/browse/HDFS-2526) | (Client)NamenodeProtocolTranslatorR23 do not need to keep a reference to rpcProxyWithoutRetry |  Major | hdfs-client, namenode | Aaron T. Myers | Aaron T. Myers |
 | [HADOOP-7833](https://issues.apache.org/jira/browse/HADOOP-7833) | Inner classes of org.apache.hadoop.ipc.protobuf.HadoopRpcProtos generates findbugs warnings which results in -1 for findbugs |  Major | ipc | John Lee | John Lee |
 | [HDFS-2532](https://issues.apache.org/jira/browse/HDFS-2532) | TestDfsOverAvroRpc timing out in trunk |  Critical | test | Todd Lipcon | Uma Maheswara Rao G |
-| [HDFS-2481](https://issues.apache.org/jira/browse/HDFS-2481) | Unknown protocol: org.apache.hadoop.hdfs.protocol.ClientProtocol |  Major | . | Tsz Wo Nicholas Sze | Sanjay Radia |
+| [HDFS-2481](https://issues.apache.org/jira/browse/HDFS-2481) | Unknown protocol: com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol |  Major | . | Tsz Wo Nicholas Sze | Sanjay Radia |
 | [HADOOP-7888](https://issues.apache.org/jira/browse/HADOOP-7888) | TestFailoverProxy fails intermittently on trunk |  Major | test | Jason Lowe | Jason Lowe |
 | [HADOOP-7897](https://issues.apache.org/jira/browse/HADOOP-7897) | ProtobufRPCEngine client side exception mechanism is not consistent with WritableRpcEngine |  Major | ipc | Suresh Srinivas | Suresh Srinivas |
 | [HADOOP-7892](https://issues.apache.org/jira/browse/HADOOP-7892) | IPC logs too verbose after "RpcKind" introduction |  Trivial | ipc | Todd Lipcon | Todd Lipcon |

@@ -1,7 +1,10 @@
 package com.gmail.benrcarver.serverlessnamenode.server.blockmanagement;
 
 import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
+import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
+import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.BlockUCState;
 import com.gmail.benrcarver.serverlessnamenode.server.namenode.INodeFile;
+import com.gmail.benrcarver.serverlessnamenode.server.protocol.DatanodeStorage;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.metadata.common.FinderType;
@@ -11,8 +14,6 @@ import io.hops.transaction.EntityManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
-import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
-import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.BlockUCState;
 
 import java.util.*;
 

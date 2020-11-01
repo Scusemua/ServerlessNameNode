@@ -38,7 +38,7 @@ import "ActiveNode.proto";
 /**
  * The ClientNamenodeProtocol Service defines the interface between a client 
  * (as runnign inside a MR Task) and the Namenode.
- * See org.apache.hadoop.hdfs.protocol.ClientProtocol for the javadoc 
+ * See com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol for the javadoc
  * for each of the methods.
  * The exceptions declared in the above class also apply to this protocol.
  * Exceptions are unwrapped and thrown by the  PB libraries.

@@ -88,7 +88,7 @@
 | [HADOOP-5067](https://issues.apache.org/jira/browse/HADOOP-5067) | Failed/Killed attempts column in jobdetails.jsp does not show the number of failed/killed attempts correctly |  Major | . | Amareshwari Sriramadasu | Amareshwari Sriramadasu |
 | [HADOOP-4760](https://issues.apache.org/jira/browse/HADOOP-4760) | HDFS streams should not throw exceptions when closed twice |  Major | fs, fs/s3 | Alejandro Abdelnur | Enis Soztutar |
 | [HADOOP-5134](https://issues.apache.org/jira/browse/HADOOP-5134) | FSNamesystem#commitBlockSynchronization adds under-construction block locations to blocksMap |  Blocker | . | Hairong Kuang | dhruba borthakur |
-| [HADOOP-5268](https://issues.apache.org/jira/browse/HADOOP-5268) | Using MultipleOutputFormat and setting reducers to 0 causes org.apache.hadoop.hdfs.protocol.AlreadyBeingCreatedException and job to fail |  Major | . | Thibaut |  |
+| [HADOOP-5268](https://issues.apache.org/jira/browse/HADOOP-5268) | Using MultipleOutputFormat and setting reducers to 0 causes com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.AlreadyBeingCreatedException and job to fail |  Major | . | Thibaut |  |
 | [HADOOP-5665](https://issues.apache.org/jira/browse/HADOOP-5665) | Namenode could not be formatted because the "whoami" program could not be run. |  Major | . | Evelyn Sylvia |  |
 
 

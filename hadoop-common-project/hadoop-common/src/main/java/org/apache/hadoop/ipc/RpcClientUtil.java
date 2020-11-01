@@ -195,7 +195,7 @@ public class RpcClientUtil {
    * The format we want is 'MethodOuterClassShortName#methodName'.
    *
    * For example, if the method is:
-   *   org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.
+   *   com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.proto.ClientNamenodeProtocolProtos.
    *     ClientNamenodeProtocol.BlockingInterface.getServerDefaults
    *
    * the format we want is:
@@ -217,7 +217,7 @@ public class RpcClientUtil {
    * 'SecondOutermostClassShortName#OutermostClassShortName'.
    *
    * For example, if the full class name is:
-   *   org.apache.hadoop.hdfs.protocol.ClientProtocol.getBlockLocations
+   *   com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol.getBlockLocations
    *
    * the format we want is:
    *   ClientProtocol#getBlockLocations

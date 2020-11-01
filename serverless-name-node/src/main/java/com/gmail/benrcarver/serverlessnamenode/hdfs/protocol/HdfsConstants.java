@@ -24,9 +24,9 @@ public class HdfsConstants {
      * HDFS Protocol Names:
      */
     public static final String CLIENT_NAMENODE_PROTOCOL_NAME =
-            "org.apache.hadoop.hdfs.protocol.ClientProtocol";
+            "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol";
     public static final String CLIENT_DATANODE_PROTOCOL_NAME =
-            "org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocol";
+            "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocol";
 
 
     public static final int MIN_BLOCKS_FOR_WRITE = 1;

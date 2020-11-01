@@ -230,7 +230,7 @@
 | [HDFS-7230](https://issues.apache.org/jira/browse/HDFS-7230) | Add rolling downgrade documentation |  Major | documentation | Tsz Wo Nicholas Sze | Tsz Wo Nicholas Sze |
 | [HDFS-7313](https://issues.apache.org/jira/browse/HDFS-7313) | Support optional configuration of AES cipher suite on DataTransferProtocol. |  Major | datanode, hdfs-client, security | Chris Nauroth | Chris Nauroth |
 | [HDFS-7276](https://issues.apache.org/jira/browse/HDFS-7276) | Limit the number of byte arrays used by DFSOutputStream |  Major | hdfs-client | Tsz Wo Nicholas Sze | Tsz Wo Nicholas Sze |
-| [HDFS-7233](https://issues.apache.org/jira/browse/HDFS-7233) | NN logs unnecessary org.apache.hadoop.hdfs.protocol.UnresolvedPathException |  Major | namenode | Rushabh S Shah | Rushabh S Shah |
+| [HDFS-7233](https://issues.apache.org/jira/browse/HDFS-7233) | NN logs unnecessary com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException |  Major | namenode | Rushabh S Shah | Rushabh S Shah |
 | [HADOOP-9457](https://issues.apache.org/jira/browse/HADOOP-9457) | add an SCM-ignored XML filename to keep secrets in (auth-keys.xml?) |  Minor | build | Steve Loughran |  |
 | [YARN-2294](https://issues.apache.org/jira/browse/YARN-2294) | Update sample program and documentations for writing YARN Application |  Major | . | Li Lu |  |
 | [YARN-666](https://issues.apache.org/jira/browse/YARN-666) | [Umbrella] Support rolling upgrades in YARN |  Major | graceful, rolling upgrade | Siddharth Seth |  |

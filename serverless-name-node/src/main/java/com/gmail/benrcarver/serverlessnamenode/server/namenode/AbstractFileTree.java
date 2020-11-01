@@ -2,7 +2,6 @@ package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsConstantsClient;
-import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockStoragePolicy;
 import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockStoragePolicySuite;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.HashMultimap;
@@ -336,7 +335,7 @@ abstract class AbstractFileTree {
      *     The path of the subtree
      * @return A FileTree instance reprecenting the path
      * @throws io.hops.exception.StorageException
-     * @throws org.apache.hadoop.hdfs.protocol.UnresolvedPathException
+     * @throws com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException
      */
     @VisibleForTesting
     static CountingFileTree createCountingFileTreeFromPath(FSNameSystem namesystem,

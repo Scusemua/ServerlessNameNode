@@ -3,10 +3,15 @@ package com.gmail.benrcarver.serverlessnamenode.server.blockmanagement;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.util.EnumCounters;
+import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
+import com.gmail.benrcarver.serverlessnamenode.server.namenode.CachedBlock;
+import com.gmail.benrcarver.serverlessnamenode.server.namenode.CachedBlock.Type;
 import com.gmail.benrcarver.serverlessnamenode.server.protocol.BlockReportContext;
+import com.gmail.benrcarver.serverlessnamenode.server.protocol.DatanodeStorage;
+import com.gmail.benrcarver.serverlessnamenode.server.protocol.StorageReport;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
-import io.hops.metadata.hdfs.entity.CachedBlock;
 import io.hops.transaction.EntityManager;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
@@ -16,8 +21,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
-
-imprt
+import org.apache.hadoop.fs.StorageType;
+import org.apache.hadoop.util.Time;
 
 import java.io.IOException;
 import java.util.*;
@@ -107,7 +112,7 @@ public class DatanodeDescriptor extends DatanodeInfo {
 //        return getPendingCached(datanodeManager);
                 Collection<io.hops.metadata.hdfs.entity.CachedBlock> tmp = EntityManager.findList(
                         io.hops.metadata.hdfs.entity.CachedBlock.Finder.ByDatanodeAndTypes, dnId.getDatanodeUuid(),
-                        Type.PENDING_CACHED);
+                        com.gmail.benrcarver.serverlessnamenode.server.namenode.CachedBlock.Type.PENDING_CACHED);
                 return CachedBlock.toHops(tmp, datanodeManager);
             }
         }.handle();

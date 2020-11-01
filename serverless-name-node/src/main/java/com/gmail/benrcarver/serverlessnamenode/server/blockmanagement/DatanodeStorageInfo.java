@@ -1,6 +1,9 @@
 package com.gmail.benrcarver.serverlessnamenode.server.blockmanagement;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
+import com.gmail.benrcarver.serverlessnamenode.server.protocol.DatanodeStorage;
+import com.gmail.benrcarver.serverlessnamenode.server.protocol.DatanodeStorage.State;
+import com.gmail.benrcarver.serverlessnamenode.server.protocol.StorageReport;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.HdfsStorageFactory;
 import io.hops.exception.StorageException;

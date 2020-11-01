@@ -3,14 +3,13 @@ package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.XAttrHelper;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsClientConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hops.common.CountersQueue;
-import com.gmail.benrcarver.serverlessnamenode.hops.metadata.HdfsStorageFactory;
-import com.gmail.benrcarver.serverlessnamenode.hops.metadata.HdfsVariables;
-import com.gmail.benrcarver.serverlessnamenode.hops.transaction.handler.HDFSOperationType;
-import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
-import com.gmail.benrcarver.serverlessnamenode.protocol.ClientProtocol;
-import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.FsPermissionExtension;
+import com.gmail.benrcarver.serverlessnamenode.protocol.*;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockManager;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.DatanodeStatistics;
 import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.DatanodeStorageInfo;
 import com.gmail.benrcarver.serverlessnamenode.server.common.StorageInfo;
 import com.google.common.annotations.VisibleForTesting;
@@ -18,11 +17,18 @@ import com.google.rpc.Status;
 import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
 import io.hops.HdfsStorageFactory;
 import io.hops.HdfsVariables;
+import io.hops.common.CountersQueue;
+import io.hops.common.INodeUtil;
+import io.hops.erasure_coding.ErasureCodingManager;
+import io.hops.exception.LockUpgradeException;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.leader_election.node.ActiveNode;
+import io.hops.metadata.hdfs.dal.INodeDataAccess;
 import io.hops.metadata.hdfs.dal.OngoingSubTreeOpsDataAccess;
 import io.hops.metadata.hdfs.dal.SafeBlocksDataAccess;
+import io.hops.metadata.hdfs.entity.EncodingStatus;
+import io.hops.metadata.hdfs.entity.FileProvenanceEntry;
 import io.hops.metadata.hdfs.entity.INodeIdentifier;
 import io.hops.metadata.hdfs.entity.SubTreeOperation;
 import io.hops.transaction.EntityManager;
@@ -32,28 +38,32 @@ import io.hops.transaction.handler.LightWeightRequestHandler;
 import io.hops.transaction.lock.INodeLock;
 import io.hops.transaction.lock.LockFactory;
 import io.hops.transaction.lock.TransactionLockTypes;
+import io.hops.transaction.lock.TransactionLockTypes.INodeLockType;
+import io.hops.transaction.lock.TransactionLockTypes.INodeResolveType;
+import io.hops.transaction.lock.TransactionLockTypes.LockType;
 import io.hops.transaction.lock.TransactionLocks;
+import io.hops.util.ByteArray;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FsServerDefaults;
-import org.apache.hadoop.fs.Options;
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.fs.permission.PermissionStatus;
+import org.apache.hadoop.ipc.ProtobufRpcEngine;
 import org.apache.hadoop.ipc.RetriableException;
+import org.apache.hadoop.metrics2.annotation.Metric;
 import org.apache.hadoop.net.NetworkTopology;
 import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.security.token.delegation.DelegationKey;
 import org.apache.hadoop.security.token.delegation.web.DelegationTokenManager;
-import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenSecretManager;
 import org.apache.hadoop.util.Daemon;
 import org.apache.hadoop.util.DataChecksum;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.*;
@@ -63,9 +73,13 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
+import static com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.SECURITY_XATTR_UNREADABLE_BY_SUPERUSER;
+import static com.gmail.benrcarver.serverlessnamenode.server.namenode.INodeDirectory.getRootDir;
+import static io.hops.transaction.lock.LockFactory.getInstance;
 import static org.apache.commons.io.IOUtils.close;
 import static org.apache.hadoop.ipc.Server.getRemoteIp;
 import static org.apache.hadoop.ipc.Server.getRemoteUser;
+import static org.apache.hadoop.util.Time.now;
 
 public class FSNameSystem implements NameSystem {
     public static final Log LOG = LogFactory.getLog(FSNameSystem.class);
@@ -213,6 +227,15 @@ public class FSNameSystem implements NameSystem {
     int slicerNbThreads;
 
     private volatile AtomicBoolean forceReadTheSafeModeFromDB = new AtomicBoolean(true);
+
+    @VisibleForTesting
+    public final EncryptionZoneManager ezManager;
+
+    /**
+     * Caches frequently used file names used in {@link INode} to reuse
+     * byte[] objects and reduce heap usage.
+     */
+    private final NameCache<ByteArray> nameCache;
 
     //private final TopConf topConf;
     //private TopMetrics topMetrics;
@@ -409,6 +432,113 @@ public class FSNameSystem implements NameSystem {
         }.handle(this);
     }
 
+    INode getInode(final long id) throws IOException {
+        return EntityManager.find(INode.Finder.ByINodeIdFTIS, id);
+    }
+
+    static INode resolveLastINode(INodesInPath iip) throws FileNotFoundException {
+        INode inode = iip.getLastINode();
+        if (inode == null) {
+            throw new FileNotFoundException("cannot find " + iip.getPath());
+        }
+        return inode;
+    }
+
+    INodesInPath getExistingPathINodes(byte[][] components)
+            throws UnresolvedLinkException, StorageException, TransactionContextException {
+        return INodesInPath.resolve(getRootDir(), components, false);
+    }
+
+    /**
+     * Get {@link INode} associated with the file / directory.
+     */
+    public INodesInPath getINodesInPath4Write(String src)
+            throws UnresolvedLinkException, StorageException, TransactionContextException {
+        return getINodesInPath4Write(src, true);
+    }
+
+    /**
+     * Get {@link INode} associated with the file / directory.
+     */
+    INodesInPath getINodesInPath4Write(String src, boolean resolveLink)
+            throws UnresolvedLinkException, StorageException, TransactionContextException {
+        final byte[][] components = INode.getPathComponents(src);
+        INodesInPath inodesInPath = INodesInPath.resolve(getRootDir(), components,
+                resolveLink);
+        return inodesInPath;
+    }
+
+    /**
+     * We kept the name from apache hadoop for meging simplification but the only purpose of this
+     * function is to remove the encryptionZones as the InodeMap is the DB.
+     */
+    public final void removeFromInodeMap(List<? extends INode> inodes) throws IOException {
+        if (inodes != null) {
+            for (INode inode : inodes) {
+                if (inode != null) {
+                    inode.remove();
+                    if (inode instanceof INodeWithAdditionalFields) {
+                        ezManager.removeEncryptionZone(inode.getId());
+                    }
+                }
+            }
+        }
+    }
+
+    INode getInodeTX(final long id) throws IOException {
+        HopsTransactionalRequestHandler getInodeHandler =
+                new HopsTransactionalRequestHandler(
+                        HDFSOperationType.GET_INODE) {
+                    INodeIdentifier inodeIdentifier;
+
+                    @Override
+                    public void setUp() throws StorageException {
+                        inodeIdentifier = new INodeIdentifier(id);
+                    }
+
+                    @Override
+                    public void acquireLock(TransactionLocks locks) throws IOException {
+                        LockFactory lf = LockFactory.getInstance();
+                        locks.add(lf.
+                                getIndividualINodeLock(TransactionLockTypes.INodeLockType.READ_COMMITTED, inodeIdentifier, true));
+                    }
+
+                    @Override
+                    public Object performTask() throws IOException {
+                        return getInode(id);
+
+                    }
+                };
+        return (INode) getInodeHandler.handle();
+    }
+
+    /**
+     * Get {@link INode} associated with the file / directory.
+     * @throws SnapshotAccessControlException if path is in RO snapshot
+     */
+    public INode getINode4Write(String src) throws UnresolvedLinkException, StorageException, TransactionContextException {
+        return getINodesInPath4Write(src, true).getLastINode();
+    }
+
+    /** @return the {@link INodesInPath} containing all inodes in the path. */
+    public INodesInPath getINodesInPath(String path, boolean resolveLink) throws UnresolvedLinkException, StorageException,
+            TransactionContextException {
+        final byte[][] components = INode.getPathComponents(path);
+        return INodesInPath.resolve(getRootDir(), components, resolveLink);
+    }
+    /** @return the last inode in the path. */
+    INode getINode(String path, boolean resolveLink)
+            throws UnresolvedLinkException, StorageException, TransactionContextException {
+        return getINodesInPath(path, resolveLink).getLastINode();
+    }
+
+    /**
+     *  Get {@link INode} associated with the file / directory.
+     */
+    public INode getINode(String src) throws UnresolvedLinkException, StorageException, TransactionContextException {
+        return getINode(src, true);
+    }
+
     void setAsyncLockRemoval(final String path) throws IOException {
         LightWeightRequestHandler handler = new LightWeightRequestHandler(
                 HDFSOperationType.SET_ASYNC_SUBTREE_RECOVERY_FLAG) {
@@ -440,6 +570,53 @@ public class FSNameSystem implements NameSystem {
         }
     }
 
+    /**
+     * @see com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol#getEncodingStatus
+     */
+    public EncodingStatus getEncodingStatus(final String filePathArg)
+            throws IOException {
+        final FSPermissionChecker pc = getPermissionChecker();
+        byte[][] pathComponents = FSDirectory.getPathComponentsForReservedPath(filePathArg);
+        final String filePath = dir.resolvePath(pc, filePathArg, pathComponents);
+        HopsTransactionalRequestHandler findReq =
+                new HopsTransactionalRequestHandler(
+                        HDFSOperationType.FIND_ENCODING_STATUS) {
+                    @Override
+                    public void acquireLock(TransactionLocks locks) throws IOException {
+                        LockFactory lf = LockFactory.getInstance();
+                        INodeLock il = lf.getINodeLock(INodeLockType.READ_COMMITTED, INodeResolveType.PATH, filePath)
+                                .setNameNodeID(nameNode.getId())
+                                .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes());
+                        locks.add(il).add(lf.getEncodingStatusLock(LockType.READ_COMMITTED, filePath));
+                    }
+
+                    @Override
+                    public Object performTask() throws IOException {
+
+                        INodesInPath iip = dir.getINodesInPath(filePath, true);
+                        try {
+                            if (isPermissionEnabled) {
+                                dir.checkPathAccess(pc, iip, FsAction.READ);
+                            }
+                        } catch (AccessControlException e){
+                            logAuditEvent(false, "getEncodingStatus", filePath);
+                            throw e;
+                        }
+                        INode targetNode = iip.getLastINode();
+                        if (targetNode == null) {
+                            throw new FileNotFoundException();
+                        }
+                        return EntityManager
+                                .find(EncodingStatus.Finder.ByInodeId, targetNode.getId());
+                    }
+                };
+        Object result = findReq.handle();
+        if (result == null) {
+            return new EncodingStatus(EncodingStatus.Status.NOT_ENCODED);
+        }
+        return (EncodingStatus) result;
+    }
+
     public void delayAfterBbuildingTree(String message) {
         //Only for testing
         if (isTestingSTO) {
@@ -464,7 +641,10 @@ public class FSNameSystem implements NameSystem {
 
     @Override
     public void checkSuperuserPrivilege() throws AccessControlException {
-
+        if (isPermissionEnabled) {
+            FSPermissionChecker pc = getPermissionChecker();
+            pc.checkSuperuserPrivilege();
+        }
     }
 
     @Override
@@ -499,11 +679,134 @@ public class FSNameSystem implements NameSystem {
     }
 
     private SafeModeInfo safeMode() throws IOException{
-        throw new NotImplementedException();
+        if(!forceReadTheSafeModeFromDB.get()){
+            return null;
+        }
+
+        List<Object> vals = HdfsVariables.getSafeModeFromDB();
+        if(vals==null || vals.isEmpty()){
+            return null;
+        }
+        return new FSNameSystem.SafeModeInfo((double) vals.get(0),
+                (int) vals.get(1), (int) vals.get(2),
+                (int) vals.get(3), (double) vals.get(4),
+                (int) vals.get(5) == 0 ? true : false);
+    }
+
+    /**
+     * Client invoked methods are invoked over RPC and will be in
+     * RPC call context even if the client exits.
+     */
+    boolean isExternalInvocation() {
+        return ProtobufRpcEngine.Server.isRpcInvocation() ||
+                NamenodeWebHdfsMethods.isWebHdfsInvocation();
+    }
+
+    /**
+     * Set the status of an erasure-coded file.
+     *
+     * @param sourceFile
+     *    the file path
+     * @param status
+     *    the file status
+     * @throws IOException
+     */
+    public void updateEncodingStatus(String sourceFile,
+                                     EncodingStatus.Status status) throws IOException {
+        updateEncodingStatus(sourceFile, status, null, null);
+    }
+
+    /**
+     * Set the parity status of an erasure-coded file.
+     *
+     * @param sourceFile
+     *    the file path
+     * @param parityStatus
+     *    the parity file status
+     * @throws IOException
+     */
+    public void updateEncodingStatus(String sourceFile,
+                                     EncodingStatus.ParityStatus parityStatus) throws IOException {
+        updateEncodingStatus(sourceFile, null, parityStatus, null);
+    }
+
+    /**
+     * Set the status of an erasure-coded file.
+     *
+     * @param sourceFile
+     *    the file path
+     * @param status
+     *    the file status
+     * @param parityFile
+     *    the parity file name
+     * @throws IOException
+     */
+    public void updateEncodingStatus(String sourceFile,
+                                     EncodingStatus.Status status, String parityFile) throws IOException {
+        updateEncodingStatus(sourceFile, status, null, parityFile);
+    }
+
+    /**
+     * Set the status of an erasure-coded file and its parity file.
+     *
+     * @param sourceFile
+     *    the file path
+     * @param status
+     *    the file status
+     * @param parityStatus
+     *    the parity status
+     * @param parityFile
+     *    the parity file name
+     * @throws IOException
+     */
+    public void updateEncodingStatus(final String sourceFileArg,
+                                     final EncodingStatus.Status status,
+                                     final EncodingStatus.ParityStatus parityStatus, final String parityFile)
+            throws IOException {
+        byte[][] pathComponents = FSDirectory.getPathComponentsForReservedPath(sourceFileArg);
+        final String sourceFile = dir.resolvePath(getPermissionChecker(), sourceFileArg, pathComponents);
+        new HopsTransactionalRequestHandler(
+                HDFSOperationType.UPDATE_ENCODING_STATUS) {
+
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = LockFactory.getInstance();
+                INodeLock il = lf.getINodeLock(INodeLockType.WRITE, INodeResolveType.PATH, sourceFile)
+                        .setNameNodeID(nameNode.getId())
+                        .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes());
+                locks.add(il).add(lf.getEncodingStatusLock(LockType.WRITE, sourceFile));
+            }
+
+            @Override
+            public Object performTask() throws IOException {
+                INode targetNode = getINode(sourceFile);
+                EncodingStatus encodingStatus = EntityManager
+                        .find(EncodingStatus.Finder.ByInodeId, targetNode.getId());
+                if (status != null) {
+                    encodingStatus.setStatus(status);
+                    encodingStatus.setStatusModificationTime(System.currentTimeMillis());
+                }
+                if (parityFile != null) {
+                    encodingStatus.setParityFileName(parityFile);
+                    // Should be updated together with the status so the modification time is already set
+                }
+                if (parityStatus != null) {
+                    encodingStatus.setParityStatus(parityStatus);
+                    encodingStatus.setStatusModificationTime(System.currentTimeMillis());
+                }
+                EntityManager.update(encodingStatus);
+                return null;
+            }
+        }.handle();
     }
 
     boolean isAuditEnabled() {
         return !isDefaultAuditLogger || auditLog.isInfoEnabled();
+    }
+
+    private void logAuditEvent(boolean succeeded, String cmd, String src)
+            throws IOException {
+        logAuditEvent(succeeded, cmd, src, null, null);
     }
 
     private void logAuditEvent(boolean succeeded, String cmd, String src,
@@ -931,6 +1234,506 @@ public class FSNameSystem implements NameSystem {
         }
     }
 
+    /** Get the file info for a specific file.
+     * @param fsd FSDirectory
+     * @param src The string representation of the path to the file
+     * @param includeStoragePolicy whether to include storage policy
+     * @return object containing information regarding the file
+     *         or null if file not found
+     */
+    static HdfsFileStatus getFileInfo(
+            FSDirectory fsd, INodesInPath src, boolean isRawPath,
+            boolean includeStoragePolicy)
+            throws IOException {
+
+        final INode i = src.getLastINode();
+        byte policyId = includeStoragePolicy && i != null && !i.isSymlink() ? i.getStoragePolicyID()
+                : HdfsConstantsClient.BLOCK_STORAGE_POLICY_ID_UNSPECIFIED;
+        return i == null ? null : createFileStatus(
+                fsd, HdfsFileStatus.EMPTY_NAME, i, policyId, isRawPath,
+                src);
+    }
+
+    /**
+     * Create FileStatus by file INode
+     */
+    static HdfsFileStatus createFileStatus(
+            FSDirectory fsd, byte[] path, INode node, byte storagePolicy, boolean isRawPath, INodesInPath iip) throws
+            IOException {
+        long size = 0;     // length is zero for directories
+        short replication = 0;
+        long blocksize = 0;
+        boolean isStoredInDB = false;
+        final boolean isEncrypted;
+
+        final FileEncryptionInfo feInfo = isRawPath ? null :
+                fsd.getFileEncryptionInfo(node, iip);
+
+        if (node.isFile()) {
+            final INodeFile fileNode = node.asFile();
+            size = fileNode.getSize();
+            replication = fileNode.getBlockReplication();
+            blocksize = fileNode.getPreferredBlockSize();
+            isEncrypted = (feInfo != null) ||
+                    (isRawPath && fsd.isInAnEZ(INodesInPath.fromINode(node)));
+        } else {
+            isEncrypted = fsd.isInAnEZ(INodesInPath.fromINode(node));
+        }
+
+        int childrenNum = node.isDirectory() ?
+                node.asDirectory().getChildrenNum() : 0;
+
+        return new HdfsFileStatus(
+                size,
+                node.isDirectory(),
+                replication,
+                blocksize,
+                node.getModificationTime(),
+                node.getAccessTime(),
+                getPermissionForFileStatus(node, isEncrypted),
+                node.getUserName(),
+                node.getGroupName(),
+                node.isSymlink() ? node.asSymlink().getSymlink() : null,
+                path,
+                node.getId(),
+                childrenNum,
+                feInfo,
+                storagePolicy);
+    }
+
+    /**
+     * Returns an inode's FsPermission for use in an outbound FileStatus.  If the
+     * inode has an ACL or is for an encrypted file/dir, then this method will
+     * return an FsPermissionExtension.
+     *
+     * @param node INode to check
+     * @param isEncrypted boolean true if the file/dir is encrypted
+     * @return FsPermission from inode, with ACL bit on if the inode has an ACL
+     * and encrypted bit on if it represents an encrypted file/dir.
+     */
+    private static FsPermission getPermissionForFileStatus(
+            INode node, boolean isEncrypted) throws IOException {
+        FsPermission perm = node.getFsPermission();
+        boolean hasAcl = node.getAclFeature() != null;
+        if (hasAcl || isEncrypted) {
+            perm = new FsPermissionExtension(perm, hasAcl, isEncrypted);
+        }
+        return perm;
+    }
+
+    /**
+     * Get block locations within the specified range.
+     *
+     * @see ClientProtocol#getBlockLocations(String, long, long)
+     */
+    public LocatedBlocks getBlockLocations(final String clientMachine, final String srcArg,
+                                           final long offset, final long length) throws IOException {
+
+        // First try the operation using shared lock.
+        // Upgrade the lock to exclusive lock if LockUpgradeException is encountered.
+        // This operation tries to update the inode access time once every hr.
+        // The lock upgrade exception is thrown when the inode access time stamp is
+        // updated while holding shared lock on the inode. In this case retry the operation
+        // using an exclusive lock.
+        LocatedBlocks result = null;
+        try {
+            try {
+                result = getBlockLocationsWithLock(clientMachine, srcArg, offset, length, INodeLockType.READ);
+            } catch (LockUpgradeException e) {
+                LOG.debug("Encountered LockUpgradeException while reading " + srcArg
+                        + ". Retrying the operation using exclusive locks");
+                result = getBlockLocationsWithLock(clientMachine, srcArg, offset, length, INodeLockType.WRITE);
+            }
+        } catch (AccessControlException e) {
+            logAuditEvent(false, "open", srcArg);
+            throw e;
+        }
+        logAuditEvent(true, "open", srcArg);
+        return result;
+    }
+
+    LocatedBlocks getBlockLocationsWithLock(final String clientMachine, final String srcArg,
+                                            final long offset, final long length, final INodeLockType lockType) throws IOException {
+        byte[][] pathComponents = FSDirectory.getPathComponentsForReservedPath(srcArg);
+        final String src = dir.resolvePath(getPermissionChecker(), srcArg, pathComponents);
+        final boolean isSuperUser =  dir.getPermissionChecker().isSuperUser();
+        HopsTransactionalRequestHandler getBlockLocationsHandler = new HopsTransactionalRequestHandler(
+                HDFSOperationType.GET_BLOCK_LOCATIONS, src) {
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = getInstance();
+                INodeLock il = lf.getINodeLock(lockType, INodeResolveType.PATH, src)
+                        .setNameNodeID(nameNode.getId())
+                        .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes())
+                        .skipReadingQuotaAttr(!dir.isQuotaEnabled());
+                locks.add(il).add(lf.getBlockLock())
+                        .add(lf.getBlockRelated(BLK.RE, BLK.ER, BLK.CR, BLK.UC, BLK.CA));
+                locks.add(lf.getAcesLock());
+                locks.add(lf.getEZLock());
+                if(isSuperUser) {
+                    locks.add(lf.getXAttrLock());
+                }else {
+                    locks.add(lf.getXAttrLock(FSDirXAttrOp.XATTR_FILE_ENCRYPTION_INFO));
+                }
+            }
+
+            @Override
+            public Object performTask() throws IOException {
+                GetBlockLocationsResult res = null;
+
+                res = getBlockLocationsInt(srcArg, src, offset, length, true, true);
+
+                if (res.updateAccessTime()) {
+                    final long now = now();
+                    try {
+                        final INodesInPath iip = dir.getINodesInPath(src, true);
+                        INode inode = iip.getLastINode();
+                        boolean updateAccessTime = inode != null &&
+                                now > inode.getAccessTime() + getAccessTimePrecision();
+                        if (!isInSafeMode() && updateAccessTime) {
+                            boolean changed = FSDirAttrOp.setTimes(dir,
+                                    inode, -1, now, false);
+                        }
+                    } catch (Throwable e) {
+                        LOG.warn("Failed to update the access time of " + src, e);
+                    }
+                }
+
+                LocatedBlocks blocks = res.blocks;
+
+                if (blocks != null && !blocks
+                        .hasPhantomBlock()) { // no need to sort phantom datanodes
+                    blockManager.getDatanodeManager()
+                            .sortLocatedBlocks(clientMachine, blocks.getLocatedBlocks());
+
+                    // lastBlock is not part of getLocatedBlocks(), might need to sort it too
+                    LocatedBlock lastBlock = blocks.getLastLocatedBlock();
+                    if (lastBlock != null) {
+                        ArrayList<LocatedBlock> lastBlockList = Lists.newArrayList(lastBlock);
+                        blockManager.getDatanodeManager().sortLocatedBlocks(
+                                clientMachine, lastBlockList);
+                    }
+                }
+                return blocks;
+            }
+        };
+
+        return (LocatedBlocks) getBlockLocationsHandler.handle(this);
+
+    }
+
+    /**
+     * Get block locations within the specified range.
+     *
+     * @throws IOException
+     * @see ClientProtocol#getBlockLocations(String, long, long)
+     */
+    public GetBlockLocationsResult getBlockLocations(final String srcArg, final long offset,
+                                                     final long length, final boolean needBlockToken, final boolean checkSafeMode)
+            throws IOException {
+        final FSPermissionChecker pc = getPermissionChecker();
+        byte[][] pathComponents = FSDirectory.getPathComponentsForReservedPath(srcArg);
+        final String src = dir.resolvePath(pc, srcArg, pathComponents);
+        final boolean isSuperUser =  dir.getPermissionChecker().isSuperUser();
+        HopsTransactionalRequestHandler getBlockLocationsHandler = new HopsTransactionalRequestHandler(
+                HDFSOperationType.GET_BLOCK_LOCATIONS, src) {
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = getInstance();
+                INodeLock il = lf.getINodeLock(INodeLockType.READ, INodeResolveType.PATH, src)
+                        .setNameNodeID(nameNode.getId())
+                        .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes());
+                locks.add(il).add(lf.getBlockLock())
+                        .add(lf.getBlockRelated(BLK.RE, BLK.ER, BLK.CR, BLK.UC, BLK.CA));
+                locks.add(lf.getEZLock());
+                if (isSuperUser) {
+                    locks.add(lf.getXAttrLock());
+                } else {
+                    locks.add(lf.getXAttrLock(FSDirXAttrOp.XATTR_FILE_ENCRYPTION_INFO));
+                }
+            }
+
+            @Override
+            public Object performTask() throws IOException {
+                return getBlockLocationsInt(srcArg, src, offset, length, needBlockToken, checkSafeMode);
+            }
+        };
+        return (GetBlockLocationsResult) getBlockLocationsHandler.handle(this);
+    }
+
+    /*
+     * Get block locations within the specified range, updating the
+     * access times if necessary.
+     */
+    private GetBlockLocationsResult getBlockLocationsInt(String srcArg, String src, long offset,
+                                                         long length, boolean needBlockToken)
+            throws IOException {
+        FSPermissionChecker pc = getPermissionChecker();
+
+        final INodesInPath iip = dir.getINodesInPath(src, true);
+        final INodeFile inode = INodeFile.valueOf(iip.getLastINode(), src);
+
+        if (isPermissionEnabled) {
+            dir.checkPathAccess(pc, iip, FsAction.READ);
+            checkUnreadableBySuperuser(pc, inode);
+        }
+
+        final long fileSize = inode.computeFileSizeNotIncludingLastUcBlock();
+        boolean isUc = inode.isUnderConstruction();
+
+        final FileEncryptionInfo feInfo =
+                FSDirectory.isReservedRawName(srcArg) ?
+                        null : dir.getFileEncryptionInfo(inode, iip);
+
+        final LocatedBlocks blocks = blockManager.createLocatedBlocks(
+                inode.getBlocks(), fileSize,
+                isUc, offset, length, needBlockToken, feInfo);
+
+        // Set caching information for the located blocks.
+        for (LocatedBlock lb : blocks.getLocatedBlocks()) {
+            cacheManager.setCachedLocations(lb, inode.getId());
+        }
+
+        final long now = now();
+        boolean updateAccessTime = isAccessTimeSupported() && !isInSafeMode()
+                && now > inode.getAccessTime() + getAccessTimePrecision();
+        return new GetBlockLocationsResult(updateAccessTime, blocks);
+    }
+
+    /**
+     * Get the file info for a specific file.
+     *
+     * @param src
+     *     The string representation of the path to the file
+     * @param resolveLink
+     *     whether to throw UnresolvedLinkException
+     *     if src refers to a symlink
+     * @return object containing information regarding the file
+     * or null if file not found
+     * @throws AccessControlException
+     *     if access is denied
+     * @throws UnresolvedLinkException
+     *     if a symlink is encountered.
+     */
+    public HdfsFileStatus getFileInfo(final String src, final boolean resolveLink)
+            throws IOException {
+        HdfsFileStatus stat = null;
+        try {
+            stat = FSDirStatAndListingOp.getFileInfo(dir, src, resolveLink);
+        } catch (AccessControlException e) {
+            logAuditEvent(false, "getfileinfo", src);
+            throw e;
+        }
+        logAuditEvent(true, "getfileinfo", src);
+        return stat;
+    }
+
+    private GetBlockLocationsResult getBlockLocationsInt(final String srcArg, final String src, final long offset,
+                                                         final long length, final boolean needBlockToken, final boolean checkSafeMode)
+            throws IOException {
+
+        if (offset < 0) {
+            throw new HadoopIllegalArgumentException(
+                    "Negative offset is not supported. File: " + src);
+        }
+        if (length < 0) {
+            throw new HadoopIllegalArgumentException(
+                    "Negative length is not supported. File: " + src);
+        }
+
+        GetBlockLocationsResult ret;
+        final INodeFile inodeFile = INodeFile.valueOf(dir.getINode(src), src);
+        if (inodeFile.isFileStoredInDB()) {
+            LOG.debug("SMALL_FILE The file is stored in the database. Returning Phantom Blocks");
+            ret = getPhantomBlockLocationsUpdateTimes(srcArg, src, needBlockToken);
+        } else {
+            ret = getBlockLocationsInt(srcArg, src, offset, length, needBlockToken);
+        }
+
+        if (checkSafeMode && isInSafeMode()) {
+            for (LocatedBlock b : ret.blocks.getLocatedBlocks()) {
+                // if safe mode & no block locations yet then throw SafeModeException
+                if ((b.getLocations() == null) || (b.getLocations().length == 0)) {
+                    SafeModeException se = new SafeModeException(
+                            "Zero blocklocations for " + src, safeMode());
+                    throw new RetriableException(se);
+                }
+            }
+        }
+        inodeFile.logProvenanceEvent(getNamenodeId(), FileProvenanceEntry.Operation.getBlockLocations());
+        return ret;
+    }
+
+    public static class GetBlockLocationsResult {
+        final boolean updateAccessTime;
+        public final LocatedBlocks blocks;
+        boolean updateAccessTime() {
+            return updateAccessTime;
+        }
+        private GetBlockLocationsResult(
+                boolean updateAccessTime, LocatedBlocks blocks) {
+            this.updateAccessTime = updateAccessTime;
+            this.blocks = blocks;
+        }
+    }
+
+    private void checkUnreadableBySuperuser(FSPermissionChecker pc,
+                                            INode inode)
+            throws IOException {
+        if(pc.isSuperUser()) {
+            for (XAttr xattr : FSDirXAttrOp.getXAttrs(inode)) {
+                if (XAttrHelper.getPrefixName(xattr).
+                        equals(SECURITY_XATTR_UNREADABLE_BY_SUPERUSER)) {
+                    if (pc.isSuperUser()) {
+                        throw new AccessControlException("Access is denied for " +
+                                pc.getUser() + " since the superuser is not allowed to " +
+                                "perform this operation.");
+                    }
+                }
+            }
+        }
+    }
+
+    long getAccessTimePrecision() {
+        return accessTimePrecision;
+    }
+
+    private boolean isAccessTimeSupported() {
+        return accessTimePrecision > 0;
+    }
+
+    /**
+     * Get phantom block location for the file stored in the database and
+     * access times if necessary.
+     */
+
+    private GetBlockLocationsResult getPhantomBlockLocationsUpdateTimes(String srcArg, String src, boolean needBlockToken)
+            throws IOException {
+
+        FSPermissionChecker pc = getPermissionChecker();
+
+        final INodesInPath iip = dir.getINodesInPath(src, true);
+        final INodeFile inode = INodeFile.valueOf(iip.getLastINode(), src);
+
+        if (isPermissionEnabled) {
+            dir.checkPathAccess(pc, iip, FsAction.READ);
+            checkUnreadableBySuperuser(pc, inode);
+        }
+
+        final FileEncryptionInfo feInfo =
+                FSDirectory.isReservedRawName(srcArg) ?
+                        null : dir.getFileEncryptionInfo(inode, iip);
+
+        final LocatedBlocks blocks = blockManager
+                .createPhantomLocatedBlocks(inode, inode.getFileDataInDB(),
+                        inode.isUnderConstruction(), needBlockToken, feInfo);
+
+        final long now = now();
+        boolean updateAccessTime = isAccessTimeSupported() && !isInSafeMode()
+                && now > inode.getAccessTime() + getAccessTimePrecision();
+        return new GetBlockLocationsResult(updateAccessTime, blocks);
+
+    }
+
+    static HdfsFileStatus getFileInfo(
+            FSDirectory fsd, String src, boolean resolveLink, boolean isRawPath,
+            boolean includeStoragePolicy)
+            throws IOException {
+        String srcs = FSDirectory.normalizePath(src);
+        final INodesInPath iip = fsd.getINodesInPath(srcs, resolveLink);
+        return getFileInfo(fsd, iip, isRawPath, includeStoragePolicy);
+    }
+
+    /**
+     * Get the path of a file with the given inode id.
+     *
+     * @param id
+     *    the inode id of the file
+     * @return
+     *    the path
+     * @throws IOException
+     */
+    public String getPath(long id, boolean inTree) throws IOException {
+        LinkedList<INode> resolvedInodes = new LinkedList<>();
+        boolean resolved[] = new boolean[1];
+        INodeUtil.findPathINodesById(id, inTree, resolvedInodes, resolved);
+
+        if (!resolved[0]) {
+            throw new IOException(
+                    "Path could not be resolved for inode with id " + id);
+        }
+
+        return INodeUtil.constructPath(resolvedInodes);
+    }
+
+    /**
+     * Get the inode with the given id.
+     *
+     * @param id
+     *    the inode id
+     * @return
+     *    the inode
+     * @throws IOException
+     */
+    public INode findInode(final long id) throws IOException {
+        LightWeightRequestHandler findHandler =
+                new LightWeightRequestHandler(HDFSOperationType.GET_INODE) {
+                    @Override
+                    public Object performTask() throws IOException {
+                        INodeDataAccess<INode> dataAccess =
+                                (INodeDataAccess) io.hops.metadata.HdfsStorageFactory
+                                        .getDataAccess(INodeDataAccess.class);
+                        return dataAccess.findInodeByIdFTIS(id);
+                    }
+                };
+        return (INode) findHandler.handle();
+    }
+
+    /**
+     * Remove leases and inodes related to a given path
+     * @param src The given path
+     * @param removedINodes Containing the list of inodes to be removed from
+     *                      inodesMap
+     * @param acquireINodeMapLock Whether to acquire the lock for inode removal
+     */
+    void removeLeasesAndINodes(String src, List<INode> removedINodes)
+            throws IOException {
+        leaseManager.removeLeaseWithPrefixPath(src);
+        // remove inodes from inodesMap
+        if (removedINodes != null) {
+            dir.removeFromInodeMap(removedINodes);
+            removedINodes.clear();
+        }
+    }
+
+    /**
+     * From the given list, incrementally remove the blocks from blockManager.
+     * Write lock is dropped and reacquired every BLOCK_DELETION_INCREMENT to
+     * ensure that other waiters on the lock can get in. See HDFS-2938
+     *
+     * @param blocks
+     *          An instance of {@link BlocksMapUpdateInfo} which contains a list
+     *          of blocks that need to be removed from blocksMap
+     */
+    public void removeBlocks(INode.BlocksMapUpdateInfo blocks)
+            throws StorageException, TransactionContextException, IOException {
+        List<Block> toDeleteList = blocks.getToDeleteList();
+        Iterator<Block> iter = toDeleteList.iterator();
+        while (iter.hasNext()) {
+            for (int i = 0; i < BLOCK_DELETION_INCREMENT && iter.hasNext(); i++) {
+                blockManager.removeBlock(iter.next());
+            }
+        }
+    }
+
+    public int getLeaseCreationLockRows(){
+        return leaseCreationLockRows;
+    }
+
+    public boolean isErasureCodingEnabled() {
+        return erasureCodingEnabled;
+    }
+
     //This is for testing purposes only
     @VisibleForTesting
     boolean isImageLoaded() {
@@ -958,6 +1761,13 @@ public class FSNameSystem implements NameSystem {
 
         logAuditEvent(true, "rename (options=" + Arrays.toString(options) +
                 ")", src, dst, auditStat);
+    }
+
+    /**
+     * @return the block manager.
+     */
+    public BlockManager getBlockManager() {
+        return blockManager;
     }
 
     public PathInformation getPathExistingINodesFromDB(final String path,
@@ -1024,6 +1834,13 @@ public class FSNameSystem implements NameSystem {
                     }
                 };
         return (PathInformation)handler.handle(this);
+    }
+
+    @Override // FSNamesystemMBean
+    @Metric({"LiveDataNodes",
+            "Number of datanodes marked as live"})
+    public int getNumLiveDataNodes() {
+        return getBlockManager().getDatanodeManager().getNumLiveDataNodes();
     }
 
     /**

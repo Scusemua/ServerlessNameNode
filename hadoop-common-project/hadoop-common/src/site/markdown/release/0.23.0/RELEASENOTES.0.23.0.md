@@ -726,7 +726,7 @@ Updated the Quota exceptions to now use human readable output.
 
 * [HDFS-2107](https://issues.apache.org/jira/browse/HDFS-2107) | *Major* | **Move block management code to a package**
 
-Moved block management codes to a new package org.apache.hadoop.hdfs.server.blockmanagement.
+Moved block management codes to a new package com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.
 
 
 ---

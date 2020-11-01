@@ -12,11 +12,14 @@ import io.hops.common.IDsMonitor;
 import io.hops.exception.StorageException;
 import io.hops.exception.StorageInitializtionException;
 import io.hops.log.NDCWrapper;
-import io.hops.metadata.adaptor.INodeDALAdaptor;
-import io.hops.metadata.adaptor.PendingBlockInfoDALAdaptor;
+import io.hops.metadata.adaptor.*;
 import io.hops.metadata.common.EntityDataAccess;
 import io.hops.metadata.common.entity.*;
+import io.hops.metadata.election.dal.HdfsLeDescriptorDataAccess;
+import io.hops.metadata.election.dal.LeDescriptorDataAccess;
 import io.hops.metadata.election.entity.LeDescriptor;
+import io.hops.metadata.hdfs.dal.*;
+import io.hops.metadata.hdfs.entity.*;
 import io.hops.security.UsersGroups;
 import io.hops.transaction.EntityManager;
 import io.hops.transaction.context.ContextInitializer;
@@ -24,9 +27,6 @@ import io.hops.transaction.context.EntityContext;
 import io.hops.transaction.context.TransactionsStats;
 import io.hops.transaction.context.VariableContext;
 import io.hops.transaction.lock.LockFactory;
-
-import io.hops.metadata.hdfs.dal.*;
-import io.hops.metadata.hdfs.entity.*;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.CommonConfigurationKeys;
 

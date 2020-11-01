@@ -1,13 +1,21 @@
 package com.gmail.benrcarver.serverlessnamenode.server.blockmanagement;
 
 import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
+import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
+import com.gmail.benrcarver.serverlessnamenode.server.protocol.BlockReport;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.hash.Hashing;
 import io.hops.HdfsStorageFactory;
+import io.hops.exception.StorageException;
+import io.hops.exception.TransactionContextException;
 import io.hops.metadata.hdfs.dal.HashBucketDataAccess;
 import io.hops.metadata.hdfs.entity.HashBucket;
+import io.hops.transaction.EntityManager;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
 import io.hops.transaction.handler.LightWeightRequestHandler;
 import io.hops.transaction.lock.LockFactory;
+import io.hops.transaction.lock.TransactionLocks;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

@@ -2,7 +2,6 @@ package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.StartupOption;
-import com.gmail.benrcarver.serverlessnamenode.exceptions.HadoopIllegalArgumentException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.protocol.NamenodeProtocols;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;

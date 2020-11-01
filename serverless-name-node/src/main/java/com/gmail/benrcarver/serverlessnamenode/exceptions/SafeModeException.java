@@ -1,6 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.exceptions;
 
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.SafeModeInfo;
+import com.gmail.benrcarver.serverlessnamenode.server.namenode.FSNameSystem;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import java.io.IOException;
 public class SafeModeException  extends IOException {
     private static final long serialVersionUID = 1L;
 
-    public SafeModeException(String text, SafeModeInfo mode) throws IOException {
+    public SafeModeException(String text, FSNameSystem.SafeModeInfo mode) throws IOException {
         super(text + ". Name node is in safe mode.\n" + mode.getTurnOffTip());
     }
 }

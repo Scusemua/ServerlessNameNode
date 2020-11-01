@@ -15,6 +15,7 @@
  */
 package io.hops.metadata.adaptor;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.util.EnumCounters;
 import io.hops.exception.StorageException;
 import io.hops.metadata.DalAdaptor;
 import io.hops.metadata.hdfs.dal.DirectoryWithQuotaFeatureDataAccess;
@@ -22,7 +23,6 @@ import io.hops.metadata.hdfs.entity.DirectoryWithQuotaFeature;
 import io.hops.metadata.hdfs.entity.INodeCandidatePrimaryKey;
 import io.hops.metadata.hdfs.entity.QuotaUpdate;
 import org.apache.hadoop.fs.StorageType;
-import org.apache.hadoop.hdfs.util.EnumCounters;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,9 +30,9 @@ import java.util.List;
 import java.util.Map;
 
 public class DirectoryWithQuotaFeatureDALAdaptor extends
-    DalAdaptor<org.apache.hadoop.hdfs.server.namenode.DirectoryWithQuotaFeature, DirectoryWithQuotaFeature>
+    DalAdaptor<com.gmail.benrcarver.serverlessnamenode.server.namenode.DirectoryWithQuotaFeature, DirectoryWithQuotaFeature>
     implements
-    DirectoryWithQuotaFeatureDataAccess<org.apache.hadoop.hdfs.server.namenode.DirectoryWithQuotaFeature> {
+    DirectoryWithQuotaFeatureDataAccess<com.gmail.benrcarver.serverlessnamenode.server.namenode.DirectoryWithQuotaFeature> {
 
   private DirectoryWithQuotaFeatureDataAccess<DirectoryWithQuotaFeature> dataAccess;
 
@@ -42,15 +42,15 @@ public class DirectoryWithQuotaFeatureDALAdaptor extends
   }
 
   @Override
-  public org.apache.hadoop.hdfs.server.namenode.DirectoryWithQuotaFeature findAttributesByPk(
+  public com.gmail.benrcarver.serverlessnamenode.server.namenode.DirectoryWithQuotaFeature findAttributesByPk(
       Long inodeId) throws StorageException {
     return convertDALtoHDFS(dataAccess.findAttributesByPk(inodeId));
   }
 
   @Override
   public void prepare(
-      Collection<org.apache.hadoop.hdfs.server.namenode.DirectoryWithQuotaFeature> modified,
-      Collection<org.apache.hadoop.hdfs.server.namenode.DirectoryWithQuotaFeature> removed)
+      Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.DirectoryWithQuotaFeature> modified,
+      Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.DirectoryWithQuotaFeature> removed)
       throws StorageException {
     dataAccess.prepare(convertHDFStoDAL(modified), convertHDFStoDAL(removed));
 
@@ -58,7 +58,7 @@ public class DirectoryWithQuotaFeatureDALAdaptor extends
 
   @Override
   public DirectoryWithQuotaFeature convertHDFStoDAL(
-      org.apache.hadoop.hdfs.server.namenode.DirectoryWithQuotaFeature dir)
+      com.gmail.benrcarver.serverlessnamenode.server.namenode.DirectoryWithQuotaFeature dir)
       throws StorageException {
     if (dir != null) {
       Map<QuotaUpdate.StorageType, Long> typeQuota = new HashMap<>();
@@ -77,7 +77,7 @@ public class DirectoryWithQuotaFeatureDALAdaptor extends
   }
 
   @Override
-  public org.apache.hadoop.hdfs.server.namenode.DirectoryWithQuotaFeature convertDALtoHDFS(
+  public com.gmail.benrcarver.serverlessnamenode.server.namenode.DirectoryWithQuotaFeature convertDALtoHDFS(
       DirectoryWithQuotaFeature hia) throws StorageException {
     if (hia != null) {
       EnumCounters<StorageType> typeQuotas = new EnumCounters<StorageType>(StorageType.class);
@@ -86,8 +86,8 @@ public class DirectoryWithQuotaFeatureDALAdaptor extends
         typeQuotas.add(type, hia.getTypeQuota().get(QuotaUpdate.StorageType.valueOf(type.name())));
         typeUsage.add(type, hia.getTypeUsed().get(QuotaUpdate.StorageType.valueOf(type.name())));
       }
-      org.apache.hadoop.hdfs.server.namenode.DirectoryWithQuotaFeature dir
-          = new org.apache.hadoop.hdfs.server.namenode.DirectoryWithQuotaFeature.Builder(hia.getInodeId()).
+      com.gmail.benrcarver.serverlessnamenode.server.namenode.DirectoryWithQuotaFeature dir
+          = new com.gmail.benrcarver.serverlessnamenode.server.namenode.DirectoryWithQuotaFeature.Builder(hia.getInodeId()).
               nameSpaceQuota(hia.getNsQuota()).storageSpaceQuota(hia.getSSQuota()).spaceUsage(hia.getSSUsed()).nameSpaceUsage(
               hia.getNsUsed()).typeQuotas(typeQuotas).typeUsages(typeUsage).build();
       return dir;
@@ -97,7 +97,7 @@ public class DirectoryWithQuotaFeatureDALAdaptor extends
   }
 
   @Override
-  public Collection<org.apache.hadoop.hdfs.server.namenode.DirectoryWithQuotaFeature> findAttributesByPkList(
+  public Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.DirectoryWithQuotaFeature> findAttributesByPkList(
       List<INodeCandidatePrimaryKey> inodePks) throws StorageException {
     return convertDALtoHDFS(dataAccess.findAttributesByPkList(inodePks));
   }

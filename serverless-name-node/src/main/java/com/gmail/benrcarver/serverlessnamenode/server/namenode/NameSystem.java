@@ -1,7 +1,8 @@
 package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
+import org.apache.hadoop.security.AccessControlException;
+
 import java.io.IOException;
-import java.security.AccessControlException;
 import java.util.Set;
 
 public interface NameSystem extends SafeMode {

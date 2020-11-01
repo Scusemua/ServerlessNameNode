@@ -2,8 +2,12 @@ package io.hops.transaction.lock;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
+import io.hops.metadata.common.entity.Variable;
 import io.hops.metadata.hdfs.entity.INodeIdentifier;
+import io.hops.metadata.hdfs.entity.QuotaUpdate;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.ipc.RetryCache;
 
 import java.util.ArrayList;
 import java.util.Collection;

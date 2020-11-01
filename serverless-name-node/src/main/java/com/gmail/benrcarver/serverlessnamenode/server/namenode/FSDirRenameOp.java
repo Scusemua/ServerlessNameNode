@@ -15,6 +15,7 @@ import io.hops.metadata.hdfs.entity.INodeIdentifier;
 import io.hops.metadata.hdfs.entity.INodeMetadataLogEntry;
 import io.hops.metadata.hdfs.entity.SubTreeOperation;
 import io.hops.transaction.EntityManager;
+import io.hops.transaction.context.HdfsTransactionContextMaintenanceCmds;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
 import io.hops.transaction.lock.INodeLock;
@@ -372,8 +373,8 @@ class FSDirRenameOp {
     }
 
     /**
-     * @see {@link #unprotectedRenameTo(FSDirectory, String, String, INodesInPath,
-     * INodesInPath, long, INode.BlocksMapUpdateInfo, Options.Rename...)}
+     * see unprotectedRenameTo(FSDirectory, String, String, INodesInPath,
+     * INodesInPath, long, INode.BlocksMapUpdateInfo, Options.Rename...)
      */
     static HdfsFileStatus renameTo(FSDirectory fsd, FSPermissionChecker pc, String src,
                                    String dst, INode.BlocksMapUpdateInfo collectedBlocks,
@@ -683,8 +684,8 @@ class FSDirRenameOp {
 
 
     /**
-     * @deprecated Use {@link #renameToInt(FSDirectory, String, String,
-     * boolean, Options.Rename...)}
+     * @deprecated Use renameToInt(FSDirectory, String, String,
+     * boolean, Options.Rename...)
      */
     @Deprecated
     @SuppressWarnings("deprecation")

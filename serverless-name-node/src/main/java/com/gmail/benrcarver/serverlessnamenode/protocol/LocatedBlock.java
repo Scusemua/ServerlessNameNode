@@ -139,7 +139,7 @@ public class LocatedBlock {
     /**
      * Returns the locations associated with this block. The returned array is not
      * expected to be modified. If it is, caller must immediately invoke
-     * {@link org.apache.hadoop.hdfs.protocol.LocatedBlock#updateCachedStorageInfo}
+     * {@link com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlock#updateCachedStorageInfo}
      * to update the cached Storage ID/Type arrays.
      */
     public DatanodeInfo[] getLocations() {

@@ -1,6 +1,9 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.proto.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ExactSizeInputStream;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.RollingUpgradeInfo;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.RollingUpgradeStatus;
 import com.gmail.benrcarver.serverlessnamenode.protocol.DatanodeProtocolProtos;
 import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsProtos;
 import com.gmail.benrcarver.serverlessnamenode.server.protocol.BlockListAsLongs;
@@ -11,7 +14,8 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.CodedInputStream;
 import org.apache.hadoop.crypto.CipherOption;
 import org.apache.hadoop.crypto.CipherSuite;
-import org.eclipse.jetty.io.ByteBufferPool;
+import org.apache.hadoop.crypto.CryptoProtocolVersion;
+import org.apache.hadoop.fs.FileEncryptionInfo;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -146,6 +150,73 @@ public class PBHelper {
             return new CipherOption(suite, inKey, inIv, outKey, outIv);
         }
         return null;
+    }
+
+    public static HdfsProtos.ZoneEncryptionInfoProto convert(
+            CipherSuite suite, CryptoProtocolVersion version, String keyName) {
+        if (suite == null || version == null || keyName == null) {
+            return null;
+        }
+        return HdfsProtos.ZoneEncryptionInfoProto.newBuilder()
+                .setSuite(convert(suite))
+                .setCryptoProtocolVersion(convert(version))
+                .setKeyName(keyName)
+                .build();
+    }
+
+    public static FileEncryptionInfo convert(
+            HdfsProtos.FileEncryptionInfoProto proto) {
+        if (proto == null) {
+            return null;
+        }
+        CipherSuite suite = convert(proto.getSuite());
+        CryptoProtocolVersion version = convert(proto.getCryptoProtocolVersion());
+        byte[] key = proto.getKey().toByteArray();
+        byte[] iv = proto.getIv().toByteArray();
+        String ezKeyVersionName = proto.getEzKeyVersionName();
+        String keyName = proto.getKeyName();
+        return new FileEncryptionInfo(suite, version, key, iv, keyName,
+                ezKeyVersionName);
+    }
+
+    public static CryptoProtocolVersion convert(HdfsProtos.CryptoProtocolVersionProto
+                                                        proto) {
+        switch(proto) {
+            case ENCRYPTION_ZONES:
+                return CryptoProtocolVersion.ENCRYPTION_ZONES;
+            default:
+                // Set to UNKNOWN and stash the unknown enum value
+                CryptoProtocolVersion version = CryptoProtocolVersion.UNKNOWN;
+                version.setUnknownValue(proto.getNumber());
+                return version;
+        }
+    }
+
+    public static HdfsProtos.RollingUpgradeStatusProto convertRollingUpgradeStatus(
+            RollingUpgradeStatus status) {
+        return HdfsProtos.RollingUpgradeStatusProto.newBuilder()
+                .setBlockPoolId(status.getBlockPoolId())
+                .build();
+    }
+
+    public static RollingUpgradeInfoProto convert(RollingUpgradeInfo info) {
+        return RollingUpgradeInfoProto.newBuilder()
+                .setStatus(convertRollingUpgradeStatus(info))
+                .setStartTime(info.getStartTime())
+                .setFinalizeTime(info.getFinalizeTime())
+                .build();
+    }
+
+    public static HdfsProtos.CryptoProtocolVersionProto convert(CryptoProtocolVersion
+                                                             version) {
+        switch(version) {
+            case UNKNOWN:
+                return HdfsProtos.CryptoProtocolVersionProto.UNKNOWN_PROTOCOL_VERSION;
+            case ENCRYPTION_ZONES:
+                return HdfsProtos.CryptoProtocolVersionProto.ENCRYPTION_ZONES;
+            default:
+                return null;
+        }
     }
 
     public static DatanodeProtocolProtos.BlockReportProto convert(BlockReport report, boolean useBlocksBuffer) {

@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * The argument passed to this fencer should be a unique string in the
  * "CommandLine" attribute for the "java.exe" process. For example, the full
- * path for the Namenode: "org.apache.hadoop.hdfs.server.namenode.NameNode".
+ * path for the Namenode: "com.gmail.benrcarver.serverlessnamenode.server.namenode.NameNode".
  * The administrator can also shorten the name to "Namenode" if it's unique.
  */
 public class PowerShellFencer extends Configured implements FenceMethod {

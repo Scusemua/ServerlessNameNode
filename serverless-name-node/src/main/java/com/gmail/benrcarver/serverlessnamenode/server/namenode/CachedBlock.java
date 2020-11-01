@@ -1,6 +1,7 @@
 package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.DatanodeDescriptor;
+import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.DatanodeManager;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.transaction.EntityManager;
@@ -118,7 +119,7 @@ public final class CachedBlock {
      * @param type If null, this parameter is ignored.
      * If it is non-null, we match only datanodes which
      * have it on this list.
-     * See {@link DatanodeDescriptor#CachedBlocksList#Type}
+     * See DatanodeDescriptor#CachedBlocksList#Type
      * for a description of all the lists.
      *
      * @return The list of datanodes. Modifying this list does not
