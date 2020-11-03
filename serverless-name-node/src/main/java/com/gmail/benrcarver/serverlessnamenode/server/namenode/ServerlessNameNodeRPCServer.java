@@ -7,17 +7,12 @@ import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.delegation.DelegationTokenIdentifier;
-import com.gmail.benrcarver.serverlessnamenode.protocol.NamenodeProtocols;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocols;
 import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BRLoadBalancingOverloadException;
 import com.google.protobuf.BlockingService;
-import io.hops.transaction.handler.HDFSOperationType;
-import io.hops.transaction.handler.HopsTransactionalRequestHandler;
-import io.hops.transaction.lock.TransactionLocks;
 import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
-import org.apache.hadoop.io.Text;
 import org.apache.hadoop.ipc.ProtobufRpcEngine;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ipc.WritableRpcEngine;
@@ -25,13 +20,11 @@ import org.apache.hadoop.ipc.protocolPB.GenericRefreshProtocolPB;
 import org.apache.hadoop.ipc.protocolPB.GenericRefreshProtocolServerSideTranslatorPB;
 import org.apache.hadoop.ipc.protocolPB.RefreshCallQueueProtocolPB;
 import org.apache.hadoop.ipc.protocolPB.RefreshCallQueueProtocolServerSideTranslatorPB;
-import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.security.protocolPB.RefreshAuthorizationPolicyProtocolPB;
 import org.apache.hadoop.security.protocolPB.RefreshAuthorizationPolicyProtocolServerSideTranslatorPB;
 import org.apache.hadoop.security.protocolPB.RefreshUserMappingsProtocolPB;
 import org.apache.hadoop.security.protocolPB.RefreshUserMappingsProtocolServerSideTranslatorPB;
 import org.apache.hadoop.security.token.SecretManager;
-import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.tools.protocolPB.GetUserMappingsProtocolPB;
 import org.apache.hadoop.tools.protocolPB.GetUserMappingsProtocolServerSideTranslatorPB;
 import org.apache.hadoop.tracing.TraceAdminProtocolPB;
@@ -63,6 +56,12 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
 
     private final String minimumDataNodeVersion;
 
+    /**
+     * The RPC server that listens to requests from clients
+     */
+    protected final RPC.Server clientRpcServer;
+    protected final InetSocketAddress clientRpcAddress;
+
     private static final Logger LOG = ServerlessNameNode.LOG;
     private static final Logger stateChangeLog = ServerlessNameNode.stateChangeLog;
     private static final Logger blockStateChangeLog = ServerlessNameNode.blockStateChangeLog;
@@ -71,7 +70,7 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
         this.nn = nameNode;
     }
 
-    public NameNodeRpcServer(Configuration conf, ServerlessNameNode nn) throws IOException {
+    public ServerlessNameNodeRPCServer(Configuration conf, ServerlessNameNode nn) throws IOException {
         this.nn = nn;
         this.namesystem = nn.getNamesystem();
         //this.metrics = ServerlessNameNode.getNameNodeMetrics();
@@ -270,6 +269,28 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
 
     InetSocketAddress getRpcAddress() {
         return clientRpcAddress;
+    }
+
+    /**
+     * Wait until the RPC servers have shutdown.
+     */
+    void join() throws InterruptedException {
+        clientRpcServer.join();
+        if (serviceRpcServer != null) {
+            serviceRpcServer.join();
+        }
+    }
+
+    /**
+     * Stop client and service RPC servers.
+     */
+    void stop() {
+        if (clientRpcServer != null) {
+            clientRpcServer.stop();
+        }
+        if (serviceRpcServer != null) {
+            serviceRpcServer.stop();
+        }
     }
 
     /**

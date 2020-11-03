@@ -2,7 +2,7 @@ package com.gmail.benrcarver.serverlessnamenode.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
-import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsProtos;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.transaction.handler.HDFSOperationType;

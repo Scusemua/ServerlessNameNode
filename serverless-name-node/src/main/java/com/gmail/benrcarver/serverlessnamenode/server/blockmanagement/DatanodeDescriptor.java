@@ -4,7 +4,7 @@ package com.gmail.benrcarver.serverlessnamenode.server.blockmanagement;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.util.EnumCounters;
-import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.server.namenode.CachedBlock;
 import com.gmail.benrcarver.serverlessnamenode.server.namenode.CachedBlock.Type;
 import com.gmail.benrcarver.serverlessnamenode.server.protocol.BlockReportContext;

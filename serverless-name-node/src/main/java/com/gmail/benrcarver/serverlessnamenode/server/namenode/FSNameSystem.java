@@ -10,7 +10,7 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.FsPermissionExtension;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.delegation.DelegationTokenIdentifier;
-import com.gmail.benrcarver.serverlessnamenode.protocol.*;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
 import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.*;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
 import com.gmail.benrcarver.serverlessnamenode.server.common.StorageInfo;
@@ -26,6 +26,7 @@ import io.hops.erasure_coding.ErasureCodingManager;
 import io.hops.exception.LockUpgradeException;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
+import io.hops.exception.TransientStorageException;
 import io.hops.leader_election.node.ActiveNode;
 import io.hops.metadata.hdfs.dal.*;
 import io.hops.metadata.hdfs.entity.*;
@@ -48,11 +49,13 @@ import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.*;
+import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.ipc.NotALeaderException;
 import org.apache.hadoop.ipc.ProtobufRpcEngine;
 import org.apache.hadoop.ipc.RetriableException;
 import org.apache.hadoop.metrics2.annotation.Metric;
+import org.apache.hadoop.metrics2.util.MBeans;
 import org.apache.hadoop.net.NetworkTopology;
 import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.UserGroupInformation;
@@ -64,6 +67,7 @@ import org.apache.hadoop.util.Daemon;
 import org.apache.hadoop.util.DataChecksum;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import javax.management.ObjectName;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -77,7 +81,6 @@ import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
 import static com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.SECURITY_XATTR_UNREADABLE_BY_SUPERUSER;
 import static com.gmail.benrcarver.serverlessnamenode.server.namenode.INodeDirectory.getRootDir;
 import static io.hops.transaction.lock.LockFactory.getInstance;
-import static org.apache.commons.io.IOUtils.close;
 import static org.apache.hadoop.ipc.Server.getRemoteIp;
 import static org.apache.hadoop.ipc.Server.getRemoteUser;
 import static org.apache.hadoop.util.Time.now;
@@ -169,6 +172,9 @@ public class FSNameSystem implements NameSystem {
      * The interval of namenode checking for the disk space availability
      */
     private final long resourceRecheckInterval;
+
+    private ObjectName mbeanName;
+    private ObjectName mxbeanName;
 
     // The actual resource checker instance.
     NameNodeResourceChecker nnResourceChecker;
@@ -445,6 +451,108 @@ public class FSNameSystem implements NameSystem {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Stop services common
+     *
+     */
+    private void stopCommonServices() {
+        if (blockManager != null) {
+            blockManager.close();
+        }
+        if (quotaUpdateManager != null) {
+            quotaUpdateManager.close();
+        }
+        RootINodeCache.stop();
+    }
+
+    private void stopSecretManager() {
+        if (dtSecretManager != null) {
+            dtSecretManager.stopThreads();
+        }
+    }
+
+    /**
+     * Stop services required in active state
+     *
+     * @throws InterruptedException
+     */
+    void stopActiveServices() {
+        LOG.info("Stopping services started for active state");
+        stopSecretManager();
+        leaseManager.stopMonitor();
+        if (nnrmthread != null) {
+            ((NameNodeResourceMonitor) nnrmthread.getRunnable()).stopMonitor();
+            nnrmthread.interrupt();
+        }
+
+        if(retryCacheCleanerThread !=null){
+            ((RetryCacheCleaner)retryCacheCleanerThread.getRunnable()).stopMonitor();
+            retryCacheCleanerThread.interrupt();
+        }
+
+        if (erasureCodingManager != null) {
+            erasureCodingManager.close();
+        }
+
+        if (cacheManager != null) {
+            cacheManager.stopMonitorThread();
+            //HOPS as we are distributed we may stop one NN without stopping all of them. In this case we should not clear
+            //the information used by the other NN.
+            //TODO: check if there is some case where we really need to do the clear.
+//      if (blockManager != null) {
+//        blockManager.getDatanodeManager().clearPendingCachingCommands();
+//        blockManager.getDatanodeManager().setShouldSendCachingCommands(false);
+//        // Don't want to keep replication queues when not in Active.
+//        blockManager.clearQueues();
+//      }
+//      initializedReplQueues = false;
+        }
+    }
+
+    /**
+     * Close down this file system manager.
+     * Causes heartbeat and lease daemons to stop; waits briefly for
+     * them to finish, but a short timeout returns control back to caller.
+     */
+    void close() {
+        fsRunning = false;
+        try {
+            stopCommonServices();
+            if (smmthread != null) {
+                smmthread.interrupt();
+            }
+            fsOperationsExecutor.shutdownNow();
+        } finally {
+            // using finally to ensure we also wait for lease daemon
+            try {
+                stopActiveServices();
+                if (dir != null) {
+                    dir.close();
+                }
+            } catch (IOException ie) {
+                LOG.error("Error closing FSDirectory", ie);
+                IOUtils.cleanup(LOG, dir);
+            }
+        }
+    }
+
+    /**
+     * shutdown FSNamesystem
+     */
+    void shutdown() {
+        if (mbeanName != null) {
+            MBeans.unregister(mbeanName);
+            mbeanName = null;
+        }
+        if (mxbeanName != null) {
+            MBeans.unregister(mxbeanName);
+            mxbeanName = null;
+        }
+        if (blockManager != null) {
+            blockManager.shutdown();
+        }
     }
 
     /**
@@ -2958,6 +3066,102 @@ public class FSNameSystem implements NameSystem {
          */
         int blockThreshold() throws IOException {
             return HdfsVariables.getBlockThreshold();
+        }
+    }
+
+    /**
+     * Perform resource checks and cache the results.
+     */
+    void checkAvailableResources() {
+        Preconditions.checkState(nnResourceChecker != null, "nnResourceChecker not initialized");
+        int tries = 0;
+        Throwable lastThrowable = null;
+        while (tries < maxDBTries) {
+            try {
+                SafeModeInfo safeMode = safeMode();
+                if(safeMode!=null){
+                    //another namenode set safeMode to true since last time we checked
+                    //we need to start reading safeMode from the database for every opperation
+                    //until the all cluster get out of safemode.
+                    forceReadTheSafeModeFromDB.set(true);
+                }
+                if (!nnResourceChecker.hasAvailablePrimarySpace()) {
+                    //Database resources are in between preThreshold and Threshold
+                    //that means that soon enough we will hit the resources threshold
+                    //therefore, we enable reading the safemode variable from the
+                    //database, since at any point from now on, the leader will go to
+                    //safe mode.
+                    forceReadTheSafeModeFromDB.set(true);
+                }
+
+                hasResourcesAvailable = nnResourceChecker.hasAvailableSpace();
+                break;
+            } catch (StorageException e) {
+                LOG.warn("StorageException in checkAvailableResources (" + tries + "/" + maxDBTries + ").", e);
+                if (e instanceof TransientStorageException) {
+                    continue; //do not count TransientStorageException as a failled try
+                }
+                lastThrowable = e;
+                tries++;
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    // Deliberately ignore
+                }
+            } catch (Throwable t) {
+                LOG.error("Runtime exception in checkAvailableResources. ", t);
+                lastThrowable = t;
+                tries++;
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException ex) {
+                    // Deliberately ignore
+                }
+            }
+        }
+        if (tries >= maxDBTries) {
+            terminate(1, lastThrowable);
+        }
+    }
+
+    /**
+     * Periodically calls hasAvailableResources of NameNodeResourceChecker, and
+     * if
+     * there are found to be insufficient resources available, causes the NN to
+     * enter safe mode. If resources are later found to have returned to
+     * acceptable levels, this daemon will cause the NN to exit safe mode.
+     */
+    class NameNodeResourceMonitor implements Runnable {
+        boolean shouldNNRmRun = true;
+
+        @Override
+        public void run() {
+            try {
+                while (fsRunning && shouldNNRmRun) {
+                    checkAvailableResources();
+                    if (!nameNodeHasResourcesAvailable()) {
+                        String lowResourcesMsg = "NameNode's database low on available " +
+                                "resources.";
+                        if (!isInSafeMode()) {
+                            LOG.warn(lowResourcesMsg + "Entering safe mode.");
+                        } else {
+                            LOG.warn(lowResourcesMsg + "Already in safe mode.");
+                        }
+                        enterSafeMode(true);
+                    }
+                    try {
+                        Thread.sleep(resourceRecheckInterval);
+                    } catch (InterruptedException ie) {
+                        // Deliberately ignore
+                    }
+                }
+            } catch (Exception e) {
+                FSNamesystem.LOG.error("Exception in NameNodeResourceMonitor: ", e);
+            }
+        }
+
+        public void stopMonitor() {
+            shouldNNRmRun = false;
         }
     }
 

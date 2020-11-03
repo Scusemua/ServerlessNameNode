@@ -6,7 +6,7 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.IOStreamPair;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.TrustedChannelResolver;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.block.DataEncryptionKey;
-import com.gmail.benrcarver.serverlessnamenode.protocol.BlockTokenIdentifier;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.BlockTokenIdentifier;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import org.apache.commons.codec.binary.Base64;

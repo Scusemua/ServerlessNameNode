@@ -1,6 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.web;
 
-import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsFileStatus;
 
 public class WebHdfsConstants {
     public static final String WEBHDFS_SCHEME = "webhdfs";

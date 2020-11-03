@@ -5,7 +5,7 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DistributedFileSystem;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.FSLimitException;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
-import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsFileStatus;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsFileStatus;
 import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockStoragePolicySuite;
 import com.google.common.base.Preconditions;
 import io.hops.exception.StorageException;

@@ -10,8 +10,8 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.QuotaByStorageTypeE
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataEncryptionKeyFactory;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.block.DataEncryptionKey;
-import com.gmail.benrcarver.serverlessnamenode.protocol.BlockTokenIdentifier;
-import com.gmail.benrcarver.serverlessnamenode.protocol.ClientProtocol;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.BlockTokenIdentifier;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol;
 import com.gmail.benrcarver.serverlessnamenode.server.namenode.ServerlessNameNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;

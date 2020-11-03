@@ -19,7 +19,7 @@
 // This file contains protocol buffers that are used to transfer data
 // to and from the datanode, as well as between datanodes.
 
-option java_package = "com.gmail.benrcarver.serverlessnamenode.protocol";
+option java_package = "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol";
 
 option java_outer_classname = "DataTransferProtos";
 

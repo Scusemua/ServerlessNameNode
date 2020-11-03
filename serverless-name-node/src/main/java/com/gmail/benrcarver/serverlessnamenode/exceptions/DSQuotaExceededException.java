@@ -1,6 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.exceptions;
 
-import static com.gmail.benrcarver.serverlessnamenode.util.StringUtils.TraditionalBinaryPrefix.long2String;
+import static com.gmail.benrcarver.serverlessnamenode.hdfs.util.StringUtils.TraditionalBinaryPrefix.long2String;
 
 public class DSQuotaExceededException extends QuotaExceededException {
     protected static final long serialVersionUID = 1L;

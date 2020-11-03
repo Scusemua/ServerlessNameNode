@@ -1,6 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.BlockUCState;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants.ReplicaState;

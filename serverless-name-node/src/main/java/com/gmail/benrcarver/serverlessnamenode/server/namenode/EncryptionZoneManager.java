@@ -5,7 +5,7 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.XAttrHelper;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZone;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
-import com.gmail.benrcarver.serverlessnamenode.protocol.HdfsProtos;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.protobuf.InvalidProtocolBufferException;

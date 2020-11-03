@@ -2,7 +2,7 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.net;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataEncryptionKeyFactory;
-import com.gmail.benrcarver.serverlessnamenode.protocol.BlockTokenIdentifier;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.BlockTokenIdentifier;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;

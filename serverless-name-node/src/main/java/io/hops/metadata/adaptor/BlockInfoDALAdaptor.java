@@ -15,7 +15,7 @@
  */
 package io.hops.metadata.adaptor;
 
-import com.gmail.benrcarver.serverlessnamenode.protocol.Block;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.server.common.HdfsServerConstants;
 import io.hops.exception.StorageException;
 import io.hops.metadata.DalAdaptor;

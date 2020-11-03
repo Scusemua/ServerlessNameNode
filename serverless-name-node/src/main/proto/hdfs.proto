@@ -20,7 +20,7 @@
 // by the client, server, and data transfer protocols.
 
 
-option java_package = "com.gmail.benrcarver.serverlessnamenode.protocol";
+option java_package = "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol";
 
 option java_outer_classname = "HdfsProtos";
 

@@ -16,8 +16,8 @@
 package io.hops.erasure_coding;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.protocol.LocatedBlock;
-import com.gmail.benrcarver.serverlessnamenode.protocol.LocatedBlocks;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlock;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlocks;
 import com.gmail.benrcarver.serverlessnamenode.server.namenode.FSNameSystem;
 import com.gmail.benrcarver.serverlessnamenode.server.namenode.INode;
 import io.hops.exception.StorageException;
