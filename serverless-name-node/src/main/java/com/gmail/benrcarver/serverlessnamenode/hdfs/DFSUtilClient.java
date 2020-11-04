@@ -1,6 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsClientConfigKeys;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.web.WebHdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlock;
@@ -24,8 +24,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsClientConfigKeys.DFS_HA_NAMENODES_KEY_PREFIX;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsClientConfigKeys.DFS_NAMESERVICES;
+import static com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys.DFS_HA_NAMENODES_KEY_PREFIX;
+import static com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys.DFS_NAMESERVICES;
 
 public class DFSUtilClient {
     private static final Logger LOG = LoggerFactory.getLogger(

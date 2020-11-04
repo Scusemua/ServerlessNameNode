@@ -3,15 +3,17 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.DSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.NSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsClientConfigKeys;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.QuotaByStorageTypeExceededException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.net.TcpPeerServer;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.TrustedChannelResolver;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataEncryptionKeyFactory;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataTransferSaslUtil;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.CorruptFileBlocks;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.block.DataEncryptionKey;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.BlockTokenIdentifier;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol;
 import com.gmail.benrcarver.serverlessnamenode.server.namenode.ServerlessNameNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
@@ -264,6 +266,28 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
             LOG.debug("Using local interface " + addr);
         }
         return addr;
+    }
+
+    /**
+     * @return a list in which each entry describes a corrupt file/block
+     * @throws IOException
+     */
+    public CorruptFileBlocks listCorruptFileBlocks(String path,
+                                                   String cookie)
+            throws IOException {
+        checkOpen();
+        try (TraceScope ignored
+                     = newPathTraceScope("listCorruptFileBlocks", path)) {
+            return namenode.listCorruptFileBlocks(path, cookie);
+        }
+    }
+
+    TraceScope newPathTraceScope(String description, String path) {
+        TraceScope scope = tracer.newScope(description);
+        if (path != null) {
+            scope.addKVAnnotation("path", path);
+        }
+        return scope;
     }
 
     @Override // RemotePeerFactory

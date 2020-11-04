@@ -3,7 +3,11 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.DSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.NSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
+import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.CorruptFileBlocks;
 import org.apache.hadoop.fs.Options;
+import org.apache.hadoop.fs.ParentNotDirectoryException;
+import org.apache.hadoop.fs.UnresolvedLinkException;
+import org.apache.hadoop.io.retry.Idempotent;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,6 +24,85 @@ import java.security.AccessControlException;
  * ********************************************************************
  */
 public interface ClientProtocol {
+
+    /**
+     * Enter, leave or get safe mode.
+     * <p/>
+     * Safe mode is a name node state when it
+     * <ol><li>does not accept changes to name space (read-only), and</li>
+     * <li>does not replicate or delete blocks.</li></ol>
+     * <p/>
+     * <p/>
+     * Safe mode is entered automatically at name node startup.
+     * Safe mode can also be entered manually using
+     * {@link #setSafeMode(HdfsConstants.SafeModeAction, boolean)
+     * setSafeMode(SafeModeAction.SAFEMODE_ENTER,false)}.
+     * <p/>
+     * At startup the name node accepts data node reports collecting
+     * information about block locations.
+     * In order to leave safe mode it needs to collect a configurable
+     * percentage called threshold of blocks, which satisfy the minimal
+     * replication condition.
+     * The minimal replication condition is that each block must have at least
+     * <tt>dfs.namenode.replication.min</tt> replicas.
+     * When the threshold is reached the name node extends safe mode
+     * for a configurable amount of time
+     * to let the remaining data nodes to check in before it
+     * will start replicating missing blocks.
+     * Then the name node leaves safe mode.
+     * <p/>
+     * If safe mode is turned on manually using
+     * {@link #setSafeMode(HdfsConstants.SafeModeAction, boolean)
+     * setSafeMode(SafeModeAction.SAFEMODE_ENTER,false)}
+     * then the name node stays in safe mode until it is manually turned off
+     * using {@link #setSafeMode(HdfsConstants.SafeModeAction, boolean)
+     * setSafeMode(SafeModeAction.SAFEMODE_LEAVE,false)}.
+     * Current state of the name node can be verified using
+     * {@link #setSafeMode(HdfsConstants.SafeModeAction, boolean)
+     * setSafeMode(SafeModeAction.SAFEMODE_GET,false)}
+     * <h4>Configuration parameters:</h4>
+     * <tt>dfs.safemode.threshold.pct</tt> is the threshold parameter.<br>
+     * <tt>dfs.safemode.extension</tt> is the safe mode extension parameter.<br>
+     * <tt>dfs.namenode.replication.min</tt> is the minimal replication
+     * parameter.
+     * <p/>
+     * <h4>Special cases:</h4>
+     * The name node does not enter safe mode at startup if the threshold is
+     * set to 0 or if the name space is empty.<br>
+     * If the threshold is set to 1 then all blocks need to have at least
+     * minimal replication.<br>
+     * If the threshold value is greater than 1 then the name node will not be
+     * able to turn off safe mode automatically.<br>
+     * Safe mode can always be turned off manually.
+     *
+     * @param action
+     *     <ul> <li>0 leave safe mode;</li>
+     *     <li>1 enter safe mode;</li>
+     *     <li>2 get safe mode state.</li></ul>
+     * @param isChecked
+     *     If true then action will be done only in ActiveNN.
+     * @return <ul><li>0 if the safe mode is OFF or</li>
+     * <li>1 if the safe mode is ON.</li></ul>
+     * @throws IOException
+     */
+    @Idempotent
+    public boolean setSafeMode(HdfsConstants.SafeModeAction action,
+                               boolean isChecked) throws IOException;
+
+    /**
+     * @return CorruptFileBlocks, containing a list of corrupt files (with
+     * duplicates if there is more than one corrupt block in a file)
+     * and a cookie
+     * @throws IOException
+     *     Each call returns a subset of the corrupt files in the system. To
+     *     obtain
+     *     all corrupt files, call this method repeatedly and each time pass in
+     *     the
+     *     cookie returned from the previous call.
+     */
+    @Idempotent
+    public CorruptFileBlocks listCorruptFileBlocks(String path, String cookie)
+            throws IOException;
 
     /**
      * Rename an item in the file system namespace.

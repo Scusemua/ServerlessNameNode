@@ -1,5 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.fs.*;
@@ -32,6 +33,17 @@ public class DistributedFileSystem extends FileSystem {
     }
 
     public DistributedFileSystem() {
+    }
+
+    /**
+     * Enter, leave or get safe mode.
+     *
+     * @see com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol#setSafeMode(
+     *    HdfsConstants.SafeModeAction,boolean)
+     */
+    public boolean setSafeMode(HdfsConstants.SafeModeAction action)
+            throws IOException {
+        return setSafeMode(action, false);
     }
 
     @Override

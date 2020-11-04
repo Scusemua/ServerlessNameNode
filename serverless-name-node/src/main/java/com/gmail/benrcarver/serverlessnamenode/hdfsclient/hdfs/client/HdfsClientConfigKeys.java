@@ -1,4 +1,4 @@
-package com.gmail.benrcarver.serverlessnamenode.hdfs.client;
+package com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client;
 
 /** Client configuration properties */
 public interface HdfsClientConfigKeys {
