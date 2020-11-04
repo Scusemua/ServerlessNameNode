@@ -2,10 +2,10 @@ package io.hops.common;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.INode;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.INodeDirectory;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.INodeSymlink;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.ServerlessNameNode;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeSymlink;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 

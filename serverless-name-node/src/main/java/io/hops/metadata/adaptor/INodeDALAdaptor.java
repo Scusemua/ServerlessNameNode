@@ -1,7 +1,7 @@
 package io.hops.metadata.adaptor;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.*;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.*;
 import io.hops.exception.StorageException;
 import io.hops.metadata.DalAdaptor;
 import io.hops.metadata.hdfs.dal.INodeDataAccess;
@@ -22,8 +22,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class INodeDALAdaptor
-        extends DalAdaptor<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode, INode>
-        implements INodeDataAccess<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> {
+        extends DalAdaptor<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode, INode>
+        implements INodeDataAccess<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> {
 
     private INodeDataAccess<INode> dataAccess;
 
@@ -32,36 +32,36 @@ public class INodeDALAdaptor
     }
 
     @Override
-    public com.gmail.benrcarver.serverlessnamenode.server.namenode.INode findInodeByIdFTIS(
+    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode findInodeByIdFTIS(
             long inodeId) throws StorageException {
         return convertDALtoHDFS(dataAccess.findInodeByIdFTIS(inodeId));
     }
 
     @Override
-    public Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> findInodesByIdsFTIS(long[] inodeId) throws
+    public Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> findInodesByIdsFTIS(long[] inodeId) throws
             StorageException {
         return convertDALtoHDFS(dataAccess.findInodesByIdsFTIS(inodeId));
     }
 
     @Override
-    public List<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> findInodesByParentIdFTIS(
+    public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> findInodesByParentIdFTIS(
             long parentId) throws StorageException {
-        List<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> list =
+        List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> list =
                 (List) convertDALtoHDFS(
                         dataAccess.findInodesByParentIdFTIS(parentId));
         Collections
-                .sort(list, com.gmail.benrcarver.serverlessnamenode.server.namenode.INode.Order.ByName);
+                .sort(list, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode.Order.ByName);
         return list;
     }
 
     @Override
-    public List<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> findInodesByParentIdAndPartitionIdPPIS(
+    public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> findInodesByParentIdAndPartitionIdPPIS(
             long parentId, long partitionId) throws StorageException {
-        List<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> list =
+        List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> list =
                 (List) convertDALtoHDFS(
                         dataAccess.findInodesByParentIdAndPartitionIdPPIS(parentId, partitionId));
         Collections
-                .sort(list, com.gmail.benrcarver.serverlessnamenode.server.namenode.INode.Order.ByName);
+                .sort(list, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode.Order.ByName);
         return list;
     }
 
@@ -83,32 +83,32 @@ public class INodeDALAdaptor
         return list;
     }
 
-    public List<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> lockInodesUsingPkBatchTx(
+    public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> lockInodesUsingPkBatchTx(
             String[] names, long[] parentIds, long[] partitionIds, EntityContext.LockMode lock)
             throws StorageException {
-        return (List<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode>) convertDALtoHDFS(
+        return (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode>) convertDALtoHDFS(
                 dataAccess.lockInodesUsingPkBatchTx(names, parentIds, partitionIds, lock));
     }
 
     @Override
-    public com.gmail.benrcarver.serverlessnamenode.server.namenode.INode findInodeByNameParentIdAndPartitionIdPK(
+    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode findInodeByNameParentIdAndPartitionIdPK(
             String name, long parentId, long partitionId) throws StorageException {
         return convertDALtoHDFS(
                 dataAccess.findInodeByNameParentIdAndPartitionIdPK(name, parentId, partitionId));
     }
 
     @Override
-    public List<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> getINodesPkBatched(
+    public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> getINodesPkBatched(
             String[] names, long[] parentIds, long[] partitionIds) throws StorageException {
-        return (List<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode>) convertDALtoHDFS(
+        return (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode>) convertDALtoHDFS(
                 dataAccess.getINodesPkBatched(names, parentIds, partitionIds));
     }
 
     @Override
     public void prepare(
-            Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> removed,
-            Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> newed,
-            Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> modified)
+            Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> removed,
+            Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> newed,
+            Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> modified)
             throws StorageException {
         dataAccess.prepare(convertHDFStoDAL(removed), convertHDFStoDAL(newed),
                 convertHDFStoDAL(modified));
@@ -159,7 +159,7 @@ public class INodeDALAdaptor
 
     //Only for testing
     @Override
-    public List<com.gmail.benrcarver.serverlessnamenode.server.namenode.INode> allINodes() throws StorageException {
+    public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode> allINodes() throws StorageException {
         return (List) convertDALtoHDFS(dataAccess.allINodes());
     }
 
@@ -181,7 +181,7 @@ public class INodeDALAdaptor
 
     @Override
     public INode convertHDFStoDAL(
-            com.gmail.benrcarver.serverlessnamenode.server.namenode.INode inode)
+            com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode inode)
             throws StorageException {
         INode hopINode = null;
         if (inode != null) {
@@ -237,10 +237,10 @@ public class INodeDALAdaptor
     }
 
     @Override
-    public com.gmail.benrcarver.serverlessnamenode.server.namenode.INode convertDALtoHDFS(
+    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode convertDALtoHDFS(
             INode hopINode) throws StorageException {
         try{
-            com.gmail.benrcarver.serverlessnamenode.server.namenode.INode inode = null;
+            com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode inode = null;
             if (hopINode != null) {
                 String group = null;
                 String user = null;

@@ -14,7 +14,7 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.S
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.CorruptFileBlocks;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.block.DataEncryptionKey;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.ServerlessNameNode;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;

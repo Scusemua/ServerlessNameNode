@@ -5,12 +5,12 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.AclException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstantsClient;
-import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockInfoContiguous;
-import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockInfoContiguousUnderConstruction;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.INode;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.INodeAclHelper;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.INodeDirectory;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguous;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeAclHelper;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease;
 import io.hops.HdfsStorageFactory;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 
-import static com.gmail.benrcarver.serverlessnamenode.server.namenode.INode.EMPTY_LIST;
+import static com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode.EMPTY_LIST;
 
 public class INodeUtil {
     private final static Log LOG = LogFactory.getLog(INodeUtil.class);

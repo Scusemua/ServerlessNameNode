@@ -1,7 +1,7 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.CachePool;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool;
 import com.google.common.base.Preconditions;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;

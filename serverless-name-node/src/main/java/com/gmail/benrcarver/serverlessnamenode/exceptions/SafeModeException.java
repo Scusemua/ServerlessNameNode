@@ -1,6 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.exceptions;
 
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.FSNameSystem;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSNameSystem;
 
 import java.io.IOException;
 

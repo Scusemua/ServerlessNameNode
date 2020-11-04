@@ -1,7 +1,7 @@
 package io.hops;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.INode;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode;
 import io.hops.metadata.hdfs.entity.INodeIdentifier;
 import io.hops.transaction.context.TransactionsStats;
 import org.apache.commons.logging.Log;

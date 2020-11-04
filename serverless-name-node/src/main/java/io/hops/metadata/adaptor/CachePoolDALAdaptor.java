@@ -23,8 +23,8 @@ import org.apache.hadoop.fs.permission.FsPermission;
 
 import java.util.Collection;
 
-public class CachePoolDALAdaptor extends DalAdaptor<com.gmail.benrcarver.serverlessnamenode.server .namenode.CachePool, CachePool>
-    implements CachePoolDataAccess<com.gmail.benrcarver.serverlessnamenode.server .namenode.CachePool> {
+public class CachePoolDALAdaptor extends DalAdaptor<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool, CachePool>
+    implements CachePoolDataAccess<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool> {
 
   private CachePoolDataAccess<CachePool> dataAccess;
 
@@ -33,40 +33,40 @@ public class CachePoolDALAdaptor extends DalAdaptor<com.gmail.benrcarver.serverl
   }
 
   @Override
-  public CachePool convertHDFStoDAL(com.gmail.benrcarver.serverlessnamenode.server .namenode.CachePool cachePool) throws StorageException {
+  public CachePool convertHDFStoDAL(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool cachePool) throws StorageException {
     return new CachePool(cachePool.getPoolName(), cachePool.getOwnerName(), cachePool.getGroupName(), cachePool.
         getMode().toShort(), cachePool.getLimit(), cachePool.getMaxRelativeExpiryMs(), cachePool.getBytesNeeded(),
         cachePool.getBytesCached(), cachePool.getFilesNeeded(), cachePool.getFilesCached());
   }
 
   @Override
-  public com.gmail.benrcarver.serverlessnamenode.server .namenode.CachePool convertDALtoHDFS(CachePool cachePool) {
+  public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool convertDALtoHDFS(CachePool cachePool) {
     if(cachePool==null){
       return null;
     }
-    return new com.gmail.benrcarver.serverlessnamenode.server .namenode.CachePool(cachePool.getPoolName(), cachePool.getOwnerName(),
+    return new com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool(cachePool.getPoolName(), cachePool.getOwnerName(),
         cachePool.getGroupName(), new FsPermission(cachePool.getMode()), cachePool.getLimit(), cachePool.getMaxRelativeExpiryMs(), cachePool.getBytesNeeded(),
         cachePool.getBytesCached(), cachePool.getFilesNeeded(), cachePool.getFilesCached());
   }
 
   @Override
-  public void prepare(Collection<com.gmail.benrcarver.serverlessnamenode.server .namenode.CachePool> removed,
-                      Collection<com.gmail.benrcarver.serverlessnamenode.server .namenode.CachePool> newed) throws StorageException {
+  public void prepare(Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool> removed,
+                      Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool> newed) throws StorageException {
     dataAccess.prepare(convertHDFStoDAL(removed), convertHDFStoDAL(newed));
   }
 
   @Override
-  public com.gmail.benrcarver.serverlessnamenode.server .namenode.CachePool find(String key) throws StorageException {
+  public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool find(String key) throws StorageException {
     return convertDALtoHDFS(dataAccess.find(key));
   }
 
   @Override
-  public Collection<com.gmail.benrcarver.serverlessnamenode.server .namenode.CachePool> findAboveName(String key) throws StorageException{
+  public Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool> findAboveName(String key) throws StorageException{
     return convertDALtoHDFS(dataAccess.findAboveName(key));
   }
   
   @Override
-  public Collection<com.gmail.benrcarver.serverlessnamenode.server .namenode.CachePool> findAll() throws StorageException{
+  public Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool> findAll() throws StorageException{
     return convertDALtoHDFS(dataAccess.findAll());
   }
 }

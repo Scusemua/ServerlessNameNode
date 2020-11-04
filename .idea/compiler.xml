@@ -9,6 +9,7 @@
         <module name="hadoop-maven-plugins" />
         <module name="hadoop-annotations" />
         <module name="hadoop-common" />
+        <module name="hadoop-hdfs-client" />
         <module name="serverless-name-node" />
       </profile>
     </annotationProcessing>
@@ -17,7 +18,7 @@
       <module name="hadoop-common" target="1.8" />
       <module name="hadoop-common-project" target="1.8" />
       <module name="hadoop-hdfs" target="1.5" />
-      <module name="hadoop-hdfs-client" target="1.5" />
+      <module name="hadoop-hdfs-client" target="1.8" />
       <module name="hadoop-hdfs-project" target="1.8" />
       <module name="hadoop-maven-plugins" target="1.8" />
       <module name="hops-leader-election" target="1.8" />

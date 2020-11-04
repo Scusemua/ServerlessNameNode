@@ -9,9 +9,9 @@ import java.util.Collection;
 import java.util.List;
 
 public class PendingBlockInfoDALAdaptor extends
-        DalAdaptor<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo, PendingBlockInfo>
+        DalAdaptor<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo, PendingBlockInfo>
         implements
-        PendingBlockDataAccess<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo> {
+        PendingBlockDataAccess<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> {
 
     private final PendingBlockDataAccess<PendingBlockInfo> dataAccces;
 
@@ -21,21 +21,21 @@ public class PendingBlockInfoDALAdaptor extends
     }
 
     @Override
-    public List<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo> findByTimeLimitLessThan(
+    public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> findByTimeLimitLessThan(
             long timeLimit) throws StorageException {
-        return (List<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo>) convertDALtoHDFS(
+        return (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo>) convertDALtoHDFS(
                 dataAccces.findByTimeLimitLessThan(timeLimit));
     }
 
     @Override
-    public List<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo> findAll()
+    public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> findAll()
             throws StorageException {
-        return (List<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo>) convertDALtoHDFS(
+        return (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo>) convertDALtoHDFS(
                 dataAccces.findAll());
     }
 
     @Override
-    public com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo findByBlockAndInodeIds(
+    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo findByBlockAndInodeIds(
             long blockId, long inodeId) throws StorageException {
         return convertDALtoHDFS(dataAccces.findByBlockAndInodeIds(blockId, inodeId));
     }
@@ -47,9 +47,9 @@ public class PendingBlockInfoDALAdaptor extends
 
     @Override
     public void prepare(
-            Collection<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo> removed,
-            Collection<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo> newed,
-            Collection<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo> modified)
+            Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> removed,
+            Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> newed,
+            Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> modified)
             throws StorageException {
         dataAccces.prepare(convertHDFStoDAL(removed), convertHDFStoDAL(newed),
                 convertHDFStoDAL(modified));
@@ -62,7 +62,7 @@ public class PendingBlockInfoDALAdaptor extends
 
     @Override
     public PendingBlockInfo convertHDFStoDAL(
-            com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo hdfsClass)
+            com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo hdfsClass)
             throws StorageException {
         if (hdfsClass != null) {
             return new PendingBlockInfo(hdfsClass.getBlockId(),
@@ -74,10 +74,10 @@ public class PendingBlockInfoDALAdaptor extends
     }
 
     @Override
-    public com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo convertDALtoHDFS(
+    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo convertDALtoHDFS(
             PendingBlockInfo dalClass) throws StorageException {
         if (dalClass != null) {
-            return new com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo(
+            return new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo(
                     dalClass.getBlockId(), dalClass.getInodeId(), dalClass.getTimeStamp(),
                     dalClass.getTargets());
         } else {
@@ -86,16 +86,16 @@ public class PendingBlockInfoDALAdaptor extends
     }
 
     @Override
-    public List<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo> findByINodeId(
+    public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> findByINodeId(
             long inodeId) throws StorageException {
-        return (List<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo>) convertDALtoHDFS(
+        return (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo>) convertDALtoHDFS(
                 dataAccces.findByINodeId(inodeId));
     }
 
     @Override
-    public List<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo> findByINodeIds(
+    public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> findByINodeIds(
             long[] inodeIds) throws StorageException {
-        return (List<com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.PendingBlockInfo>) convertDALtoHDFS(
+        return (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo>) convertDALtoHDFS(
                 dataAccces.findByINodeIds(inodeIds));
     }
 }

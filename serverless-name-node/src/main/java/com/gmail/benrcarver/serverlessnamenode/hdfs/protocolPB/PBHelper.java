@@ -6,9 +6,9 @@ import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.RollingU
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.RollingUpgradeStatus;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeProtocolProtos;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
-import com.gmail.benrcarver.serverlessnamenode.server.protocol.BlockListAsLongs;
-import com.gmail.benrcarver.serverlessnamenode.server.protocol.BlockReport;
-import com.gmail.benrcarver.serverlessnamenode.server.protocol.Bucket;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockListAsLongs;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockReport;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.Bucket;
 import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.CodedInputStream;

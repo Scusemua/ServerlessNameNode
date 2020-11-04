@@ -25,7 +25,7 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DirectoryListing;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsFileStatus;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsLocatedFileStatus;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.ServerlessNameNode;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.conf.Configuration;

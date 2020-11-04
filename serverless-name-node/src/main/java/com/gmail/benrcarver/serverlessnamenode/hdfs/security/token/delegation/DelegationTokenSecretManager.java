@@ -2,8 +2,8 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.security.token.delegation;
 
 //FIXME: needs to be presisted
 
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.FSNameSystem;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.ServerlessNameNode;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSNameSystem;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;

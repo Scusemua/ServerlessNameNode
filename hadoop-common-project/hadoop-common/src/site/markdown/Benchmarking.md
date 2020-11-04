@@ -30,7 +30,7 @@ The benchmark first generates inputs for each thread so that the input generatio
 
 The general command line syntax is:
 
-`hadoop com.gmail.benrcarver.serverlessnamenode.server.namenode.NNThroughputBenchmark [genericOptions] [commandOptions]`
+`hadoop com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NNThroughputBenchmark [genericOptions] [commandOptions]`
 
 #### Generic Options
 
@@ -93,7 +93,7 @@ The benchmark measures the number of operations performed by the name-node per s
 Following is a sample reports by running following commands that opens 100K files with 1K threads against a remote name-node. See [HDFS scalability: the limits to growth](https://www.usenix.org/legacy/publications/login/2010-04/openpdfs/shvachko.pdf) for real-world benchmark stats.
 
 ```
-$ hadoop com.gmail.benrcarver.serverlessnamenode.server.namenode.NNThroughputBenchmark -fs hdfs://nameservice:9000 -op open -threads 1000 -files 100000
+$ hadoop com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NNThroughputBenchmark -fs hdfs://nameservice:9000 -op open -threads 1000 -files 100000
 
 --- open inputs ---
 nrFiles = 100000

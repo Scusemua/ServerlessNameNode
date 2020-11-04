@@ -23,8 +23,8 @@ import io.hops.metadata.hdfs.entity.Lease;
 import java.util.Collection;
 
 public class LeaseDALAdaptor
-    extends DalAdaptor<com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease, Lease>
-    implements LeaseDataAccess<com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease> {
+    extends DalAdaptor<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease, Lease>
+    implements LeaseDataAccess<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease> {
 
   private final LeaseDataAccess<Lease> dataAccess;
 
@@ -38,34 +38,34 @@ public class LeaseDALAdaptor
   }
 
   @Override
-  public Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease> findByTimeLimit(
+  public Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease> findByTimeLimit(
       long timeLimit) throws StorageException {
     return convertDALtoHDFS(dataAccess.findByTimeLimit(timeLimit));
   }
 
   @Override
-  public Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease> findAll()
+  public Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease> findAll()
       throws StorageException {
     return convertDALtoHDFS(dataAccess.findAll());
   }
 
   @Override
-  public com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease findByPKey(String holder, int holderId)
+  public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease findByPKey(String holder, int holderId)
       throws StorageException {
     return convertDALtoHDFS(dataAccess.findByPKey(holder,holderId));
   }
 
   @Override
-  public com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease findByHolderId(
+  public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease findByHolderId(
       int holderId) throws StorageException {
     return convertDALtoHDFS(dataAccess.findByHolderId(holderId));
   }
 
   @Override
   public void prepare(
-      Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease> removed,
-      Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease> newLeases,
-      Collection<com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease> modified)
+      Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease> removed,
+      Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease> newLeases,
+      Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease> modified)
       throws StorageException {
     dataAccess.prepare(convertHDFStoDAL(removed), convertHDFStoDAL(newLeases),
         convertHDFStoDAL(modified));
@@ -78,7 +78,7 @@ public class LeaseDALAdaptor
 
   @Override
   public Lease convertHDFStoDAL(
-      com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease hdfsClass)
+      com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease hdfsClass)
       throws StorageException {
     if (hdfsClass != null) {
       return new Lease(hdfsClass.getHolder(), hdfsClass.getHolderID(),
@@ -89,10 +89,10 @@ public class LeaseDALAdaptor
   }
 
   @Override
-  public com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease convertDALtoHDFS(
+  public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease convertDALtoHDFS(
       Lease dalClass) throws StorageException {
     if (dalClass != null) {
-      return new com.gmail.benrcarver.serverlessnamenode.server.namenode.Lease(
+      return new com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease(
           dalClass.getHolder(), dalClass.getHolderId(),
           dalClass.getLastUpdate(), dalClass.getCount());
     } else {

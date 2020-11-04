@@ -60,7 +60,7 @@ Changed processing of conf/slaves file to allow # to begin a comment.
 
 * [HADOOP-4572](https://issues.apache.org/jira/browse/HADOOP-4572) | *Major* | **INode and its sub-classes should be package private**
 
-Moved org.apache.hadoop.hdfs.{CreateEditsLog, NNThroughputBenchmark} to com.gmail.benrcarver.serverlessnamenode.server.namenode.
+Moved org.apache.hadoop.hdfs.{CreateEditsLog, NNThroughputBenchmark} to com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.
 
 
 ---

@@ -4,7 +4,7 @@ import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.ServerlessNameNode;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import org.apache.commons.logging.Log;

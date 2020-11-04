@@ -2,8 +2,8 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.HdfsConfiguration;
-import com.gmail.benrcarver.serverlessnamenode.server.datanode.DataNodeLayoutVersion;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.NameNodeLayoutVersion;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.DataNodeLayoutVersion;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NameNodeLayoutVersion;
 import org.apache.hadoop.classification.InterfaceAudience;
 
 import java.util.HashMap;

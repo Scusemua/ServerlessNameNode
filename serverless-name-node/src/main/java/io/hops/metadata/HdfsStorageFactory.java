@@ -1,11 +1,11 @@
 package io.hops.metadata;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockInfoContiguous;
-import com.gmail.benrcarver.serverlessnamenode.server.blockmanagement.BlockInfoContiguousUnderConstruction;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.INodeDirectory;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.INodeFile;
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.INodeSymlink;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguous;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeFile;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeSymlink;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.*;
 import io.hops.common.IDsMonitor;

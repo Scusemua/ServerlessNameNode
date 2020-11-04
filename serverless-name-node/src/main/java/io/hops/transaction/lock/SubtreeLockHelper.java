@@ -1,6 +1,6 @@
 package io.hops.transaction.lock;
 
-import com.gmail.benrcarver.serverlessnamenode.server.namenode.ServerlessNameNode;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
 import io.hops.leader_election.node.ActiveNode;
 
 import java.util.Collection;
