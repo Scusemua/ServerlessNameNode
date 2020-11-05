@@ -5,7 +5,6 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.XAttrHelper;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.AlreadyBeingCreatedException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.FsPermissionExtension;

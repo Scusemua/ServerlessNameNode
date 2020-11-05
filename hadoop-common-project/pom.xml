@@ -16,6 +16,8 @@
 
     <modules>
         <module>hadoop-common</module>
+        <module>hadoop-auth</module>
         <module>hadoop-annotations</module>
+        <module>hadoop-minikdc</module>
     </modules>
 </project>

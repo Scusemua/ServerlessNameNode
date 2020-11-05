@@ -1,7 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstantsClient;
 import io.hops.metadata.hdfs.entity.MetaStatus;
 import org.apache.hadoop.fs.PathIsNotDirectoryException;
 import org.apache.hadoop.fs.permission.PermissionStatus;

@@ -17,7 +17,6 @@
  */
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.DatanodeStorage;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;

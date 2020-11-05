@@ -1,7 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.BlockTokenIdentifier;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.security.token.Token;

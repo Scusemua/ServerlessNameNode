@@ -5,6 +5,8 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/hadoop-hdfs-client/pom.xml" />
+        <option value="$PROJECT_DIR$/hadoop-common-project/hadoop-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/hadoop-common-project/hadoop-minikdc/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

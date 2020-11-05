@@ -2,7 +2,6 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.net.EncryptedPeer;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.IOStreamPair;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.TrustedChannelResolver;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.block.DataEncryptionKey;

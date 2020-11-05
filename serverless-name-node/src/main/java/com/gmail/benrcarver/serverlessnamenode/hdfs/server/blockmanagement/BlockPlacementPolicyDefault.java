@@ -19,11 +19,9 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.DatanodeStorage.State;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.BlockStoragePolicy;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlock;
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.hadoop.classification.InterfaceAudience;

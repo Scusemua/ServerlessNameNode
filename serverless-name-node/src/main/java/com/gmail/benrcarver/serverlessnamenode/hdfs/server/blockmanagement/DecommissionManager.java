@@ -35,8 +35,6 @@ import io.hops.util.Slicer;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSNamesystem;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Namesystem;
 import org.apache.hadoop.hdfs.util.CyclicIteration;

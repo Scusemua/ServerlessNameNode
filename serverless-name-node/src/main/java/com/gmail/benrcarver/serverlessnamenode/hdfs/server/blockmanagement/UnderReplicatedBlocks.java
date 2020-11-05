@@ -32,7 +32,6 @@ import io.hops.transaction.handler.LightWeightRequestHandler;
 import io.hops.transaction.lock.LockFactory;
 import io.hops.transaction.lock.TransactionLockTypes;
 import io.hops.transaction.lock.TransactionLocks;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NameNode;
 
 import java.io.IOException;

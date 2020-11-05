@@ -31,8 +31,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
 import org.apache.hadoop.util.Time;
 import org.slf4j.Logger;
 

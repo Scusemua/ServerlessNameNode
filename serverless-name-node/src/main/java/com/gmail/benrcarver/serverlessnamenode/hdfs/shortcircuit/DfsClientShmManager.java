@@ -17,7 +17,6 @@
  */
 package com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;

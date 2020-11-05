@@ -19,7 +19,6 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement;
 
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirective;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.*;
 import com.google.common.base.Preconditions;

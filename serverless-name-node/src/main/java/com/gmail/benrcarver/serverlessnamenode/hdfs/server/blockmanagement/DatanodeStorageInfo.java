@@ -1,6 +1,5 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.DatanodeStorage;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.DatanodeStorage.State;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.StorageReport;

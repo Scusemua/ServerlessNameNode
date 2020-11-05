@@ -1,6 +1,5 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockCollection;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguous;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.GenerationStamp;

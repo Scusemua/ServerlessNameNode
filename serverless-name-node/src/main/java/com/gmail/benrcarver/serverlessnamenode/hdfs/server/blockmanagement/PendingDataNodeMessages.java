@@ -20,7 +20,6 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;
 
 import java.util.List;

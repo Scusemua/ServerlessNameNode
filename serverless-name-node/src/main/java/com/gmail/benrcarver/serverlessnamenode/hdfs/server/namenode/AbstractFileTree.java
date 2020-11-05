@@ -1,7 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstantsClient;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.HashMultimap;

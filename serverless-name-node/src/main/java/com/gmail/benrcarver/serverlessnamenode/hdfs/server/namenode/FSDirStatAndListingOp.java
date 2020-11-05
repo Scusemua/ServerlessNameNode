@@ -1,11 +1,8 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DirectoryListing;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsLocatedFileStatus;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.FsPermissionExtension;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstantsClient;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsFileStatus;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlock;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlocks;
 import com.google.common.base.Charsets;

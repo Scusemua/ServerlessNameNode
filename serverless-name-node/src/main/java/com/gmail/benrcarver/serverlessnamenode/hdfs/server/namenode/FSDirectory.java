@@ -3,8 +3,6 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstantsClient;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsFileStatus;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
 import com.google.common.annotations.VisibleForTesting;

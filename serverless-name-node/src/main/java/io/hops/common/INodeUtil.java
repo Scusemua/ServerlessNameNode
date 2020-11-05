@@ -3,8 +3,6 @@ package io.hops.common;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.AclException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstantsClient;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguous;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode;

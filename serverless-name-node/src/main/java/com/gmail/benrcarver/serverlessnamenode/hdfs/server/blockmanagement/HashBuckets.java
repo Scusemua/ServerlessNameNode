@@ -1,6 +1,5 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockReport;
 import com.google.common.annotations.VisibleForTesting;

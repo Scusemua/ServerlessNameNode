@@ -2,7 +2,6 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.XAttrHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZone;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;

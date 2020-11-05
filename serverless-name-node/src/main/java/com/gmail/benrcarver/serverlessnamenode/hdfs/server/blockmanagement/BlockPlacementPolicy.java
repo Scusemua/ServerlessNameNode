@@ -18,9 +18,7 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.BlockStoragePolicy;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.Block;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlock;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

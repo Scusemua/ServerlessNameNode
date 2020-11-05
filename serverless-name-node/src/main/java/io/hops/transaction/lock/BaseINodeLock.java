@@ -1,7 +1,6 @@
 package io.hops.transaction.lock;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstantsClient;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.*;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;

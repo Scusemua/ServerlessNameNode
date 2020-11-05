@@ -21,7 +21,6 @@ import io.hops.metadata.StorageMap;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtilClient;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Namesystem;
 import org.apache.hadoop.hdfs.server.protocol.StorageReport;
 import org.apache.hadoop.hdfs.server.protocol.VolumeFailureSummary;

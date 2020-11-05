@@ -18,7 +18,6 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeInfo;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.net.NetworkTopology;

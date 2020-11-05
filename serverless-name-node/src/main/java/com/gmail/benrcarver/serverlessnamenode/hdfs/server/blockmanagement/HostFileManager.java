@@ -27,7 +27,6 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.UnmodifiableIterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.util.HostsFileReader;
 
 import javax.annotation.Nullable;
