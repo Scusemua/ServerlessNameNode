@@ -1,6 +1,5 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.DSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.NSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.CorruptFileBlocks;

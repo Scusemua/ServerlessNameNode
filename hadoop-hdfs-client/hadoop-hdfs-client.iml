@@ -58,7 +58,6 @@
     <orderEntry type="library" name="Maven: com.jcraft:jsch:0.1.55" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-client:5.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-recipes:5.1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.curator:curator-framework:5.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.htrace:htrace-core4:4.2.0-incubating" level="project" />
     <orderEntry type="library" name="Maven: org.apache.zookeeper:zookeeper:3.6.2" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
@@ -73,7 +72,7 @@
     <orderEntry type="library" name="Maven: io.netty:netty-transport-native-epoll:4.1.50.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-transport-native-unix-common:4.1.50.Final" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.20" level="project" />
-    <orderEntry type="library" name="Maven: com.gmail.benrcarver.ServerlessNameNode.metadata:hops-metadata-dal:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="hops-metadata-dal" />
     <orderEntry type="library" name="Maven: com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-simplekdc:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-client:2.0.1" level="project" />
@@ -86,11 +85,6 @@
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-crypto:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-util:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:token-provider:2.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.nimbusds:nimbus-jose-jwt:8.2.1" level="project" />
-    <orderEntry type="library" name="Maven: com.github.stephenc.jcip:jcip-annotations:1.0-1" level="project" />
-    <orderEntry type="library" name="Maven: net.minidev:json-smart:2.3" level="project" />
-    <orderEntry type="library" name="Maven: net.minidev:accessors-smart:1.2" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm:5.0.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-admin:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-server:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-identity:2.0.1" level="project" />
@@ -111,6 +105,12 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="hadoop-auth" />
+    <orderEntry type="library" name="Maven: com.nimbusds:nimbus-jose-jwt:9.1.2" level="project" />
+    <orderEntry type="library" name="Maven: com.github.stephenc.jcip:jcip-annotations:1.0-1" level="project" />
+    <orderEntry type="library" name="Maven: net.minidev:json-smart:2.3" level="project" />
+    <orderEntry type="library" name="Maven: net.minidev:accessors-smart:1.2" level="project" />
+    <orderEntry type="library" name="Maven: org.ow2.asm:asm:5.0.4" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.curator:curator-framework:5.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.amazonaws:aws-lambda-java-core:1.2.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.6" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:jsr305:3.0.2" level="project" />

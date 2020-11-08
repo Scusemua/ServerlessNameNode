@@ -7,19 +7,22 @@
         <option value="$PROJECT_DIR$/hadoop-hdfs-client/pom.xml" />
         <option value="$PROJECT_DIR$/hadoop-common-project/hadoop-auth/pom.xml" />
         <option value="$PROJECT_DIR$/hadoop-common-project/hadoop-minikdc/pom.xml" />
+        <option value="$PROJECT_DIR$/serverless-name-node-base/pom.xml" />
+        <option value="$PROJECT_DIR$/serverless-name-node/pom.xml" />
+        <option value="$PROJECT_DIR$/hops-metadata-dal-impl-ndb/pom.xml" />
+        <option value="$PROJECT_DIR$/hops-metadata-dal/pom.xml" />
+        <option value="$PROJECT_DIR$/hadoop-maven-plugins/pom.xml" />
+        <option value="$PROJECT_DIR$/hadoop-common-project/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
-        <option value="$PROJECT_DIR$/hadoop-common-project/pom.xml" />
         <option value="$PROJECT_DIR$/hadoop-hdfs-project/pom.xml" />
         <option value="$PROJECT_DIR$/hops-leader-election/pom.xml" />
-        <option value="$PROJECT_DIR$/hops-metadata-dal-impl-ndb/pom.xml" />
-        <option value="$PROJECT_DIR$/hops-metadata-dal/pom.xml" />
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8.0.181" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8.0.181" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

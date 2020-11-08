@@ -1,5 +1,7 @@
 package com.gmail.benrcarver.serverlessnamenode.exceptions;
 
+import org.apache.hadoop.fs.Path;
+
 import java.io.IOException;
 
 /**

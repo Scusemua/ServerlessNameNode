@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="ExternalSystem" externalSystem="Maven" />
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
@@ -108,7 +107,7 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.20" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.bouncycastle:bcprov-jdk15on:1.67" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.67" level="project" />
-    <orderEntry type="library" name="Maven: com.gmail.benrcarver.ServerlessNameNode.metadata:hops-metadata-dal:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="hops-metadata-dal" />
     <orderEntry type="library" name="Maven: com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-simplekdc:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.kerby:kerb-client:2.0.1" level="project" />

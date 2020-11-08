@@ -17,26 +17,18 @@
  */
 
 package org.apache.hadoop.minikdc;
-import org.apache.kerby.kerberos.kerb.KrbException;
+
 import org.apache.kerby.kerberos.kerb.server.KdcConfigKey;
 import org.apache.kerby.kerberos.kerb.server.SimpleKdcServer;
-import org.apache.kerby.util.IOUtil;
 import org.apache.kerby.util.NetworkUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.nio.ch.IOUtil;
+import sun.security.krb5.KrbException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Mini KDC based on Apache Directory Server that can be embedded in testcases
@@ -288,10 +280,10 @@ public class MiniKdc {
   private void resetDefaultRealm() throws IOException {
     InputStream templateResource = new FileInputStream(
             getKrb5conf().getAbsolutePath());
-    String content = IOUtil.readInput(templateResource);
+    String content = IOUtil.read(templateResource);
     content = content.replaceAll("default_realm = .*\n",
             "default_realm = " + getRealm() + "\n");
-    IOUtil.writeFile(content, getKrb5conf());
+    IOUtil.write(content, getKrb5conf());
   }
 
   private void prepareKdcServer() throws Exception {
@@ -340,7 +332,7 @@ public class MiniKdc {
     if (simpleKdc != null) {
       try {
         simpleKdc.stop();
-      } catch (KrbException e) {
+      } catch (org.apache.kerby.kerberos.kerb.KrbException e) {
         e.printStackTrace();
       } finally {
         if(conf.getProperty(DEBUG) != null) {

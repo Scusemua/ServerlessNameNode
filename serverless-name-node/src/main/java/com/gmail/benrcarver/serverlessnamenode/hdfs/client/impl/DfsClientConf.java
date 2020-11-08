@@ -19,7 +19,6 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSClient;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ByteArrayManager;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
 import com.google.common.annotations.VisibleForTesting;

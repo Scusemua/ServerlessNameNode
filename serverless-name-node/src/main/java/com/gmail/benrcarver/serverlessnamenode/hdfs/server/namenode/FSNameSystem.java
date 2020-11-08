@@ -2841,7 +2841,7 @@ public class FSNameSystem implements NameSystem {
         /**
          * A tip on how safe mode is to be turned off: manually or automatically.
          */
-        String getTurnOffTip() throws IOException{
+        public String getTurnOffTip() throws IOException{
             if(!isOn()){
                 return "Safe mode is OFF.";
             }

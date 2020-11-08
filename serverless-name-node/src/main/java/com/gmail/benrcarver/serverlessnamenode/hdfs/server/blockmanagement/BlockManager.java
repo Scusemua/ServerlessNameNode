@@ -5,7 +5,6 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.BlockStoragePolicy;
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.block.DataEncryptionKey;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.BlockTokenIdentifier.AccessMode;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.ReplicaState;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.*;

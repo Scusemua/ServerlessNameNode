@@ -1,7 +1,6 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode;
 
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.DSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.NSQuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
