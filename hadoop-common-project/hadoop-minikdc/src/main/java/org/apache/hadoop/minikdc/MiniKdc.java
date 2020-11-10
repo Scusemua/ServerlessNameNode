@@ -20,11 +20,10 @@ package org.apache.hadoop.minikdc;
 
 import org.apache.kerby.kerberos.kerb.server.KdcConfigKey;
 import org.apache.kerby.kerberos.kerb.server.SimpleKdcServer;
+import org.apache.kerby.util.IOUtil;
 import org.apache.kerby.util.NetworkUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import sun.nio.ch.IOUtil;
-import sun.security.krb5.KrbException;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -280,10 +279,10 @@ public class MiniKdc {
   private void resetDefaultRealm() throws IOException {
     InputStream templateResource = new FileInputStream(
             getKrb5conf().getAbsolutePath());
-    String content = IOUtil.read(templateResource);
+    String content = IOUtil.readInput(templateResource);
     content = content.replaceAll("default_realm = .*\n",
             "default_realm = " + getRealm() + "\n");
-    IOUtil.write(content, getKrb5conf());
+    IOUtil.writeFile(content, getKrb5conf());
   }
 
   private void prepareKdcServer() throws Exception {

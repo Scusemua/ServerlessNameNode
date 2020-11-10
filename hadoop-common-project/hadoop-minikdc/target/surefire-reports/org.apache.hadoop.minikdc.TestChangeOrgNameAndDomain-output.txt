@@ -1,0 +1,25 @@
+SLF4J: No SLF4J providers were found.
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#noProviders for further details.
+Debug is  true storeKey true useTicketCache true useKeyTab true doNotPrompt true ticketCache is null isInitiator true KeyTab is G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-minikdc\target\foo.keytab refreshKrb5Config is true principal is foo tryFirstPass is false useFirstPass is false storePass is false clearPass is false
+Refreshing Kerberos configuration
+Acquire TGT from Cache
+Principal is foo@APACHE.COM
+null credentials from Ticket Cache
+principal is foo@APACHE.COM
+Will use keytab
+Commit Succeeded 
+
+		[Krb5LoginModule]: Entering logout
+		[Krb5LoginModule]: logged out Subject
+Debug is  true storeKey true useTicketCache true useKeyTab true doNotPrompt true ticketCache is null isInitiator false KeyTab is G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-minikdc\target\foo.keytab refreshKrb5Config is true principal is foo tryFirstPass is false useFirstPass is false storePass is false clearPass is false
+Refreshing Kerberos configuration
+Acquire TGT from Cache
+Principal is foo@APACHE.COM
+null credentials from Ticket Cache
+principal is foo@APACHE.COM
+Will use keytab
+Commit Succeeded 
+
+		[Krb5LoginModule]: Entering logout
+		[Krb5LoginModule]: logged out Subject

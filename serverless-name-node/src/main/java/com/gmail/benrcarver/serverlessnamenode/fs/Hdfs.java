@@ -18,9 +18,7 @@
 package com.gmail.benrcarver.serverlessnamenode.fs;
 
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSClient;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtilClient;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.HdfsConfiguration;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.*;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsDataInputStream;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsDataOutputStream;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.CorruptFileBlockIterator;

@@ -5,14 +5,14 @@ import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.net.TcpPeerServer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.QuotaByStorageTypeExceededException;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.TrustedChannelResolver;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataEncryptionKeyFactory;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataTransferSaslUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.CorruptFileBlocks;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.block.DataEncryptionKey;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
@@ -22,8 +22,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
+import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
+import org.apache.hadoop.hdfs.protocol.CorruptFileBlocks;
+import org.apache.hadoop.hdfs.protocol.DSQuotaExceededException;
+import org.apache.hadoop.hdfs.protocol.DatanodeID;
+import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
+import org.apache.hadoop.hdfs.security.token.block.DataEncryptionKey;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.retry.LossyRetryInvocationHandler;
 import org.apache.hadoop.ipc.RemoteException;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.security.AccessControlException;
@@ -148,7 +155,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
         this.socketFactory = NetUtils.getSocketFactoryFromProperty(conf,
                 conf.get(DFSConfigKeys.DFS_CLIENT_XCEIVER_SOCKET_FACTORY_CLASS_KEY,
                         DFSConfigKeys.DEFAULT_DFS_CLIENT_XCEIVER_FACTORY_CLASS));
-        this.dtpReplaceDatanodeOnFailure = ReplaceDatanodeOnFailure.get(conf);
+        this.dtpReplaceDatanodeOnFailure = HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure.get(conf);
 
         this.ugi = UserGroupInformation.getCurrentUser();
 

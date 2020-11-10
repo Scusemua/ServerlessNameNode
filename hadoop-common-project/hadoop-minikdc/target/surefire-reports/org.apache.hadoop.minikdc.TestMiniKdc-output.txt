@@ -1,0 +1,11 @@
+Debug is  true storeKey true useTicketCache true useKeyTab true doNotPrompt true ticketCache is null isInitiator true KeyTab is G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-minikdc\target\foo.keytab refreshKrb5Config is true principal is foo tryFirstPass is false useFirstPass is false storePass is false clearPass is false
+Refreshing Kerberos configuration
+Acquire TGT from Cache
+Principal is foo@EXAMPLE.COM
+null credentials from Ticket Cache
+principal is foo@EXAMPLE.COM
+Will use keytab
+Commit Succeeded 
+
+		[Krb5LoginModule]: Entering logout
+		[Krb5LoginModule]: logged out Subject
