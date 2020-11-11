@@ -97,6 +97,17 @@ public class ServerlessNameNode {
      */
     protected boolean stopRequested = false;
 
+    /** Given a configuration get the bind host of the service rpc server
+     *  If the bind host is not configured returns null.
+     */
+    protected String getServiceRpcServerBindHost(Configuration conf) {
+        String addr = conf.getTrimmed(DFS_NAMENODE_SERVICE_RPC_BIND_HOST_KEY);
+        if (addr == null || addr.isEmpty()) {
+            return null;
+        }
+        return addr;
+    }
+
     /**
      * for block report load balancing
      */

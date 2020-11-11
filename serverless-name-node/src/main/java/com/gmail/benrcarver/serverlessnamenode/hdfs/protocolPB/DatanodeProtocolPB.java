@@ -15,32 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.gmail.benrcarver.serverlessnamenode.fs;
+
+package com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB;
 
 import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.classification.InterfaceStability;
-import org.apache.hadoop.fs.BlockLocation;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.DatanodeProtocolService;
+import org.apache.hadoop.ipc.ProtocolInfo;
+import org.apache.hadoop.security.KerberosInfo;
 
-import java.io.IOException;
-
-/**
- * Wrapper for {@link BlockLocation} that also includes a {@link LocatedBlock},
- * allowing more detailed queries to the datanode about a block.
- */
+@KerberosInfo(
+    serverPrincipal = DFSConfigKeys.DFS_NAMENODE_KERBEROS_PRINCIPAL_KEY,
+    clientPrincipal = DFSConfigKeys.DFS_DATANODE_KERBEROS_PRINCIPAL_KEY)
+@ProtocolInfo(
+    protocolName = "org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol",
+    protocolVersion = 1)
 @InterfaceAudience.Private
-@InterfaceStability.Unstable
-public class HdfsBlockLocation extends BlockLocation {
-
-  private final LocatedBlock block;
-  
-  public HdfsBlockLocation(BlockLocation loc, LocatedBlock block)
-      throws IOException {
-    // Initialize with data from passed in BlockLocation
-    super(loc);
-    this.block = block;
-  }
-  
-  public LocatedBlock getLocatedBlock() {
-    return block;
-  }
+public interface DatanodeProtocolPB
+    extends DatanodeProtocolService.BlockingInterface {
 }

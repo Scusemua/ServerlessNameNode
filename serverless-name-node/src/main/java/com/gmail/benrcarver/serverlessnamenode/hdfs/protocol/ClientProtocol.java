@@ -1,14 +1,13 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NotReplicatedYetException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.SafeModeException;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.ParentNotDirectoryException;
 import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.fs.UnresolvedLinkException;
-import org.apache.hadoop.hdfs.protocol.CorruptFileBlocks;
-import org.apache.hadoop.hdfs.protocol.DSQuotaExceededException;
-import org.apache.hadoop.hdfs.protocol.NSQuotaExceededException;
-import org.apache.hadoop.hdfs.protocol.QuotaExceededException;
+import org.apache.hadoop.hdfs.protocol.*;
+import org.apache.hadoop.io.retry.AtMostOnce;
 import org.apache.hadoop.io.retry.Idempotent;
 
 import java.io.FileNotFoundException;
@@ -26,6 +25,136 @@ import java.security.AccessControlException;
  * ********************************************************************
  */
 public interface ClientProtocol {
+
+    /**
+     * The client can give up on a block by calling abandonBlock().
+     * The client can then  either obtain a new block, or complete or abandon the
+     * file.
+     * Any partial writes to the block will be discarded.
+     *
+     * @param b         Block to abandon
+     * @param fileId    The id of the file where the block resides.  Older clients
+     *                    will pass GRANDFATHER_INODE_ID here.
+     * @param src       The path of the file where the block resides.
+     * @param holder    Lease holder.
+     *
+     * @throws AccessControlException
+     *     If access is denied
+     * @throws FileNotFoundException
+     *     file <code>src</code> is not found
+     * @throws UnresolvedLinkException
+     *     If <code>src</code> contains a symlink
+     * @throws IOException
+     *     If an I/O error occurred
+     */
+    @Idempotent
+    public void abandonBlock(ExtendedBlock b, long fileId, String src, String holder)
+            throws AccessControlException, FileNotFoundException,
+            UnresolvedLinkException, IOException;
+
+    /**
+     * Update a pipeline for a block under construction
+     *
+     * @param clientName
+     *     the name of the client
+     * @param oldBlock
+     *     the old block
+     * @param newBlock
+     *     the new block containing new generation stamp and length
+     * @param newNodes
+     *     datanodes in the pipeline
+     * @throws IOException
+     *     if any error occurs
+     */
+    @AtMostOnce
+    public void updatePipeline(String clientName, ExtendedBlock oldBlock,
+                               ExtendedBlock newBlock, DatanodeID[] newNodes, String[] newStorages)
+            throws IOException;
+
+    /**
+     * A client that wants to write an additional block to the
+     * indicated filename (which must currently be open for writing)
+     * should call addBlock().
+     * <p/>
+     * addBlock() allocates a new block and datanodes the block data
+     * should be replicated to.
+     * <p/>
+     * addBlock() also commits the previous block by reporting
+     * to the name-node the actual generation stamp and the length
+     * of the block that the client has transmitted to data-nodes.
+     *
+     * @param src
+     *     the file being created
+     * @param clientName
+     *     the name of the client that adds the block
+     * @param previous
+     *     previous block
+     * @param excludeNodes
+     *     a list of nodes that should not be
+     *     allocated for the current block
+     * @param fileId the id uniquely identifying a file
+     *
+     * @return LocatedBlock allocated block information.
+     * @throws AccessControlException
+     *     If access is denied
+     * @throws FileNotFoundException
+     *     If file <code>src</code> is not found
+     * @throws NotReplicatedYetException
+     *     previous blocks of the file are not
+     *     replicated yet. Blocks cannot be added until replication
+     *     completes.
+     * @throws SafeModeException
+     *     create not allowed in safemode
+     * @throws UnresolvedLinkException
+     *     If <code>src</code> contains a symlink
+     * @throws IOException
+     *     If an I/O error occurred
+     */
+    @Idempotent
+    public LocatedBlock addBlock(String src, String clientName,
+                                 ExtendedBlock previous, DatanodeInfo[] excludeNodes, long fileId, String[] favoredNodes)
+            throws AccessControlException, FileNotFoundException,
+            NotReplicatedYetException, SafeModeException, UnresolvedLinkException,
+            IOException;
+
+    /**
+     * Get a datanode for an existing pipeline.
+     *
+     * @param src
+     *     the file being written
+     * @param fileId the ID of the file being written
+     * @param blk
+     *     the block being written
+     * @param existings
+     *     the existing nodes in the pipeline
+     * @param excludes
+     *     the excluded nodes
+     * @param numAdditionalNodes
+     *     number of additional datanodes
+     * @param clientName
+     *     the name of the client
+     * @return the located block.
+     * @throws AccessControlException
+     *     If access is denied
+     * @throws FileNotFoundException
+     *     If file <code>src</code> is not found
+     * @throws SafeModeException
+     *     create not allowed in safemode
+     * @throws UnresolvedLinkException
+     *     If <code>src</code> contains a symlink
+     * @throws IOException
+     *     If an I/O error occurred
+     */
+    @Idempotent
+    public LocatedBlock getAdditionalDatanode(final String src,final long fileId,
+                                              final ExtendedBlock blk,
+                                              final DatanodeInfo[] existings,
+                                              final String[] existingStorageIDs,
+                                              final DatanodeInfo[] excludes,
+                                              final int numAdditionalNodes,
+                                              final String clientName)
+            throws AccessControlException, FileNotFoundException, SafeModeException,
+            UnresolvedLinkException, IOException;
 
     /**
      * Enter, leave or get safe mode.
@@ -137,6 +266,25 @@ public interface ClientProtocol {
     @Idempotent
     public CorruptFileBlocks listCorruptFileBlocks(String path, String cookie)
             throws IOException;
+
+    /**
+     * Get a new generation stamp together with an access token for
+     * a block under construction
+     * <p/>
+     * This method is called only when a client needs to recover a failed
+     * pipeline or set up a pipeline for appending to a block.
+     *
+     * @param block
+     *     a block
+     * @param clientName
+     *     the name of the client
+     * @return a located block with a new generation stamp and an access token
+     * @throws IOException
+     *     if any error occurs
+     */
+    @Idempotent
+    public LocatedBlock updateBlockForPipeline(ExtendedBlock block,
+                                               String clientName) throws IOException;
 
     /**
      * Rename an item in the file system namespace.

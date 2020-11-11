@@ -115,7 +115,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
     private volatile long serverDefaultsLastUpdate;
     final String clientName;
     private final SocketFactory socketFactory;
-    final HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure dtpReplaceDatanodeOnFailure;
+    final ReplaceDatanodeOnFailure dtpReplaceDatanodeOnFailure;
     final FileSystem.Statistics stats;
     private final String authority;
     private Random r = new Random();

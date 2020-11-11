@@ -1,31 +1,41 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.NSQuotaExceededException;
-import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
-import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.HDFSPolicyProvider;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeProtocolProtos;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocols;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BRLoadBalancingOverloadException;
+import com.gmail.benrcarver.serverlessnamenode.protocol.ClientNamenodeProtocolProtos;
 import com.google.protobuf.BlockingService;
 import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
+import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.ipc.ProtobufRpcEngine;
 import org.apache.hadoop.ipc.RPC;
 import org.apache.hadoop.ipc.WritableRpcEngine;
+import org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos;
+import org.apache.hadoop.ipc.proto.RefreshCallQueueProtocolProtos;
 import org.apache.hadoop.ipc.protocolPB.GenericRefreshProtocolPB;
 import org.apache.hadoop.ipc.protocolPB.GenericRefreshProtocolServerSideTranslatorPB;
 import org.apache.hadoop.ipc.protocolPB.RefreshCallQueueProtocolPB;
 import org.apache.hadoop.ipc.protocolPB.RefreshCallQueueProtocolServerSideTranslatorPB;
+import org.apache.hadoop.net.Node;
+import org.apache.hadoop.security.authorize.AuthorizationException;
+import org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos;
+import org.apache.hadoop.security.proto.RefreshUserMappingsProtocolProtos;
 import org.apache.hadoop.security.protocolPB.RefreshAuthorizationPolicyProtocolPB;
 import org.apache.hadoop.security.protocolPB.RefreshAuthorizationPolicyProtocolServerSideTranslatorPB;
 import org.apache.hadoop.security.protocolPB.RefreshUserMappingsProtocolPB;
 import org.apache.hadoop.security.protocolPB.RefreshUserMappingsProtocolServerSideTranslatorPB;
 import org.apache.hadoop.security.token.SecretManager;
+import org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos;
 import org.apache.hadoop.tools.protocolPB.GetUserMappingsProtocolPB;
 import org.apache.hadoop.tools.protocolPB.GetUserMappingsProtocolServerSideTranslatorPB;
+import org.apache.hadoop.tracing.TraceAdminPB;
 import org.apache.hadoop.tracing.TraceAdminProtocolPB;
 import org.apache.hadoop.tracing.TraceAdminProtocolServerSideTranslatorPB;
 import org.slf4j.Logger;
@@ -35,9 +45,12 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.file.FileAlreadyExistsException;
 import java.security.AccessControlException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.DFS_NAMENODE_HANDLER_COUNT_DEFAULT;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.DFS_NAMENODE_HANDLER_COUNT_KEY;
+import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
 import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants.MAX_PATH_DEPTH;
 import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants.MAX_PATH_LENGTH;
 
@@ -61,6 +74,8 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
     protected final RPC.Server clientRpcServer;
     protected final InetSocketAddress clientRpcAddress;
 
+    private final boolean serviceAuthEnabled;
+
     private static final Logger LOG = ServerlessNameNode.LOG;
     private static final Logger stateChangeLog = ServerlessNameNode.stateChangeLog;
     private static final Logger blockStateChangeLog = ServerlessNameNode.blockStateChangeLog;
@@ -83,50 +98,50 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
         ClientNamenodeProtocolServerSideTranslatorPB
                 clientProtocolServerTranslator =
                 new ClientNamenodeProtocolServerSideTranslatorPB(this);
-        BlockingService clientNNPbService = ClientNamenodeProtocol.
+        BlockingService clientNNPbService = ClientNamenodeProtocolProtos.ClientNamenodeProtocol.
                 newReflectiveBlockingService(clientProtocolServerTranslator);
 
         DatanodeProtocolServerSideTranslatorPB dnProtoPbTranslator =
                 new DatanodeProtocolServerSideTranslatorPB(this);
-        BlockingService dnProtoPbService = DatanodeProtocolService
+        BlockingService dnProtoPbService = DatanodeProtocolProtos.DatanodeProtocolService
                 .newReflectiveBlockingService(dnProtoPbTranslator);
 
         NamenodeProtocolServerSideTranslatorPB namenodeProtocolXlator =
                 new NamenodeProtocolServerSideTranslatorPB(this);
-        BlockingService NNPbService = NamenodeProtocolService
+        BlockingService NNPbService = NamenodeProtocolProtos.NamenodeProtocolService
                 .newReflectiveBlockingService(namenodeProtocolXlator);
 
         RefreshAuthorizationPolicyProtocolServerSideTranslatorPB
                 refreshAuthPolicyXlator =
                 new RefreshAuthorizationPolicyProtocolServerSideTranslatorPB(this);
         BlockingService refreshAuthService =
-                RefreshAuthorizationPolicyProtocolService
+                RefreshAuthorizationPolicyProtocolProtos.RefreshAuthorizationPolicyProtocolService
                         .newReflectiveBlockingService(refreshAuthPolicyXlator);
 
         RefreshUserMappingsProtocolServerSideTranslatorPB refreshUserMappingXlator =
                 new RefreshUserMappingsProtocolServerSideTranslatorPB(this);
         BlockingService refreshUserMappingService =
-                RefreshUserMappingsProtocolService
+                RefreshUserMappingsProtocolProtos.RefreshUserMappingsProtocolService
                         .newReflectiveBlockingService(refreshUserMappingXlator);
 
         RefreshCallQueueProtocolServerSideTranslatorPB refreshCallQueueXlator =
                 new RefreshCallQueueProtocolServerSideTranslatorPB(this);
-        BlockingService refreshCallQueueService = RefreshCallQueueProtocolService
+        BlockingService refreshCallQueueService = RefreshCallQueueProtocolProtos.RefreshCallQueueProtocolService
                 .newReflectiveBlockingService(refreshCallQueueXlator);
 
         GenericRefreshProtocolServerSideTranslatorPB genericRefreshXlator =
                 new GenericRefreshProtocolServerSideTranslatorPB(this);
-        BlockingService genericRefreshService = GenericRefreshProtocolService
+        BlockingService genericRefreshService = GenericRefreshProtocolProtos.GenericRefreshProtocolService
                 .newReflectiveBlockingService(genericRefreshXlator);
 
         GetUserMappingsProtocolServerSideTranslatorPB getUserMappingXlator =
                 new GetUserMappingsProtocolServerSideTranslatorPB(this);
-        BlockingService getUserMappingService = GetUserMappingsProtocolService
+        BlockingService getUserMappingService = GetUserMappingsProtocolProtos.GetUserMappingsProtocolService
                 .newReflectiveBlockingService(getUserMappingXlator);
 
         TraceAdminProtocolServerSideTranslatorPB traceAdminXlator =
                 new TraceAdminProtocolServerSideTranslatorPB(this);
-        BlockingService traceAdminService = TraceAdminService
+        BlockingService traceAdminService = TraceAdminPB.TraceAdminService
                 .newReflectiveBlockingService(traceAdminXlator);
 
         WritableRpcEngine.ensureInitialized();
@@ -144,7 +159,7 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
                     conf.getInt(DFS_NAMENODE_SERVICE_HANDLER_COUNT_KEY,
                             DFS_NAMENODE_SERVICE_HANDLER_COUNT_DEFAULT);
             this.serviceRpcServer = new RPC.Builder(conf).setProtocol(
-                    org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolPB.class)
+                    com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.ClientNamenodeProtocolPB.class)
                     .setInstance(clientNNPbService)
                     .setBindAddress(bindHost)
                     .setPort(serviceRpcAddr.getPort()).setNumHandlers(serviceHandlerCount)
@@ -188,7 +203,7 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
         LOG.info("RPC server is binding to " + bindHost + ":" + rpcAddr.getPort());
 
         this.clientRpcServer = new RPC.Builder(conf).setProtocol(
-                org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolPB.class)
+                com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.ClientNamenodeProtocolPB.class)
                 .setInstance(clientNNPbService).setBindAddress(bindHost)
                 .setPort(rpcAddr.getPort()).setNumHandlers(handlerCount)
                 .setVerbose(false)
@@ -303,6 +318,131 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
                 srcPath.depth() <= MAX_PATH_DEPTH);
     }
 
+    /**
+     * The client needs to give up on the block.
+     */
+    @Override // ClientProtocol
+    public void abandonBlock(ExtendedBlock b, long fileId, String src, String holder)
+            throws IOException {
+        checkNNStartup();
+        if (stateChangeLog.isDebugEnabled()) {
+            stateChangeLog
+                    .debug("*BLOCK* NameNode.abandonBlock: " + b + " of file " + src);
+        }
+        if (!namesystem.abandonBlock(b, fileId, src, holder)) {
+            throw new IOException("Cannot abandon block during write to " + src);
+        }
+    }
+
+    @Override // ClientProtocol
+    public void updatePipeline(String clientName, ExtendedBlock oldBlock,
+                               ExtendedBlock newBlock, DatanodeID[] newNodes, String[] newStorageIDs)
+            throws IOException {
+        checkNNStartup();
+        namesystem.updatePipeline(clientName, oldBlock, newBlock, newNodes, newStorageIDs);
+    }
+
+    @Override // ClientProtocol
+    public LocatedBlock addBlock(String src, String clientName,
+                                 ExtendedBlock previous, DatanodeInfo[] excludedNodes, long fileId, String[] favoredNodes) throws IOException {
+        checkNNStartup();
+        if (stateChangeLog.isDebugEnabled()) {
+            stateChangeLog.debug(
+                    "*BLOCK* NameNode.addBlock: file " + src + " fileId=" + fileId + " for " + clientName);
+        }
+        HashSet<Node> excludedNodesSet = null;
+
+        if (excludedNodes != null) {
+            excludedNodesSet = new HashSet<>(excludedNodes.length);
+            for (Node node : excludedNodes) {
+                excludedNodesSet.add(node);
+            }
+        }
+        List<String> favoredNodesList = (favoredNodes == null) ? null
+                : Arrays.asList(favoredNodes);
+        LocatedBlock locatedBlock = namesystem
+                .getAdditionalBlock(src, fileId, clientName, previous, excludedNodesSet, favoredNodesList);
+        /*if (locatedBlock != null) {
+            metrics.incrAddBlockOps();
+        }*/
+        return locatedBlock;
+    }
+
+    @Override // ClientProtocol
+    public void addBlockChecksum(String src, int blockIndex, long checksum)
+            throws IOException {
+        checkNNStartup();
+        namesystem.addBlockChecksum(src, blockIndex, checksum);
+    }
+
+    @Override // ClientProtocol
+    public LocatedBlock getAdditionalDatanode(final String src,
+                                              final long fileId, final ExtendedBlock blk,
+                                              final DatanodeInfo[] existings,
+                                              final String[] existingStorageIDs,
+                                              final DatanodeInfo[] excludes,
+                                              final int numAdditionalNodes,
+                                              final String clientName) throws IOException {
+        checkNNStartup();
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("getAdditionalDatanode: src=" + src
+                    + ", fileId=" + fileId
+                    + ", blk=" + blk
+                    + ", existings=" + Arrays.asList(existings)
+                    + ", excludes=" + Arrays.asList(excludes)
+                    + ", numAdditionalNodes=" + numAdditionalNodes
+                    + ", clientName=" + clientName);
+        }
+
+        //metrics.incrGetAdditionalDatanodeOps();
+
+        HashSet<Node> excludeSet = null;
+        if (excludes != null) {
+            excludeSet = new HashSet<>(excludes.length);
+            for (Node node : excludes) {
+                excludeSet.add(node);
+            }
+        }
+        return namesystem.getAdditionalDatanode(src, fileId, blk, existings,
+                existingStorageIDs, excludeSet, numAdditionalNodes, clientName);
+    }
+
+    @Override
+    public boolean setSafeMode(HdfsConstants.SafeModeAction action, boolean isChecked) throws IOException {
+        return false;
+    }
+
+    @Override // ClientProtocol
+    public void setQuota(String path, long namespaceQuota, long storagespaceQuota,
+                         StorageType type)
+            throws IOException {
+        checkNNStartup();
+        namesystem.setQuota(path, namespaceQuota, storagespaceQuota, type);
+    }
+
+    @Override // ClientProtocol
+    public CorruptFileBlocks listCorruptFileBlocks(String path, String cookie)
+            throws IOException {
+        checkNNStartup();
+        String[] cookieTab = new String[]{cookie};
+        Collection<FSNameSystem.CorruptFileBlockInfo> fbs =
+                namesystem.listCorruptFileBlocks(path, cookieTab);
+
+        String[] files = new String[fbs.size()];
+        int i = 0;
+        for (FSNameSystem.CorruptFileBlockInfo fb : fbs) {
+            files[i++] = fb.path;
+        }
+        return new CorruptFileBlocks(files, cookieTab[0]);
+    }
+
+    @Override // ClientProtocol
+    public LocatedBlock updateBlockForPipeline(ExtendedBlock block,
+                                               String clientName) throws IOException {
+        checkNNStartup();
+        return namesystem.updateBlockForPipeline(block, clientName);
+    }
+
     @Override
     public boolean rename(String src, String dst) throws UnresolvedLinkException, IOException {
         return false;
@@ -339,5 +479,21 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
             /*LightWeightCacheDistributed.putTransactional(success);*/
         }
         //metrics.incrFilesRenamed();
+    }
+
+    @Override // RefreshAuthorizationPolicyProtocol
+    public void refreshServiceAcl() throws IOException {
+        checkNNStartup();
+        if (!serviceAuthEnabled) {
+            throw new AuthorizationException(
+                    "Service Level Authorization not enabled!");
+        }
+
+        this.clientRpcServer
+                .refreshServiceAcl(new Configuration(), new HDFSPolicyProvider());
+        if (this.serviceRpcServer != null) {
+            this.serviceRpcServer
+                    .refreshServiceAcl(new Configuration(), new HDFSPolicyProvider());
+        }
     }
 }

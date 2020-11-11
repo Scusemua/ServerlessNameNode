@@ -2,8 +2,6 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.web.WebHdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlock;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlocks;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;

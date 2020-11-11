@@ -26,6 +26,7 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.*;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NotReplicatedYetException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ByteArrayManager;
 import com.google.common.cache.*;
 import com.google.common.collect.ImmutableSet;

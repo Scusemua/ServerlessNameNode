@@ -96,6 +96,12 @@
             <artifactId>json</artifactId>
             <version>20140107</version>
         </dependency>
+        <dependency>
+            <groupId>io.hops</groupId>
+            <artifactId>hops-leader-election</artifactId>
+            <version>3.2.0.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

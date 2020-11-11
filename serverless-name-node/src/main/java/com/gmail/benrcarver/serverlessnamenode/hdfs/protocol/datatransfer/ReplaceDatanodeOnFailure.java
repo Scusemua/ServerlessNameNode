@@ -36,7 +36,7 @@ public class ReplaceDatanodeOnFailure {
     DISABLE(Condition.FALSE),
     /** Never add a new datanode. */
     NEVER(Condition.FALSE),
-    /** @see org.apache.hadoop.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure.Condition#DEFAULT */
+    /** @see com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure.Condition#DEFAULT */
     DEFAULT(Condition.DEFAULT),
     /** Always add a new datanode when an existing datanode is removed. */
     ALWAYS(Condition.TRUE);
@@ -157,13 +157,13 @@ public class ReplaceDatanodeOnFailure {
   /**
    * Get the setting from configuration.
    */
-  public static org.apache.hadoop.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure get(final Configuration conf) {
+  public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure get(final Configuration conf) {
     final Policy policy = getPolicy(conf);
     final boolean bestEffort = conf.getBoolean(
         HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure.BEST_EFFORT_KEY,
         HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure.BEST_EFFORT_DEFAULT);
     
-    return new org.apache.hadoop.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure(policy, bestEffort);
+    return new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure(policy, bestEffort);
   }
 
   private static Policy getPolicy(final Configuration conf) {

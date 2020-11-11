@@ -1,7 +1,7 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.block.DataEncryptionKey;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.hdfs.security.token.block.DataEncryptionKey;
 
 import java.io.IOException;
 

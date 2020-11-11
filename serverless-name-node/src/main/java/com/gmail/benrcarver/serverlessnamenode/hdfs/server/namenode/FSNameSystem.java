@@ -48,6 +48,7 @@ import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.*;
+import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.ipc.NotALeaderException;
@@ -395,6 +396,21 @@ public class FSNameSystem implements NameSystem {
             LOG.error(getClass().getSimpleName() + " initialization failed.", e);
             close();
             throw e;
+        }
+    }
+
+    static class CorruptFileBlockInfo {
+        String path;
+        Block block;
+
+        CorruptFileBlockInfo(String p, Block b) {
+            path = p;
+            block = b;
+        }
+
+        @Override
+        public String toString() {
+            return block.getBlockName() + "\t" + path;
         }
     }
 
