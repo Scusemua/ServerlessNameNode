@@ -1,14 +1,12 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.proto.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ExactSizeInputStream;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.RollingUpgradeInfo;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.RollingUpgradeStatus;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeProtocolProtos;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockListAsLongs;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockReport;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.Bucket;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ExactSizeInputStream;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.proto.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto;
 import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.CodedInputStream;
@@ -16,6 +14,9 @@ import org.apache.hadoop.crypto.CipherOption;
 import org.apache.hadoop.crypto.CipherSuite;
 import org.apache.hadoop.crypto.CryptoProtocolVersion;
 import org.apache.hadoop.fs.FileEncryptionInfo;
+import org.apache.hadoop.hdfs.protocol.RollingUpgradeInfo;
+import org.apache.hadoop.hdfs.protocol.RollingUpgradeStatus;
+import org.apache.hadoop.util.DataChecksum;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -217,6 +218,10 @@ public class PBHelper {
             default:
                 return null;
         }
+    }
+
+    public static DataChecksum.Type convert(HdfsProtos.ChecksumTypeProto type) {
+        return DataChecksum.Type.valueOf(type.getNumber());
     }
 
     public static DatanodeProtocolProtos.BlockReportProto convert(BlockReport report, boolean useBlocksBuffer) {

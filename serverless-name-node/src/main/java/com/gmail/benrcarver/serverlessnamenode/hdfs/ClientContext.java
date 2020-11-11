@@ -17,17 +17,16 @@
  */
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
-
+import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf.ShortCircuitConf;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DomainSocketFactory;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ByteArrayManager;
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
-import org.apache.hadoop.hdfs.client.impl.DfsClientConf.ShortCircuitConf;
-import org.apache.hadoop.hdfs.shortcircuit.DomainSocketFactory;
-import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache;
-import org.apache.hadoop.hdfs.util.ByteArrayManager;
 
 import java.util.HashMap;
 

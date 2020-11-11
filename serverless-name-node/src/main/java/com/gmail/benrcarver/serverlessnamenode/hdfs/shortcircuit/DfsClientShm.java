@@ -17,6 +17,7 @@
  */
 package com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.net.DomainPeer;
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.net.unix.DomainSocket;
 import org.apache.hadoop.net.unix.DomainSocketWatcher;

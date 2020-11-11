@@ -19,6 +19,7 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSClient;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
 import com.google.common.base.Preconditions;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -94,7 +95,7 @@ public class DomainSocketFactory {
       .expireAfterWrite(10, TimeUnit.MINUTES)
       .build();
 
-  public DomainSocketFactory(ShortCircuitConf conf) {
+  public DomainSocketFactory(DfsClientConf.ShortCircuitConf conf) {
     final String feature;
     if (conf.isShortCircuitLocalReads() && (!conf.isUseLegacyBlockReaderLocal())) {
       feature = "The short-circuit local reads feature";
@@ -128,7 +129,7 @@ public class DomainSocketFactory {
    *
    * @return             Information about the socket path.
    */
-  public PathInfo getPathInfo(InetSocketAddress addr, ShortCircuitConf conf) {
+  public PathInfo getPathInfo(InetSocketAddress addr, DfsClientConf.ShortCircuitConf conf) {
     // If there is no domain socket path configured, we can't use domain
     // sockets.
     if (conf.getDomainSocketPath().isEmpty()) return PathInfo.NOT_CONFIGURED;

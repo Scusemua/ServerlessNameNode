@@ -17,6 +17,9 @@
  */
 package com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.ExtendedBlockId;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.net.DomainPeer;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm.Slot;
@@ -27,6 +30,7 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.ipc.RetriableException;
 import org.apache.hadoop.net.unix.DomainSocket;
@@ -326,7 +330,7 @@ public class ShortCircuitCache implements Closeable {
    */
   private final com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShmManager shmManager;
 
-  public static com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache fromConf(ShortCircuitConf conf) {
+  public static com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache fromConf(DfsClientConf.ShortCircuitConf conf) {
     return new com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache(
         conf.getShortCircuitStreamsCacheSize(),
         conf.getShortCircuitStreamsCacheExpiryMs(),
