@@ -10,6 +10,7 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.CodedInputStream;
 import com.google.protobuf.CodedOutputStream;
 import com.google.protobuf.WireFormat;
+import org.apache.hadoop.hdfs.protocol.Block;
 
 import java.io.IOException;
 import java.io.InputStream;

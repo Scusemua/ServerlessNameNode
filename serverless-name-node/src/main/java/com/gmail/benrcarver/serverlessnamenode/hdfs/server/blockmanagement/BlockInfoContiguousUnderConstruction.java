@@ -7,6 +7,7 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNa
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.transaction.EntityManager;
+import org.apache.hadoop.hdfs.protocol.Block;
 
 import java.io.IOException;
 import java.util.ArrayList;

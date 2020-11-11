@@ -1,14 +1,19 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement;
 
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.VolumeFailureSummary;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.util.EnumCounters;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachedBlock;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachedBlock.Type;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockReportContext;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.DatanodeStorage;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.StorageReport;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.util.LightWeightHashSet;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableList;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
+import io.hops.metadata.StorageMap;
 import io.hops.transaction.EntityManager;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
@@ -19,6 +24,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.fs.StorageType;
+import org.apache.hadoop.hdfs.protocol.Block;
+import org.apache.hadoop.hdfs.protocol.DatanodeID;
+import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
 import org.apache.hadoop.util.Time;
 
 import java.io.IOException;

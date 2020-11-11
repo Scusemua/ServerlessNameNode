@@ -49,6 +49,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.*;
 import org.apache.hadoop.hdfs.protocol.*;
+import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.ipc.NotALeaderException;
@@ -466,6 +467,62 @@ public class FSNameSystem implements NameSystem {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Get a new generation stamp together with an access token for
+     * a block under construction
+     * <p/>
+     * This method is called for recovering a failed pipeline or setting up
+     * a pipeline to append to a block.
+     *
+     * @param block
+     *     a block
+     * @param clientName
+     *     the name of a client
+     * @return a located block with a new generation stamp and an access token
+     * @throws IOException
+     *     if any error occurs
+     */
+    LocatedBlock updateBlockForPipeline(final ExtendedBlock block,
+                                        final String clientName) throws IOException {
+        HopsTransactionalRequestHandler updateBlockForPipelineHandler =
+                new HopsTransactionalRequestHandler(
+                        HDFSOperationType.UPDATE_BLOCK_FOR_PIPELINE) {
+                    INodeIdentifier inodeIdentifier;
+
+                    @Override
+                    public void setUp() throws StorageException {
+                        Block b = block.getLocalBlock();
+                        inodeIdentifier = INodeUtil.resolveINodeFromBlock(b);
+                    }
+
+                    @Override
+                    public void acquireLock(TransactionLocks locks) throws IOException {
+                        LockFactory lf = LockFactory.getInstance();
+                        locks.add(
+                                lf.getIndividualINodeLock(INodeLockType.WRITE, inodeIdentifier, true))
+                                .add(lf.getBlockLock(block.getBlockId(), inodeIdentifier));
+                    }
+
+                    @Override
+                    public Object performTask() throws IOException {
+                        LocatedBlock locatedBlock;
+                        // check validity of parameters
+                        checkUCBlock(block, clientName);
+
+                        INodeFile pendingFile = (INodeFile) EntityManager
+                                .find(INode.Finder.ByINodeIdFTIS, inodeIdentifier.getInodeId());
+
+                        // get a new generation stamp and an access token
+                        block.setGenerationStamp(pendingFile.nextGenerationStamp());
+                        locatedBlock = new LocatedBlock(block, new DatanodeInfo[0]);
+                        blockManager.setBlockToken(locatedBlock, BlockTokenIdentifier.AccessMode.WRITE);
+
+                        return locatedBlock;
+                    }
+                };
+        return (LocatedBlock) updateBlockForPipelineHandler.handle(this);
     }
 
     /**

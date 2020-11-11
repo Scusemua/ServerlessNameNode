@@ -17,6 +17,7 @@ import io.hops.metadata.hdfs.entity.INodeIdentifier;
 import io.hops.transaction.EntityManager;
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.hdfs.protocol.HdfsConstantsClient;
 
 import java.io.IOException;
 import java.util.*;

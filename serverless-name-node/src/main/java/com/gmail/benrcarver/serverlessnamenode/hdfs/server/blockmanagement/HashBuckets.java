@@ -17,6 +17,7 @@ import io.hops.transaction.lock.LockFactory;
 import io.hops.transaction.lock.TransactionLocks;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.hdfs.protocol.Block;
 
 import java.io.IOException;
 import java.util.*;
