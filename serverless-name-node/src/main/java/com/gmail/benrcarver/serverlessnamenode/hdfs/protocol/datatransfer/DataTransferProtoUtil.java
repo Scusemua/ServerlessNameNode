@@ -18,6 +18,7 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.BaseHeaderProto;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.ChecksumProto;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.ClientOperationHeaderProto;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.DataTransferTraceInfoProto;
@@ -25,6 +26,7 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.OpWriteBlockProto.BlockConstructionStage;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.security.token.block.InvalidBlockTokenException;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.hdfs.protocol.ExtendedBlock;
@@ -102,10 +104,10 @@ public abstract class DataTransferProtoUtil {
   }
 
   public static void checkBlockOpStatus(
-          BlockOpResponseProto response,
+          DataTransferProtos.BlockOpResponseProto response,
           String logInfo) throws IOException {
-    if (response.getStatus() != Status.SUCCESS) {
-      if (response.getStatus() == Status.ERROR_ACCESS_TOKEN) {
+    if (response.getStatus() != DataTransferProtos.Status.SUCCESS) {
+      if (response.getStatus() == DataTransferProtos.Status.ERROR_ACCESS_TOKEN) {
         throw new InvalidBlockTokenException(
           "Got access token error"
           + ", status message " + response.getMessage()

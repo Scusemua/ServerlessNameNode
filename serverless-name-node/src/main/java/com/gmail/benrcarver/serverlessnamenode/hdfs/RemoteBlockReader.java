@@ -17,24 +17,23 @@
  */
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.DataTransferProtoUtil;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.Sender;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ClientMmap;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.Status;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.FSInputChecker;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.ReadOption;
-import org.apache.hadoop.hdfs.net.Peer;
 import org.apache.hadoop.hdfs.protocol.Block;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.protocol.ExtendedBlock;
-import org.apache.hadoop.hdfs.protocol.datatransfer.DataTransferProtoUtil;
-import org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader;
-import org.apache.hadoop.hdfs.protocol.datatransfer.Sender;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BlockOpResponseProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.ReadOpChecksumInfoProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status;
-import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
-import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
-import org.apache.hadoop.hdfs.shortcircuit.ClientMmap;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.security.token.Token;
@@ -144,9 +143,9 @@ public class RemoteBlockReader extends FSInputChecker implements BlockReader {
     // if eos was set in the previous read, send a status code to the DN
     if (eos && !eosBefore && nRead >= 0) {
       if (needChecksum()) {
-        sendReadResult(peer, Status.CHECKSUM_OK);
+        sendReadResult(peer, DataTransferProtos.Status.CHECKSUM_OK);
       } else {
-        sendReadResult(peer, Status.SUCCESS);
+        sendReadResult(peer, DataTransferProtos.Status.SUCCESS);
       }
     }
     return nRead;
@@ -412,10 +411,10 @@ public class RemoteBlockReader extends FSInputChecker implements BlockReader {
     DataInputStream in = new DataInputStream(
         new BufferedInputStream(peer.getInputStream(), bufferSize));
     
-    BlockOpResponseProto status =
-        BlockOpResponseProto.parseFrom(PBHelper.vintPrefixed(in));
+    DataTransferProtos.BlockOpResponseProto status =
+        DataTransferProtos.BlockOpResponseProto.parseFrom(PBHelper.vintPrefixed(in));
     RemoteBlockReader2.checkSuccess(status, peer, block, file);
-    ReadOpChecksumInfoProto checksumInfo = status.getReadOpChecksumInfo();
+    DataTransferProtos.ReadOpChecksumInfoProto checksumInfo = status.getReadOpChecksumInfo();
     DataChecksum checksum =
         DataTransferProtoUtil.fromProto(checksumInfo.getChecksum());
     //Warning when we get CHECKSUM_NULL?

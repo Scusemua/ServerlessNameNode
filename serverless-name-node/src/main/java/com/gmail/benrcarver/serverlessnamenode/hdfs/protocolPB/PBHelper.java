@@ -1,12 +1,17 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeProtocolProtos;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.RollingUpgradeStatusProto;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.DatanodeIDProto;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockListAsLongs;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockReport;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.Bucket;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ExactSizeInputStream;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.proto.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto;
+import com.gmail.benrcarver.serverlessnamenode.protocol.ClientNamenodeProtocolProtos;
+import com.gmail.benrcarver.serverlessnamenode.protocol.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.CodedInputStream;
@@ -14,14 +19,22 @@ import org.apache.hadoop.crypto.CipherOption;
 import org.apache.hadoop.crypto.CipherSuite;
 import org.apache.hadoop.crypto.CryptoProtocolVersion;
 import org.apache.hadoop.fs.FileEncryptionInfo;
+import org.apache.hadoop.fs.StorageType;
+import org.apache.hadoop.hdfs.protocol.DatanodeID;
+import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
 import org.apache.hadoop.hdfs.protocol.RollingUpgradeInfo;
 import org.apache.hadoop.hdfs.protocol.RollingUpgradeStatus;
+import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.security.proto.SecurityProtos;
+import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.util.DataChecksum;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -200,8 +213,52 @@ public class PBHelper {
                 .build();
     }
 
+    public static ClientNamenodeProtocolProtos.RollingUpgradeActionProto convert(HdfsConstants.RollingUpgradeAction a) {
+        switch (a) {
+            case QUERY:
+                return ClientNamenodeProtocolProtos.RollingUpgradeActionProto.QUERY;
+            case PREPARE:
+                return ClientNamenodeProtocolProtos.RollingUpgradeActionProto.START;
+            case FINALIZE:
+                return ClientNamenodeProtocolProtos.RollingUpgradeActionProto.FINALIZE;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + a);
+        }
+    }
+
+    public static HdfsConstants.RollingUpgradeAction convert(ClientNamenodeProtocolProtos.RollingUpgradeActionProto a) {
+        switch (a) {
+            case QUERY:
+                return HdfsConstants.RollingUpgradeAction.QUERY;
+            case START:
+                return HdfsConstants.RollingUpgradeAction.PREPARE;
+            case FINALIZE:
+                return HdfsConstants.RollingUpgradeAction.FINALIZE;
+            default:
+                throw new IllegalArgumentException("Unexpected value: " + a);
+        }
+    }
+
+    public static RollingUpgradeStatus convert(RollingUpgradeStatusProto proto) {
+        return new RollingUpgradeStatus(proto.getBlockPoolId());
+    }
+
     public static RollingUpgradeInfoProto convert(RollingUpgradeInfo info) {
         return RollingUpgradeInfoProto.newBuilder()
+                .setStatus(convertRollingUpgradeStatus(info))
+                .setStartTime(info.getStartTime())
+                .setFinalizeTime(info.getFinalizeTime())
+                .build();
+    }
+
+    public static RollingUpgradeInfo convert(RollingUpgradeInfoProto proto) {
+        RollingUpgradeStatusProto status = proto.getStatus();
+        return new RollingUpgradeInfo(status.getBlockPoolId(),
+                proto.getStartTime(), proto.getFinalizeTime());
+    }
+
+    public static ClientNamenodeProtocolProtos.RollingUpgradeInfoProto convert(RollingUpgradeInfo info) {
+        return ClientNamenodeProtocolProtos.RollingUpgradeInfoProto.newBuilder()
                 .setStatus(convertRollingUpgradeStatus(info))
                 .setStartTime(info.getStartTime())
                 .setFinalizeTime(info.getFinalizeTime())
@@ -220,8 +277,143 @@ public class PBHelper {
         }
     }
 
+    public static HdfsProtos.DatanodeInfoProto convert(DatanodeInfo info) {
+        HdfsProtos.DatanodeInfoProto.Builder builder = HdfsProtos.DatanodeInfoProto.newBuilder();
+        if (info.getNetworkLocation() != null) {
+            builder.setLocation(info.getNetworkLocation());
+        }
+        builder
+                .setId(PBHelper.convert((DatanodeID) info))
+                .setCapacity(info.getCapacity())
+                .setDfsUsed(info.getDfsUsed())
+                .setRemaining(info.getRemaining())
+                .setBlockPoolUsed(info.getBlockPoolUsed())
+                .setCacheCapacity(info.getCacheCapacity())
+                .setCacheUsed(info.getCacheUsed())
+                .setLastUpdate(info.getLastUpdate())
+                .setLastUpdateMonotonic(info.getLastUpdateMonotonic())
+                .setXceiverCount(info.getXceiverCount())
+                .setAdminState(PBHelper.convert(info.getAdminState()))
+                .build();
+        return builder.build();
+    }
+
+    // DatanodeId
+    public static DatanodeID convert(DatanodeIDProto dn) {
+        return new DatanodeID(dn.getIpAddr(), dn.getHostName(), dn.getDatanodeUuid(),
+                dn.getXferPort(), dn.getInfoPort(), dn.hasInfoSecurePort() ? dn
+                .getInfoSecurePort() : 0, dn.getIpcPort());
+    }
+
+    public static DatanodeIDProto convert(DatanodeID dn) {
+        // For wire compatibility with older versions we transmit the StorageID
+        // which is the same as the DatanodeUuid. Since StorageID is a required
+        // field we pass the empty string if the DatanodeUuid is not yet known.
+        return DatanodeIDProto.newBuilder()
+                .setIpAddr(dn.getIpAddr())
+                .setHostName(dn.getHostName())
+                .setDatanodeUuid(dn.getDatanodeUuid() != null ? dn.getDatanodeUuid() : "")
+                .setXferPort(dn.getXferPort())
+                .setInfoPort(dn.getInfoPort())
+                .setInfoSecurePort(dn.getInfoSecurePort())
+                .setIpcPort(dn.getIpcPort()).build();
+    }
+
+    // Arrays of DatanodeId
+    public static DatanodeIDProto[] convert(DatanodeID[] did) {
+        if (did == null) {
+            return null;
+        }
+        final int len = did.length;
+        DatanodeIDProto[] result = new DatanodeIDProto[len];
+        for (int i = 0; i < len; ++i) {
+            result[i] = convert(did[i]);
+        }
+        return result;
+    }
+
+    public static DatanodeID[] convert(DatanodeIDProto[] did) {
+        if (did == null) {
+            return null;
+        }
+        final int len = did.length;
+        DatanodeID[] result = new DatanodeID[len];
+        for (int i = 0; i < len; ++i) {
+            result[i] = convert(did[i]);
+        }
+        return result;
+    }
+
+    static public HdfsProtos.DatanodeInfoProto convertDatanodeInfo(DatanodeInfo di) {
+        if (di == null) {
+            return null;
+        }
+        return convert(di);
+    }
+
+    public static StorageType convertStorageType(HdfsProtos.StorageTypeProto type) {
+        switch(type) {
+            case DISK:
+                return StorageType.DISK;
+            case SSD:
+                return StorageType.SSD;
+            case RAID5:
+                return StorageType.RAID5;
+            case ARCHIVE:
+                return StorageType.ARCHIVE;
+            case DB:
+                return StorageType.DB;
+            case PROVIDED:
+                return StorageType.PROVIDED;
+            default:
+                throw new IllegalStateException(
+                        "BUG: StorageTypeProto not found, type=" + type);
+        }
+    }
+
+    public static StorageType[] convertStorageTypes(
+            List<HdfsProtos.StorageTypeProto> storageTypesList, int expectedSize) {
+        final StorageType[] storageTypes = new StorageType[expectedSize];
+        if (storageTypesList.size() != expectedSize) { // missing storage types
+            Preconditions.checkState(storageTypesList.isEmpty());
+            Arrays.fill(storageTypes, StorageType.DEFAULT);
+        } else {
+            for (int i = 0; i < storageTypes.length; ++i) {
+                storageTypes[i] = convertStorageType(storageTypesList.get(i));
+            }
+        }
+        return storageTypes;
+    }
+
+    public static SecurityProtos.TokenProto convert(Token<?> tok) {
+        return SecurityProtos.TokenProto.newBuilder().
+                setIdentifier(ByteString.copyFrom(tok.getIdentifier())).
+                setPassword(ByteString.copyFrom(tok.getPassword())).
+                setKind(tok.getKind().toString()).
+                setService(tok.getService().toString()).build();
+    }
+
+    public static Token<BlockTokenIdentifier> convert(SecurityProtos.TokenProto blockToken) {
+        return new Token<>(
+                blockToken.getIdentifier().toByteArray(),
+                blockToken.getPassword().toByteArray(), new Text(blockToken.getKind()),
+                new Text(blockToken.getService()));
+    }
+
     public static DataChecksum.Type convert(HdfsProtos.ChecksumTypeProto type) {
         return DataChecksum.Type.valueOf(type.getNumber());
+    }
+
+    public static DatanodeInfo.AdminStates convert(HdfsProtos.DatanodeInfoProto.AdminState adminState) {
+        switch (adminState) {
+            case DECOMMISSION_INPROGRESS:
+                return DatanodeInfo.AdminStates.DECOMMISSION_INPROGRESS;
+            case DECOMMISSIONED:
+                return DatanodeInfo.AdminStates.DECOMMISSIONED;
+            case NORMAL:
+            default:
+                return DatanodeInfo.AdminStates.NORMAL;
+        }
     }
 
     public static DatanodeProtocolProtos.BlockReportProto convert(BlockReport report, boolean useBlocksBuffer) {

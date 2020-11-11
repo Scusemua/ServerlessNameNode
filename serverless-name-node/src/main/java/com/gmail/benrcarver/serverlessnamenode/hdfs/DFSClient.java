@@ -1,6 +1,5 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.fs.BlockStorageLocation;
 import com.gmail.benrcarver.serverlessnamenode.fs.HdfsBlockLocation;
 import com.gmail.benrcarver.serverlessnamenode.fs.VolumeId;
@@ -10,14 +9,15 @@ import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.net.TcpPeerServer;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.IOStreamPair;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.TrustedChannelResolver;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.*;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataEncryptionKeyFactory;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataTransferSaslUtil;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.security.token.block.InvalidBlockTokenException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
@@ -199,7 +199,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
         this.socketFactory = NetUtils.getSocketFactoryFromProperty(conf,
                 conf.get(DFSConfigKeys.DFS_CLIENT_XCEIVER_SOCKET_FACTORY_CLASS_KEY,
                         DFSConfigKeys.DEFAULT_DFS_CLIENT_XCEIVER_FACTORY_CLASS));
-        this.dtpReplaceDatanodeOnFailure = ReplaceDatanodeOnFailure.get(conf);
+        this.dtpReplaceDatanodeOnFailure = HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure.get(conf);
 
         this.ugi = UserGroupInformation.getCurrentUser();
 
@@ -216,14 +216,14 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
         int numResponseToDrop = conf.getInt(
                 DFSConfigKeys.DFS_CLIENT_TEST_DROP_NAMENODE_RESPONSE_NUM_KEY,
                 DFSConfigKeys.DFS_CLIENT_TEST_DROP_NAMENODE_RESPONSE_NUM_DEFAULT);
-        ServerlessNameNodeProxies.ProxyAndInfo<ClientProtocol> proxyInfo = null;
+        NameNodeProxies.ProxyAndInfo<ClientProtocol> proxyInfo = null;
         AtomicBoolean nnFallbackToSimpleAuth = new AtomicBoolean(false);
         if (numResponseToDrop > 0) {
             // This case is used for testing.
             LOG.warn(DFSConfigKeys.DFS_CLIENT_TEST_DROP_NAMENODE_RESPONSE_NUM_KEY
                     + " is set to " + numResponseToDrop
                     + ", this hacked client will proactively drop responses");
-            proxyInfo = ServerlessNameNodeProxies.createProxyWithLossyRetryHandler(conf,
+            proxyInfo = NameNodeProxies.createProxyWithLossyRetryHandler(conf,
                     nameNodeUri, ClientProtocol.class, numResponseToDrop,
                     nnFallbackToSimpleAuth);
         }
@@ -241,7 +241,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
         } else {
             Preconditions.checkArgument(nameNodeUri != null,
                     "null URI");
-            proxyInfo = ServerlessNameNodeProxies.createHopsRandomStickyProxy(conf, nameNodeUri,
+            proxyInfo = NameNodeProxies.createHopsRandomStickyProxy(conf, nameNodeUri,
                     ClientProtocol.class, nnFallbackToSimpleAuth);
             this.dtService = proxyInfo.getDelegationTokenService();
             this.namenode = proxyInfo.getProxy();
@@ -249,11 +249,11 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
             if(namenode != null) {
                 try {
                     List<ActiveNode> anns = namenode.getActiveNamenodesForClient().getSortedActiveNodes();
-                    leaderNN = ServerlessNameNodeProxies.createHopsLeaderProxy(conf, nameNodeUri,
+                    leaderNN = NameNodeProxies.createHopsLeaderProxy(conf, nameNodeUri,
                             ClientProtocol.class, nnFallbackToSimpleAuth).getProxy();
 
                     for (ActiveNode an : anns) {
-                        allNNs.add(ServerlessNameNodeProxies.createNonHAProxy(conf, an.getRpcServerAddressForClients(),
+                        allNNs.add(NameNodeProxies.createNonHAProxy(conf, an.getRpcServerAddressForClients(),
                                 ClientProtocol.class, ugi, false, nnFallbackToSimpleAuth).getProxy());
                     }
                 } catch (ConnectException e){
@@ -751,8 +751,8 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
                         "a failover proxy provider configured.");
             }
 
-            ServerlessNameNodeProxies.ProxyAndInfo<ClientProtocol> info =
-                    ServerlessNameNodeProxies.createProxy(conf, uri, ClientProtocol.class);
+            NameNodeProxies.ProxyAndInfo<ClientProtocol> info =
+                    NameNodeProxies.createProxy(conf, uri, ClientProtocol.class);
             assert info.getDelegationTokenService().equals(token.getService()) :
                     "Returned service '" + info.getDelegationTokenService().toString() +
                             "' doesn't match expected service '" +

@@ -1,6 +1,7 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
@@ -52,6 +53,12 @@ public class DistributedFileSystem extends FileSystem {
     public boolean setSafeMode(HdfsConstants.SafeModeAction action)
             throws IOException {
         return setSafeMode(action, false);
+    }
+
+    @InterfaceAudience.Private
+    @VisibleForTesting
+    public DFSClient getClient() {
+        return dfs;
     }
 
     /**

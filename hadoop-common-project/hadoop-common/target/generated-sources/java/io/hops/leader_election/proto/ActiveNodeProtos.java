@@ -6,128 +6,109 @@ package io.hops.leader_election.proto;
 public final class ActiveNodeProtos {
   private ActiveNodeProtos() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface ActiveNodeProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.ActiveNodeProto)
-      com.google.protobuf.GeneratedMessageV3.
+      com.google.protobuf.GeneratedMessage.
           ExtendableMessageOrBuilder<ActiveNodeProto> {
 
+    // optional int64 id = 1;
     /**
      * <code>optional int64 id = 1;</code>
-     * @return Whether the id field is set.
      */
     boolean hasId();
     /**
      * <code>optional int64 id = 1;</code>
-     * @return The id.
      */
     long getId();
 
+    // optional string rpcHostname = 2;
     /**
      * <code>optional string rpcHostname = 2;</code>
-     * @return Whether the rpcHostname field is set.
      */
     boolean hasRpcHostname();
     /**
      * <code>optional string rpcHostname = 2;</code>
-     * @return The rpcHostname.
      */
     java.lang.String getRpcHostname();
     /**
      * <code>optional string rpcHostname = 2;</code>
-     * @return The bytes for rpcHostname.
      */
     com.google.protobuf.ByteString
         getRpcHostnameBytes();
 
+    // optional string rpcIpAddress = 3;
     /**
      * <code>optional string rpcIpAddress = 3;</code>
-     * @return Whether the rpcIpAddress field is set.
      */
     boolean hasRpcIpAddress();
     /**
      * <code>optional string rpcIpAddress = 3;</code>
-     * @return The rpcIpAddress.
      */
     java.lang.String getRpcIpAddress();
     /**
      * <code>optional string rpcIpAddress = 3;</code>
-     * @return The bytes for rpcIpAddress.
      */
     com.google.protobuf.ByteString
         getRpcIpAddressBytes();
 
+    // optional int32 rpcPort = 4;
     /**
      * <code>optional int32 rpcPort = 4;</code>
-     * @return Whether the rpcPort field is set.
      */
     boolean hasRpcPort();
     /**
      * <code>optional int32 rpcPort = 4;</code>
-     * @return The rpcPort.
      */
     int getRpcPort();
 
+    // optional string serviceIpAddress = 5;
     /**
      * <code>optional string serviceIpAddress = 5;</code>
-     * @return Whether the serviceIpAddress field is set.
      */
     boolean hasServiceIpAddress();
     /**
      * <code>optional string serviceIpAddress = 5;</code>
-     * @return The serviceIpAddress.
      */
     java.lang.String getServiceIpAddress();
     /**
      * <code>optional string serviceIpAddress = 5;</code>
-     * @return The bytes for serviceIpAddress.
      */
     com.google.protobuf.ByteString
         getServiceIpAddressBytes();
 
+    // optional int32 servicePort = 6;
     /**
      * <code>optional int32 servicePort = 6;</code>
-     * @return Whether the servicePort field is set.
      */
     boolean hasServicePort();
     /**
      * <code>optional int32 servicePort = 6;</code>
-     * @return The servicePort.
      */
     int getServicePort();
 
+    // optional string httpAddress = 7;
     /**
      * <code>optional string httpAddress = 7;</code>
-     * @return Whether the httpAddress field is set.
      */
     boolean hasHttpAddress();
     /**
      * <code>optional string httpAddress = 7;</code>
-     * @return The httpAddress.
      */
     java.lang.String getHttpAddress();
     /**
      * <code>optional string httpAddress = 7;</code>
-     * @return The bytes for httpAddress.
      */
     com.google.protobuf.ByteString
         getHttpAddressBytes();
 
+    // optional int32 locationDomainId = 8;
     /**
      * <code>optional int32 locationDomainId = 8;</code>
-     * @return Whether the locationDomainId field is set.
      */
     boolean hasLocationDomainId();
     /**
      * <code>optional int32 locationDomainId = 8;</code>
-     * @return The locationDomainId.
      */
     int getLocationDomainId();
   }
@@ -135,42 +116,35 @@ public final class ActiveNodeProtos {
    * Protobuf type {@code hadoop.common.ActiveNodeProto}
    */
   public static final class ActiveNodeProto extends
-      com.google.protobuf.GeneratedMessageV3.ExtendableMessage<
-        ActiveNodeProto> implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.ActiveNodeProto)
-      ActiveNodeProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage.ExtendableMessage<
+        ActiveNodeProto> implements ActiveNodeProtoOrBuilder {
     // Use ActiveNodeProto.newBuilder() to construct.
-    private ActiveNodeProto(com.google.protobuf.GeneratedMessageV3.ExtendableBuilder<io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, ?> builder) {
+    private ActiveNodeProto(com.google.protobuf.GeneratedMessage.ExtendableBuilder<io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, ?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private ActiveNodeProto() {
-      rpcHostname_ = "";
-      rpcIpAddress_ = "";
-      serviceIpAddress_ = "";
-      httpAddress_ = "";
+    private ActiveNodeProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ActiveNodeProto defaultInstance;
+    public static ActiveNodeProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new ActiveNodeProto();
+    public ActiveNodeProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private ActiveNodeProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -182,21 +156,26 @@ public final class ActiveNodeProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               id_ = input.readInt64();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              rpcHostname_ = bs;
+              rpcHostname_ = input.readBytes();
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              rpcIpAddress_ = bs;
+              rpcIpAddress_ = input.readBytes();
               break;
             }
             case 32: {
@@ -205,9 +184,8 @@ public final class ActiveNodeProtos {
               break;
             }
             case 42: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000010;
-              serviceIpAddress_ = bs;
+              serviceIpAddress_ = input.readBytes();
               break;
             }
             case 48: {
@@ -216,21 +194,13 @@ public final class ActiveNodeProtos {
               break;
             }
             case 58: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000040;
-              httpAddress_ = bs;
+              httpAddress_ = input.readBytes();
               break;
             }
             case 64: {
               bitField0_ |= 0x00000080;
               locationDomainId_ = input.readInt32();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -239,7 +209,7 @@ public final class ActiveNodeProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -250,49 +220,57 @@ public final class ActiveNodeProtos {
       return io.hops.leader_election.proto.ActiveNodeProtos.internal_static_hadoop_common_ActiveNodeProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return io.hops.leader_election.proto.ActiveNodeProtos.internal_static_hadoop_common_ActiveNodeProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto.class, io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<ActiveNodeProto> PARSER =
+        new com.google.protobuf.AbstractParser<ActiveNodeProto>() {
+      public ActiveNodeProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ActiveNodeProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ActiveNodeProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // optional int64 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private long id_;
     /**
      * <code>optional int64 id = 1;</code>
-     * @return Whether the id field is set.
      */
-    @java.lang.Override
     public boolean hasId() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>optional int64 id = 1;</code>
-     * @return The id.
      */
-    @java.lang.Override
     public long getId() {
       return id_;
     }
 
+    // optional string rpcHostname = 2;
     public static final int RPCHOSTNAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object rpcHostname_;
+    private java.lang.Object rpcHostname_;
     /**
      * <code>optional string rpcHostname = 2;</code>
-     * @return Whether the rpcHostname field is set.
      */
-    @java.lang.Override
     public boolean hasRpcHostname() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>optional string rpcHostname = 2;</code>
-     * @return The rpcHostname.
      */
-    @java.lang.Override
     public java.lang.String getRpcHostname() {
       java.lang.Object ref = rpcHostname_;
       if (ref instanceof java.lang.String) {
@@ -309,9 +287,7 @@ public final class ActiveNodeProtos {
     }
     /**
      * <code>optional string rpcHostname = 2;</code>
-     * @return The bytes for rpcHostname.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getRpcHostnameBytes() {
       java.lang.Object ref = rpcHostname_;
@@ -326,21 +302,18 @@ public final class ActiveNodeProtos {
       }
     }
 
+    // optional string rpcIpAddress = 3;
     public static final int RPCIPADDRESS_FIELD_NUMBER = 3;
-    private volatile java.lang.Object rpcIpAddress_;
+    private java.lang.Object rpcIpAddress_;
     /**
      * <code>optional string rpcIpAddress = 3;</code>
-     * @return Whether the rpcIpAddress field is set.
      */
-    @java.lang.Override
     public boolean hasRpcIpAddress() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>optional string rpcIpAddress = 3;</code>
-     * @return The rpcIpAddress.
      */
-    @java.lang.Override
     public java.lang.String getRpcIpAddress() {
       java.lang.Object ref = rpcIpAddress_;
       if (ref instanceof java.lang.String) {
@@ -357,9 +330,7 @@ public final class ActiveNodeProtos {
     }
     /**
      * <code>optional string rpcIpAddress = 3;</code>
-     * @return The bytes for rpcIpAddress.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getRpcIpAddressBytes() {
       java.lang.Object ref = rpcIpAddress_;
@@ -374,40 +345,34 @@ public final class ActiveNodeProtos {
       }
     }
 
+    // optional int32 rpcPort = 4;
     public static final int RPCPORT_FIELD_NUMBER = 4;
     private int rpcPort_;
     /**
      * <code>optional int32 rpcPort = 4;</code>
-     * @return Whether the rpcPort field is set.
      */
-    @java.lang.Override
     public boolean hasRpcPort() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>optional int32 rpcPort = 4;</code>
-     * @return The rpcPort.
      */
-    @java.lang.Override
     public int getRpcPort() {
       return rpcPort_;
     }
 
+    // optional string serviceIpAddress = 5;
     public static final int SERVICEIPADDRESS_FIELD_NUMBER = 5;
-    private volatile java.lang.Object serviceIpAddress_;
+    private java.lang.Object serviceIpAddress_;
     /**
      * <code>optional string serviceIpAddress = 5;</code>
-     * @return Whether the serviceIpAddress field is set.
      */
-    @java.lang.Override
     public boolean hasServiceIpAddress() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>optional string serviceIpAddress = 5;</code>
-     * @return The serviceIpAddress.
      */
-    @java.lang.Override
     public java.lang.String getServiceIpAddress() {
       java.lang.Object ref = serviceIpAddress_;
       if (ref instanceof java.lang.String) {
@@ -424,9 +389,7 @@ public final class ActiveNodeProtos {
     }
     /**
      * <code>optional string serviceIpAddress = 5;</code>
-     * @return The bytes for serviceIpAddress.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getServiceIpAddressBytes() {
       java.lang.Object ref = serviceIpAddress_;
@@ -441,40 +404,34 @@ public final class ActiveNodeProtos {
       }
     }
 
+    // optional int32 servicePort = 6;
     public static final int SERVICEPORT_FIELD_NUMBER = 6;
     private int servicePort_;
     /**
      * <code>optional int32 servicePort = 6;</code>
-     * @return Whether the servicePort field is set.
      */
-    @java.lang.Override
     public boolean hasServicePort() {
-      return ((bitField0_ & 0x00000020) != 0);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <code>optional int32 servicePort = 6;</code>
-     * @return The servicePort.
      */
-    @java.lang.Override
     public int getServicePort() {
       return servicePort_;
     }
 
+    // optional string httpAddress = 7;
     public static final int HTTPADDRESS_FIELD_NUMBER = 7;
-    private volatile java.lang.Object httpAddress_;
+    private java.lang.Object httpAddress_;
     /**
      * <code>optional string httpAddress = 7;</code>
-     * @return Whether the httpAddress field is set.
      */
-    @java.lang.Override
     public boolean hasHttpAddress() {
-      return ((bitField0_ & 0x00000040) != 0);
+      return ((bitField0_ & 0x00000040) == 0x00000040);
     }
     /**
      * <code>optional string httpAddress = 7;</code>
-     * @return The httpAddress.
      */
-    @java.lang.Override
     public java.lang.String getHttpAddress() {
       java.lang.Object ref = httpAddress_;
       if (ref instanceof java.lang.String) {
@@ -491,9 +448,7 @@ public final class ActiveNodeProtos {
     }
     /**
      * <code>optional string httpAddress = 7;</code>
-     * @return The bytes for httpAddress.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getHttpAddressBytes() {
       java.lang.Object ref = httpAddress_;
@@ -508,31 +463,36 @@ public final class ActiveNodeProtos {
       }
     }
 
+    // optional int32 locationDomainId = 8;
     public static final int LOCATIONDOMAINID_FIELD_NUMBER = 8;
     private int locationDomainId_;
     /**
      * <code>optional int32 locationDomainId = 8;</code>
-     * @return Whether the locationDomainId field is set.
      */
-    @java.lang.Override
     public boolean hasLocationDomainId() {
-      return ((bitField0_ & 0x00000080) != 0);
+      return ((bitField0_ & 0x00000080) == 0x00000080);
     }
     /**
      * <code>optional int32 locationDomainId = 8;</code>
-     * @return The locationDomainId.
      */
-    @java.lang.Override
     public int getLocationDomainId() {
       return locationDomainId_;
     }
 
+    private void initFields() {
+      id_ = 0L;
+      rpcHostname_ = "";
+      rpcIpAddress_ = "";
+      rpcPort_ = 0;
+      serviceIpAddress_ = "";
+      servicePort_ = 0;
+      httpAddress_ = "";
+      locationDomainId_ = 0;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!extensionsAreInitialized()) {
         memoizedIsInitialized = 0;
@@ -542,78 +502,89 @@ public final class ActiveNodeProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      com.google.protobuf.GeneratedMessageV3
-        .ExtendableMessage<io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto>.ExtensionWriter
-          extensionWriter = newExtensionWriter();
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      com.google.protobuf.GeneratedMessage
+        .ExtendableMessage<io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto>.ExtensionWriter extensionWriter =
+          newExtensionWriter();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt64(1, id_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, rpcHostname_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getRpcHostnameBytes());
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, rpcIpAddress_);
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getRpcIpAddressBytes());
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeInt32(4, rpcPort_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, serviceIpAddress_);
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getServiceIpAddressBytes());
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         output.writeInt32(6, servicePort_);
       }
-      if (((bitField0_ & 0x00000040) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, httpAddress_);
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        output.writeBytes(7, getHttpAddressBytes());
       }
-      if (((bitField0_ & 0x00000080) != 0)) {
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
         output.writeInt32(8, locationDomainId_);
       }
       extensionWriter.writeUntil(10, output);
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, id_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, rpcHostname_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getRpcHostnameBytes());
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, rpcIpAddress_);
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getRpcIpAddressBytes());
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(4, rpcPort_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, serviceIpAddress_);
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, getServiceIpAddressBytes());
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(6, servicePort_);
       }
-      if (((bitField0_ & 0x00000040) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, httpAddress_);
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(7, getHttpAddressBytes());
       }
-      if (((bitField0_ & 0x00000080) != 0)) {
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(8, locationDomainId_);
       }
       size += extensionsSerializedSize();
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -626,63 +597,65 @@ public final class ActiveNodeProtos {
       }
       io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto other = (io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto) obj;
 
-      if (hasId() != other.hasId()) return false;
+      boolean result = true;
+      result = result && (hasId() == other.hasId());
       if (hasId()) {
-        if (getId()
-            != other.getId()) return false;
+        result = result && (getId()
+            == other.getId());
       }
-      if (hasRpcHostname() != other.hasRpcHostname()) return false;
+      result = result && (hasRpcHostname() == other.hasRpcHostname());
       if (hasRpcHostname()) {
-        if (!getRpcHostname()
-            .equals(other.getRpcHostname())) return false;
+        result = result && getRpcHostname()
+            .equals(other.getRpcHostname());
       }
-      if (hasRpcIpAddress() != other.hasRpcIpAddress()) return false;
+      result = result && (hasRpcIpAddress() == other.hasRpcIpAddress());
       if (hasRpcIpAddress()) {
-        if (!getRpcIpAddress()
-            .equals(other.getRpcIpAddress())) return false;
+        result = result && getRpcIpAddress()
+            .equals(other.getRpcIpAddress());
       }
-      if (hasRpcPort() != other.hasRpcPort()) return false;
+      result = result && (hasRpcPort() == other.hasRpcPort());
       if (hasRpcPort()) {
-        if (getRpcPort()
-            != other.getRpcPort()) return false;
+        result = result && (getRpcPort()
+            == other.getRpcPort());
       }
-      if (hasServiceIpAddress() != other.hasServiceIpAddress()) return false;
+      result = result && (hasServiceIpAddress() == other.hasServiceIpAddress());
       if (hasServiceIpAddress()) {
-        if (!getServiceIpAddress()
-            .equals(other.getServiceIpAddress())) return false;
+        result = result && getServiceIpAddress()
+            .equals(other.getServiceIpAddress());
       }
-      if (hasServicePort() != other.hasServicePort()) return false;
+      result = result && (hasServicePort() == other.hasServicePort());
       if (hasServicePort()) {
-        if (getServicePort()
-            != other.getServicePort()) return false;
+        result = result && (getServicePort()
+            == other.getServicePort());
       }
-      if (hasHttpAddress() != other.hasHttpAddress()) return false;
+      result = result && (hasHttpAddress() == other.hasHttpAddress());
       if (hasHttpAddress()) {
-        if (!getHttpAddress()
-            .equals(other.getHttpAddress())) return false;
+        result = result && getHttpAddress()
+            .equals(other.getHttpAddress());
       }
-      if (hasLocationDomainId() != other.hasLocationDomainId()) return false;
+      result = result && (hasLocationDomainId() == other.hasLocationDomainId());
       if (hasLocationDomainId()) {
-        if (getLocationDomainId()
-            != other.getLocationDomainId()) return false;
+        result = result && (getLocationDomainId()
+            == other.getLocationDomainId());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      if (!getExtensionFields().equals(other.getExtensionFields()))
-        return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      result = result &&
+          getExtensionFields().equals(other.getExtensionFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasId()) {
         hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getId());
+        hash = (53 * hash) + hashLong(getId());
       }
       if (hasRpcHostname()) {
         hash = (37 * hash) + RPCHOSTNAME_FIELD_NUMBER;
@@ -713,22 +686,11 @@ public final class ActiveNodeProtos {
         hash = (53 * hash) + getLocationDomainId();
       }
       hash = hashFields(hash, getExtensionFields());
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -752,59 +714,46 @@ public final class ActiveNodeProtos {
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -812,17 +761,14 @@ public final class ActiveNodeProtos {
      * Protobuf type {@code hadoop.common.ActiveNodeProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.ExtendableBuilder<
-          io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.ActiveNodeProto)
-        io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.ExtendableBuilder<
+          io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, Builder> implements io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return io.hops.leader_election.proto.ActiveNodeProtos.internal_static_hadoop_common_ActiveNodeProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return io.hops.leader_election.proto.ActiveNodeProtos.internal_static_hadoop_common_ActiveNodeProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -835,16 +781,18 @@ public final class ActiveNodeProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -866,18 +814,19 @@ public final class ActiveNodeProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return io.hops.leader_election.proto.ActiveNodeProtos.internal_static_hadoop_common_ActiveNodeProto_descriptor;
       }
 
-      @java.lang.Override
       public io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto getDefaultInstanceForType() {
         return io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto build() {
         io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -886,108 +835,47 @@ public final class ActiveNodeProtos {
         return result;
       }
 
-      @java.lang.Override
       public io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto buildPartial() {
         io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto result = new io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.id_ = id_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.rpcHostname_ = rpcHostname_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
         result.rpcIpAddress_ = rpcIpAddress_;
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.rpcPort_ = rpcPort_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.rpcPort_ = rpcPort_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
         result.serviceIpAddress_ = serviceIpAddress_;
-        if (((from_bitField0_ & 0x00000020) != 0)) {
-          result.servicePort_ = servicePort_;
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
         }
-        if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.servicePort_ = servicePort_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
           to_bitField0_ |= 0x00000040;
         }
         result.httpAddress_ = httpAddress_;
-        if (((from_bitField0_ & 0x00000080) != 0)) {
-          result.locationDomainId_ = locationDomainId_;
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
           to_bitField0_ |= 0x00000080;
         }
+        result.locationDomainId_ = locationDomainId_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
-      public <Type> Builder setExtension(
-          com.google.protobuf.GeneratedMessage.GeneratedExtension<
-              io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, Type> extension,
-          Type value) {
-        return super.setExtension(extension, value);
-      }
-      @java.lang.Override
-      public <Type> Builder setExtension(
-          com.google.protobuf.GeneratedMessage.GeneratedExtension<
-              io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, java.util.List<Type>> extension,
-          int index, Type value) {
-        return super.setExtension(extension, index, value);
-      }
-      @java.lang.Override
-      public <Type> Builder addExtension(
-          com.google.protobuf.GeneratedMessage.GeneratedExtension<
-              io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, java.util.List<Type>> extension,
-          Type value) {
-        return super.addExtension(extension, value);
-      }
-      @java.lang.Override
-      public <Type> Builder clearExtension(
-          com.google.protobuf.GeneratedMessage.GeneratedExtension<
-              io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, ?> extension) {
-        return super.clearExtension(extension);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto) {
           return mergeFrom((io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto)other);
@@ -1032,20 +920,18 @@ public final class ActiveNodeProtos {
           setLocationDomainId(other.getLocationDomainId());
         }
         this.mergeExtensionFields(other);
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!extensionsAreInitialized()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1055,7 +941,7 @@ public final class ActiveNodeProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1065,27 +951,22 @@ public final class ActiveNodeProtos {
       }
       private int bitField0_;
 
+      // optional int64 id = 1;
       private long id_ ;
       /**
        * <code>optional int64 id = 1;</code>
-       * @return Whether the id field is set.
        */
-      @java.lang.Override
       public boolean hasId() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>optional int64 id = 1;</code>
-       * @return The id.
        */
-      @java.lang.Override
       public long getId() {
         return id_;
       }
       /**
        * <code>optional int64 id = 1;</code>
-       * @param value The id to set.
-       * @return This builder for chaining.
        */
       public Builder setId(long value) {
         bitField0_ |= 0x00000001;
@@ -1095,7 +976,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional int64 id = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -1104,27 +984,23 @@ public final class ActiveNodeProtos {
         return this;
       }
 
+      // optional string rpcHostname = 2;
       private java.lang.Object rpcHostname_ = "";
       /**
        * <code>optional string rpcHostname = 2;</code>
-       * @return Whether the rpcHostname field is set.
        */
       public boolean hasRpcHostname() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>optional string rpcHostname = 2;</code>
-       * @return The rpcHostname.
        */
       public java.lang.String getRpcHostname() {
         java.lang.Object ref = rpcHostname_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            rpcHostname_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          rpcHostname_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1132,7 +1008,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string rpcHostname = 2;</code>
-       * @return The bytes for rpcHostname.
        */
       public com.google.protobuf.ByteString
           getRpcHostnameBytes() {
@@ -1149,8 +1024,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string rpcHostname = 2;</code>
-       * @param value The rpcHostname to set.
-       * @return This builder for chaining.
        */
       public Builder setRpcHostname(
           java.lang.String value) {
@@ -1164,7 +1037,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string rpcHostname = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearRpcHostname() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -1174,8 +1046,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string rpcHostname = 2;</code>
-       * @param value The bytes for rpcHostname to set.
-       * @return This builder for chaining.
        */
       public Builder setRpcHostnameBytes(
           com.google.protobuf.ByteString value) {
@@ -1188,27 +1058,23 @@ public final class ActiveNodeProtos {
         return this;
       }
 
+      // optional string rpcIpAddress = 3;
       private java.lang.Object rpcIpAddress_ = "";
       /**
        * <code>optional string rpcIpAddress = 3;</code>
-       * @return Whether the rpcIpAddress field is set.
        */
       public boolean hasRpcIpAddress() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>optional string rpcIpAddress = 3;</code>
-       * @return The rpcIpAddress.
        */
       public java.lang.String getRpcIpAddress() {
         java.lang.Object ref = rpcIpAddress_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            rpcIpAddress_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          rpcIpAddress_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1216,7 +1082,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string rpcIpAddress = 3;</code>
-       * @return The bytes for rpcIpAddress.
        */
       public com.google.protobuf.ByteString
           getRpcIpAddressBytes() {
@@ -1233,8 +1098,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string rpcIpAddress = 3;</code>
-       * @param value The rpcIpAddress to set.
-       * @return This builder for chaining.
        */
       public Builder setRpcIpAddress(
           java.lang.String value) {
@@ -1248,7 +1111,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string rpcIpAddress = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearRpcIpAddress() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -1258,8 +1120,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string rpcIpAddress = 3;</code>
-       * @param value The bytes for rpcIpAddress to set.
-       * @return This builder for chaining.
        */
       public Builder setRpcIpAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -1272,27 +1132,22 @@ public final class ActiveNodeProtos {
         return this;
       }
 
+      // optional int32 rpcPort = 4;
       private int rpcPort_ ;
       /**
        * <code>optional int32 rpcPort = 4;</code>
-       * @return Whether the rpcPort field is set.
        */
-      @java.lang.Override
       public boolean hasRpcPort() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>optional int32 rpcPort = 4;</code>
-       * @return The rpcPort.
        */
-      @java.lang.Override
       public int getRpcPort() {
         return rpcPort_;
       }
       /**
        * <code>optional int32 rpcPort = 4;</code>
-       * @param value The rpcPort to set.
-       * @return This builder for chaining.
        */
       public Builder setRpcPort(int value) {
         bitField0_ |= 0x00000008;
@@ -1302,7 +1157,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional int32 rpcPort = 4;</code>
-       * @return This builder for chaining.
        */
       public Builder clearRpcPort() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -1311,27 +1165,23 @@ public final class ActiveNodeProtos {
         return this;
       }
 
+      // optional string serviceIpAddress = 5;
       private java.lang.Object serviceIpAddress_ = "";
       /**
        * <code>optional string serviceIpAddress = 5;</code>
-       * @return Whether the serviceIpAddress field is set.
        */
       public boolean hasServiceIpAddress() {
-        return ((bitField0_ & 0x00000010) != 0);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>optional string serviceIpAddress = 5;</code>
-       * @return The serviceIpAddress.
        */
       public java.lang.String getServiceIpAddress() {
         java.lang.Object ref = serviceIpAddress_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            serviceIpAddress_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          serviceIpAddress_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1339,7 +1189,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string serviceIpAddress = 5;</code>
-       * @return The bytes for serviceIpAddress.
        */
       public com.google.protobuf.ByteString
           getServiceIpAddressBytes() {
@@ -1356,8 +1205,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string serviceIpAddress = 5;</code>
-       * @param value The serviceIpAddress to set.
-       * @return This builder for chaining.
        */
       public Builder setServiceIpAddress(
           java.lang.String value) {
@@ -1371,7 +1218,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string serviceIpAddress = 5;</code>
-       * @return This builder for chaining.
        */
       public Builder clearServiceIpAddress() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -1381,8 +1227,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string serviceIpAddress = 5;</code>
-       * @param value The bytes for serviceIpAddress to set.
-       * @return This builder for chaining.
        */
       public Builder setServiceIpAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -1395,27 +1239,22 @@ public final class ActiveNodeProtos {
         return this;
       }
 
+      // optional int32 servicePort = 6;
       private int servicePort_ ;
       /**
        * <code>optional int32 servicePort = 6;</code>
-       * @return Whether the servicePort field is set.
        */
-      @java.lang.Override
       public boolean hasServicePort() {
-        return ((bitField0_ & 0x00000020) != 0);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
        * <code>optional int32 servicePort = 6;</code>
-       * @return The servicePort.
        */
-      @java.lang.Override
       public int getServicePort() {
         return servicePort_;
       }
       /**
        * <code>optional int32 servicePort = 6;</code>
-       * @param value The servicePort to set.
-       * @return This builder for chaining.
        */
       public Builder setServicePort(int value) {
         bitField0_ |= 0x00000020;
@@ -1425,7 +1264,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional int32 servicePort = 6;</code>
-       * @return This builder for chaining.
        */
       public Builder clearServicePort() {
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -1434,27 +1272,23 @@ public final class ActiveNodeProtos {
         return this;
       }
 
+      // optional string httpAddress = 7;
       private java.lang.Object httpAddress_ = "";
       /**
        * <code>optional string httpAddress = 7;</code>
-       * @return Whether the httpAddress field is set.
        */
       public boolean hasHttpAddress() {
-        return ((bitField0_ & 0x00000040) != 0);
+        return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       /**
        * <code>optional string httpAddress = 7;</code>
-       * @return The httpAddress.
        */
       public java.lang.String getHttpAddress() {
         java.lang.Object ref = httpAddress_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            httpAddress_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          httpAddress_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1462,7 +1296,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string httpAddress = 7;</code>
-       * @return The bytes for httpAddress.
        */
       public com.google.protobuf.ByteString
           getHttpAddressBytes() {
@@ -1479,8 +1312,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string httpAddress = 7;</code>
-       * @param value The httpAddress to set.
-       * @return This builder for chaining.
        */
       public Builder setHttpAddress(
           java.lang.String value) {
@@ -1494,7 +1325,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string httpAddress = 7;</code>
-       * @return This builder for chaining.
        */
       public Builder clearHttpAddress() {
         bitField0_ = (bitField0_ & ~0x00000040);
@@ -1504,8 +1334,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional string httpAddress = 7;</code>
-       * @param value The bytes for httpAddress to set.
-       * @return This builder for chaining.
        */
       public Builder setHttpAddressBytes(
           com.google.protobuf.ByteString value) {
@@ -1518,27 +1346,22 @@ public final class ActiveNodeProtos {
         return this;
       }
 
+      // optional int32 locationDomainId = 8;
       private int locationDomainId_ ;
       /**
        * <code>optional int32 locationDomainId = 8;</code>
-       * @return Whether the locationDomainId field is set.
        */
-      @java.lang.Override
       public boolean hasLocationDomainId() {
-        return ((bitField0_ & 0x00000080) != 0);
+        return ((bitField0_ & 0x00000080) == 0x00000080);
       }
       /**
        * <code>optional int32 locationDomainId = 8;</code>
-       * @return The locationDomainId.
        */
-      @java.lang.Override
       public int getLocationDomainId() {
         return locationDomainId_;
       }
       /**
        * <code>optional int32 locationDomainId = 8;</code>
-       * @param value The locationDomainId to set.
-       * @return This builder for chaining.
        */
       public Builder setLocationDomainId(int value) {
         bitField0_ |= 0x00000080;
@@ -1548,7 +1371,6 @@ public final class ActiveNodeProtos {
       }
       /**
        * <code>optional int32 locationDomainId = 8;</code>
-       * @return This builder for chaining.
        */
       public Builder clearLocationDomainId() {
         bitField0_ = (bitField0_ & ~0x00000080);
@@ -1556,63 +1378,22 @@ public final class ActiveNodeProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.ActiveNodeProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.ActiveNodeProto)
-    private static final io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto();
+      defaultInstance = new ActiveNodeProto(true);
+      defaultInstance.initFields();
     }
 
-    public static io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<ActiveNodeProto>
-        PARSER = new com.google.protobuf.AbstractParser<ActiveNodeProto>() {
-      @java.lang.Override
-      public ActiveNodeProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ActiveNodeProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ActiveNodeProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ActiveNodeProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.ActiveNodeProto)
   }
 
-  public interface SortedActiveNodeListProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.SortedActiveNodeListProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface SortedActiveNodeListProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .hadoop.common.ActiveNodeProto active_node = 1;
     /**
      * <code>repeated .hadoop.common.ActiveNodeProto active_node = 1;</code>
      */
@@ -1641,38 +1422,35 @@ public final class ActiveNodeProtos {
    * Protobuf type {@code hadoop.common.SortedActiveNodeListProto}
    */
   public static final class SortedActiveNodeListProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.SortedActiveNodeListProto)
-      SortedActiveNodeListProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements SortedActiveNodeListProtoOrBuilder {
     // Use SortedActiveNodeListProto.newBuilder() to construct.
-    private SortedActiveNodeListProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private SortedActiveNodeListProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private SortedActiveNodeListProto() {
-      activeNode_ = java.util.Collections.emptyList();
+    private SortedActiveNodeListProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final SortedActiveNodeListProto defaultInstance;
+    public static SortedActiveNodeListProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new SortedActiveNodeListProto();
+    public SortedActiveNodeListProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private SortedActiveNodeListProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1684,20 +1462,19 @@ public final class ActiveNodeProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 activeNode_ = new java.util.ArrayList<io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              activeNode_.add(
-                  input.readMessage(io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto.PARSER, extensionRegistry));
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              activeNode_.add(input.readMessage(io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto.PARSER, extensionRegistry));
               break;
             }
           }
@@ -1706,9 +1483,9 @@ public final class ActiveNodeProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           activeNode_ = java.util.Collections.unmodifiableList(activeNode_);
         }
         this.unknownFields = unknownFields.build();
@@ -1720,27 +1497,40 @@ public final class ActiveNodeProtos {
       return io.hops.leader_election.proto.ActiveNodeProtos.internal_static_hadoop_common_SortedActiveNodeListProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return io.hops.leader_election.proto.ActiveNodeProtos.internal_static_hadoop_common_SortedActiveNodeListProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto.class, io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<SortedActiveNodeListProto> PARSER =
+        new com.google.protobuf.AbstractParser<SortedActiveNodeListProto>() {
+      public SortedActiveNodeListProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SortedActiveNodeListProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SortedActiveNodeListProto> getParserForType() {
+      return PARSER;
+    }
+
+    // repeated .hadoop.common.ActiveNodeProto active_node = 1;
     public static final int ACTIVE_NODE_FIELD_NUMBER = 1;
     private java.util.List<io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto> activeNode_;
     /**
      * <code>repeated .hadoop.common.ActiveNodeProto active_node = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto> getActiveNodeList() {
       return activeNode_;
     }
     /**
      * <code>repeated .hadoop.common.ActiveNodeProto active_node = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<? extends io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProtoOrBuilder> 
         getActiveNodeOrBuilderList() {
       return activeNode_;
@@ -1748,32 +1538,30 @@ public final class ActiveNodeProtos {
     /**
      * <code>repeated .hadoop.common.ActiveNodeProto active_node = 1;</code>
      */
-    @java.lang.Override
     public int getActiveNodeCount() {
       return activeNode_.size();
     }
     /**
      * <code>repeated .hadoop.common.ActiveNodeProto active_node = 1;</code>
      */
-    @java.lang.Override
     public io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto getActiveNode(int index) {
       return activeNode_.get(index);
     }
     /**
      * <code>repeated .hadoop.common.ActiveNodeProto active_node = 1;</code>
      */
-    @java.lang.Override
     public io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProtoOrBuilder getActiveNodeOrBuilder(
         int index) {
       return activeNode_.get(index);
     }
 
+    private void initFields() {
+      activeNode_ = java.util.Collections.emptyList();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getActiveNodeCount(); i++) {
         if (!getActiveNode(i).isInitialized()) {
@@ -1785,18 +1573,18 @@ public final class ActiveNodeProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       for (int i = 0; i < activeNode_.size(); i++) {
         output.writeMessage(1, activeNode_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -1804,9 +1592,16 @@ public final class ActiveNodeProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, activeNode_.get(i));
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1819,39 +1614,31 @@ public final class ActiveNodeProtos {
       }
       io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto other = (io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto) obj;
 
-      if (!getActiveNodeList()
-          .equals(other.getActiveNodeList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && getActiveNodeList()
+          .equals(other.getActiveNodeList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (getActiveNodeCount() > 0) {
         hash = (37 * hash) + ACTIVE_NODE_FIELD_NUMBER;
         hash = (53 * hash) + getActiveNodeList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1875,59 +1662,46 @@ public final class ActiveNodeProtos {
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1935,16 +1709,14 @@ public final class ActiveNodeProtos {
      * Protobuf type {@code hadoop.common.SortedActiveNodeListProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.SortedActiveNodeListProto)
-        io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return io.hops.leader_election.proto.ActiveNodeProtos.internal_static_hadoop_common_SortedActiveNodeListProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return io.hops.leader_election.proto.ActiveNodeProtos.internal_static_hadoop_common_SortedActiveNodeListProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1957,17 +1729,19 @@ public final class ActiveNodeProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getActiveNodeFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (activeNodeBuilder_ == null) {
@@ -1979,18 +1753,19 @@ public final class ActiveNodeProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return io.hops.leader_election.proto.ActiveNodeProtos.internal_static_hadoop_common_SortedActiveNodeListProto_descriptor;
       }
 
-      @java.lang.Override
       public io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto getDefaultInstanceForType() {
         return io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto build() {
         io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1999,12 +1774,11 @@ public final class ActiveNodeProtos {
         return result;
       }
 
-      @java.lang.Override
       public io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto buildPartial() {
         io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto result = new io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto(this);
         int from_bitField0_ = bitField0_;
         if (activeNodeBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
             activeNode_ = java.util.Collections.unmodifiableList(activeNode_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -2016,39 +1790,6 @@ public final class ActiveNodeProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto) {
           return mergeFrom((io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto)other);
@@ -2079,29 +1820,27 @@ public final class ActiveNodeProtos {
               activeNode_ = other.activeNode_;
               bitField0_ = (bitField0_ & ~0x00000001);
               activeNodeBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getActiveNodeFieldBuilder() : null;
             } else {
               activeNodeBuilder_.addAllMessages(other.activeNode_);
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         for (int i = 0; i < getActiveNodeCount(); i++) {
           if (!getActiveNode(i).isInitialized()) {
+            
             return false;
           }
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2111,7 +1850,7 @@ public final class ActiveNodeProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2121,16 +1860,17 @@ public final class ActiveNodeProtos {
       }
       private int bitField0_;
 
+      // repeated .hadoop.common.ActiveNodeProto active_node = 1;
       private java.util.List<io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto> activeNode_ =
         java.util.Collections.emptyList();
       private void ensureActiveNodeIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           activeNode_ = new java.util.ArrayList<io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto>(activeNode_);
           bitField0_ |= 0x00000001;
          }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto.Builder, io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProtoOrBuilder> activeNodeBuilder_;
 
       /**
@@ -2262,8 +2002,7 @@ public final class ActiveNodeProtos {
           java.lang.Iterable<? extends io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto> values) {
         if (activeNodeBuilder_ == null) {
           ensureActiveNodeIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, activeNode_);
+          super.addAll(values, activeNode_);
           onChanged();
         } else {
           activeNodeBuilder_.addAllMessages(values);
@@ -2346,89 +2085,48 @@ public final class ActiveNodeProtos {
            getActiveNodeBuilderList() {
         return getActiveNodeFieldBuilder().getBuilderList();
       }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto.Builder, io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProtoOrBuilder> 
           getActiveNodeFieldBuilder() {
         if (activeNodeBuilder_ == null) {
-          activeNodeBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          activeNodeBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto, io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProto.Builder, io.hops.leader_election.proto.ActiveNodeProtos.ActiveNodeProtoOrBuilder>(
                   activeNode_,
-                  ((bitField0_ & 0x00000001) != 0),
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
           activeNode_ = null;
         }
         return activeNodeBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.SortedActiveNodeListProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.SortedActiveNodeListProto)
-    private static final io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto();
+      defaultInstance = new SortedActiveNodeListProto(true);
+      defaultInstance.initFields();
     }
 
-    public static io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<SortedActiveNodeListProto>
-        PARSER = new com.google.protobuf.AbstractParser<SortedActiveNodeListProto>() {
-      @java.lang.Override
-      public SortedActiveNodeListProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new SortedActiveNodeListProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<SortedActiveNodeListProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<SortedActiveNodeListProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public io.hops.leader_election.proto.ActiveNodeProtos.SortedActiveNodeListProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.SortedActiveNodeListProto)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_ActiveNodeProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_ActiveNodeProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_SortedActiveNodeListProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_SortedActiveNodeListProto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -2443,22 +2141,30 @@ public final class ActiveNodeProtos {
       "eader_election.protoB\020ActiveNodeProtos\210\001" +
       "\001\240\001\001"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_hadoop_common_ActiveNodeProto_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_hadoop_common_ActiveNodeProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_ActiveNodeProto_descriptor,
+              new java.lang.String[] { "Id", "RpcHostname", "RpcIpAddress", "RpcPort", "ServiceIpAddress", "ServicePort", "HttpAddress", "LocationDomainId", });
+          internal_static_hadoop_common_SortedActiveNodeListProto_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_hadoop_common_SortedActiveNodeListProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_SortedActiveNodeListProto_descriptor,
+              new java.lang.String[] { "ActiveNode", });
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_hadoop_common_ActiveNodeProto_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_hadoop_common_ActiveNodeProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_ActiveNodeProto_descriptor,
-        new java.lang.String[] { "Id", "RpcHostname", "RpcIpAddress", "RpcPort", "ServiceIpAddress", "ServicePort", "HttpAddress", "LocationDomainId", });
-    internal_static_hadoop_common_SortedActiveNodeListProto_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_hadoop_common_SortedActiveNodeListProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_SortedActiveNodeListProto_descriptor,
-        new java.lang.String[] { "ActiveNode", });
+        }, assigner);
   }
 
   // @@protoc_insertion_point(outer_class_scope)

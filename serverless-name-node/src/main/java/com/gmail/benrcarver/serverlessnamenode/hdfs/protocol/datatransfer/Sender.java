@@ -17,17 +17,18 @@
  */
 package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.*;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm;
 import com.google.protobuf.Message;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
 import org.apache.hadoop.hdfs.protocol.ExtendedBlock;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.*;
-import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
-import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
-import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.SlotId;
 import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.util.DataChecksum;
 import org.apache.htrace.core.SpanId;
@@ -37,7 +38,7 @@ import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import static org.apache.hadoop.hdfs.protocol.datatransfer.DataTransferProtoUtil.toProto;
+import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.DataTransferProtoUtil.toProto;
 
 /**
  * Sender
@@ -116,11 +117,11 @@ public class Sender implements DataTransferProtocol {
       final CachingStrategy cachingStrategy,
       final boolean pinning,
       final boolean[] targetPinnings) throws IOException {
-    ClientOperationHeaderProto header = DataTransferProtoUtil.buildClientHeader(
+    DataTransferProtos.ClientOperationHeaderProto header = DataTransferProtoUtil.buildClientHeader(
         blk, clientName, blockToken);
     
-    ChecksumProto checksumProto =
-        DataTransferProtoUtil.toProto(requestedChecksum);
+    DataTransferProtos.ChecksumProto checksumProto =
+        toProto(requestedChecksum);
 
     OpWriteBlockProto.Builder proto = OpWriteBlockProto.newBuilder()
             .setHeader(header)
@@ -160,8 +161,8 @@ public class Sender implements DataTransferProtocol {
 
   @Override
   public void requestShortCircuitFds(final ExtendedBlock blk,
-      final Token<BlockTokenIdentifier> blockToken,
-      SlotId slotId, int maxVersion, boolean supportsReceiptVerification)
+                                     final Token<BlockTokenIdentifier> blockToken,
+                                     ShortCircuitShm.SlotId slotId, int maxVersion, boolean supportsReceiptVerification)
         throws IOException {
     OpRequestShortCircuitAccessProto.Builder builder =
         OpRequestShortCircuitAccessProto.newBuilder()
@@ -176,7 +177,7 @@ public class Sender implements DataTransferProtocol {
   }
 
   @Override
-  public void releaseShortCircuitFds(SlotId slotId) throws IOException {
+  public void releaseShortCircuitFds(ShortCircuitShm.SlotId slotId) throws IOException {
     ReleaseShortCircuitAccessRequestProto.Builder builder =
         ReleaseShortCircuitAccessRequestProto.newBuilder().
         setSlotId(PBHelper.convert(slotId));

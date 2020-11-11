@@ -6,58 +6,49 @@ package org.apache.hadoop.security.proto;
 public final class RefreshAuthorizationPolicyProtocolProtos {
   private RefreshAuthorizationPolicyProtocolProtos() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface RefreshServiceAclRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.RefreshServiceAclRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RefreshServiceAclRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
+   * Protobuf type {@code hadoop.common.RefreshServiceAclRequestProto}
+   *
    * <pre>
    **
    *  Refresh service acl request.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.RefreshServiceAclRequestProto}
    */
   public static final class RefreshServiceAclRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.RefreshServiceAclRequestProto)
-      RefreshServiceAclRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements RefreshServiceAclRequestProtoOrBuilder {
     // Use RefreshServiceAclRequestProto.newBuilder() to construct.
-    private RefreshServiceAclRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private RefreshServiceAclRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private RefreshServiceAclRequestProto() {
+    private RefreshServiceAclRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final RefreshServiceAclRequestProto defaultInstance;
+    public static RefreshServiceAclRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new RefreshServiceAclRequestProto();
+    public RefreshServiceAclRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private RefreshServiceAclRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -69,8 +60,8 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -81,7 +72,7 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -92,40 +83,61 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
       return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.internal_static_hadoop_common_RefreshServiceAclRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.internal_static_hadoop_common_RefreshServiceAclRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto.class, org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<RefreshServiceAclRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<RefreshServiceAclRequestProto>() {
+      public RefreshServiceAclRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new RefreshServiceAclRequestProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<RefreshServiceAclRequestProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -138,33 +150,25 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
       }
       org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto other = (org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -188,81 +192,66 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.RefreshServiceAclRequestProto}
+     *
      * <pre>
      **
      *  Refresh service acl request.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.RefreshServiceAclRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.RefreshServiceAclRequestProto)
-        org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.internal_static_hadoop_common_RefreshServiceAclRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.internal_static_hadoop_common_RefreshServiceAclRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -275,33 +264,36 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.internal_static_hadoop_common_RefreshServiceAclRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto build() {
         org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -310,46 +302,12 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto buildPartial() {
         org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto result = new org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto) {
           return mergeFrom((org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto)other);
@@ -361,17 +319,14 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
 
       public Builder mergeFrom(org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto other) {
         if (other == org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -381,7 +336,7 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -389,103 +344,59 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.RefreshServiceAclRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.RefreshServiceAclRequestProto)
-    private static final org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto();
+      defaultInstance = new RefreshServiceAclRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<RefreshServiceAclRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<RefreshServiceAclRequestProto>() {
-      @java.lang.Override
-      public RefreshServiceAclRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new RefreshServiceAclRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<RefreshServiceAclRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<RefreshServiceAclRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.RefreshServiceAclRequestProto)
   }
 
-  public interface RefreshServiceAclResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.RefreshServiceAclResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RefreshServiceAclResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
+   * Protobuf type {@code hadoop.common.RefreshServiceAclResponseProto}
+   *
    * <pre>
    **
    * void response
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.RefreshServiceAclResponseProto}
    */
   public static final class RefreshServiceAclResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.RefreshServiceAclResponseProto)
-      RefreshServiceAclResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements RefreshServiceAclResponseProtoOrBuilder {
     // Use RefreshServiceAclResponseProto.newBuilder() to construct.
-    private RefreshServiceAclResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private RefreshServiceAclResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private RefreshServiceAclResponseProto() {
+    private RefreshServiceAclResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final RefreshServiceAclResponseProto defaultInstance;
+    public static RefreshServiceAclResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new RefreshServiceAclResponseProto();
+    public RefreshServiceAclResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private RefreshServiceAclResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -497,8 +408,8 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -509,7 +420,7 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -520,40 +431,61 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
       return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.internal_static_hadoop_common_RefreshServiceAclResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.internal_static_hadoop_common_RefreshServiceAclResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto.class, org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<RefreshServiceAclResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<RefreshServiceAclResponseProto>() {
+      public RefreshServiceAclResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new RefreshServiceAclResponseProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<RefreshServiceAclResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -566,33 +498,25 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
       }
       org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto other = (org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -616,81 +540,66 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.RefreshServiceAclResponseProto}
+     *
      * <pre>
      **
      * void response
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.RefreshServiceAclResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.RefreshServiceAclResponseProto)
-        org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.internal_static_hadoop_common_RefreshServiceAclResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.internal_static_hadoop_common_RefreshServiceAclResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -703,33 +612,36 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.internal_static_hadoop_common_RefreshServiceAclResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto build() {
         org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -738,46 +650,12 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto buildPartial() {
         org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto result = new org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto) {
           return mergeFrom((org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto)other);
@@ -789,17 +667,14 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
 
       public Builder mergeFrom(org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto other) {
         if (other == org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -809,7 +684,7 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -817,66 +692,25 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.RefreshServiceAclResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.RefreshServiceAclResponseProto)
-    private static final org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto();
+      defaultInstance = new RefreshServiceAclResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<RefreshServiceAclResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<RefreshServiceAclResponseProto>() {
-      @java.lang.Override
-      public RefreshServiceAclResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new RefreshServiceAclResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<RefreshServiceAclResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<RefreshServiceAclResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshServiceAclResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.RefreshServiceAclResponseProto)
   }
 
   /**
+   * Protobuf service {@code hadoop.common.RefreshAuthorizationPolicyProtocolService}
+   *
    * <pre>
    **
    * Protocol which is used to refresh the authorization policy in use currently.
    * </pre>
-   *
-   * Protobuf service {@code hadoop.common.RefreshAuthorizationPolicyProtocolService}
    */
   public static abstract class RefreshAuthorizationPolicyProtocolService
       implements com.google.protobuf.Service {
@@ -884,12 +718,12 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
 
     public interface Interface {
       /**
+       * <code>rpc refreshServiceAcl(.hadoop.common.RefreshServiceAclRequestProto) returns (.hadoop.common.RefreshServiceAclResponseProto);</code>
+       *
        * <pre>
        **
        * Refresh the service-level authorization policy in-effect.
        * </pre>
-       *
-       * <code>rpc refreshServiceAcl(.hadoop.common.RefreshServiceAclRequestProto) returns (.hadoop.common.RefreshServiceAclResponseProto);</code>
        */
       public abstract void refreshServiceAcl(
           com.google.protobuf.RpcController controller,
@@ -974,12 +808,12 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
     }
 
     /**
+     * <code>rpc refreshServiceAcl(.hadoop.common.RefreshServiceAclRequestProto) returns (.hadoop.common.RefreshServiceAclResponseProto);</code>
+     *
      * <pre>
      **
      * Refresh the service-level authorization policy in-effect.
      * </pre>
-     *
-     * <code>rpc refreshServiceAcl(.hadoop.common.RefreshServiceAclRequestProto) returns (.hadoop.common.RefreshServiceAclResponseProto);</code>
      */
     public abstract void refreshServiceAcl(
         com.google.protobuf.RpcController controller,
@@ -1117,22 +951,22 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
     // @@protoc_insertion_point(class_scope:hadoop.common.RefreshAuthorizationPolicyProtocolService)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_RefreshServiceAclRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_RefreshServiceAclRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_RefreshServiceAclResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_RefreshServiceAclResponseProto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -1147,22 +981,30 @@ public final class RefreshAuthorizationPolicyProtocolProtos {
       "B(RefreshAuthorizationPolicyProtocolProt" +
       "os\210\001\001\240\001\001"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_hadoop_common_RefreshServiceAclRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_hadoop_common_RefreshServiceAclRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_RefreshServiceAclRequestProto_descriptor,
+              new java.lang.String[] { });
+          internal_static_hadoop_common_RefreshServiceAclResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_hadoop_common_RefreshServiceAclResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_RefreshServiceAclResponseProto_descriptor,
+              new java.lang.String[] { });
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_hadoop_common_RefreshServiceAclRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_hadoop_common_RefreshServiceAclRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_RefreshServiceAclRequestProto_descriptor,
-        new java.lang.String[] { });
-    internal_static_hadoop_common_RefreshServiceAclResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_hadoop_common_RefreshServiceAclResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_RefreshServiceAclResponseProto_descriptor,
-        new java.lang.String[] { });
+        }, assigner);
   }
 
   // @@protoc_insertion_point(outer_class_scope)

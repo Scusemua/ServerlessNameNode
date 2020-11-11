@@ -6,88 +6,76 @@ package org.apache.hadoop.ipc.protobuf;
 public final class ProtocolInfoProtos {
   private ProtocolInfoProtos() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface GetProtocolVersionsRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GetProtocolVersionsRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetProtocolVersionsRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string protocol = 1;
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return Whether the protocol field is set.
      */
     boolean hasProtocol();
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return The protocol.
      */
     java.lang.String getProtocol();
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return The bytes for protocol.
      */
     com.google.protobuf.ByteString
         getProtocolBytes();
   }
   /**
+   * Protobuf type {@code hadoop.common.GetProtocolVersionsRequestProto}
+   *
    * <pre>
    **
    * Request to get protocol versions for all supported rpc kinds.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GetProtocolVersionsRequestProto}
    */
   public static final class GetProtocolVersionsRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GetProtocolVersionsRequestProto)
-      GetProtocolVersionsRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GetProtocolVersionsRequestProtoOrBuilder {
     // Use GetProtocolVersionsRequestProto.newBuilder() to construct.
-    private GetProtocolVersionsRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GetProtocolVersionsRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GetProtocolVersionsRequestProto() {
-      protocol_ = "";
+    private GetProtocolVersionsRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetProtocolVersionsRequestProto defaultInstance;
+    public static GetProtocolVersionsRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GetProtocolVersionsRequestProto();
+    public GetProtocolVersionsRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GetProtocolVersionsRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -99,17 +87,16 @@ public final class ProtocolInfoProtos {
             case 0:
               done = true;
               break;
-            case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000001;
-              protocol_ = bs;
-              break;
-            }
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              protocol_ = input.readBytes();
               break;
             }
           }
@@ -118,7 +105,7 @@ public final class ProtocolInfoProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -129,38 +116,49 @@ public final class ProtocolInfoProtos {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolVersionsRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolVersionsRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto.class, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GetProtocolVersionsRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<GetProtocolVersionsRequestProto>() {
+      public GetProtocolVersionsRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetProtocolVersionsRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetProtocolVersionsRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required string protocol = 1;
     public static final int PROTOCOL_FIELD_NUMBER = 1;
-    private volatile java.lang.Object protocol_;
+    private java.lang.Object protocol_;
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return Whether the protocol field is set.
      */
-    @java.lang.Override
     public boolean hasProtocol() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return The protocol.
      */
-    @java.lang.Override
     public java.lang.String getProtocol() {
       java.lang.Object ref = protocol_;
       if (ref instanceof java.lang.String) {
@@ -176,14 +174,12 @@ public final class ProtocolInfoProtos {
       }
     }
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return The bytes for protocol.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getProtocolBytes() {
       java.lang.Object ref = protocol_;
@@ -198,12 +194,13 @@ public final class ProtocolInfoProtos {
       }
     }
 
+    private void initFields() {
+      protocol_ = "";
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasProtocol()) {
         memoizedIsInitialized = 0;
@@ -213,27 +210,35 @@ public final class ProtocolInfoProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, protocol_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getProtocolBytes());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, protocol_);
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getProtocolBytes());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -246,42 +251,34 @@ public final class ProtocolInfoProtos {
       }
       org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto other = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto) obj;
 
-      if (hasProtocol() != other.hasProtocol()) return false;
+      boolean result = true;
+      result = result && (hasProtocol() == other.hasProtocol());
       if (hasProtocol()) {
-        if (!getProtocol()
-            .equals(other.getProtocol())) return false;
+        result = result && getProtocol()
+            .equals(other.getProtocol());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasProtocol()) {
         hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
         hash = (53 * hash) + getProtocol().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -305,81 +302,66 @@ public final class ProtocolInfoProtos {
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GetProtocolVersionsRequestProto}
+     *
      * <pre>
      **
      * Request to get protocol versions for all supported rpc kinds.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GetProtocolVersionsRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GetProtocolVersionsRequestProto)
-        org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolVersionsRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolVersionsRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -392,16 +374,18 @@ public final class ProtocolInfoProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         protocol_ = "";
@@ -409,18 +393,19 @@ public final class ProtocolInfoProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolVersionsRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto build() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -429,12 +414,11 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto buildPartial() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto result = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.protocol_ = protocol_;
@@ -443,39 +427,6 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto) {
           return mergeFrom((org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto)other);
@@ -492,20 +443,18 @@ public final class ProtocolInfoProtos {
           protocol_ = other.protocol_;
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasProtocol()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -515,7 +464,7 @@ public final class ProtocolInfoProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -525,47 +474,42 @@ public final class ProtocolInfoProtos {
       }
       private int bitField0_;
 
+      // required string protocol = 1;
       private java.lang.Object protocol_ = "";
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @return Whether the protocol field is set.
        */
       public boolean hasProtocol() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @return The protocol.
        */
       public java.lang.String getProtocol() {
         java.lang.Object ref = protocol_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            protocol_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          protocol_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @return The bytes for protocol.
        */
       public com.google.protobuf.ByteString
           getProtocolBytes() {
@@ -581,13 +525,11 @@ public final class ProtocolInfoProtos {
         }
       }
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @param value The protocol to set.
-       * @return This builder for chaining.
        */
       public Builder setProtocol(
           java.lang.String value) {
@@ -600,12 +542,11 @@ public final class ProtocolInfoProtos {
         return this;
       }
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProtocol() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -614,13 +555,11 @@ public final class ProtocolInfoProtos {
         return this;
       }
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @param value The bytes for protocol to set.
-       * @return This builder for chaining.
        */
       public Builder setProtocolBytes(
           com.google.protobuf.ByteString value) {
@@ -632,163 +571,112 @@ public final class ProtocolInfoProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GetProtocolVersionsRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GetProtocolVersionsRequestProto)
-    private static final org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto();
+      defaultInstance = new GetProtocolVersionsRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetProtocolVersionsRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<GetProtocolVersionsRequestProto>() {
-      @java.lang.Override
-      public GetProtocolVersionsRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetProtocolVersionsRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetProtocolVersionsRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetProtocolVersionsRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GetProtocolVersionsRequestProto)
   }
 
-  public interface ProtocolVersionProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.ProtocolVersionProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ProtocolVersionProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string rpcKind = 1;
     /**
+     * <code>required string rpcKind = 1;</code>
+     *
      * <pre>
      *RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 1;</code>
-     * @return Whether the rpcKind field is set.
      */
     boolean hasRpcKind();
     /**
+     * <code>required string rpcKind = 1;</code>
+     *
      * <pre>
      *RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 1;</code>
-     * @return The rpcKind.
      */
     java.lang.String getRpcKind();
     /**
+     * <code>required string rpcKind = 1;</code>
+     *
      * <pre>
      *RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 1;</code>
-     * @return The bytes for rpcKind.
      */
     com.google.protobuf.ByteString
         getRpcKindBytes();
 
+    // repeated uint64 versions = 2;
     /**
+     * <code>repeated uint64 versions = 2;</code>
+     *
      * <pre>
      *Protocol version corresponding to the rpc kind.
      * </pre>
-     *
-     * <code>repeated uint64 versions = 2;</code>
-     * @return A list containing the versions.
      */
     java.util.List<java.lang.Long> getVersionsList();
     /**
+     * <code>repeated uint64 versions = 2;</code>
+     *
      * <pre>
      *Protocol version corresponding to the rpc kind.
      * </pre>
-     *
-     * <code>repeated uint64 versions = 2;</code>
-     * @return The count of versions.
      */
     int getVersionsCount();
     /**
+     * <code>repeated uint64 versions = 2;</code>
+     *
      * <pre>
      *Protocol version corresponding to the rpc kind.
      * </pre>
-     *
-     * <code>repeated uint64 versions = 2;</code>
-     * @param index The index of the element to return.
-     * @return The versions at the given index.
      */
     long getVersions(int index);
   }
   /**
+   * Protobuf type {@code hadoop.common.ProtocolVersionProto}
+   *
    * <pre>
    **
    * Protocol version with corresponding rpc kind.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.ProtocolVersionProto}
    */
   public static final class ProtocolVersionProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.ProtocolVersionProto)
-      ProtocolVersionProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements ProtocolVersionProtoOrBuilder {
     // Use ProtocolVersionProto.newBuilder() to construct.
-    private ProtocolVersionProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private ProtocolVersionProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private ProtocolVersionProto() {
-      rpcKind_ = "";
-      versions_ = emptyLongList();
+    private ProtocolVersionProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ProtocolVersionProto defaultInstance;
+    public static ProtocolVersionProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new ProtocolVersionProto();
+    public ProtocolVersionProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private ProtocolVersionProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -800,38 +688,37 @@ public final class ProtocolInfoProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              rpcKind_ = bs;
+              rpcKind_ = input.readBytes();
               break;
             }
             case 16: {
-              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-                versions_ = newLongList();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                versions_ = new java.util.ArrayList<java.lang.Long>();
                 mutable_bitField0_ |= 0x00000002;
               }
-              versions_.addLong(input.readUInt64());
+              versions_.add(input.readUInt64());
               break;
             }
             case 18: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000002) != 0) && input.getBytesUntilLimit() > 0) {
-                versions_ = newLongList();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+                versions_ = new java.util.ArrayList<java.lang.Long>();
                 mutable_bitField0_ |= 0x00000002;
               }
               while (input.getBytesUntilLimit() > 0) {
-                versions_.addLong(input.readUInt64());
+                versions_.add(input.readUInt64());
               }
               input.popLimit(limit);
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -840,10 +727,10 @@ public final class ProtocolInfoProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) != 0)) {
-          versions_.makeImmutable(); // C
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          versions_ = java.util.Collections.unmodifiableList(versions_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -854,38 +741,49 @@ public final class ProtocolInfoProtos {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_ProtocolVersionProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_ProtocolVersionProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto.class, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<ProtocolVersionProto> PARSER =
+        new com.google.protobuf.AbstractParser<ProtocolVersionProto>() {
+      public ProtocolVersionProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ProtocolVersionProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ProtocolVersionProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required string rpcKind = 1;
     public static final int RPCKIND_FIELD_NUMBER = 1;
-    private volatile java.lang.Object rpcKind_;
+    private java.lang.Object rpcKind_;
     /**
+     * <code>required string rpcKind = 1;</code>
+     *
      * <pre>
      *RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 1;</code>
-     * @return Whether the rpcKind field is set.
      */
-    @java.lang.Override
     public boolean hasRpcKind() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
+     * <code>required string rpcKind = 1;</code>
+     *
      * <pre>
      *RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 1;</code>
-     * @return The rpcKind.
      */
-    @java.lang.Override
     public java.lang.String getRpcKind() {
       java.lang.Object ref = rpcKind_;
       if (ref instanceof java.lang.String) {
@@ -901,14 +799,12 @@ public final class ProtocolInfoProtos {
       }
     }
     /**
+     * <code>required string rpcKind = 1;</code>
+     *
      * <pre>
      *RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 1;</code>
-     * @return The bytes for rpcKind.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getRpcKindBytes() {
       java.lang.Object ref = rpcKind_;
@@ -923,51 +819,49 @@ public final class ProtocolInfoProtos {
       }
     }
 
+    // repeated uint64 versions = 2;
     public static final int VERSIONS_FIELD_NUMBER = 2;
-    private com.google.protobuf.Internal.LongList versions_;
+    private java.util.List<java.lang.Long> versions_;
     /**
+     * <code>repeated uint64 versions = 2;</code>
+     *
      * <pre>
      *Protocol version corresponding to the rpc kind.
      * </pre>
-     *
-     * <code>repeated uint64 versions = 2;</code>
-     * @return A list containing the versions.
      */
-    @java.lang.Override
     public java.util.List<java.lang.Long>
         getVersionsList() {
       return versions_;
     }
     /**
+     * <code>repeated uint64 versions = 2;</code>
+     *
      * <pre>
      *Protocol version corresponding to the rpc kind.
      * </pre>
-     *
-     * <code>repeated uint64 versions = 2;</code>
-     * @return The count of versions.
      */
     public int getVersionsCount() {
       return versions_.size();
     }
     /**
+     * <code>repeated uint64 versions = 2;</code>
+     *
      * <pre>
      *Protocol version corresponding to the rpc kind.
      * </pre>
-     *
-     * <code>repeated uint64 versions = 2;</code>
-     * @param index The index of the element to return.
-     * @return The versions at the given index.
      */
     public long getVersions(int index) {
-      return versions_.getLong(index);
+      return versions_.get(index);
     }
 
+    private void initFields() {
+      rpcKind_ = "";
+      versions_ = java.util.Collections.emptyList();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasRpcKind()) {
         memoizedIsInitialized = 0;
@@ -977,39 +871,47 @@ public final class ProtocolInfoProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, rpcKind_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getRpcKindBytes());
       }
       for (int i = 0; i < versions_.size(); i++) {
-        output.writeUInt64(2, versions_.getLong(i));
+        output.writeUInt64(2, versions_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, rpcKind_);
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getRpcKindBytes());
       }
       {
         int dataSize = 0;
         for (int i = 0; i < versions_.size(); i++) {
           dataSize += com.google.protobuf.CodedOutputStream
-            .computeUInt64SizeNoTag(versions_.getLong(i));
+            .computeUInt64SizeNoTag(versions_.get(i));
         }
         size += dataSize;
         size += 1 * getVersionsList().size();
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1022,24 +924,27 @@ public final class ProtocolInfoProtos {
       }
       org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto other = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto) obj;
 
-      if (hasRpcKind() != other.hasRpcKind()) return false;
+      boolean result = true;
+      result = result && (hasRpcKind() == other.hasRpcKind());
       if (hasRpcKind()) {
-        if (!getRpcKind()
-            .equals(other.getRpcKind())) return false;
+        result = result && getRpcKind()
+            .equals(other.getRpcKind());
       }
-      if (!getVersionsList()
-          .equals(other.getVersionsList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && getVersionsList()
+          .equals(other.getVersionsList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasRpcKind()) {
         hash = (37 * hash) + RPCKIND_FIELD_NUMBER;
         hash = (53 * hash) + getRpcKind().hashCode();
@@ -1048,22 +953,11 @@ public final class ProtocolInfoProtos {
         hash = (37 * hash) + VERSIONS_FIELD_NUMBER;
         hash = (53 * hash) + getVersionsList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1087,81 +981,66 @@ public final class ProtocolInfoProtos {
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.ProtocolVersionProto}
+     *
      * <pre>
      **
      * Protocol version with corresponding rpc kind.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.ProtocolVersionProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.ProtocolVersionProto)
-        org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_ProtocolVersionProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_ProtocolVersionProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1174,37 +1053,40 @@ public final class ProtocolInfoProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         rpcKind_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        versions_ = emptyLongList();
+        versions_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_ProtocolVersionProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto getDefaultInstanceForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto build() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1213,17 +1095,16 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto buildPartial() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto result = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.rpcKind_ = rpcKind_;
-        if (((bitField0_ & 0x00000002) != 0)) {
-          versions_.makeImmutable();
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          versions_ = java.util.Collections.unmodifiableList(versions_);
           bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.versions_ = versions_;
@@ -1232,39 +1113,6 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto) {
           return mergeFrom((org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto)other);
@@ -1291,20 +1139,18 @@ public final class ProtocolInfoProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasRpcKind()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1314,7 +1160,7 @@ public final class ProtocolInfoProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1324,47 +1170,42 @@ public final class ProtocolInfoProtos {
       }
       private int bitField0_;
 
+      // required string rpcKind = 1;
       private java.lang.Object rpcKind_ = "";
       /**
+       * <code>required string rpcKind = 1;</code>
+       *
        * <pre>
        *RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 1;</code>
-       * @return Whether the rpcKind field is set.
        */
       public boolean hasRpcKind() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
+       * <code>required string rpcKind = 1;</code>
+       *
        * <pre>
        *RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 1;</code>
-       * @return The rpcKind.
        */
       public java.lang.String getRpcKind() {
         java.lang.Object ref = rpcKind_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            rpcKind_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          rpcKind_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
+       * <code>required string rpcKind = 1;</code>
+       *
        * <pre>
        *RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 1;</code>
-       * @return The bytes for rpcKind.
        */
       public com.google.protobuf.ByteString
           getRpcKindBytes() {
@@ -1380,13 +1221,11 @@ public final class ProtocolInfoProtos {
         }
       }
       /**
+       * <code>required string rpcKind = 1;</code>
+       *
        * <pre>
        *RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 1;</code>
-       * @param value The rpcKind to set.
-       * @return This builder for chaining.
        */
       public Builder setRpcKind(
           java.lang.String value) {
@@ -1399,12 +1238,11 @@ public final class ProtocolInfoProtos {
         return this;
       }
       /**
+       * <code>required string rpcKind = 1;</code>
+       *
        * <pre>
        *RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearRpcKind() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -1413,13 +1251,11 @@ public final class ProtocolInfoProtos {
         return this;
       }
       /**
+       * <code>required string rpcKind = 1;</code>
+       *
        * <pre>
        *RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 1;</code>
-       * @param value The bytes for rpcKind to set.
-       * @return This builder for chaining.
        */
       public Builder setRpcKindBytes(
           com.google.protobuf.ByteString value) {
@@ -1432,169 +1268,115 @@ public final class ProtocolInfoProtos {
         return this;
       }
 
-      private com.google.protobuf.Internal.LongList versions_ = emptyLongList();
+      // repeated uint64 versions = 2;
+      private java.util.List<java.lang.Long> versions_ = java.util.Collections.emptyList();
       private void ensureVersionsIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
-          versions_ = mutableCopy(versions_);
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          versions_ = new java.util.ArrayList<java.lang.Long>(versions_);
           bitField0_ |= 0x00000002;
          }
       }
       /**
+       * <code>repeated uint64 versions = 2;</code>
+       *
        * <pre>
        *Protocol version corresponding to the rpc kind.
        * </pre>
-       *
-       * <code>repeated uint64 versions = 2;</code>
-       * @return A list containing the versions.
        */
       public java.util.List<java.lang.Long>
           getVersionsList() {
-        return ((bitField0_ & 0x00000002) != 0) ?
-                 java.util.Collections.unmodifiableList(versions_) : versions_;
+        return java.util.Collections.unmodifiableList(versions_);
       }
       /**
+       * <code>repeated uint64 versions = 2;</code>
+       *
        * <pre>
        *Protocol version corresponding to the rpc kind.
        * </pre>
-       *
-       * <code>repeated uint64 versions = 2;</code>
-       * @return The count of versions.
        */
       public int getVersionsCount() {
         return versions_.size();
       }
       /**
+       * <code>repeated uint64 versions = 2;</code>
+       *
        * <pre>
        *Protocol version corresponding to the rpc kind.
        * </pre>
-       *
-       * <code>repeated uint64 versions = 2;</code>
-       * @param index The index of the element to return.
-       * @return The versions at the given index.
        */
       public long getVersions(int index) {
-        return versions_.getLong(index);
+        return versions_.get(index);
       }
       /**
+       * <code>repeated uint64 versions = 2;</code>
+       *
        * <pre>
        *Protocol version corresponding to the rpc kind.
        * </pre>
-       *
-       * <code>repeated uint64 versions = 2;</code>
-       * @param index The index to set the value at.
-       * @param value The versions to set.
-       * @return This builder for chaining.
        */
       public Builder setVersions(
           int index, long value) {
         ensureVersionsIsMutable();
-        versions_.setLong(index, value);
+        versions_.set(index, value);
         onChanged();
         return this;
       }
       /**
+       * <code>repeated uint64 versions = 2;</code>
+       *
        * <pre>
        *Protocol version corresponding to the rpc kind.
        * </pre>
-       *
-       * <code>repeated uint64 versions = 2;</code>
-       * @param value The versions to add.
-       * @return This builder for chaining.
        */
       public Builder addVersions(long value) {
         ensureVersionsIsMutable();
-        versions_.addLong(value);
+        versions_.add(value);
         onChanged();
         return this;
       }
       /**
+       * <code>repeated uint64 versions = 2;</code>
+       *
        * <pre>
        *Protocol version corresponding to the rpc kind.
        * </pre>
-       *
-       * <code>repeated uint64 versions = 2;</code>
-       * @param values The versions to add.
-       * @return This builder for chaining.
        */
       public Builder addAllVersions(
           java.lang.Iterable<? extends java.lang.Long> values) {
         ensureVersionsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, versions_);
+        super.addAll(values, versions_);
         onChanged();
         return this;
       }
       /**
+       * <code>repeated uint64 versions = 2;</code>
+       *
        * <pre>
        *Protocol version corresponding to the rpc kind.
        * </pre>
-       *
-       * <code>repeated uint64 versions = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearVersions() {
-        versions_ = emptyLongList();
+        versions_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.ProtocolVersionProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.ProtocolVersionProto)
-    private static final org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto();
+      defaultInstance = new ProtocolVersionProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<ProtocolVersionProto>
-        PARSER = new com.google.protobuf.AbstractParser<ProtocolVersionProto>() {
-      @java.lang.Override
-      public ProtocolVersionProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ProtocolVersionProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ProtocolVersionProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ProtocolVersionProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.ProtocolVersionProto)
   }
 
-  public interface GetProtocolVersionsResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GetProtocolVersionsResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetProtocolVersionsResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .hadoop.common.ProtocolVersionProto protocolVersions = 1;
     /**
      * <code>repeated .hadoop.common.ProtocolVersionProto protocolVersions = 1;</code>
      */
@@ -1620,46 +1402,43 @@ public final class ProtocolInfoProtos {
         int index);
   }
   /**
+   * Protobuf type {@code hadoop.common.GetProtocolVersionsResponseProto}
+   *
    * <pre>
    **
    * Get protocol version response.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GetProtocolVersionsResponseProto}
    */
   public static final class GetProtocolVersionsResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GetProtocolVersionsResponseProto)
-      GetProtocolVersionsResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GetProtocolVersionsResponseProtoOrBuilder {
     // Use GetProtocolVersionsResponseProto.newBuilder() to construct.
-    private GetProtocolVersionsResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GetProtocolVersionsResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GetProtocolVersionsResponseProto() {
-      protocolVersions_ = java.util.Collections.emptyList();
+    private GetProtocolVersionsResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetProtocolVersionsResponseProto defaultInstance;
+    public static GetProtocolVersionsResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GetProtocolVersionsResponseProto();
+    public GetProtocolVersionsResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GetProtocolVersionsResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1671,20 +1450,19 @@ public final class ProtocolInfoProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 protocolVersions_ = new java.util.ArrayList<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              protocolVersions_.add(
-                  input.readMessage(org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto.PARSER, extensionRegistry));
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              protocolVersions_.add(input.readMessage(org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto.PARSER, extensionRegistry));
               break;
             }
           }
@@ -1693,9 +1471,9 @@ public final class ProtocolInfoProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           protocolVersions_ = java.util.Collections.unmodifiableList(protocolVersions_);
         }
         this.unknownFields = unknownFields.build();
@@ -1707,27 +1485,40 @@ public final class ProtocolInfoProtos {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolVersionsResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolVersionsResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto.class, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GetProtocolVersionsResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<GetProtocolVersionsResponseProto>() {
+      public GetProtocolVersionsResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetProtocolVersionsResponseProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetProtocolVersionsResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    // repeated .hadoop.common.ProtocolVersionProto protocolVersions = 1;
     public static final int PROTOCOLVERSIONS_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto> protocolVersions_;
     /**
      * <code>repeated .hadoop.common.ProtocolVersionProto protocolVersions = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto> getProtocolVersionsList() {
       return protocolVersions_;
     }
     /**
      * <code>repeated .hadoop.common.ProtocolVersionProto protocolVersions = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<? extends org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProtoOrBuilder> 
         getProtocolVersionsOrBuilderList() {
       return protocolVersions_;
@@ -1735,32 +1526,30 @@ public final class ProtocolInfoProtos {
     /**
      * <code>repeated .hadoop.common.ProtocolVersionProto protocolVersions = 1;</code>
      */
-    @java.lang.Override
     public int getProtocolVersionsCount() {
       return protocolVersions_.size();
     }
     /**
      * <code>repeated .hadoop.common.ProtocolVersionProto protocolVersions = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto getProtocolVersions(int index) {
       return protocolVersions_.get(index);
     }
     /**
      * <code>repeated .hadoop.common.ProtocolVersionProto protocolVersions = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProtoOrBuilder getProtocolVersionsOrBuilder(
         int index) {
       return protocolVersions_.get(index);
     }
 
+    private void initFields() {
+      protocolVersions_ = java.util.Collections.emptyList();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getProtocolVersionsCount(); i++) {
         if (!getProtocolVersions(i).isInitialized()) {
@@ -1772,18 +1561,18 @@ public final class ProtocolInfoProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       for (int i = 0; i < protocolVersions_.size(); i++) {
         output.writeMessage(1, protocolVersions_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -1791,9 +1580,16 @@ public final class ProtocolInfoProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, protocolVersions_.get(i));
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1806,39 +1602,31 @@ public final class ProtocolInfoProtos {
       }
       org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto other = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto) obj;
 
-      if (!getProtocolVersionsList()
-          .equals(other.getProtocolVersionsList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && getProtocolVersionsList()
+          .equals(other.getProtocolVersionsList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (getProtocolVersionsCount() > 0) {
         hash = (37 * hash) + PROTOCOLVERSIONS_FIELD_NUMBER;
         hash = (53 * hash) + getProtocolVersionsList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1862,81 +1650,66 @@ public final class ProtocolInfoProtos {
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GetProtocolVersionsResponseProto}
+     *
      * <pre>
      **
      * Get protocol version response.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GetProtocolVersionsResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GetProtocolVersionsResponseProto)
-        org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolVersionsResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolVersionsResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1949,17 +1722,19 @@ public final class ProtocolInfoProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getProtocolVersionsFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (protocolVersionsBuilder_ == null) {
@@ -1971,18 +1746,19 @@ public final class ProtocolInfoProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolVersionsResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto build() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1991,12 +1767,11 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto buildPartial() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto result = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto(this);
         int from_bitField0_ = bitField0_;
         if (protocolVersionsBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
             protocolVersions_ = java.util.Collections.unmodifiableList(protocolVersions_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -2008,39 +1783,6 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto) {
           return mergeFrom((org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto)other);
@@ -2071,29 +1813,27 @@ public final class ProtocolInfoProtos {
               protocolVersions_ = other.protocolVersions_;
               bitField0_ = (bitField0_ & ~0x00000001);
               protocolVersionsBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getProtocolVersionsFieldBuilder() : null;
             } else {
               protocolVersionsBuilder_.addAllMessages(other.protocolVersions_);
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         for (int i = 0; i < getProtocolVersionsCount(); i++) {
           if (!getProtocolVersions(i).isInitialized()) {
+            
             return false;
           }
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2103,7 +1843,7 @@ public final class ProtocolInfoProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2113,16 +1853,17 @@ public final class ProtocolInfoProtos {
       }
       private int bitField0_;
 
+      // repeated .hadoop.common.ProtocolVersionProto protocolVersions = 1;
       private java.util.List<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto> protocolVersions_ =
         java.util.Collections.emptyList();
       private void ensureProtocolVersionsIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           protocolVersions_ = new java.util.ArrayList<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto>(protocolVersions_);
           bitField0_ |= 0x00000001;
          }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto.Builder, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProtoOrBuilder> protocolVersionsBuilder_;
 
       /**
@@ -2254,8 +1995,7 @@ public final class ProtocolInfoProtos {
           java.lang.Iterable<? extends org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto> values) {
         if (protocolVersionsBuilder_ == null) {
           ensureProtocolVersionsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, protocolVersions_);
+          super.addAll(values, protocolVersions_);
           onChanged();
         } else {
           protocolVersionsBuilder_.addAllMessages(values);
@@ -2338,177 +2078,127 @@ public final class ProtocolInfoProtos {
            getProtocolVersionsBuilderList() {
         return getProtocolVersionsFieldBuilder().getBuilderList();
       }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto.Builder, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProtoOrBuilder> 
           getProtocolVersionsFieldBuilder() {
         if (protocolVersionsBuilder_ == null) {
-          protocolVersionsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          protocolVersionsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProto.Builder, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolVersionProtoOrBuilder>(
                   protocolVersions_,
-                  ((bitField0_ & 0x00000001) != 0),
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
           protocolVersions_ = null;
         }
         return protocolVersionsBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GetProtocolVersionsResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GetProtocolVersionsResponseProto)
-    private static final org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto();
+      defaultInstance = new GetProtocolVersionsResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetProtocolVersionsResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<GetProtocolVersionsResponseProto>() {
-      @java.lang.Override
-      public GetProtocolVersionsResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetProtocolVersionsResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetProtocolVersionsResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetProtocolVersionsResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GetProtocolVersionsResponseProto)
   }
 
-  public interface GetProtocolSignatureRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GetProtocolSignatureRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetProtocolSignatureRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string protocol = 1;
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return Whether the protocol field is set.
      */
     boolean hasProtocol();
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return The protocol.
      */
     java.lang.String getProtocol();
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return The bytes for protocol.
      */
     com.google.protobuf.ByteString
         getProtocolBytes();
 
+    // required string rpcKind = 2;
     /**
+     * <code>required string rpcKind = 2;</code>
+     *
      * <pre>
      * RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 2;</code>
-     * @return Whether the rpcKind field is set.
      */
     boolean hasRpcKind();
     /**
+     * <code>required string rpcKind = 2;</code>
+     *
      * <pre>
      * RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 2;</code>
-     * @return The rpcKind.
      */
     java.lang.String getRpcKind();
     /**
+     * <code>required string rpcKind = 2;</code>
+     *
      * <pre>
      * RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 2;</code>
-     * @return The bytes for rpcKind.
      */
     com.google.protobuf.ByteString
         getRpcKindBytes();
   }
   /**
+   * Protobuf type {@code hadoop.common.GetProtocolSignatureRequestProto}
+   *
    * <pre>
    **
    * Get protocol signature request.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GetProtocolSignatureRequestProto}
    */
   public static final class GetProtocolSignatureRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GetProtocolSignatureRequestProto)
-      GetProtocolSignatureRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GetProtocolSignatureRequestProtoOrBuilder {
     // Use GetProtocolSignatureRequestProto.newBuilder() to construct.
-    private GetProtocolSignatureRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GetProtocolSignatureRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GetProtocolSignatureRequestProto() {
-      protocol_ = "";
-      rpcKind_ = "";
+    private GetProtocolSignatureRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetProtocolSignatureRequestProto defaultInstance;
+    public static GetProtocolSignatureRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GetProtocolSignatureRequestProto();
+    public GetProtocolSignatureRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GetProtocolSignatureRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2520,23 +2210,21 @@ public final class ProtocolInfoProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              protocol_ = bs;
+              protocol_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              rpcKind_ = bs;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              rpcKind_ = input.readBytes();
               break;
             }
           }
@@ -2545,7 +2233,7 @@ public final class ProtocolInfoProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -2556,38 +2244,49 @@ public final class ProtocolInfoProtos {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolSignatureRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolSignatureRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto.class, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GetProtocolSignatureRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<GetProtocolSignatureRequestProto>() {
+      public GetProtocolSignatureRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetProtocolSignatureRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetProtocolSignatureRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required string protocol = 1;
     public static final int PROTOCOL_FIELD_NUMBER = 1;
-    private volatile java.lang.Object protocol_;
+    private java.lang.Object protocol_;
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return Whether the protocol field is set.
      */
-    @java.lang.Override
     public boolean hasProtocol() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return The protocol.
      */
-    @java.lang.Override
     public java.lang.String getProtocol() {
       java.lang.Object ref = protocol_;
       if (ref instanceof java.lang.String) {
@@ -2603,14 +2302,12 @@ public final class ProtocolInfoProtos {
       }
     }
     /**
+     * <code>required string protocol = 1;</code>
+     *
      * <pre>
      * Protocol name
      * </pre>
-     *
-     * <code>required string protocol = 1;</code>
-     * @return The bytes for protocol.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getProtocolBytes() {
       java.lang.Object ref = protocol_;
@@ -2625,29 +2322,26 @@ public final class ProtocolInfoProtos {
       }
     }
 
+    // required string rpcKind = 2;
     public static final int RPCKIND_FIELD_NUMBER = 2;
-    private volatile java.lang.Object rpcKind_;
+    private java.lang.Object rpcKind_;
     /**
+     * <code>required string rpcKind = 2;</code>
+     *
      * <pre>
      * RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 2;</code>
-     * @return Whether the rpcKind field is set.
      */
-    @java.lang.Override
     public boolean hasRpcKind() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
+     * <code>required string rpcKind = 2;</code>
+     *
      * <pre>
      * RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 2;</code>
-     * @return The rpcKind.
      */
-    @java.lang.Override
     public java.lang.String getRpcKind() {
       java.lang.Object ref = rpcKind_;
       if (ref instanceof java.lang.String) {
@@ -2663,14 +2357,12 @@ public final class ProtocolInfoProtos {
       }
     }
     /**
+     * <code>required string rpcKind = 2;</code>
+     *
      * <pre>
      * RPC kind
      * </pre>
-     *
-     * <code>required string rpcKind = 2;</code>
-     * @return The bytes for rpcKind.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getRpcKindBytes() {
       java.lang.Object ref = rpcKind_;
@@ -2685,12 +2377,14 @@ public final class ProtocolInfoProtos {
       }
     }
 
+    private void initFields() {
+      protocol_ = "";
+      rpcKind_ = "";
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasProtocol()) {
         memoizedIsInitialized = 0;
@@ -2704,33 +2398,42 @@ public final class ProtocolInfoProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, protocol_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getProtocolBytes());
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, rpcKind_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getRpcKindBytes());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, protocol_);
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getProtocolBytes());
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, rpcKind_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getRpcKindBytes());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -2743,27 +2446,30 @@ public final class ProtocolInfoProtos {
       }
       org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto other = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto) obj;
 
-      if (hasProtocol() != other.hasProtocol()) return false;
+      boolean result = true;
+      result = result && (hasProtocol() == other.hasProtocol());
       if (hasProtocol()) {
-        if (!getProtocol()
-            .equals(other.getProtocol())) return false;
+        result = result && getProtocol()
+            .equals(other.getProtocol());
       }
-      if (hasRpcKind() != other.hasRpcKind()) return false;
+      result = result && (hasRpcKind() == other.hasRpcKind());
       if (hasRpcKind()) {
-        if (!getRpcKind()
-            .equals(other.getRpcKind())) return false;
+        result = result && getRpcKind()
+            .equals(other.getRpcKind());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasProtocol()) {
         hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
         hash = (53 * hash) + getProtocol().hashCode();
@@ -2772,22 +2478,11 @@ public final class ProtocolInfoProtos {
         hash = (37 * hash) + RPCKIND_FIELD_NUMBER;
         hash = (53 * hash) + getRpcKind().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2811,81 +2506,66 @@ public final class ProtocolInfoProtos {
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GetProtocolSignatureRequestProto}
+     *
      * <pre>
      **
      * Get protocol signature request.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GetProtocolSignatureRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GetProtocolSignatureRequestProto)
-        org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolSignatureRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolSignatureRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -2898,16 +2578,18 @@ public final class ProtocolInfoProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         protocol_ = "";
@@ -2917,18 +2599,19 @@ public final class ProtocolInfoProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolSignatureRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto build() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -2937,16 +2620,15 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto buildPartial() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto result = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.protocol_ = protocol_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.rpcKind_ = rpcKind_;
@@ -2955,39 +2637,6 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto) {
           return mergeFrom((org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto)other);
@@ -3009,23 +2658,22 @@ public final class ProtocolInfoProtos {
           rpcKind_ = other.rpcKind_;
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasProtocol()) {
+          
           return false;
         }
         if (!hasRpcKind()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3035,7 +2683,7 @@ public final class ProtocolInfoProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -3045,47 +2693,42 @@ public final class ProtocolInfoProtos {
       }
       private int bitField0_;
 
+      // required string protocol = 1;
       private java.lang.Object protocol_ = "";
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @return Whether the protocol field is set.
        */
       public boolean hasProtocol() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @return The protocol.
        */
       public java.lang.String getProtocol() {
         java.lang.Object ref = protocol_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            protocol_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          protocol_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @return The bytes for protocol.
        */
       public com.google.protobuf.ByteString
           getProtocolBytes() {
@@ -3101,13 +2744,11 @@ public final class ProtocolInfoProtos {
         }
       }
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @param value The protocol to set.
-       * @return This builder for chaining.
        */
       public Builder setProtocol(
           java.lang.String value) {
@@ -3120,12 +2761,11 @@ public final class ProtocolInfoProtos {
         return this;
       }
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearProtocol() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -3134,13 +2774,11 @@ public final class ProtocolInfoProtos {
         return this;
       }
       /**
+       * <code>required string protocol = 1;</code>
+       *
        * <pre>
        * Protocol name
        * </pre>
-       *
-       * <code>required string protocol = 1;</code>
-       * @param value The bytes for protocol to set.
-       * @return This builder for chaining.
        */
       public Builder setProtocolBytes(
           com.google.protobuf.ByteString value) {
@@ -3153,47 +2791,42 @@ public final class ProtocolInfoProtos {
         return this;
       }
 
+      // required string rpcKind = 2;
       private java.lang.Object rpcKind_ = "";
       /**
+       * <code>required string rpcKind = 2;</code>
+       *
        * <pre>
        * RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 2;</code>
-       * @return Whether the rpcKind field is set.
        */
       public boolean hasRpcKind() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
+       * <code>required string rpcKind = 2;</code>
+       *
        * <pre>
        * RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 2;</code>
-       * @return The rpcKind.
        */
       public java.lang.String getRpcKind() {
         java.lang.Object ref = rpcKind_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            rpcKind_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          rpcKind_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
+       * <code>required string rpcKind = 2;</code>
+       *
        * <pre>
        * RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 2;</code>
-       * @return The bytes for rpcKind.
        */
       public com.google.protobuf.ByteString
           getRpcKindBytes() {
@@ -3209,13 +2842,11 @@ public final class ProtocolInfoProtos {
         }
       }
       /**
+       * <code>required string rpcKind = 2;</code>
+       *
        * <pre>
        * RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 2;</code>
-       * @param value The rpcKind to set.
-       * @return This builder for chaining.
        */
       public Builder setRpcKind(
           java.lang.String value) {
@@ -3228,12 +2859,11 @@ public final class ProtocolInfoProtos {
         return this;
       }
       /**
+       * <code>required string rpcKind = 2;</code>
+       *
        * <pre>
        * RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearRpcKind() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -3242,13 +2872,11 @@ public final class ProtocolInfoProtos {
         return this;
       }
       /**
+       * <code>required string rpcKind = 2;</code>
+       *
        * <pre>
        * RPC kind
        * </pre>
-       *
-       * <code>required string rpcKind = 2;</code>
-       * @param value The bytes for rpcKind to set.
-       * @return This builder for chaining.
        */
       public Builder setRpcKindBytes(
           com.google.protobuf.ByteString value) {
@@ -3260,63 +2888,22 @@ public final class ProtocolInfoProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GetProtocolSignatureRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GetProtocolSignatureRequestProto)
-    private static final org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto();
+      defaultInstance = new GetProtocolSignatureRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetProtocolSignatureRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<GetProtocolSignatureRequestProto>() {
-      @java.lang.Override
-      public GetProtocolSignatureRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetProtocolSignatureRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetProtocolSignatureRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetProtocolSignatureRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GetProtocolSignatureRequestProto)
   }
 
-  public interface GetProtocolSignatureResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GetProtocolSignatureResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetProtocolSignatureResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .hadoop.common.ProtocolSignatureProto protocolSignature = 1;
     /**
      * <code>repeated .hadoop.common.ProtocolSignatureProto protocolSignature = 1;</code>
      */
@@ -3342,46 +2929,43 @@ public final class ProtocolInfoProtos {
         int index);
   }
   /**
+   * Protobuf type {@code hadoop.common.GetProtocolSignatureResponseProto}
+   *
    * <pre>
    **
    * Get protocol signature response.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GetProtocolSignatureResponseProto}
    */
   public static final class GetProtocolSignatureResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GetProtocolSignatureResponseProto)
-      GetProtocolSignatureResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GetProtocolSignatureResponseProtoOrBuilder {
     // Use GetProtocolSignatureResponseProto.newBuilder() to construct.
-    private GetProtocolSignatureResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GetProtocolSignatureResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GetProtocolSignatureResponseProto() {
-      protocolSignature_ = java.util.Collections.emptyList();
+    private GetProtocolSignatureResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetProtocolSignatureResponseProto defaultInstance;
+    public static GetProtocolSignatureResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GetProtocolSignatureResponseProto();
+    public GetProtocolSignatureResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GetProtocolSignatureResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -3393,20 +2977,19 @@ public final class ProtocolInfoProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 protocolSignature_ = new java.util.ArrayList<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              protocolSignature_.add(
-                  input.readMessage(org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto.PARSER, extensionRegistry));
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              protocolSignature_.add(input.readMessage(org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto.PARSER, extensionRegistry));
               break;
             }
           }
@@ -3415,9 +2998,9 @@ public final class ProtocolInfoProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           protocolSignature_ = java.util.Collections.unmodifiableList(protocolSignature_);
         }
         this.unknownFields = unknownFields.build();
@@ -3429,27 +3012,40 @@ public final class ProtocolInfoProtos {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolSignatureResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolSignatureResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto.class, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GetProtocolSignatureResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<GetProtocolSignatureResponseProto>() {
+      public GetProtocolSignatureResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetProtocolSignatureResponseProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetProtocolSignatureResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    // repeated .hadoop.common.ProtocolSignatureProto protocolSignature = 1;
     public static final int PROTOCOLSIGNATURE_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto> protocolSignature_;
     /**
      * <code>repeated .hadoop.common.ProtocolSignatureProto protocolSignature = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto> getProtocolSignatureList() {
       return protocolSignature_;
     }
     /**
      * <code>repeated .hadoop.common.ProtocolSignatureProto protocolSignature = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<? extends org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProtoOrBuilder> 
         getProtocolSignatureOrBuilderList() {
       return protocolSignature_;
@@ -3457,32 +3053,30 @@ public final class ProtocolInfoProtos {
     /**
      * <code>repeated .hadoop.common.ProtocolSignatureProto protocolSignature = 1;</code>
      */
-    @java.lang.Override
     public int getProtocolSignatureCount() {
       return protocolSignature_.size();
     }
     /**
      * <code>repeated .hadoop.common.ProtocolSignatureProto protocolSignature = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto getProtocolSignature(int index) {
       return protocolSignature_.get(index);
     }
     /**
      * <code>repeated .hadoop.common.ProtocolSignatureProto protocolSignature = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProtoOrBuilder getProtocolSignatureOrBuilder(
         int index) {
       return protocolSignature_.get(index);
     }
 
+    private void initFields() {
+      protocolSignature_ = java.util.Collections.emptyList();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getProtocolSignatureCount(); i++) {
         if (!getProtocolSignature(i).isInitialized()) {
@@ -3494,18 +3088,18 @@ public final class ProtocolInfoProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       for (int i = 0; i < protocolSignature_.size(); i++) {
         output.writeMessage(1, protocolSignature_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -3513,9 +3107,16 @@ public final class ProtocolInfoProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, protocolSignature_.get(i));
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -3528,39 +3129,31 @@ public final class ProtocolInfoProtos {
       }
       org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto other = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto) obj;
 
-      if (!getProtocolSignatureList()
-          .equals(other.getProtocolSignatureList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && getProtocolSignatureList()
+          .equals(other.getProtocolSignatureList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (getProtocolSignatureCount() > 0) {
         hash = (37 * hash) + PROTOCOLSIGNATURE_FIELD_NUMBER;
         hash = (53 * hash) + getProtocolSignatureList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3584,81 +3177,66 @@ public final class ProtocolInfoProtos {
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GetProtocolSignatureResponseProto}
+     *
      * <pre>
      **
      * Get protocol signature response.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GetProtocolSignatureResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GetProtocolSignatureResponseProto)
-        org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolSignatureResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolSignatureResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -3671,17 +3249,19 @@ public final class ProtocolInfoProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getProtocolSignatureFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (protocolSignatureBuilder_ == null) {
@@ -3693,18 +3273,19 @@ public final class ProtocolInfoProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_GetProtocolSignatureResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto build() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -3713,12 +3294,11 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto buildPartial() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto result = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto(this);
         int from_bitField0_ = bitField0_;
         if (protocolSignatureBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
             protocolSignature_ = java.util.Collections.unmodifiableList(protocolSignature_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -3730,39 +3310,6 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto) {
           return mergeFrom((org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto)other);
@@ -3793,29 +3340,27 @@ public final class ProtocolInfoProtos {
               protocolSignature_ = other.protocolSignature_;
               bitField0_ = (bitField0_ & ~0x00000001);
               protocolSignatureBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getProtocolSignatureFieldBuilder() : null;
             } else {
               protocolSignatureBuilder_.addAllMessages(other.protocolSignature_);
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         for (int i = 0; i < getProtocolSignatureCount(); i++) {
           if (!getProtocolSignature(i).isInitialized()) {
+            
             return false;
           }
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3825,7 +3370,7 @@ public final class ProtocolInfoProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -3835,16 +3380,17 @@ public final class ProtocolInfoProtos {
       }
       private int bitField0_;
 
+      // repeated .hadoop.common.ProtocolSignatureProto protocolSignature = 1;
       private java.util.List<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto> protocolSignature_ =
         java.util.Collections.emptyList();
       private void ensureProtocolSignatureIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           protocolSignature_ = new java.util.ArrayList<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto>(protocolSignature_);
           bitField0_ |= 0x00000001;
          }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto.Builder, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProtoOrBuilder> protocolSignatureBuilder_;
 
       /**
@@ -3976,8 +3522,7 @@ public final class ProtocolInfoProtos {
           java.lang.Iterable<? extends org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto> values) {
         if (protocolSignatureBuilder_ == null) {
           ensureProtocolSignatureIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, protocolSignature_);
+          super.addAll(values, protocolSignature_);
           onChanged();
         } else {
           protocolSignatureBuilder_.addAllMessages(values);
@@ -4060,102 +3605,56 @@ public final class ProtocolInfoProtos {
            getProtocolSignatureBuilderList() {
         return getProtocolSignatureFieldBuilder().getBuilderList();
       }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto.Builder, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProtoOrBuilder> 
           getProtocolSignatureFieldBuilder() {
         if (protocolSignatureBuilder_ == null) {
-          protocolSignatureBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          protocolSignatureBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto.Builder, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProtoOrBuilder>(
                   protocolSignature_,
-                  ((bitField0_ & 0x00000001) != 0),
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
           protocolSignature_ = null;
         }
         return protocolSignatureBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GetProtocolSignatureResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GetProtocolSignatureResponseProto)
-    private static final org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto();
+      defaultInstance = new GetProtocolSignatureResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetProtocolSignatureResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<GetProtocolSignatureResponseProto>() {
-      @java.lang.Override
-      public GetProtocolSignatureResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetProtocolSignatureResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetProtocolSignatureResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetProtocolSignatureResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolSignatureResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GetProtocolSignatureResponseProto)
   }
 
-  public interface ProtocolSignatureProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.ProtocolSignatureProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ProtocolSignatureProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required uint64 version = 1;
     /**
      * <code>required uint64 version = 1;</code>
-     * @return Whether the version field is set.
      */
     boolean hasVersion();
     /**
      * <code>required uint64 version = 1;</code>
-     * @return The version.
      */
     long getVersion();
 
+    // repeated uint32 methods = 2;
     /**
      * <code>repeated uint32 methods = 2;</code>
-     * @return A list containing the methods.
      */
     java.util.List<java.lang.Integer> getMethodsList();
     /**
      * <code>repeated uint32 methods = 2;</code>
-     * @return The count of methods.
      */
     int getMethodsCount();
     /**
      * <code>repeated uint32 methods = 2;</code>
-     * @param index The index of the element to return.
-     * @return The methods at the given index.
      */
     int getMethods(int index);
   }
@@ -4163,38 +3662,35 @@ public final class ProtocolInfoProtos {
    * Protobuf type {@code hadoop.common.ProtocolSignatureProto}
    */
   public static final class ProtocolSignatureProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.ProtocolSignatureProto)
-      ProtocolSignatureProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements ProtocolSignatureProtoOrBuilder {
     // Use ProtocolSignatureProto.newBuilder() to construct.
-    private ProtocolSignatureProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private ProtocolSignatureProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private ProtocolSignatureProto() {
-      methods_ = emptyIntList();
+    private ProtocolSignatureProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ProtocolSignatureProto defaultInstance;
+    public static ProtocolSignatureProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new ProtocolSignatureProto();
+    public ProtocolSignatureProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private ProtocolSignatureProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -4206,37 +3702,37 @@ public final class ProtocolInfoProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               version_ = input.readUInt64();
               break;
             }
             case 16: {
-              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
-                methods_ = newIntList();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                methods_ = new java.util.ArrayList<java.lang.Integer>();
                 mutable_bitField0_ |= 0x00000002;
               }
-              methods_.addInt(input.readUInt32());
+              methods_.add(input.readUInt32());
               break;
             }
             case 18: {
               int length = input.readRawVarint32();
               int limit = input.pushLimit(length);
-              if (!((mutable_bitField0_ & 0x00000002) != 0) && input.getBytesUntilLimit() > 0) {
-                methods_ = newIntList();
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+                methods_ = new java.util.ArrayList<java.lang.Integer>();
                 mutable_bitField0_ |= 0x00000002;
               }
               while (input.getBytesUntilLimit() > 0) {
-                methods_.addInt(input.readUInt32());
+                methods_.add(input.readUInt32());
               }
               input.popLimit(limit);
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -4245,10 +3741,10 @@ public final class ProtocolInfoProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) != 0)) {
-          methods_.makeImmutable(); // C
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          methods_ = java.util.Collections.unmodifiableList(methods_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -4259,67 +3755,76 @@ public final class ProtocolInfoProtos {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_ProtocolSignatureProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_ProtocolSignatureProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto.class, org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<ProtocolSignatureProto> PARSER =
+        new com.google.protobuf.AbstractParser<ProtocolSignatureProto>() {
+      public ProtocolSignatureProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ProtocolSignatureProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ProtocolSignatureProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required uint64 version = 1;
     public static final int VERSION_FIELD_NUMBER = 1;
     private long version_;
     /**
      * <code>required uint64 version = 1;</code>
-     * @return Whether the version field is set.
      */
-    @java.lang.Override
     public boolean hasVersion() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required uint64 version = 1;</code>
-     * @return The version.
      */
-    @java.lang.Override
     public long getVersion() {
       return version_;
     }
 
+    // repeated uint32 methods = 2;
     public static final int METHODS_FIELD_NUMBER = 2;
-    private com.google.protobuf.Internal.IntList methods_;
+    private java.util.List<java.lang.Integer> methods_;
     /**
      * <code>repeated uint32 methods = 2;</code>
-     * @return A list containing the methods.
      */
-    @java.lang.Override
     public java.util.List<java.lang.Integer>
         getMethodsList() {
       return methods_;
     }
     /**
      * <code>repeated uint32 methods = 2;</code>
-     * @return The count of methods.
      */
     public int getMethodsCount() {
       return methods_.size();
     }
     /**
      * <code>repeated uint32 methods = 2;</code>
-     * @param index The index of the element to return.
-     * @return The methods at the given index.
      */
     public int getMethods(int index) {
-      return methods_.getInt(index);
+      return methods_.get(index);
     }
 
+    private void initFields() {
+      version_ = 0L;
+      methods_ = java.util.Collections.emptyList();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasVersion()) {
         memoizedIsInitialized = 0;
@@ -4329,25 +3834,25 @@ public final class ProtocolInfoProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeUInt64(1, version_);
       }
       for (int i = 0; i < methods_.size(); i++) {
-        output.writeUInt32(2, methods_.getInt(i));
+        output.writeUInt32(2, methods_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, version_);
       }
@@ -4355,14 +3860,21 @@ public final class ProtocolInfoProtos {
         int dataSize = 0;
         for (int i = 0; i < methods_.size(); i++) {
           dataSize += com.google.protobuf.CodedOutputStream
-            .computeUInt32SizeNoTag(methods_.getInt(i));
+            .computeUInt32SizeNoTag(methods_.get(i));
         }
         size += dataSize;
         size += 1 * getMethodsList().size();
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -4375,49 +3887,40 @@ public final class ProtocolInfoProtos {
       }
       org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto other = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto) obj;
 
-      if (hasVersion() != other.hasVersion()) return false;
+      boolean result = true;
+      result = result && (hasVersion() == other.hasVersion());
       if (hasVersion()) {
-        if (getVersion()
-            != other.getVersion()) return false;
+        result = result && (getVersion()
+            == other.getVersion());
       }
-      if (!getMethodsList()
-          .equals(other.getMethodsList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && getMethodsList()
+          .equals(other.getMethodsList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasVersion()) {
         hash = (37 * hash) + VERSION_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getVersion());
+        hash = (53 * hash) + hashLong(getVersion());
       }
       if (getMethodsCount() > 0) {
         hash = (37 * hash) + METHODS_FIELD_NUMBER;
         hash = (53 * hash) + getMethodsList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4441,59 +3944,46 @@ public final class ProtocolInfoProtos {
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -4501,16 +3991,14 @@ public final class ProtocolInfoProtos {
      * Protobuf type {@code hadoop.common.ProtocolSignatureProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.ProtocolSignatureProto)
-        org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_ProtocolSignatureProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_ProtocolSignatureProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -4523,37 +4011,40 @@ public final class ProtocolInfoProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         version_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000001);
-        methods_ = emptyIntList();
+        methods_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.internal_static_hadoop_common_ProtocolSignatureProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto getDefaultInstanceForType() {
         return org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto build() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -4562,17 +4053,16 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto buildPartial() {
         org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto result = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.version_ = version_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        if (((bitField0_ & 0x00000002) != 0)) {
-          methods_.makeImmutable();
+        result.version_ = version_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          methods_ = java.util.Collections.unmodifiableList(methods_);
           bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.methods_ = methods_;
@@ -4581,39 +4071,6 @@ public final class ProtocolInfoProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto) {
           return mergeFrom((org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto)other);
@@ -4638,20 +4095,18 @@ public final class ProtocolInfoProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasVersion()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4661,7 +4116,7 @@ public final class ProtocolInfoProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -4671,27 +4126,22 @@ public final class ProtocolInfoProtos {
       }
       private int bitField0_;
 
+      // required uint64 version = 1;
       private long version_ ;
       /**
        * <code>required uint64 version = 1;</code>
-       * @return Whether the version field is set.
        */
-      @java.lang.Override
       public boolean hasVersion() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required uint64 version = 1;</code>
-       * @return The version.
        */
-      @java.lang.Override
       public long getVersion() {
         return version_;
       }
       /**
        * <code>required uint64 version = 1;</code>
-       * @param value The version to set.
-       * @return This builder for chaining.
        */
       public Builder setVersion(long value) {
         bitField0_ |= 0x00000001;
@@ -4701,7 +4151,6 @@ public final class ProtocolInfoProtos {
       }
       /**
        * <code>required uint64 version = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearVersion() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -4710,144 +4159,90 @@ public final class ProtocolInfoProtos {
         return this;
       }
 
-      private com.google.protobuf.Internal.IntList methods_ = emptyIntList();
+      // repeated uint32 methods = 2;
+      private java.util.List<java.lang.Integer> methods_ = java.util.Collections.emptyList();
       private void ensureMethodsIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
-          methods_ = mutableCopy(methods_);
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          methods_ = new java.util.ArrayList<java.lang.Integer>(methods_);
           bitField0_ |= 0x00000002;
          }
       }
       /**
        * <code>repeated uint32 methods = 2;</code>
-       * @return A list containing the methods.
        */
       public java.util.List<java.lang.Integer>
           getMethodsList() {
-        return ((bitField0_ & 0x00000002) != 0) ?
-                 java.util.Collections.unmodifiableList(methods_) : methods_;
+        return java.util.Collections.unmodifiableList(methods_);
       }
       /**
        * <code>repeated uint32 methods = 2;</code>
-       * @return The count of methods.
        */
       public int getMethodsCount() {
         return methods_.size();
       }
       /**
        * <code>repeated uint32 methods = 2;</code>
-       * @param index The index of the element to return.
-       * @return The methods at the given index.
        */
       public int getMethods(int index) {
-        return methods_.getInt(index);
+        return methods_.get(index);
       }
       /**
        * <code>repeated uint32 methods = 2;</code>
-       * @param index The index to set the value at.
-       * @param value The methods to set.
-       * @return This builder for chaining.
        */
       public Builder setMethods(
           int index, int value) {
         ensureMethodsIsMutable();
-        methods_.setInt(index, value);
+        methods_.set(index, value);
         onChanged();
         return this;
       }
       /**
        * <code>repeated uint32 methods = 2;</code>
-       * @param value The methods to add.
-       * @return This builder for chaining.
        */
       public Builder addMethods(int value) {
         ensureMethodsIsMutable();
-        methods_.addInt(value);
+        methods_.add(value);
         onChanged();
         return this;
       }
       /**
        * <code>repeated uint32 methods = 2;</code>
-       * @param values The methods to add.
-       * @return This builder for chaining.
        */
       public Builder addAllMethods(
           java.lang.Iterable<? extends java.lang.Integer> values) {
         ensureMethodsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, methods_);
+        super.addAll(values, methods_);
         onChanged();
         return this;
       }
       /**
        * <code>repeated uint32 methods = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearMethods() {
-        methods_ = emptyIntList();
+        methods_ = java.util.Collections.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.ProtocolSignatureProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.ProtocolSignatureProto)
-    private static final org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto();
+      defaultInstance = new ProtocolSignatureProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<ProtocolSignatureProto>
-        PARSER = new com.google.protobuf.AbstractParser<ProtocolSignatureProto>() {
-      @java.lang.Override
-      public ProtocolSignatureProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ProtocolSignatureProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ProtocolSignatureProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ProtocolSignatureProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.ProtocolSignatureProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.ProtocolSignatureProto)
   }
 
   /**
+   * Protobuf service {@code hadoop.common.ProtocolInfoService}
+   *
    * <pre>
    **
    * Protocol to get information about protocols.
    * </pre>
-   *
-   * Protobuf service {@code hadoop.common.ProtocolInfoService}
    */
   public static abstract class ProtocolInfoService
       implements com.google.protobuf.Service {
@@ -4855,13 +4250,13 @@ public final class ProtocolInfoProtos {
 
     public interface Interface {
       /**
+       * <code>rpc getProtocolVersions(.hadoop.common.GetProtocolVersionsRequestProto) returns (.hadoop.common.GetProtocolVersionsResponseProto);</code>
+       *
        * <pre>
        **
        * Return protocol version corresponding to protocol interface for each
        * supported rpc kind.
        * </pre>
-       *
-       * <code>rpc getProtocolVersions(.hadoop.common.GetProtocolVersionsRequestProto) returns (.hadoop.common.GetProtocolVersionsResponseProto);</code>
        */
       public abstract void getProtocolVersions(
           com.google.protobuf.RpcController controller,
@@ -4869,12 +4264,12 @@ public final class ProtocolInfoProtos {
           com.google.protobuf.RpcCallback<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto> done);
 
       /**
+       * <code>rpc getProtocolSignature(.hadoop.common.GetProtocolSignatureRequestProto) returns (.hadoop.common.GetProtocolSignatureResponseProto);</code>
+       *
        * <pre>
        **
        * Return protocol version corresponding to protocol interface.
        * </pre>
-       *
-       * <code>rpc getProtocolSignature(.hadoop.common.GetProtocolSignatureRequestProto) returns (.hadoop.common.GetProtocolSignatureResponseProto);</code>
        */
       public abstract void getProtocolSignature(
           com.google.protobuf.RpcController controller,
@@ -4973,13 +4368,13 @@ public final class ProtocolInfoProtos {
     }
 
     /**
+     * <code>rpc getProtocolVersions(.hadoop.common.GetProtocolVersionsRequestProto) returns (.hadoop.common.GetProtocolVersionsResponseProto);</code>
+     *
      * <pre>
      **
      * Return protocol version corresponding to protocol interface for each
      * supported rpc kind.
      * </pre>
-     *
-     * <code>rpc getProtocolVersions(.hadoop.common.GetProtocolVersionsRequestProto) returns (.hadoop.common.GetProtocolVersionsResponseProto);</code>
      */
     public abstract void getProtocolVersions(
         com.google.protobuf.RpcController controller,
@@ -4987,12 +4382,12 @@ public final class ProtocolInfoProtos {
         com.google.protobuf.RpcCallback<org.apache.hadoop.ipc.protobuf.ProtocolInfoProtos.GetProtocolVersionsResponseProto> done);
 
     /**
+     * <code>rpc getProtocolSignature(.hadoop.common.GetProtocolSignatureRequestProto) returns (.hadoop.common.GetProtocolSignatureResponseProto);</code>
+     *
      * <pre>
      **
      * Return protocol version corresponding to protocol interface.
      * </pre>
-     *
-     * <code>rpc getProtocolSignature(.hadoop.common.GetProtocolSignatureRequestProto) returns (.hadoop.common.GetProtocolSignatureResponseProto);</code>
      */
     public abstract void getProtocolSignature(
         com.google.protobuf.RpcController controller,
@@ -5171,42 +4566,42 @@ public final class ProtocolInfoProtos {
     // @@protoc_insertion_point(class_scope:hadoop.common.ProtocolInfoService)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GetProtocolVersionsRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GetProtocolVersionsRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_ProtocolVersionProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_ProtocolVersionProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GetProtocolVersionsResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GetProtocolVersionsResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GetProtocolSignatureRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GetProtocolSignatureRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GetProtocolSignatureResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GetProtocolSignatureResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_ProtocolSignatureProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_ProtocolSignatureProto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -5219,7 +4614,7 @@ public final class ProtocolInfoProtos {
       "nProto\"E\n GetProtocolSignatureRequestPro" +
       "to\022\020\n\010protocol\030\001 \002(\t\022\017\n\007rpcKind\030\002 \002(\t\"e\n" +
       "!GetProtocolSignatureResponseProto\022@\n\021pr" +
-      "otocolSignature\030\001 \003(\0132%.hadoop.common.Pr" +
+      "otocolSignature\030\001 \003(\0132%.hadoop.common.Pr",
       "otocolSignatureProto\":\n\026ProtocolSignatur" +
       "eProto\022\017\n\007version\030\001 \002(\004\022\017\n\007methods\030\002 \003(\r" +
       "2\210\002\n\023ProtocolInfoService\022v\n\023getProtocolV" +
@@ -5229,49 +4624,57 @@ public final class ProtocolInfoProtos {
       "ignature\022/.hadoop.common.GetProtocolSign" +
       "atureRequestProto\0320.hadoop.common.GetPro" +
       "tocolSignatureResponseProtoB:\n\036org.apach" +
-      "e.hadoop.ipc.protobufB\022ProtocolInfoProto" +
+      "e.hadoop.ipc.protobufB\022ProtocolInfoProto",
       "s\210\001\001\240\001\001"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_hadoop_common_GetProtocolVersionsRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_hadoop_common_GetProtocolVersionsRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GetProtocolVersionsRequestProto_descriptor,
+              new java.lang.String[] { "Protocol", });
+          internal_static_hadoop_common_ProtocolVersionProto_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_hadoop_common_ProtocolVersionProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_ProtocolVersionProto_descriptor,
+              new java.lang.String[] { "RpcKind", "Versions", });
+          internal_static_hadoop_common_GetProtocolVersionsResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_hadoop_common_GetProtocolVersionsResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GetProtocolVersionsResponseProto_descriptor,
+              new java.lang.String[] { "ProtocolVersions", });
+          internal_static_hadoop_common_GetProtocolSignatureRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_hadoop_common_GetProtocolSignatureRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GetProtocolSignatureRequestProto_descriptor,
+              new java.lang.String[] { "Protocol", "RpcKind", });
+          internal_static_hadoop_common_GetProtocolSignatureResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_hadoop_common_GetProtocolSignatureResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GetProtocolSignatureResponseProto_descriptor,
+              new java.lang.String[] { "ProtocolSignature", });
+          internal_static_hadoop_common_ProtocolSignatureProto_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_hadoop_common_ProtocolSignatureProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_ProtocolSignatureProto_descriptor,
+              new java.lang.String[] { "Version", "Methods", });
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_hadoop_common_GetProtocolVersionsRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_hadoop_common_GetProtocolVersionsRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GetProtocolVersionsRequestProto_descriptor,
-        new java.lang.String[] { "Protocol", });
-    internal_static_hadoop_common_ProtocolVersionProto_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_hadoop_common_ProtocolVersionProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_ProtocolVersionProto_descriptor,
-        new java.lang.String[] { "RpcKind", "Versions", });
-    internal_static_hadoop_common_GetProtocolVersionsResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_hadoop_common_GetProtocolVersionsResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GetProtocolVersionsResponseProto_descriptor,
-        new java.lang.String[] { "ProtocolVersions", });
-    internal_static_hadoop_common_GetProtocolSignatureRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_hadoop_common_GetProtocolSignatureRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GetProtocolSignatureRequestProto_descriptor,
-        new java.lang.String[] { "Protocol", "RpcKind", });
-    internal_static_hadoop_common_GetProtocolSignatureResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_hadoop_common_GetProtocolSignatureResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GetProtocolSignatureResponseProto_descriptor,
-        new java.lang.String[] { "ProtocolSignature", });
-    internal_static_hadoop_common_ProtocolSignatureProto_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_hadoop_common_ProtocolSignatureProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_ProtocolSignatureProto_descriptor,
-        new java.lang.String[] { "Version", "Methods", });
+        }, assigner);
   }
 
   // @@protoc_insertion_point(outer_class_scope)

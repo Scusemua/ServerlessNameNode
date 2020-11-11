@@ -6,76 +6,64 @@ package org.apache.hadoop.tools.proto;
 public final class GetUserMappingsProtocolProtos {
   private GetUserMappingsProtocolProtos() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface GetGroupsForUserRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GetGroupsForUserRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetGroupsForUserRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string user = 1;
     /**
      * <code>required string user = 1;</code>
-     * @return Whether the user field is set.
      */
     boolean hasUser();
     /**
      * <code>required string user = 1;</code>
-     * @return The user.
      */
     java.lang.String getUser();
     /**
      * <code>required string user = 1;</code>
-     * @return The bytes for user.
      */
     com.google.protobuf.ByteString
         getUserBytes();
   }
   /**
+   * Protobuf type {@code hadoop.common.GetGroupsForUserRequestProto}
+   *
    * <pre>
    **
    *  Get groups for user request.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GetGroupsForUserRequestProto}
    */
   public static final class GetGroupsForUserRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GetGroupsForUserRequestProto)
-      GetGroupsForUserRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GetGroupsForUserRequestProtoOrBuilder {
     // Use GetGroupsForUserRequestProto.newBuilder() to construct.
-    private GetGroupsForUserRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GetGroupsForUserRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GetGroupsForUserRequestProto() {
-      user_ = "";
+    private GetGroupsForUserRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetGroupsForUserRequestProto defaultInstance;
+    public static GetGroupsForUserRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GetGroupsForUserRequestProto();
+    public GetGroupsForUserRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GetGroupsForUserRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -87,17 +75,16 @@ public final class GetUserMappingsProtocolProtos {
             case 0:
               done = true;
               break;
-            case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000001;
-              user_ = bs;
-              break;
-            }
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              user_ = input.readBytes();
               break;
             }
           }
@@ -106,7 +93,7 @@ public final class GetUserMappingsProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -117,30 +104,41 @@ public final class GetUserMappingsProtocolProtos {
       return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.internal_static_hadoop_common_GetGroupsForUserRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.internal_static_hadoop_common_GetGroupsForUserRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto.class, org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GetGroupsForUserRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<GetGroupsForUserRequestProto>() {
+      public GetGroupsForUserRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetGroupsForUserRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetGroupsForUserRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required string user = 1;
     public static final int USER_FIELD_NUMBER = 1;
-    private volatile java.lang.Object user_;
+    private java.lang.Object user_;
     /**
      * <code>required string user = 1;</code>
-     * @return Whether the user field is set.
      */
-    @java.lang.Override
     public boolean hasUser() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string user = 1;</code>
-     * @return The user.
      */
-    @java.lang.Override
     public java.lang.String getUser() {
       java.lang.Object ref = user_;
       if (ref instanceof java.lang.String) {
@@ -157,9 +155,7 @@ public final class GetUserMappingsProtocolProtos {
     }
     /**
      * <code>required string user = 1;</code>
-     * @return The bytes for user.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getUserBytes() {
       java.lang.Object ref = user_;
@@ -174,12 +170,13 @@ public final class GetUserMappingsProtocolProtos {
       }
     }
 
+    private void initFields() {
+      user_ = "";
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasUser()) {
         memoizedIsInitialized = 0;
@@ -189,27 +186,35 @@ public final class GetUserMappingsProtocolProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, user_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getUserBytes());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, user_);
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getUserBytes());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -222,42 +227,34 @@ public final class GetUserMappingsProtocolProtos {
       }
       org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto other = (org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto) obj;
 
-      if (hasUser() != other.hasUser()) return false;
+      boolean result = true;
+      result = result && (hasUser() == other.hasUser());
       if (hasUser()) {
-        if (!getUser()
-            .equals(other.getUser())) return false;
+        result = result && getUser()
+            .equals(other.getUser());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasUser()) {
         hash = (37 * hash) + USER_FIELD_NUMBER;
         hash = (53 * hash) + getUser().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -281,81 +278,66 @@ public final class GetUserMappingsProtocolProtos {
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GetGroupsForUserRequestProto}
+     *
      * <pre>
      **
      *  Get groups for user request.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GetGroupsForUserRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GetGroupsForUserRequestProto)
-        org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.internal_static_hadoop_common_GetGroupsForUserRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.internal_static_hadoop_common_GetGroupsForUserRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -368,16 +350,18 @@ public final class GetUserMappingsProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         user_ = "";
@@ -385,18 +369,19 @@ public final class GetUserMappingsProtocolProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.internal_static_hadoop_common_GetGroupsForUserRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto build() {
         org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -405,12 +390,11 @@ public final class GetUserMappingsProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto buildPartial() {
         org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto result = new org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.user_ = user_;
@@ -419,39 +403,6 @@ public final class GetUserMappingsProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto) {
           return mergeFrom((org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto)other);
@@ -468,20 +419,18 @@ public final class GetUserMappingsProtocolProtos {
           user_ = other.user_;
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasUser()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -491,7 +440,7 @@ public final class GetUserMappingsProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -501,27 +450,23 @@ public final class GetUserMappingsProtocolProtos {
       }
       private int bitField0_;
 
+      // required string user = 1;
       private java.lang.Object user_ = "";
       /**
        * <code>required string user = 1;</code>
-       * @return Whether the user field is set.
        */
       public boolean hasUser() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string user = 1;</code>
-       * @return The user.
        */
       public java.lang.String getUser() {
         java.lang.Object ref = user_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            user_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          user_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -529,7 +474,6 @@ public final class GetUserMappingsProtocolProtos {
       }
       /**
        * <code>required string user = 1;</code>
-       * @return The bytes for user.
        */
       public com.google.protobuf.ByteString
           getUserBytes() {
@@ -546,8 +490,6 @@ public final class GetUserMappingsProtocolProtos {
       }
       /**
        * <code>required string user = 1;</code>
-       * @param value The user to set.
-       * @return This builder for chaining.
        */
       public Builder setUser(
           java.lang.String value) {
@@ -561,7 +503,6 @@ public final class GetUserMappingsProtocolProtos {
       }
       /**
        * <code>required string user = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearUser() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -571,8 +512,6 @@ public final class GetUserMappingsProtocolProtos {
       }
       /**
        * <code>required string user = 1;</code>
-       * @param value The bytes for user to set.
-       * @return This builder for chaining.
        */
       public Builder setUserBytes(
           com.google.protobuf.ByteString value) {
@@ -584,129 +523,79 @@ public final class GetUserMappingsProtocolProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GetGroupsForUserRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GetGroupsForUserRequestProto)
-    private static final org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto();
+      defaultInstance = new GetGroupsForUserRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetGroupsForUserRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<GetGroupsForUserRequestProto>() {
-      @java.lang.Override
-      public GetGroupsForUserRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetGroupsForUserRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetGroupsForUserRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetGroupsForUserRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GetGroupsForUserRequestProto)
   }
 
-  public interface GetGroupsForUserResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GetGroupsForUserResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetGroupsForUserResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated string groups = 1;
     /**
      * <code>repeated string groups = 1;</code>
-     * @return A list containing the groups.
      */
     java.util.List<java.lang.String>
-        getGroupsList();
+    getGroupsList();
     /**
      * <code>repeated string groups = 1;</code>
-     * @return The count of groups.
      */
     int getGroupsCount();
     /**
      * <code>repeated string groups = 1;</code>
-     * @param index The index of the element to return.
-     * @return The groups at the given index.
      */
     java.lang.String getGroups(int index);
     /**
      * <code>repeated string groups = 1;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the groups at the given index.
      */
     com.google.protobuf.ByteString
         getGroupsBytes(int index);
   }
   /**
+   * Protobuf type {@code hadoop.common.GetGroupsForUserResponseProto}
+   *
    * <pre>
    **
    * Response for get groups.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GetGroupsForUserResponseProto}
    */
   public static final class GetGroupsForUserResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GetGroupsForUserResponseProto)
-      GetGroupsForUserResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GetGroupsForUserResponseProtoOrBuilder {
     // Use GetGroupsForUserResponseProto.newBuilder() to construct.
-    private GetGroupsForUserResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GetGroupsForUserResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GetGroupsForUserResponseProto() {
-      groups_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    private GetGroupsForUserResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetGroupsForUserResponseProto defaultInstance;
+    public static GetGroupsForUserResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GetGroupsForUserResponseProto();
+    public GetGroupsForUserResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GetGroupsForUserResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -718,20 +607,19 @@ public final class GetUserMappingsProtocolProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 groups_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000001;
               }
-              groups_.add(bs);
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              groups_.add(input.readBytes());
               break;
             }
           }
@@ -740,10 +628,10 @@ public final class GetUserMappingsProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
-          groups_ = groups_.getUnmodifiableView();
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
+          groups_ = new com.google.protobuf.UnmodifiableLazyStringList(groups_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -754,86 +642,104 @@ public final class GetUserMappingsProtocolProtos {
       return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.internal_static_hadoop_common_GetGroupsForUserResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.internal_static_hadoop_common_GetGroupsForUserResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto.class, org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GetGroupsForUserResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<GetGroupsForUserResponseProto>() {
+      public GetGroupsForUserResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetGroupsForUserResponseProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetGroupsForUserResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    // repeated string groups = 1;
     public static final int GROUPS_FIELD_NUMBER = 1;
     private com.google.protobuf.LazyStringList groups_;
     /**
      * <code>repeated string groups = 1;</code>
-     * @return A list containing the groups.
      */
-    public com.google.protobuf.ProtocolStringList
+    public java.util.List<java.lang.String>
         getGroupsList() {
       return groups_;
     }
     /**
      * <code>repeated string groups = 1;</code>
-     * @return The count of groups.
      */
     public int getGroupsCount() {
       return groups_.size();
     }
     /**
      * <code>repeated string groups = 1;</code>
-     * @param index The index of the element to return.
-     * @return The groups at the given index.
      */
     public java.lang.String getGroups(int index) {
       return groups_.get(index);
     }
     /**
      * <code>repeated string groups = 1;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the groups at the given index.
      */
     public com.google.protobuf.ByteString
         getGroupsBytes(int index) {
       return groups_.getByteString(index);
     }
 
+    private void initFields() {
+      groups_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       for (int i = 0; i < groups_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, groups_.getRaw(i));
+        output.writeBytes(1, groups_.getByteString(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
       {
         int dataSize = 0;
         for (int i = 0; i < groups_.size(); i++) {
-          dataSize += computeStringSizeNoTag(groups_.getRaw(i));
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeBytesSizeNoTag(groups_.getByteString(i));
         }
         size += dataSize;
         size += 1 * getGroupsList().size();
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -846,39 +752,31 @@ public final class GetUserMappingsProtocolProtos {
       }
       org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto other = (org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto) obj;
 
-      if (!getGroupsList()
-          .equals(other.getGroupsList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && getGroupsList()
+          .equals(other.getGroupsList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (getGroupsCount() > 0) {
         hash = (37 * hash) + GROUPS_FIELD_NUMBER;
         hash = (53 * hash) + getGroupsList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -902,81 +800,66 @@ public final class GetUserMappingsProtocolProtos {
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GetGroupsForUserResponseProto}
+     *
      * <pre>
      **
      * Response for get groups.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GetGroupsForUserResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GetGroupsForUserResponseProto)
-        org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.internal_static_hadoop_common_GetGroupsForUserResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.internal_static_hadoop_common_GetGroupsForUserResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -989,16 +872,18 @@ public final class GetUserMappingsProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         groups_ = com.google.protobuf.LazyStringArrayList.EMPTY;
@@ -1006,18 +891,19 @@ public final class GetUserMappingsProtocolProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.internal_static_hadoop_common_GetGroupsForUserResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto build() {
         org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1026,12 +912,12 @@ public final class GetUserMappingsProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto buildPartial() {
         org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto result = new org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto(this);
         int from_bitField0_ = bitField0_;
-        if (((bitField0_ & 0x00000001) != 0)) {
-          groups_ = groups_.getUnmodifiableView();
+        if (((bitField0_ & 0x00000001) == 0x00000001)) {
+          groups_ = new com.google.protobuf.UnmodifiableLazyStringList(
+              groups_);
           bitField0_ = (bitField0_ & ~0x00000001);
         }
         result.groups_ = groups_;
@@ -1039,39 +925,6 @@ public final class GetUserMappingsProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto) {
           return mergeFrom((org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto)other);
@@ -1093,17 +946,14 @@ public final class GetUserMappingsProtocolProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1113,7 +963,7 @@ public final class GetUserMappingsProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1123,40 +973,35 @@ public final class GetUserMappingsProtocolProtos {
       }
       private int bitField0_;
 
+      // repeated string groups = 1;
       private com.google.protobuf.LazyStringList groups_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureGroupsIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           groups_ = new com.google.protobuf.LazyStringArrayList(groups_);
           bitField0_ |= 0x00000001;
          }
       }
       /**
        * <code>repeated string groups = 1;</code>
-       * @return A list containing the groups.
        */
-      public com.google.protobuf.ProtocolStringList
+      public java.util.List<java.lang.String>
           getGroupsList() {
-        return groups_.getUnmodifiableView();
+        return java.util.Collections.unmodifiableList(groups_);
       }
       /**
        * <code>repeated string groups = 1;</code>
-       * @return The count of groups.
        */
       public int getGroupsCount() {
         return groups_.size();
       }
       /**
        * <code>repeated string groups = 1;</code>
-       * @param index The index of the element to return.
-       * @return The groups at the given index.
        */
       public java.lang.String getGroups(int index) {
         return groups_.get(index);
       }
       /**
        * <code>repeated string groups = 1;</code>
-       * @param index The index of the value to return.
-       * @return The bytes of the groups at the given index.
        */
       public com.google.protobuf.ByteString
           getGroupsBytes(int index) {
@@ -1164,9 +1009,6 @@ public final class GetUserMappingsProtocolProtos {
       }
       /**
        * <code>repeated string groups = 1;</code>
-       * @param index The index to set the value at.
-       * @param value The groups to set.
-       * @return This builder for chaining.
        */
       public Builder setGroups(
           int index, java.lang.String value) {
@@ -1180,8 +1022,6 @@ public final class GetUserMappingsProtocolProtos {
       }
       /**
        * <code>repeated string groups = 1;</code>
-       * @param value The groups to add.
-       * @return This builder for chaining.
        */
       public Builder addGroups(
           java.lang.String value) {
@@ -1195,20 +1035,16 @@ public final class GetUserMappingsProtocolProtos {
       }
       /**
        * <code>repeated string groups = 1;</code>
-       * @param values The groups to add.
-       * @return This builder for chaining.
        */
       public Builder addAllGroups(
           java.lang.Iterable<java.lang.String> values) {
         ensureGroupsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, groups_);
+        super.addAll(values, groups_);
         onChanged();
         return this;
       }
       /**
        * <code>repeated string groups = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearGroups() {
         groups_ = com.google.protobuf.LazyStringArrayList.EMPTY;
@@ -1218,8 +1054,6 @@ public final class GetUserMappingsProtocolProtos {
       }
       /**
        * <code>repeated string groups = 1;</code>
-       * @param value The bytes of the groups to add.
-       * @return This builder for chaining.
        */
       public Builder addGroupsBytes(
           com.google.protobuf.ByteString value) {
@@ -1231,66 +1065,25 @@ public final class GetUserMappingsProtocolProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GetGroupsForUserResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GetGroupsForUserResponseProto)
-    private static final org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto();
+      defaultInstance = new GetGroupsForUserResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetGroupsForUserResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<GetGroupsForUserResponseProto>() {
-      @java.lang.Override
-      public GetGroupsForUserResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetGroupsForUserResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetGroupsForUserResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetGroupsForUserResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetGroupsForUserResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GetGroupsForUserResponseProto)
   }
 
   /**
+   * Protobuf service {@code hadoop.common.GetUserMappingsProtocolService}
+   *
    * <pre>
    **
    * Protocol which maps users to groups.
    * </pre>
-   *
-   * Protobuf service {@code hadoop.common.GetUserMappingsProtocolService}
    */
   public static abstract class GetUserMappingsProtocolService
       implements com.google.protobuf.Service {
@@ -1298,12 +1091,12 @@ public final class GetUserMappingsProtocolProtos {
 
     public interface Interface {
       /**
+       * <code>rpc getGroupsForUser(.hadoop.common.GetGroupsForUserRequestProto) returns (.hadoop.common.GetGroupsForUserResponseProto);</code>
+       *
        * <pre>
        **
        * Get the groups which are mapped to the given user.
        * </pre>
-       *
-       * <code>rpc getGroupsForUser(.hadoop.common.GetGroupsForUserRequestProto) returns (.hadoop.common.GetGroupsForUserResponseProto);</code>
        */
       public abstract void getGroupsForUser(
           com.google.protobuf.RpcController controller,
@@ -1388,12 +1181,12 @@ public final class GetUserMappingsProtocolProtos {
     }
 
     /**
+     * <code>rpc getGroupsForUser(.hadoop.common.GetGroupsForUserRequestProto) returns (.hadoop.common.GetGroupsForUserResponseProto);</code>
+     *
      * <pre>
      **
      * Get the groups which are mapped to the given user.
      * </pre>
-     *
-     * <code>rpc getGroupsForUser(.hadoop.common.GetGroupsForUserRequestProto) returns (.hadoop.common.GetGroupsForUserResponseProto);</code>
      */
     public abstract void getGroupsForUser(
         com.google.protobuf.RpcController controller,
@@ -1531,22 +1324,22 @@ public final class GetUserMappingsProtocolProtos {
     // @@protoc_insertion_point(class_scope:hadoop.common.GetUserMappingsProtocolService)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GetGroupsForUserRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GetGroupsForUserRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GetGroupsForUserResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GetGroupsForUserResponseProto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -1560,22 +1353,30 @@ public final class GetUserMappingsProtocolProtos {
       "seProtoBD\n\035org.apache.hadoop.tools.proto" +
       "B\035GetUserMappingsProtocolProtos\210\001\001\240\001\001"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_hadoop_common_GetGroupsForUserRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_hadoop_common_GetGroupsForUserRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GetGroupsForUserRequestProto_descriptor,
+              new java.lang.String[] { "User", });
+          internal_static_hadoop_common_GetGroupsForUserResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_hadoop_common_GetGroupsForUserResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GetGroupsForUserResponseProto_descriptor,
+              new java.lang.String[] { "Groups", });
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_hadoop_common_GetGroupsForUserRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_hadoop_common_GetGroupsForUserRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GetGroupsForUserRequestProto_descriptor,
-        new java.lang.String[] { "User", });
-    internal_static_hadoop_common_GetGroupsForUserResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_hadoop_common_GetGroupsForUserResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GetGroupsForUserResponseProto_descriptor,
-        new java.lang.String[] { "Groups", });
+        }, assigner);
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -18,6 +18,7 @@
 
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.LinkedListMultimap;
@@ -25,7 +26,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
-import org.apache.hadoop.hdfs.net.Peer;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.util.Daemon;
@@ -180,7 +180,6 @@ public class PeerCache {
 
   /**
    * Give an unused socket to the cache.
-   * @param sock socket not used by anyone.
    */
   public void put(DatanodeID dnId, Peer peer) {
     Preconditions.checkNotNull(dnId);

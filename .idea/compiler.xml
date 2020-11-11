@@ -11,10 +11,10 @@
         <module name="hadoop-minikdc" />
         <module name="hadoop-annotations" />
         <module name="serverless-name-node" />
-        <module name="hadoop-maven-plugins" />
-        <module name="hadoop-hdfs-client" />
         <module name="hadoop-common" />
+        <module name="hadoop-hdfs-client" />
         <module name="hops-metadata-dal" />
+        <module name="hadoop-maven-plugins" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -25,12 +25,12 @@
       <module name="hadoop-hdfs" target="1.5" />
       <module name="hadoop-hdfs-client" target="1.5" />
       <module name="hadoop-hdfs-project" target="1.8" />
-      <module name="hadoop-maven-plugins" target="7" />
+      <module name="hadoop-maven-plugins" target="1.8" />
       <module name="hadoop-minikdc" target="1.5" />
       <module name="hops-leader-election" target="1.5" />
       <module name="hops-metadata-dal" target="8" />
       <module name="hops-metadata-dal-impl-ndb" target="1.5" />
-      <module name="serverless-name-node" target="1.5" />
+      <module name="serverless-name-node" target="1.8" />
       <module name="serverless-name-node-base" target="1.5" />
       <module name="ServerlessNameNode" target="1.5" />
     </bytecodeTargetLevel>

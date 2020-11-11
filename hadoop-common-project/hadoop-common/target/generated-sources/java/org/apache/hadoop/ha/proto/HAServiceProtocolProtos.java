@@ -6,13 +6,7 @@ package org.apache.hadoop.ha.proto;
 public final class HAServiceProtocolProtos {
   private HAServiceProtocolProtos() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   /**
    * Protobuf enum {@code hadoop.common.HAServiceStateProto}
@@ -22,15 +16,15 @@ public final class HAServiceProtocolProtos {
     /**
      * <code>INITIALIZING = 0;</code>
      */
-    INITIALIZING(0),
+    INITIALIZING(0, 0),
     /**
      * <code>ACTIVE = 1;</code>
      */
-    ACTIVE(1),
+    ACTIVE(1, 1),
     /**
      * <code>STANDBY = 2;</code>
      */
-    STANDBY(2),
+    STANDBY(2, 2),
     ;
 
     /**
@@ -47,25 +41,9 @@ public final class HAServiceProtocolProtos {
     public static final int STANDBY_VALUE = 2;
 
 
-    public final int getNumber() {
-      return value;
-    }
+    public final int getNumber() { return value; }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
     public static HAServiceStateProto valueOf(int value) {
-      return forNumber(value);
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static HAServiceStateProto forNumber(int value) {
       switch (value) {
         case 0: return INITIALIZING;
         case 1: return ACTIVE;
@@ -78,17 +56,17 @@ public final class HAServiceProtocolProtos {
         internalGetValueMap() {
       return internalValueMap;
     }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        HAServiceStateProto> internalValueMap =
+    private static com.google.protobuf.Internal.EnumLiteMap<HAServiceStateProto>
+        internalValueMap =
           new com.google.protobuf.Internal.EnumLiteMap<HAServiceStateProto>() {
             public HAServiceStateProto findValueByNumber(int number) {
-              return HAServiceStateProto.forNumber(number);
+              return HAServiceStateProto.valueOf(number);
             }
           };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
+      return getDescriptor().getValues().get(index);
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptorForType() {
@@ -110,9 +88,11 @@ public final class HAServiceProtocolProtos {
       return VALUES[desc.getIndex()];
     }
 
+    private final int index;
     private final int value;
 
-    private HAServiceStateProto(int value) {
+    private HAServiceStateProto(int index, int value) {
+      this.index = index;
       this.value = value;
     }
 
@@ -127,15 +107,15 @@ public final class HAServiceProtocolProtos {
     /**
      * <code>REQUEST_BY_USER = 0;</code>
      */
-    REQUEST_BY_USER(0),
+    REQUEST_BY_USER(0, 0),
     /**
      * <code>REQUEST_BY_USER_FORCED = 1;</code>
      */
-    REQUEST_BY_USER_FORCED(1),
+    REQUEST_BY_USER_FORCED(1, 1),
     /**
      * <code>REQUEST_BY_ZKFC = 2;</code>
      */
-    REQUEST_BY_ZKFC(2),
+    REQUEST_BY_ZKFC(2, 2),
     ;
 
     /**
@@ -152,25 +132,9 @@ public final class HAServiceProtocolProtos {
     public static final int REQUEST_BY_ZKFC_VALUE = 2;
 
 
-    public final int getNumber() {
-      return value;
-    }
+    public final int getNumber() { return value; }
 
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     * @deprecated Use {@link #forNumber(int)} instead.
-     */
-    @java.lang.Deprecated
     public static HARequestSource valueOf(int value) {
-      return forNumber(value);
-    }
-
-    /**
-     * @param value The numeric wire value of the corresponding enum entry.
-     * @return The enum associated with the given numeric wire value.
-     */
-    public static HARequestSource forNumber(int value) {
       switch (value) {
         case 0: return REQUEST_BY_USER;
         case 1: return REQUEST_BY_USER_FORCED;
@@ -183,17 +147,17 @@ public final class HAServiceProtocolProtos {
         internalGetValueMap() {
       return internalValueMap;
     }
-    private static final com.google.protobuf.Internal.EnumLiteMap<
-        HARequestSource> internalValueMap =
+    private static com.google.protobuf.Internal.EnumLiteMap<HARequestSource>
+        internalValueMap =
           new com.google.protobuf.Internal.EnumLiteMap<HARequestSource>() {
             public HARequestSource findValueByNumber(int number) {
-              return HARequestSource.forNumber(number);
+              return HARequestSource.valueOf(number);
             }
           };
 
     public final com.google.protobuf.Descriptors.EnumValueDescriptor
         getValueDescriptor() {
-      return getDescriptor().getValues().get(ordinal());
+      return getDescriptor().getValues().get(index);
     }
     public final com.google.protobuf.Descriptors.EnumDescriptor
         getDescriptorForType() {
@@ -215,27 +179,27 @@ public final class HAServiceProtocolProtos {
       return VALUES[desc.getIndex()];
     }
 
+    private final int index;
     private final int value;
 
-    private HARequestSource(int value) {
+    private HARequestSource(int index, int value) {
+      this.index = index;
       this.value = value;
     }
 
     // @@protoc_insertion_point(enum_scope:hadoop.common.HARequestSource)
   }
 
-  public interface HAStateChangeRequestInfoProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.HAStateChangeRequestInfoProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface HAStateChangeRequestInfoProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required .hadoop.common.HARequestSource reqSource = 1;
     /**
      * <code>required .hadoop.common.HARequestSource reqSource = 1;</code>
-     * @return Whether the reqSource field is set.
      */
     boolean hasReqSource();
     /**
      * <code>required .hadoop.common.HARequestSource reqSource = 1;</code>
-     * @return The reqSource.
      */
     org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource getReqSource();
   }
@@ -243,38 +207,35 @@ public final class HAServiceProtocolProtos {
    * Protobuf type {@code hadoop.common.HAStateChangeRequestInfoProto}
    */
   public static final class HAStateChangeRequestInfoProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.HAStateChangeRequestInfoProto)
-      HAStateChangeRequestInfoProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements HAStateChangeRequestInfoProtoOrBuilder {
     // Use HAStateChangeRequestInfoProto.newBuilder() to construct.
-    private HAStateChangeRequestInfoProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private HAStateChangeRequestInfoProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private HAStateChangeRequestInfoProto() {
-      reqSource_ = 0;
+    private HAStateChangeRequestInfoProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final HAStateChangeRequestInfoProto defaultInstance;
+    public static HAStateChangeRequestInfoProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new HAStateChangeRequestInfoProto();
+    public HAStateChangeRequestInfoProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private HAStateChangeRequestInfoProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -286,22 +247,21 @@ public final class HAServiceProtocolProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               int rawValue = input.readEnum();
-                @SuppressWarnings("deprecation")
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource value = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(1, rawValue);
               } else {
                 bitField0_ |= 0x00000001;
-                reqSource_ = rawValue;
-              }
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
+                reqSource_ = value;
               }
               break;
             }
@@ -311,7 +271,7 @@ public final class HAServiceProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -322,40 +282,52 @@ public final class HAServiceProtocolProtos {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_HAStateChangeRequestInfoProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_HAStateChangeRequestInfoProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.class, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.Builder.class);
     }
 
-    private int bitField0_;
-    public static final int REQSOURCE_FIELD_NUMBER = 1;
-    private int reqSource_;
-    /**
-     * <code>required .hadoop.common.HARequestSource reqSource = 1;</code>
-     * @return Whether the reqSource field is set.
-     */
-    @java.lang.Override public boolean hasReqSource() {
-      return ((bitField0_ & 0x00000001) != 0);
-    }
-    /**
-     * <code>required .hadoop.common.HARequestSource reqSource = 1;</code>
-     * @return The reqSource.
-     */
-    @java.lang.Override public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource getReqSource() {
-      @SuppressWarnings("deprecation")
-      org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource result = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource.valueOf(reqSource_);
-      return result == null ? org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource.REQUEST_BY_USER : result;
+    public static com.google.protobuf.Parser<HAStateChangeRequestInfoProto> PARSER =
+        new com.google.protobuf.AbstractParser<HAStateChangeRequestInfoProto>() {
+      public HAStateChangeRequestInfoProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new HAStateChangeRequestInfoProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<HAStateChangeRequestInfoProto> getParserForType() {
+      return PARSER;
     }
 
+    private int bitField0_;
+    // required .hadoop.common.HARequestSource reqSource = 1;
+    public static final int REQSOURCE_FIELD_NUMBER = 1;
+    private org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource reqSource_;
+    /**
+     * <code>required .hadoop.common.HARequestSource reqSource = 1;</code>
+     */
+    public boolean hasReqSource() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required .hadoop.common.HARequestSource reqSource = 1;</code>
+     */
+    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource getReqSource() {
+      return reqSource_;
+    }
+
+    private void initFields() {
+      reqSource_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource.REQUEST_BY_USER;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasReqSource()) {
         memoizedIsInitialized = 0;
@@ -365,28 +337,35 @@ public final class HAServiceProtocolProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeEnum(1, reqSource_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeEnum(1, reqSource_.getNumber());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, reqSource_);
+          .computeEnumSize(1, reqSource_.getNumber());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -399,41 +378,34 @@ public final class HAServiceProtocolProtos {
       }
       org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto other = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto) obj;
 
-      if (hasReqSource() != other.hasReqSource()) return false;
+      boolean result = true;
+      result = result && (hasReqSource() == other.hasReqSource());
       if (hasReqSource()) {
-        if (reqSource_ != other.reqSource_) return false;
+        result = result &&
+            (getReqSource() == other.getReqSource());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasReqSource()) {
         hash = (37 * hash) + REQSOURCE_FIELD_NUMBER;
-        hash = (53 * hash) + reqSource_;
+        hash = (53 * hash) + hashEnum(getReqSource());
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -457,59 +429,46 @@ public final class HAServiceProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -517,16 +476,14 @@ public final class HAServiceProtocolProtos {
      * Protobuf type {@code hadoop.common.HAStateChangeRequestInfoProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.HAStateChangeRequestInfoProto)
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_HAStateChangeRequestInfoProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_HAStateChangeRequestInfoProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -539,35 +496,38 @@ public final class HAServiceProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
-        reqSource_ = 0;
+        reqSource_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource.REQUEST_BY_USER;
         bitField0_ = (bitField0_ & ~0x00000001);
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_HAStateChangeRequestInfoProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto build() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -576,12 +536,11 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto buildPartial() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto result = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.reqSource_ = reqSource_;
@@ -590,39 +549,6 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto)other);
@@ -637,20 +563,18 @@ public final class HAServiceProtocolProtos {
         if (other.hasReqSource()) {
           setReqSource(other.getReqSource());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasReqSource()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -660,7 +584,7 @@ public final class HAServiceProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -670,145 +594,94 @@ public final class HAServiceProtocolProtos {
       }
       private int bitField0_;
 
-      private int reqSource_ = 0;
+      // required .hadoop.common.HARequestSource reqSource = 1;
+      private org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource reqSource_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource.REQUEST_BY_USER;
       /**
        * <code>required .hadoop.common.HARequestSource reqSource = 1;</code>
-       * @return Whether the reqSource field is set.
        */
-      @java.lang.Override public boolean hasReqSource() {
-        return ((bitField0_ & 0x00000001) != 0);
+      public boolean hasReqSource() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required .hadoop.common.HARequestSource reqSource = 1;</code>
-       * @return The reqSource.
        */
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource getReqSource() {
-        @SuppressWarnings("deprecation")
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource result = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource.valueOf(reqSource_);
-        return result == null ? org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource.REQUEST_BY_USER : result;
+        return reqSource_;
       }
       /**
        * <code>required .hadoop.common.HARequestSource reqSource = 1;</code>
-       * @param value The reqSource to set.
-       * @return This builder for chaining.
        */
       public Builder setReqSource(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource value) {
         if (value == null) {
           throw new NullPointerException();
         }
         bitField0_ |= 0x00000001;
-        reqSource_ = value.getNumber();
+        reqSource_ = value;
         onChanged();
         return this;
       }
       /**
        * <code>required .hadoop.common.HARequestSource reqSource = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearReqSource() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        reqSource_ = 0;
+        reqSource_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HARequestSource.REQUEST_BY_USER;
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.HAStateChangeRequestInfoProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.HAStateChangeRequestInfoProto)
-    private static final org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto();
+      defaultInstance = new HAStateChangeRequestInfoProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<HAStateChangeRequestInfoProto>
-        PARSER = new com.google.protobuf.AbstractParser<HAStateChangeRequestInfoProto>() {
-      @java.lang.Override
-      public HAStateChangeRequestInfoProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new HAStateChangeRequestInfoProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<HAStateChangeRequestInfoProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<HAStateChangeRequestInfoProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.HAStateChangeRequestInfoProto)
   }
 
-  public interface MonitorHealthRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.MonitorHealthRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface MonitorHealthRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
+   * Protobuf type {@code hadoop.common.MonitorHealthRequestProto}
+   *
    * <pre>
    **
    * void request
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.MonitorHealthRequestProto}
    */
   public static final class MonitorHealthRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.MonitorHealthRequestProto)
-      MonitorHealthRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements MonitorHealthRequestProtoOrBuilder {
     // Use MonitorHealthRequestProto.newBuilder() to construct.
-    private MonitorHealthRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private MonitorHealthRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private MonitorHealthRequestProto() {
+    private MonitorHealthRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final MonitorHealthRequestProto defaultInstance;
+    public static MonitorHealthRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new MonitorHealthRequestProto();
+    public MonitorHealthRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private MonitorHealthRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -820,8 +693,8 @@ public final class HAServiceProtocolProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -832,7 +705,7 @@ public final class HAServiceProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -843,40 +716,61 @@ public final class HAServiceProtocolProtos {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_MonitorHealthRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_MonitorHealthRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto.class, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<MonitorHealthRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<MonitorHealthRequestProto>() {
+      public MonitorHealthRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new MonitorHealthRequestProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<MonitorHealthRequestProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -889,33 +783,25 @@ public final class HAServiceProtocolProtos {
       }
       org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto other = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -939,81 +825,66 @@ public final class HAServiceProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.MonitorHealthRequestProto}
+     *
      * <pre>
      **
      * void request
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.MonitorHealthRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.MonitorHealthRequestProto)
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_MonitorHealthRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_MonitorHealthRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1026,33 +897,36 @@ public final class HAServiceProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_MonitorHealthRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto build() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1061,46 +935,12 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto buildPartial() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto result = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto)other);
@@ -1112,17 +952,14 @@ public final class HAServiceProtocolProtos {
 
       public Builder mergeFrom(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto other) {
         if (other == org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1132,7 +969,7 @@ public final class HAServiceProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1140,103 +977,59 @@ public final class HAServiceProtocolProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.MonitorHealthRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.MonitorHealthRequestProto)
-    private static final org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto();
+      defaultInstance = new MonitorHealthRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<MonitorHealthRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<MonitorHealthRequestProto>() {
-      @java.lang.Override
-      public MonitorHealthRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new MonitorHealthRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<MonitorHealthRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<MonitorHealthRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.MonitorHealthRequestProto)
   }
 
-  public interface MonitorHealthResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.MonitorHealthResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface MonitorHealthResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
+   * Protobuf type {@code hadoop.common.MonitorHealthResponseProto}
+   *
    * <pre>
    **
    * void response
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.MonitorHealthResponseProto}
    */
   public static final class MonitorHealthResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.MonitorHealthResponseProto)
-      MonitorHealthResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements MonitorHealthResponseProtoOrBuilder {
     // Use MonitorHealthResponseProto.newBuilder() to construct.
-    private MonitorHealthResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private MonitorHealthResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private MonitorHealthResponseProto() {
+    private MonitorHealthResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final MonitorHealthResponseProto defaultInstance;
+    public static MonitorHealthResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new MonitorHealthResponseProto();
+    public MonitorHealthResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private MonitorHealthResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -1248,8 +1041,8 @@ public final class HAServiceProtocolProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -1260,7 +1053,7 @@ public final class HAServiceProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1271,40 +1064,61 @@ public final class HAServiceProtocolProtos {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_MonitorHealthResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_MonitorHealthResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto.class, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<MonitorHealthResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<MonitorHealthResponseProto>() {
+      public MonitorHealthResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new MonitorHealthResponseProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<MonitorHealthResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1317,33 +1131,25 @@ public final class HAServiceProtocolProtos {
       }
       org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto other = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1367,81 +1173,66 @@ public final class HAServiceProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.MonitorHealthResponseProto}
+     *
      * <pre>
      **
      * void response
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.MonitorHealthResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.MonitorHealthResponseProto)
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_MonitorHealthResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_MonitorHealthResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1454,33 +1245,36 @@ public final class HAServiceProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_MonitorHealthResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto build() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1489,46 +1283,12 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto buildPartial() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto result = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto)other);
@@ -1540,17 +1300,14 @@ public final class HAServiceProtocolProtos {
 
       public Builder mergeFrom(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto other) {
         if (other == org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1560,7 +1317,7 @@ public final class HAServiceProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1568,71 +1325,28 @@ public final class HAServiceProtocolProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.MonitorHealthResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.MonitorHealthResponseProto)
-    private static final org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto();
+      defaultInstance = new MonitorHealthResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<MonitorHealthResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<MonitorHealthResponseProto>() {
-      @java.lang.Override
-      public MonitorHealthResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new MonitorHealthResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<MonitorHealthResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<MonitorHealthResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.MonitorHealthResponseProto)
   }
 
-  public interface TransitionToActiveRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.TransitionToActiveRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface TransitionToActiveRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;
     /**
      * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-     * @return Whether the reqInfo field is set.
      */
     boolean hasReqInfo();
     /**
      * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-     * @return The reqInfo.
      */
     org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto getReqInfo();
     /**
@@ -1641,45 +1355,43 @@ public final class HAServiceProtocolProtos {
     org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder getReqInfoOrBuilder();
   }
   /**
+   * Protobuf type {@code hadoop.common.TransitionToActiveRequestProto}
+   *
    * <pre>
    **
    * void request
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.TransitionToActiveRequestProto}
    */
   public static final class TransitionToActiveRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.TransitionToActiveRequestProto)
-      TransitionToActiveRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements TransitionToActiveRequestProtoOrBuilder {
     // Use TransitionToActiveRequestProto.newBuilder() to construct.
-    private TransitionToActiveRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private TransitionToActiveRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private TransitionToActiveRequestProto() {
+    private TransitionToActiveRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final TransitionToActiveRequestProto defaultInstance;
+    public static TransitionToActiveRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new TransitionToActiveRequestProto();
+    public TransitionToActiveRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private TransitionToActiveRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1691,9 +1403,16 @@ public final class HAServiceProtocolProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000001) != 0)) {
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
                 subBuilder = reqInfo_.toBuilder();
               }
               reqInfo_ = input.readMessage(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.PARSER, extensionRegistry);
@@ -1704,20 +1423,13 @@ public final class HAServiceProtocolProtos {
               bitField0_ |= 0x00000001;
               break;
             }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1728,47 +1440,58 @@ public final class HAServiceProtocolProtos {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToActiveRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToActiveRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto.class, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<TransitionToActiveRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<TransitionToActiveRequestProto>() {
+      public TransitionToActiveRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransitionToActiveRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TransitionToActiveRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;
     public static final int REQINFO_FIELD_NUMBER = 1;
     private org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto reqInfo_;
     /**
      * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-     * @return Whether the reqInfo field is set.
      */
-    @java.lang.Override
     public boolean hasReqInfo() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-     * @return The reqInfo.
      */
-    @java.lang.Override
     public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto getReqInfo() {
-      return reqInfo_ == null ? org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance() : reqInfo_;
+      return reqInfo_;
     }
     /**
      * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder getReqInfoOrBuilder() {
-      return reqInfo_ == null ? org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance() : reqInfo_;
+      return reqInfo_;
     }
 
+    private void initFields() {
+      reqInfo_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasReqInfo()) {
         memoizedIsInitialized = 0;
@@ -1782,28 +1505,35 @@ public final class HAServiceProtocolProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(1, getReqInfo());
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, reqInfo_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getReqInfo());
+          .computeMessageSize(1, reqInfo_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1816,42 +1546,34 @@ public final class HAServiceProtocolProtos {
       }
       org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto other = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto) obj;
 
-      if (hasReqInfo() != other.hasReqInfo()) return false;
+      boolean result = true;
+      result = result && (hasReqInfo() == other.hasReqInfo());
       if (hasReqInfo()) {
-        if (!getReqInfo()
-            .equals(other.getReqInfo())) return false;
+        result = result && getReqInfo()
+            .equals(other.getReqInfo());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasReqInfo()) {
         hash = (37 * hash) + REQINFO_FIELD_NUMBER;
         hash = (53 * hash) + getReqInfo().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1875,81 +1597,66 @@ public final class HAServiceProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.TransitionToActiveRequestProto}
+     *
      * <pre>
      **
      * void request
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.TransitionToActiveRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.TransitionToActiveRequestProto)
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToActiveRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToActiveRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1962,21 +1669,23 @@ public final class HAServiceProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getReqInfoFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (reqInfoBuilder_ == null) {
-          reqInfo_ = null;
+          reqInfo_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance();
         } else {
           reqInfoBuilder_.clear();
         }
@@ -1984,18 +1693,19 @@ public final class HAServiceProtocolProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToActiveRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto build() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -2004,57 +1714,23 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto buildPartial() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto result = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          if (reqInfoBuilder_ == null) {
-            result.reqInfo_ = reqInfo_;
-          } else {
-            result.reqInfo_ = reqInfoBuilder_.build();
-          }
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
+        }
+        if (reqInfoBuilder_ == null) {
+          result.reqInfo_ = reqInfo_;
+        } else {
+          result.reqInfo_ = reqInfoBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto)other);
@@ -2069,23 +1745,22 @@ public final class HAServiceProtocolProtos {
         if (other.hasReqInfo()) {
           mergeReqInfo(other.getReqInfo());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasReqInfo()) {
+          
           return false;
         }
         if (!getReqInfo().isInitialized()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2095,7 +1770,7 @@ public final class HAServiceProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2105,23 +1780,22 @@ public final class HAServiceProtocolProtos {
       }
       private int bitField0_;
 
-      private org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto reqInfo_;
-      private com.google.protobuf.SingleFieldBuilderV3<
+      // required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;
+      private org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto reqInfo_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.Builder, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder> reqInfoBuilder_;
       /**
        * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-       * @return Whether the reqInfo field is set.
        */
       public boolean hasReqInfo() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-       * @return The reqInfo.
        */
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto getReqInfo() {
         if (reqInfoBuilder_ == null) {
-          return reqInfo_ == null ? org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance() : reqInfo_;
+          return reqInfo_;
         } else {
           return reqInfoBuilder_.getMessage();
         }
@@ -2161,8 +1835,7 @@ public final class HAServiceProtocolProtos {
        */
       public Builder mergeReqInfo(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto value) {
         if (reqInfoBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0) &&
-              reqInfo_ != null &&
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
               reqInfo_ != org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance()) {
             reqInfo_ =
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.newBuilder(reqInfo_).mergeFrom(value).buildPartial();
@@ -2181,7 +1854,7 @@ public final class HAServiceProtocolProtos {
        */
       public Builder clearReqInfo() {
         if (reqInfoBuilder_ == null) {
-          reqInfo_ = null;
+          reqInfo_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance();
           onChanged();
         } else {
           reqInfoBuilder_.clear();
@@ -2204,123 +1877,78 @@ public final class HAServiceProtocolProtos {
         if (reqInfoBuilder_ != null) {
           return reqInfoBuilder_.getMessageOrBuilder();
         } else {
-          return reqInfo_ == null ?
-              org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance() : reqInfo_;
+          return reqInfo_;
         }
       }
       /**
        * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.Builder, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder> 
           getReqInfoFieldBuilder() {
         if (reqInfoBuilder_ == null) {
-          reqInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          reqInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.Builder, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder>(
-                  getReqInfo(),
+                  reqInfo_,
                   getParentForChildren(),
                   isClean());
           reqInfo_ = null;
         }
         return reqInfoBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.TransitionToActiveRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.TransitionToActiveRequestProto)
-    private static final org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto();
+      defaultInstance = new TransitionToActiveRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<TransitionToActiveRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<TransitionToActiveRequestProto>() {
-      @java.lang.Override
-      public TransitionToActiveRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new TransitionToActiveRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<TransitionToActiveRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<TransitionToActiveRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.TransitionToActiveRequestProto)
   }
 
-  public interface TransitionToActiveResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.TransitionToActiveResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface TransitionToActiveResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
+   * Protobuf type {@code hadoop.common.TransitionToActiveResponseProto}
+   *
    * <pre>
    **
    * void response
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.TransitionToActiveResponseProto}
    */
   public static final class TransitionToActiveResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.TransitionToActiveResponseProto)
-      TransitionToActiveResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements TransitionToActiveResponseProtoOrBuilder {
     // Use TransitionToActiveResponseProto.newBuilder() to construct.
-    private TransitionToActiveResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private TransitionToActiveResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private TransitionToActiveResponseProto() {
+    private TransitionToActiveResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final TransitionToActiveResponseProto defaultInstance;
+    public static TransitionToActiveResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new TransitionToActiveResponseProto();
+    public TransitionToActiveResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private TransitionToActiveResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -2332,8 +1960,8 @@ public final class HAServiceProtocolProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -2344,7 +1972,7 @@ public final class HAServiceProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -2355,40 +1983,61 @@ public final class HAServiceProtocolProtos {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToActiveResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToActiveResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto.class, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<TransitionToActiveResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<TransitionToActiveResponseProto>() {
+      public TransitionToActiveResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransitionToActiveResponseProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<TransitionToActiveResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -2401,33 +2050,25 @@ public final class HAServiceProtocolProtos {
       }
       org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto other = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2451,81 +2092,66 @@ public final class HAServiceProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.TransitionToActiveResponseProto}
+     *
      * <pre>
      **
      * void response
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.TransitionToActiveResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.TransitionToActiveResponseProto)
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToActiveResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToActiveResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -2538,33 +2164,36 @@ public final class HAServiceProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToActiveResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto build() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -2573,46 +2202,12 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto buildPartial() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto result = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto)other);
@@ -2624,17 +2219,14 @@ public final class HAServiceProtocolProtos {
 
       public Builder mergeFrom(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto other) {
         if (other == org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2644,7 +2236,7 @@ public final class HAServiceProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2652,71 +2244,28 @@ public final class HAServiceProtocolProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.TransitionToActiveResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.TransitionToActiveResponseProto)
-    private static final org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto();
+      defaultInstance = new TransitionToActiveResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<TransitionToActiveResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<TransitionToActiveResponseProto>() {
-      @java.lang.Override
-      public TransitionToActiveResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new TransitionToActiveResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<TransitionToActiveResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<TransitionToActiveResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.TransitionToActiveResponseProto)
   }
 
-  public interface TransitionToStandbyRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.TransitionToStandbyRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface TransitionToStandbyRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;
     /**
      * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-     * @return Whether the reqInfo field is set.
      */
     boolean hasReqInfo();
     /**
      * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-     * @return The reqInfo.
      */
     org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto getReqInfo();
     /**
@@ -2725,45 +2274,43 @@ public final class HAServiceProtocolProtos {
     org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder getReqInfoOrBuilder();
   }
   /**
+   * Protobuf type {@code hadoop.common.TransitionToStandbyRequestProto}
+   *
    * <pre>
    **
    * void request
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.TransitionToStandbyRequestProto}
    */
   public static final class TransitionToStandbyRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.TransitionToStandbyRequestProto)
-      TransitionToStandbyRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements TransitionToStandbyRequestProtoOrBuilder {
     // Use TransitionToStandbyRequestProto.newBuilder() to construct.
-    private TransitionToStandbyRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private TransitionToStandbyRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private TransitionToStandbyRequestProto() {
+    private TransitionToStandbyRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final TransitionToStandbyRequestProto defaultInstance;
+    public static TransitionToStandbyRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new TransitionToStandbyRequestProto();
+    public TransitionToStandbyRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private TransitionToStandbyRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2775,9 +2322,16 @@ public final class HAServiceProtocolProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000001) != 0)) {
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
                 subBuilder = reqInfo_.toBuilder();
               }
               reqInfo_ = input.readMessage(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.PARSER, extensionRegistry);
@@ -2788,20 +2342,13 @@ public final class HAServiceProtocolProtos {
               bitField0_ |= 0x00000001;
               break;
             }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -2812,47 +2359,58 @@ public final class HAServiceProtocolProtos {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToStandbyRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToStandbyRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto.class, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<TransitionToStandbyRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<TransitionToStandbyRequestProto>() {
+      public TransitionToStandbyRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransitionToStandbyRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TransitionToStandbyRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;
     public static final int REQINFO_FIELD_NUMBER = 1;
     private org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto reqInfo_;
     /**
      * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-     * @return Whether the reqInfo field is set.
      */
-    @java.lang.Override
     public boolean hasReqInfo() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-     * @return The reqInfo.
      */
-    @java.lang.Override
     public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto getReqInfo() {
-      return reqInfo_ == null ? org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance() : reqInfo_;
+      return reqInfo_;
     }
     /**
      * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder getReqInfoOrBuilder() {
-      return reqInfo_ == null ? org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance() : reqInfo_;
+      return reqInfo_;
     }
 
+    private void initFields() {
+      reqInfo_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasReqInfo()) {
         memoizedIsInitialized = 0;
@@ -2866,28 +2424,35 @@ public final class HAServiceProtocolProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(1, getReqInfo());
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, reqInfo_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getReqInfo());
+          .computeMessageSize(1, reqInfo_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -2900,42 +2465,34 @@ public final class HAServiceProtocolProtos {
       }
       org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto other = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto) obj;
 
-      if (hasReqInfo() != other.hasReqInfo()) return false;
+      boolean result = true;
+      result = result && (hasReqInfo() == other.hasReqInfo());
       if (hasReqInfo()) {
-        if (!getReqInfo()
-            .equals(other.getReqInfo())) return false;
+        result = result && getReqInfo()
+            .equals(other.getReqInfo());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasReqInfo()) {
         hash = (37 * hash) + REQINFO_FIELD_NUMBER;
         hash = (53 * hash) + getReqInfo().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2959,81 +2516,66 @@ public final class HAServiceProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.TransitionToStandbyRequestProto}
+     *
      * <pre>
      **
      * void request
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.TransitionToStandbyRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.TransitionToStandbyRequestProto)
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToStandbyRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToStandbyRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -3046,21 +2588,23 @@ public final class HAServiceProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getReqInfoFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (reqInfoBuilder_ == null) {
-          reqInfo_ = null;
+          reqInfo_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance();
         } else {
           reqInfoBuilder_.clear();
         }
@@ -3068,18 +2612,19 @@ public final class HAServiceProtocolProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToStandbyRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto build() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -3088,57 +2633,23 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto buildPartial() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto result = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          if (reqInfoBuilder_ == null) {
-            result.reqInfo_ = reqInfo_;
-          } else {
-            result.reqInfo_ = reqInfoBuilder_.build();
-          }
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
+        }
+        if (reqInfoBuilder_ == null) {
+          result.reqInfo_ = reqInfo_;
+        } else {
+          result.reqInfo_ = reqInfoBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto)other);
@@ -3153,23 +2664,22 @@ public final class HAServiceProtocolProtos {
         if (other.hasReqInfo()) {
           mergeReqInfo(other.getReqInfo());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasReqInfo()) {
+          
           return false;
         }
         if (!getReqInfo().isInitialized()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3179,7 +2689,7 @@ public final class HAServiceProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -3189,23 +2699,22 @@ public final class HAServiceProtocolProtos {
       }
       private int bitField0_;
 
-      private org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto reqInfo_;
-      private com.google.protobuf.SingleFieldBuilderV3<
+      // required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;
+      private org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto reqInfo_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.Builder, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder> reqInfoBuilder_;
       /**
        * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-       * @return Whether the reqInfo field is set.
        */
       public boolean hasReqInfo() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
-       * @return The reqInfo.
        */
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto getReqInfo() {
         if (reqInfoBuilder_ == null) {
-          return reqInfo_ == null ? org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance() : reqInfo_;
+          return reqInfo_;
         } else {
           return reqInfoBuilder_.getMessage();
         }
@@ -3245,8 +2754,7 @@ public final class HAServiceProtocolProtos {
        */
       public Builder mergeReqInfo(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto value) {
         if (reqInfoBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0) &&
-              reqInfo_ != null &&
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
               reqInfo_ != org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance()) {
             reqInfo_ =
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.newBuilder(reqInfo_).mergeFrom(value).buildPartial();
@@ -3265,7 +2773,7 @@ public final class HAServiceProtocolProtos {
        */
       public Builder clearReqInfo() {
         if (reqInfoBuilder_ == null) {
-          reqInfo_ = null;
+          reqInfo_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance();
           onChanged();
         } else {
           reqInfoBuilder_.clear();
@@ -3288,123 +2796,78 @@ public final class HAServiceProtocolProtos {
         if (reqInfoBuilder_ != null) {
           return reqInfoBuilder_.getMessageOrBuilder();
         } else {
-          return reqInfo_ == null ?
-              org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.getDefaultInstance() : reqInfo_;
+          return reqInfo_;
         }
       }
       /**
        * <code>required .hadoop.common.HAStateChangeRequestInfoProto reqInfo = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.Builder, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder> 
           getReqInfoFieldBuilder() {
         if (reqInfoBuilder_ == null) {
-          reqInfoBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          reqInfoBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProto.Builder, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAStateChangeRequestInfoProtoOrBuilder>(
-                  getReqInfo(),
+                  reqInfo_,
                   getParentForChildren(),
                   isClean());
           reqInfo_ = null;
         }
         return reqInfoBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.TransitionToStandbyRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.TransitionToStandbyRequestProto)
-    private static final org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto();
+      defaultInstance = new TransitionToStandbyRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<TransitionToStandbyRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<TransitionToStandbyRequestProto>() {
-      @java.lang.Override
-      public TransitionToStandbyRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new TransitionToStandbyRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<TransitionToStandbyRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<TransitionToStandbyRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.TransitionToStandbyRequestProto)
   }
 
-  public interface TransitionToStandbyResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.TransitionToStandbyResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface TransitionToStandbyResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
+   * Protobuf type {@code hadoop.common.TransitionToStandbyResponseProto}
+   *
    * <pre>
    **
    * void response
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.TransitionToStandbyResponseProto}
    */
   public static final class TransitionToStandbyResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.TransitionToStandbyResponseProto)
-      TransitionToStandbyResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements TransitionToStandbyResponseProtoOrBuilder {
     // Use TransitionToStandbyResponseProto.newBuilder() to construct.
-    private TransitionToStandbyResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private TransitionToStandbyResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private TransitionToStandbyResponseProto() {
+    private TransitionToStandbyResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final TransitionToStandbyResponseProto defaultInstance;
+    public static TransitionToStandbyResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new TransitionToStandbyResponseProto();
+    public TransitionToStandbyResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private TransitionToStandbyResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -3416,8 +2879,8 @@ public final class HAServiceProtocolProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -3428,7 +2891,7 @@ public final class HAServiceProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -3439,40 +2902,61 @@ public final class HAServiceProtocolProtos {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToStandbyResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToStandbyResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto.class, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<TransitionToStandbyResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<TransitionToStandbyResponseProto>() {
+      public TransitionToStandbyResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TransitionToStandbyResponseProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<TransitionToStandbyResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -3485,33 +2969,25 @@ public final class HAServiceProtocolProtos {
       }
       org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto other = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3535,81 +3011,66 @@ public final class HAServiceProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.TransitionToStandbyResponseProto}
+     *
      * <pre>
      **
      * void response
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.TransitionToStandbyResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.TransitionToStandbyResponseProto)
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToStandbyResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToStandbyResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -3622,33 +3083,36 @@ public final class HAServiceProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_TransitionToStandbyResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto build() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -3657,46 +3121,12 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto buildPartial() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto result = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto)other);
@@ -3708,17 +3138,14 @@ public final class HAServiceProtocolProtos {
 
       public Builder mergeFrom(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto other) {
         if (other == org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3728,7 +3155,7 @@ public final class HAServiceProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -3736,103 +3163,59 @@ public final class HAServiceProtocolProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.TransitionToStandbyResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.TransitionToStandbyResponseProto)
-    private static final org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto();
+      defaultInstance = new TransitionToStandbyResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<TransitionToStandbyResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<TransitionToStandbyResponseProto>() {
-      @java.lang.Override
-      public TransitionToStandbyResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new TransitionToStandbyResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<TransitionToStandbyResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<TransitionToStandbyResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.TransitionToStandbyResponseProto)
   }
 
-  public interface GetServiceStatusRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GetServiceStatusRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetServiceStatusRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
+   * Protobuf type {@code hadoop.common.GetServiceStatusRequestProto}
+   *
    * <pre>
    **
    * void request
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GetServiceStatusRequestProto}
    */
   public static final class GetServiceStatusRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GetServiceStatusRequestProto)
-      GetServiceStatusRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GetServiceStatusRequestProtoOrBuilder {
     // Use GetServiceStatusRequestProto.newBuilder() to construct.
-    private GetServiceStatusRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GetServiceStatusRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GetServiceStatusRequestProto() {
+    private GetServiceStatusRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetServiceStatusRequestProto defaultInstance;
+    public static GetServiceStatusRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GetServiceStatusRequestProto();
+    public GetServiceStatusRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GetServiceStatusRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -3844,8 +3227,8 @@ public final class HAServiceProtocolProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -3856,7 +3239,7 @@ public final class HAServiceProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -3867,40 +3250,61 @@ public final class HAServiceProtocolProtos {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_GetServiceStatusRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_GetServiceStatusRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto.class, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<GetServiceStatusRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<GetServiceStatusRequestProto>() {
+      public GetServiceStatusRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetServiceStatusRequestProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<GetServiceStatusRequestProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -3913,33 +3317,25 @@ public final class HAServiceProtocolProtos {
       }
       org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto other = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3963,81 +3359,66 @@ public final class HAServiceProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GetServiceStatusRequestProto}
+     *
      * <pre>
      **
      * void request
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GetServiceStatusRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GetServiceStatusRequestProto)
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_GetServiceStatusRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_GetServiceStatusRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -4050,33 +3431,36 @@ public final class HAServiceProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_GetServiceStatusRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto build() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -4085,46 +3469,12 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto buildPartial() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto result = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto)other);
@@ -4136,17 +3486,14 @@ public final class HAServiceProtocolProtos {
 
       public Builder mergeFrom(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto other) {
         if (other == org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4156,7 +3503,7 @@ public final class HAServiceProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -4164,166 +3511,116 @@ public final class HAServiceProtocolProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GetServiceStatusRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GetServiceStatusRequestProto)
-    private static final org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto();
+      defaultInstance = new GetServiceStatusRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetServiceStatusRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<GetServiceStatusRequestProto>() {
-      @java.lang.Override
-      public GetServiceStatusRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetServiceStatusRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetServiceStatusRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetServiceStatusRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GetServiceStatusRequestProto)
   }
 
-  public interface GetServiceStatusResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GetServiceStatusResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetServiceStatusResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required .hadoop.common.HAServiceStateProto state = 1;
     /**
      * <code>required .hadoop.common.HAServiceStateProto state = 1;</code>
-     * @return Whether the state field is set.
      */
     boolean hasState();
     /**
      * <code>required .hadoop.common.HAServiceStateProto state = 1;</code>
-     * @return The state.
      */
     org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto getState();
 
+    // optional bool readyToBecomeActive = 2;
     /**
+     * <code>optional bool readyToBecomeActive = 2;</code>
+     *
      * <pre>
      * If state is STANDBY, indicate whether it is
      * ready to become active.
      * </pre>
-     *
-     * <code>optional bool readyToBecomeActive = 2;</code>
-     * @return Whether the readyToBecomeActive field is set.
      */
     boolean hasReadyToBecomeActive();
     /**
+     * <code>optional bool readyToBecomeActive = 2;</code>
+     *
      * <pre>
      * If state is STANDBY, indicate whether it is
      * ready to become active.
      * </pre>
-     *
-     * <code>optional bool readyToBecomeActive = 2;</code>
-     * @return The readyToBecomeActive.
      */
     boolean getReadyToBecomeActive();
 
+    // optional string notReadyReason = 3;
     /**
+     * <code>optional string notReadyReason = 3;</code>
+     *
      * <pre>
      * If not ready to become active, a textual explanation of why not
      * </pre>
-     *
-     * <code>optional string notReadyReason = 3;</code>
-     * @return Whether the notReadyReason field is set.
      */
     boolean hasNotReadyReason();
     /**
+     * <code>optional string notReadyReason = 3;</code>
+     *
      * <pre>
      * If not ready to become active, a textual explanation of why not
      * </pre>
-     *
-     * <code>optional string notReadyReason = 3;</code>
-     * @return The notReadyReason.
      */
     java.lang.String getNotReadyReason();
     /**
+     * <code>optional string notReadyReason = 3;</code>
+     *
      * <pre>
      * If not ready to become active, a textual explanation of why not
      * </pre>
-     *
-     * <code>optional string notReadyReason = 3;</code>
-     * @return The bytes for notReadyReason.
      */
     com.google.protobuf.ByteString
         getNotReadyReasonBytes();
   }
   /**
+   * Protobuf type {@code hadoop.common.GetServiceStatusResponseProto}
+   *
    * <pre>
    **
    * Returns the state of the service
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GetServiceStatusResponseProto}
    */
   public static final class GetServiceStatusResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GetServiceStatusResponseProto)
-      GetServiceStatusResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GetServiceStatusResponseProtoOrBuilder {
     // Use GetServiceStatusResponseProto.newBuilder() to construct.
-    private GetServiceStatusResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GetServiceStatusResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GetServiceStatusResponseProto() {
-      state_ = 0;
-      notReadyReason_ = "";
+    private GetServiceStatusResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetServiceStatusResponseProto defaultInstance;
+    public static GetServiceStatusResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GetServiceStatusResponseProto();
+    public GetServiceStatusResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GetServiceStatusResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -4335,15 +3632,21 @@ public final class HAServiceProtocolProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               int rawValue = input.readEnum();
-                @SuppressWarnings("deprecation")
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto value = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(1, rawValue);
               } else {
                 bitField0_ |= 0x00000001;
-                state_ = rawValue;
+                state_ = value;
               }
               break;
             }
@@ -4353,16 +3656,8 @@ public final class HAServiceProtocolProtos {
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              notReadyReason_ = bs;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              notReadyReason_ = input.readBytes();
               break;
             }
           }
@@ -4371,7 +3666,7 @@ public final class HAServiceProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -4382,86 +3677,91 @@ public final class HAServiceProtocolProtos {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_GetServiceStatusResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_GetServiceStatusResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto.class, org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto.Builder.class);
     }
 
-    private int bitField0_;
-    public static final int STATE_FIELD_NUMBER = 1;
-    private int state_;
-    /**
-     * <code>required .hadoop.common.HAServiceStateProto state = 1;</code>
-     * @return Whether the state field is set.
-     */
-    @java.lang.Override public boolean hasState() {
-      return ((bitField0_ & 0x00000001) != 0);
-    }
-    /**
-     * <code>required .hadoop.common.HAServiceStateProto state = 1;</code>
-     * @return The state.
-     */
-    @java.lang.Override public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto getState() {
-      @SuppressWarnings("deprecation")
-      org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto result = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto.valueOf(state_);
-      return result == null ? org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto.INITIALIZING : result;
+    public static com.google.protobuf.Parser<GetServiceStatusResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<GetServiceStatusResponseProto>() {
+      public GetServiceStatusResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetServiceStatusResponseProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetServiceStatusResponseProto> getParserForType() {
+      return PARSER;
     }
 
+    private int bitField0_;
+    // required .hadoop.common.HAServiceStateProto state = 1;
+    public static final int STATE_FIELD_NUMBER = 1;
+    private org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto state_;
+    /**
+     * <code>required .hadoop.common.HAServiceStateProto state = 1;</code>
+     */
+    public boolean hasState() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required .hadoop.common.HAServiceStateProto state = 1;</code>
+     */
+    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto getState() {
+      return state_;
+    }
+
+    // optional bool readyToBecomeActive = 2;
     public static final int READYTOBECOMEACTIVE_FIELD_NUMBER = 2;
     private boolean readyToBecomeActive_;
     /**
+     * <code>optional bool readyToBecomeActive = 2;</code>
+     *
      * <pre>
      * If state is STANDBY, indicate whether it is
      * ready to become active.
      * </pre>
-     *
-     * <code>optional bool readyToBecomeActive = 2;</code>
-     * @return Whether the readyToBecomeActive field is set.
      */
-    @java.lang.Override
     public boolean hasReadyToBecomeActive() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
+     * <code>optional bool readyToBecomeActive = 2;</code>
+     *
      * <pre>
      * If state is STANDBY, indicate whether it is
      * ready to become active.
      * </pre>
-     *
-     * <code>optional bool readyToBecomeActive = 2;</code>
-     * @return The readyToBecomeActive.
      */
-    @java.lang.Override
     public boolean getReadyToBecomeActive() {
       return readyToBecomeActive_;
     }
 
+    // optional string notReadyReason = 3;
     public static final int NOTREADYREASON_FIELD_NUMBER = 3;
-    private volatile java.lang.Object notReadyReason_;
+    private java.lang.Object notReadyReason_;
     /**
+     * <code>optional string notReadyReason = 3;</code>
+     *
      * <pre>
      * If not ready to become active, a textual explanation of why not
      * </pre>
-     *
-     * <code>optional string notReadyReason = 3;</code>
-     * @return Whether the notReadyReason field is set.
      */
-    @java.lang.Override
     public boolean hasNotReadyReason() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
+     * <code>optional string notReadyReason = 3;</code>
+     *
      * <pre>
      * If not ready to become active, a textual explanation of why not
      * </pre>
-     *
-     * <code>optional string notReadyReason = 3;</code>
-     * @return The notReadyReason.
      */
-    @java.lang.Override
     public java.lang.String getNotReadyReason() {
       java.lang.Object ref = notReadyReason_;
       if (ref instanceof java.lang.String) {
@@ -4477,14 +3777,12 @@ public final class HAServiceProtocolProtos {
       }
     }
     /**
+     * <code>optional string notReadyReason = 3;</code>
+     *
      * <pre>
      * If not ready to become active, a textual explanation of why not
      * </pre>
-     *
-     * <code>optional string notReadyReason = 3;</code>
-     * @return The bytes for notReadyReason.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getNotReadyReasonBytes() {
       java.lang.Object ref = notReadyReason_;
@@ -4499,12 +3797,15 @@ public final class HAServiceProtocolProtos {
       }
     }
 
+    private void initFields() {
+      state_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto.INITIALIZING;
+      readyToBecomeActive_ = false;
+      notReadyReason_ = "";
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasState()) {
         memoizedIsInitialized = 0;
@@ -4514,41 +3815,49 @@ public final class HAServiceProtocolProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeEnum(1, state_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeEnum(1, state_.getNumber());
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBool(2, readyToBecomeActive_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, notReadyReason_);
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getNotReadyReasonBytes());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, state_);
+          .computeEnumSize(1, state_.getNumber());
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBoolSize(2, readyToBecomeActive_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, notReadyReason_);
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getNotReadyReasonBytes());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -4561,60 +3870,52 @@ public final class HAServiceProtocolProtos {
       }
       org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto other = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto) obj;
 
-      if (hasState() != other.hasState()) return false;
+      boolean result = true;
+      result = result && (hasState() == other.hasState());
       if (hasState()) {
-        if (state_ != other.state_) return false;
+        result = result &&
+            (getState() == other.getState());
       }
-      if (hasReadyToBecomeActive() != other.hasReadyToBecomeActive()) return false;
+      result = result && (hasReadyToBecomeActive() == other.hasReadyToBecomeActive());
       if (hasReadyToBecomeActive()) {
-        if (getReadyToBecomeActive()
-            != other.getReadyToBecomeActive()) return false;
+        result = result && (getReadyToBecomeActive()
+            == other.getReadyToBecomeActive());
       }
-      if (hasNotReadyReason() != other.hasNotReadyReason()) return false;
+      result = result && (hasNotReadyReason() == other.hasNotReadyReason());
       if (hasNotReadyReason()) {
-        if (!getNotReadyReason()
-            .equals(other.getNotReadyReason())) return false;
+        result = result && getNotReadyReason()
+            .equals(other.getNotReadyReason());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasState()) {
         hash = (37 * hash) + STATE_FIELD_NUMBER;
-        hash = (53 * hash) + state_;
+        hash = (53 * hash) + hashEnum(getState());
       }
       if (hasReadyToBecomeActive()) {
         hash = (37 * hash) + READYTOBECOMEACTIVE_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-            getReadyToBecomeActive());
+        hash = (53 * hash) + hashBoolean(getReadyToBecomeActive());
       }
       if (hasNotReadyReason()) {
         hash = (37 * hash) + NOTREADYREASON_FIELD_NUMBER;
         hash = (53 * hash) + getNotReadyReason().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4638,81 +3939,66 @@ public final class HAServiceProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GetServiceStatusResponseProto}
+     *
      * <pre>
      **
      * Returns the state of the service
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GetServiceStatusResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GetServiceStatusResponseProto)
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_GetServiceStatusResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_GetServiceStatusResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -4725,19 +4011,21 @@ public final class HAServiceProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
-        state_ = 0;
+        state_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto.INITIALIZING;
         bitField0_ = (bitField0_ & ~0x00000001);
         readyToBecomeActive_ = false;
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -4746,18 +4034,19 @@ public final class HAServiceProtocolProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.internal_static_hadoop_common_GetServiceStatusResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto build() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -4766,20 +4055,19 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto buildPartial() {
         org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto result = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.state_ = state_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          result.readyToBecomeActive_ = readyToBecomeActive_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.readyToBecomeActive_ = readyToBecomeActive_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
         result.notReadyReason_ = notReadyReason_;
@@ -4788,39 +4076,6 @@ public final class HAServiceProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto)other);
@@ -4843,20 +4098,18 @@ public final class HAServiceProtocolProtos {
           notReadyReason_ = other.notReadyReason_;
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasState()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4866,7 +4119,7 @@ public final class HAServiceProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -4876,85 +4129,73 @@ public final class HAServiceProtocolProtos {
       }
       private int bitField0_;
 
-      private int state_ = 0;
+      // required .hadoop.common.HAServiceStateProto state = 1;
+      private org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto state_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto.INITIALIZING;
       /**
        * <code>required .hadoop.common.HAServiceStateProto state = 1;</code>
-       * @return Whether the state field is set.
        */
-      @java.lang.Override public boolean hasState() {
-        return ((bitField0_ & 0x00000001) != 0);
+      public boolean hasState() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required .hadoop.common.HAServiceStateProto state = 1;</code>
-       * @return The state.
        */
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto getState() {
-        @SuppressWarnings("deprecation")
-        org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto result = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto.valueOf(state_);
-        return result == null ? org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto.INITIALIZING : result;
+        return state_;
       }
       /**
        * <code>required .hadoop.common.HAServiceStateProto state = 1;</code>
-       * @param value The state to set.
-       * @return This builder for chaining.
        */
       public Builder setState(org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto value) {
         if (value == null) {
           throw new NullPointerException();
         }
         bitField0_ |= 0x00000001;
-        state_ = value.getNumber();
+        state_ = value;
         onChanged();
         return this;
       }
       /**
        * <code>required .hadoop.common.HAServiceStateProto state = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearState() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        state_ = 0;
+        state_ = org.apache.hadoop.ha.proto.HAServiceProtocolProtos.HAServiceStateProto.INITIALIZING;
         onChanged();
         return this;
       }
 
+      // optional bool readyToBecomeActive = 2;
       private boolean readyToBecomeActive_ ;
       /**
+       * <code>optional bool readyToBecomeActive = 2;</code>
+       *
        * <pre>
        * If state is STANDBY, indicate whether it is
        * ready to become active.
        * </pre>
-       *
-       * <code>optional bool readyToBecomeActive = 2;</code>
-       * @return Whether the readyToBecomeActive field is set.
        */
-      @java.lang.Override
       public boolean hasReadyToBecomeActive() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
+       * <code>optional bool readyToBecomeActive = 2;</code>
+       *
        * <pre>
        * If state is STANDBY, indicate whether it is
        * ready to become active.
        * </pre>
-       *
-       * <code>optional bool readyToBecomeActive = 2;</code>
-       * @return The readyToBecomeActive.
        */
-      @java.lang.Override
       public boolean getReadyToBecomeActive() {
         return readyToBecomeActive_;
       }
       /**
+       * <code>optional bool readyToBecomeActive = 2;</code>
+       *
        * <pre>
        * If state is STANDBY, indicate whether it is
        * ready to become active.
        * </pre>
-       *
-       * <code>optional bool readyToBecomeActive = 2;</code>
-       * @param value The readyToBecomeActive to set.
-       * @return This builder for chaining.
        */
       public Builder setReadyToBecomeActive(boolean value) {
         bitField0_ |= 0x00000002;
@@ -4963,13 +4204,12 @@ public final class HAServiceProtocolProtos {
         return this;
       }
       /**
+       * <code>optional bool readyToBecomeActive = 2;</code>
+       *
        * <pre>
        * If state is STANDBY, indicate whether it is
        * ready to become active.
        * </pre>
-       *
-       * <code>optional bool readyToBecomeActive = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearReadyToBecomeActive() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -4978,47 +4218,42 @@ public final class HAServiceProtocolProtos {
         return this;
       }
 
+      // optional string notReadyReason = 3;
       private java.lang.Object notReadyReason_ = "";
       /**
+       * <code>optional string notReadyReason = 3;</code>
+       *
        * <pre>
        * If not ready to become active, a textual explanation of why not
        * </pre>
-       *
-       * <code>optional string notReadyReason = 3;</code>
-       * @return Whether the notReadyReason field is set.
        */
       public boolean hasNotReadyReason() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
+       * <code>optional string notReadyReason = 3;</code>
+       *
        * <pre>
        * If not ready to become active, a textual explanation of why not
        * </pre>
-       *
-       * <code>optional string notReadyReason = 3;</code>
-       * @return The notReadyReason.
        */
       public java.lang.String getNotReadyReason() {
         java.lang.Object ref = notReadyReason_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            notReadyReason_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          notReadyReason_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
+       * <code>optional string notReadyReason = 3;</code>
+       *
        * <pre>
        * If not ready to become active, a textual explanation of why not
        * </pre>
-       *
-       * <code>optional string notReadyReason = 3;</code>
-       * @return The bytes for notReadyReason.
        */
       public com.google.protobuf.ByteString
           getNotReadyReasonBytes() {
@@ -5034,13 +4269,11 @@ public final class HAServiceProtocolProtos {
         }
       }
       /**
+       * <code>optional string notReadyReason = 3;</code>
+       *
        * <pre>
        * If not ready to become active, a textual explanation of why not
        * </pre>
-       *
-       * <code>optional string notReadyReason = 3;</code>
-       * @param value The notReadyReason to set.
-       * @return This builder for chaining.
        */
       public Builder setNotReadyReason(
           java.lang.String value) {
@@ -5053,12 +4286,11 @@ public final class HAServiceProtocolProtos {
         return this;
       }
       /**
+       * <code>optional string notReadyReason = 3;</code>
+       *
        * <pre>
        * If not ready to become active, a textual explanation of why not
        * </pre>
-       *
-       * <code>optional string notReadyReason = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearNotReadyReason() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -5067,13 +4299,11 @@ public final class HAServiceProtocolProtos {
         return this;
       }
       /**
+       * <code>optional string notReadyReason = 3;</code>
+       *
        * <pre>
        * If not ready to become active, a textual explanation of why not
        * </pre>
-       *
-       * <code>optional string notReadyReason = 3;</code>
-       * @param value The bytes for notReadyReason to set.
-       * @return This builder for chaining.
        */
       public Builder setNotReadyReasonBytes(
           com.google.protobuf.ByteString value) {
@@ -5085,68 +4315,28 @@ public final class HAServiceProtocolProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GetServiceStatusResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GetServiceStatusResponseProto)
-    private static final org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto();
+      defaultInstance = new GetServiceStatusResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetServiceStatusResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<GetServiceStatusResponseProto>() {
-      @java.lang.Override
-      public GetServiceStatusResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetServiceStatusResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetServiceStatusResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetServiceStatusResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.HAServiceProtocolProtos.GetServiceStatusResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GetServiceStatusResponseProto)
   }
 
   /**
+   * Protobuf service {@code hadoop.common.HAServiceProtocolService}
+   *
    * <pre>
    **
    * Protocol interface provides High availability related 
    * primitives to monitor and failover a service.
+   *
    * For details see o.a.h.ha.HAServiceProtocol.
    * </pre>
-   *
-   * Protobuf service {@code hadoop.common.HAServiceProtocolService}
    */
   public static abstract class HAServiceProtocolService
       implements com.google.protobuf.Service {
@@ -5154,12 +4344,12 @@ public final class HAServiceProtocolProtos {
 
     public interface Interface {
       /**
+       * <code>rpc monitorHealth(.hadoop.common.MonitorHealthRequestProto) returns (.hadoop.common.MonitorHealthResponseProto);</code>
+       *
        * <pre>
        **
        * Monitor the health of a service.
        * </pre>
-       *
-       * <code>rpc monitorHealth(.hadoop.common.MonitorHealthRequestProto) returns (.hadoop.common.MonitorHealthResponseProto);</code>
        */
       public abstract void monitorHealth(
           com.google.protobuf.RpcController controller,
@@ -5167,12 +4357,12 @@ public final class HAServiceProtocolProtos {
           com.google.protobuf.RpcCallback<org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto> done);
 
       /**
+       * <code>rpc transitionToActive(.hadoop.common.TransitionToActiveRequestProto) returns (.hadoop.common.TransitionToActiveResponseProto);</code>
+       *
        * <pre>
        **
        * Request service to tranisition to active state.
        * </pre>
-       *
-       * <code>rpc transitionToActive(.hadoop.common.TransitionToActiveRequestProto) returns (.hadoop.common.TransitionToActiveResponseProto);</code>
        */
       public abstract void transitionToActive(
           com.google.protobuf.RpcController controller,
@@ -5180,12 +4370,12 @@ public final class HAServiceProtocolProtos {
           com.google.protobuf.RpcCallback<org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto> done);
 
       /**
+       * <code>rpc transitionToStandby(.hadoop.common.TransitionToStandbyRequestProto) returns (.hadoop.common.TransitionToStandbyResponseProto);</code>
+       *
        * <pre>
        **
        * Request service to transition to standby state.
        * </pre>
-       *
-       * <code>rpc transitionToStandby(.hadoop.common.TransitionToStandbyRequestProto) returns (.hadoop.common.TransitionToStandbyResponseProto);</code>
        */
       public abstract void transitionToStandby(
           com.google.protobuf.RpcController controller,
@@ -5193,12 +4383,12 @@ public final class HAServiceProtocolProtos {
           com.google.protobuf.RpcCallback<org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto> done);
 
       /**
+       * <code>rpc getServiceStatus(.hadoop.common.GetServiceStatusRequestProto) returns (.hadoop.common.GetServiceStatusResponseProto);</code>
+       *
        * <pre>
        **
        * Get the current status of the service.
        * </pre>
-       *
-       * <code>rpc getServiceStatus(.hadoop.common.GetServiceStatusRequestProto) returns (.hadoop.common.GetServiceStatusResponseProto);</code>
        */
       public abstract void getServiceStatus(
           com.google.protobuf.RpcController controller,
@@ -5325,12 +4515,12 @@ public final class HAServiceProtocolProtos {
     }
 
     /**
+     * <code>rpc monitorHealth(.hadoop.common.MonitorHealthRequestProto) returns (.hadoop.common.MonitorHealthResponseProto);</code>
+     *
      * <pre>
      **
      * Monitor the health of a service.
      * </pre>
-     *
-     * <code>rpc monitorHealth(.hadoop.common.MonitorHealthRequestProto) returns (.hadoop.common.MonitorHealthResponseProto);</code>
      */
     public abstract void monitorHealth(
         com.google.protobuf.RpcController controller,
@@ -5338,12 +4528,12 @@ public final class HAServiceProtocolProtos {
         com.google.protobuf.RpcCallback<org.apache.hadoop.ha.proto.HAServiceProtocolProtos.MonitorHealthResponseProto> done);
 
     /**
+     * <code>rpc transitionToActive(.hadoop.common.TransitionToActiveRequestProto) returns (.hadoop.common.TransitionToActiveResponseProto);</code>
+     *
      * <pre>
      **
      * Request service to tranisition to active state.
      * </pre>
-     *
-     * <code>rpc transitionToActive(.hadoop.common.TransitionToActiveRequestProto) returns (.hadoop.common.TransitionToActiveResponseProto);</code>
      */
     public abstract void transitionToActive(
         com.google.protobuf.RpcController controller,
@@ -5351,12 +4541,12 @@ public final class HAServiceProtocolProtos {
         com.google.protobuf.RpcCallback<org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToActiveResponseProto> done);
 
     /**
+     * <code>rpc transitionToStandby(.hadoop.common.TransitionToStandbyRequestProto) returns (.hadoop.common.TransitionToStandbyResponseProto);</code>
+     *
      * <pre>
      **
      * Request service to transition to standby state.
      * </pre>
-     *
-     * <code>rpc transitionToStandby(.hadoop.common.TransitionToStandbyRequestProto) returns (.hadoop.common.TransitionToStandbyResponseProto);</code>
      */
     public abstract void transitionToStandby(
         com.google.protobuf.RpcController controller,
@@ -5364,12 +4554,12 @@ public final class HAServiceProtocolProtos {
         com.google.protobuf.RpcCallback<org.apache.hadoop.ha.proto.HAServiceProtocolProtos.TransitionToStandbyResponseProto> done);
 
     /**
+     * <code>rpc getServiceStatus(.hadoop.common.GetServiceStatusRequestProto) returns (.hadoop.common.GetServiceStatusResponseProto);</code>
+     *
      * <pre>
      **
      * Get the current status of the service.
      * </pre>
-     *
-     * <code>rpc getServiceStatus(.hadoop.common.GetServiceStatusRequestProto) returns (.hadoop.common.GetServiceStatusResponseProto);</code>
      */
     public abstract void getServiceStatus(
         com.google.protobuf.RpcController controller,
@@ -5630,57 +4820,57 @@ public final class HAServiceProtocolProtos {
     // @@protoc_insertion_point(class_scope:hadoop.common.HAServiceProtocolService)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_HAStateChangeRequestInfoProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_HAStateChangeRequestInfoProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_MonitorHealthRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_MonitorHealthRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_MonitorHealthResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_MonitorHealthResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_TransitionToActiveRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_TransitionToActiveRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_TransitionToActiveResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_TransitionToActiveResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_TransitionToStandbyRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_TransitionToStandbyRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_TransitionToStandbyResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_TransitionToStandbyResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GetServiceStatusRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GetServiceStatusRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GetServiceStatusResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GetServiceStatusResponseProto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -5693,7 +4883,7 @@ public final class HAServiceProtocolProtos {
       "oop.common.HAStateChangeRequestInfoProto" +
       "\"!\n\037TransitionToActiveResponseProto\"`\n\037T" +
       "ransitionToStandbyRequestProto\022=\n\007reqInf" +
-      "o\030\001 \002(\0132,.hadoop.common.HAStateChangeReq" +
+      "o\030\001 \002(\0132,.hadoop.common.HAStateChangeReq",
       "uestInfoProto\"\"\n TransitionToStandbyResp" +
       "onseProto\"\036\n\034GetServiceStatusRequestProt" +
       "o\"\207\001\n\035GetServiceStatusResponseProto\0221\n\005s" +
@@ -5703,7 +4893,7 @@ public final class HAServiceProtocolProtos {
       "to\022\020\n\014INITIALIZING\020\000\022\n\n\006ACTIVE\020\001\022\013\n\007STAN" +
       "DBY\020\002*W\n\017HARequestSource\022\023\n\017REQUEST_BY_U" +
       "SER\020\000\022\032\n\026REQUEST_BY_USER_FORCED\020\001\022\023\n\017REQ" +
-      "UEST_BY_ZKFC\020\0022\334\003\n\030HAServiceProtocolServ" +
+      "UEST_BY_ZKFC\020\0022\334\003\n\030HAServiceProtocolServ",
       "ice\022d\n\rmonitorHealth\022(.hadoop.common.Mon" +
       "itorHealthRequestProto\032).hadoop.common.M" +
       "onitorHealthResponseProto\022s\n\022transitionT" +
@@ -5713,69 +4903,77 @@ public final class HAServiceProtocolProtos {
       "andby\022..hadoop.common.TransitionToStandb" +
       "yRequestProto\032/.hadoop.common.Transition" +
       "ToStandbyResponseProto\022m\n\020getServiceStat" +
-      "us\022+.hadoop.common.GetServiceStatusReque" +
+      "us\022+.hadoop.common.GetServiceStatusReque",
       "stProto\032,.hadoop.common.GetServiceStatus" +
       "ResponseProtoB;\n\032org.apache.hadoop.ha.pr" +
       "otoB\027HAServiceProtocolProtos\210\001\001\240\001\001"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_hadoop_common_HAStateChangeRequestInfoProto_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_hadoop_common_HAStateChangeRequestInfoProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_HAStateChangeRequestInfoProto_descriptor,
+              new java.lang.String[] { "ReqSource", });
+          internal_static_hadoop_common_MonitorHealthRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_hadoop_common_MonitorHealthRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_MonitorHealthRequestProto_descriptor,
+              new java.lang.String[] { });
+          internal_static_hadoop_common_MonitorHealthResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_hadoop_common_MonitorHealthResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_MonitorHealthResponseProto_descriptor,
+              new java.lang.String[] { });
+          internal_static_hadoop_common_TransitionToActiveRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_hadoop_common_TransitionToActiveRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_TransitionToActiveRequestProto_descriptor,
+              new java.lang.String[] { "ReqInfo", });
+          internal_static_hadoop_common_TransitionToActiveResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_hadoop_common_TransitionToActiveResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_TransitionToActiveResponseProto_descriptor,
+              new java.lang.String[] { });
+          internal_static_hadoop_common_TransitionToStandbyRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_hadoop_common_TransitionToStandbyRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_TransitionToStandbyRequestProto_descriptor,
+              new java.lang.String[] { "ReqInfo", });
+          internal_static_hadoop_common_TransitionToStandbyResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(6);
+          internal_static_hadoop_common_TransitionToStandbyResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_TransitionToStandbyResponseProto_descriptor,
+              new java.lang.String[] { });
+          internal_static_hadoop_common_GetServiceStatusRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(7);
+          internal_static_hadoop_common_GetServiceStatusRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GetServiceStatusRequestProto_descriptor,
+              new java.lang.String[] { });
+          internal_static_hadoop_common_GetServiceStatusResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(8);
+          internal_static_hadoop_common_GetServiceStatusResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GetServiceStatusResponseProto_descriptor,
+              new java.lang.String[] { "State", "ReadyToBecomeActive", "NotReadyReason", });
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_hadoop_common_HAStateChangeRequestInfoProto_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_hadoop_common_HAStateChangeRequestInfoProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_HAStateChangeRequestInfoProto_descriptor,
-        new java.lang.String[] { "ReqSource", });
-    internal_static_hadoop_common_MonitorHealthRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_hadoop_common_MonitorHealthRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_MonitorHealthRequestProto_descriptor,
-        new java.lang.String[] { });
-    internal_static_hadoop_common_MonitorHealthResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_hadoop_common_MonitorHealthResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_MonitorHealthResponseProto_descriptor,
-        new java.lang.String[] { });
-    internal_static_hadoop_common_TransitionToActiveRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_hadoop_common_TransitionToActiveRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_TransitionToActiveRequestProto_descriptor,
-        new java.lang.String[] { "ReqInfo", });
-    internal_static_hadoop_common_TransitionToActiveResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_hadoop_common_TransitionToActiveResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_TransitionToActiveResponseProto_descriptor,
-        new java.lang.String[] { });
-    internal_static_hadoop_common_TransitionToStandbyRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_hadoop_common_TransitionToStandbyRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_TransitionToStandbyRequestProto_descriptor,
-        new java.lang.String[] { "ReqInfo", });
-    internal_static_hadoop_common_TransitionToStandbyResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_hadoop_common_TransitionToStandbyResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_TransitionToStandbyResponseProto_descriptor,
-        new java.lang.String[] { });
-    internal_static_hadoop_common_GetServiceStatusRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(7);
-    internal_static_hadoop_common_GetServiceStatusRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GetServiceStatusRequestProto_descriptor,
-        new java.lang.String[] { });
-    internal_static_hadoop_common_GetServiceStatusResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(8);
-    internal_static_hadoop_common_GetServiceStatusResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GetServiceStatusResponseProto_descriptor,
-        new java.lang.String[] { "State", "ReadyToBecomeActive", "NotReadyReason", });
+        }, assigner);
   }
 
   // @@protoc_insertion_point(outer_class_scope)

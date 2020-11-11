@@ -6,53 +6,44 @@ package org.apache.hadoop.tracing;
 public final class TraceAdminPB {
   private TraceAdminPB() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface ListSpanReceiversRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.ListSpanReceiversRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ListSpanReceiversRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
    * Protobuf type {@code hadoop.common.ListSpanReceiversRequestProto}
    */
   public static final class ListSpanReceiversRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.ListSpanReceiversRequestProto)
-      ListSpanReceiversRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements ListSpanReceiversRequestProtoOrBuilder {
     // Use ListSpanReceiversRequestProto.newBuilder() to construct.
-    private ListSpanReceiversRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private ListSpanReceiversRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private ListSpanReceiversRequestProto() {
+    private ListSpanReceiversRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ListSpanReceiversRequestProto defaultInstance;
+    public static ListSpanReceiversRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new ListSpanReceiversRequestProto();
+    public ListSpanReceiversRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private ListSpanReceiversRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -64,8 +55,8 @@ public final class TraceAdminPB {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -76,7 +67,7 @@ public final class TraceAdminPB {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -87,40 +78,61 @@ public final class TraceAdminPB {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ListSpanReceiversRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ListSpanReceiversRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto.class, org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<ListSpanReceiversRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<ListSpanReceiversRequestProto>() {
+      public ListSpanReceiversRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ListSpanReceiversRequestProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<ListSpanReceiversRequestProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -133,33 +145,25 @@ public final class TraceAdminPB {
       }
       org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto other = (org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -183,59 +187,46 @@ public final class TraceAdminPB {
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -243,16 +234,14 @@ public final class TraceAdminPB {
      * Protobuf type {@code hadoop.common.ListSpanReceiversRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.ListSpanReceiversRequestProto)
-        org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ListSpanReceiversRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ListSpanReceiversRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -265,33 +254,36 @@ public final class TraceAdminPB {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ListSpanReceiversRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto build() {
         org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -300,46 +292,12 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto buildPartial() {
         org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto result = new org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto) {
           return mergeFrom((org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto)other);
@@ -351,17 +309,14 @@ public final class TraceAdminPB {
 
       public Builder mergeFrom(org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto other) {
         if (other == org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -371,7 +326,7 @@ public final class TraceAdminPB {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -379,87 +334,42 @@ public final class TraceAdminPB {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.ListSpanReceiversRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.ListSpanReceiversRequestProto)
-    private static final org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto();
+      defaultInstance = new ListSpanReceiversRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<ListSpanReceiversRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<ListSpanReceiversRequestProto>() {
-      @java.lang.Override
-      public ListSpanReceiversRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ListSpanReceiversRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ListSpanReceiversRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ListSpanReceiversRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.ListSpanReceiversRequestProto)
   }
 
-  public interface SpanReceiverListInfoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.SpanReceiverListInfo)
-      com.google.protobuf.MessageOrBuilder {
+  public interface SpanReceiverListInfoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int64 id = 1;
     /**
      * <code>required int64 id = 1;</code>
-     * @return Whether the id field is set.
      */
     boolean hasId();
     /**
      * <code>required int64 id = 1;</code>
-     * @return The id.
      */
     long getId();
 
+    // required string className = 2;
     /**
      * <code>required string className = 2;</code>
-     * @return Whether the className field is set.
      */
     boolean hasClassName();
     /**
      * <code>required string className = 2;</code>
-     * @return The className.
      */
     java.lang.String getClassName();
     /**
      * <code>required string className = 2;</code>
-     * @return The bytes for className.
      */
     com.google.protobuf.ByteString
         getClassNameBytes();
@@ -468,38 +378,35 @@ public final class TraceAdminPB {
    * Protobuf type {@code hadoop.common.SpanReceiverListInfo}
    */
   public static final class SpanReceiverListInfo extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.SpanReceiverListInfo)
-      SpanReceiverListInfoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements SpanReceiverListInfoOrBuilder {
     // Use SpanReceiverListInfo.newBuilder() to construct.
-    private SpanReceiverListInfo(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private SpanReceiverListInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private SpanReceiverListInfo() {
-      className_ = "";
+    private SpanReceiverListInfo(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final SpanReceiverListInfo defaultInstance;
+    public static SpanReceiverListInfo getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new SpanReceiverListInfo();
+    public SpanReceiverListInfo getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private SpanReceiverListInfo(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -511,22 +418,21 @@ public final class TraceAdminPB {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               id_ = input.readInt64();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              className_ = bs;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              className_ = input.readBytes();
               break;
             }
           }
@@ -535,7 +441,7 @@ public final class TraceAdminPB {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -546,49 +452,57 @@ public final class TraceAdminPB {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_SpanReceiverListInfo_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_SpanReceiverListInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo.class, org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<SpanReceiverListInfo> PARSER =
+        new com.google.protobuf.AbstractParser<SpanReceiverListInfo>() {
+      public SpanReceiverListInfo parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new SpanReceiverListInfo(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<SpanReceiverListInfo> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required int64 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private long id_;
     /**
      * <code>required int64 id = 1;</code>
-     * @return Whether the id field is set.
      */
-    @java.lang.Override
     public boolean hasId() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required int64 id = 1;</code>
-     * @return The id.
      */
-    @java.lang.Override
     public long getId() {
       return id_;
     }
 
+    // required string className = 2;
     public static final int CLASSNAME_FIELD_NUMBER = 2;
-    private volatile java.lang.Object className_;
+    private java.lang.Object className_;
     /**
      * <code>required string className = 2;</code>
-     * @return Whether the className field is set.
      */
-    @java.lang.Override
     public boolean hasClassName() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string className = 2;</code>
-     * @return The className.
      */
-    @java.lang.Override
     public java.lang.String getClassName() {
       java.lang.Object ref = className_;
       if (ref instanceof java.lang.String) {
@@ -605,9 +519,7 @@ public final class TraceAdminPB {
     }
     /**
      * <code>required string className = 2;</code>
-     * @return The bytes for className.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getClassNameBytes() {
       java.lang.Object ref = className_;
@@ -622,12 +534,14 @@ public final class TraceAdminPB {
       }
     }
 
+    private void initFields() {
+      id_ = 0L;
+      className_ = "";
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -641,34 +555,42 @@ public final class TraceAdminPB {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt64(1, id_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, className_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getClassNameBytes());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, id_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, className_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getClassNameBytes());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -681,52 +603,43 @@ public final class TraceAdminPB {
       }
       org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo other = (org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo) obj;
 
-      if (hasId() != other.hasId()) return false;
+      boolean result = true;
+      result = result && (hasId() == other.hasId());
       if (hasId()) {
-        if (getId()
-            != other.getId()) return false;
+        result = result && (getId()
+            == other.getId());
       }
-      if (hasClassName() != other.hasClassName()) return false;
+      result = result && (hasClassName() == other.hasClassName());
       if (hasClassName()) {
-        if (!getClassName()
-            .equals(other.getClassName())) return false;
+        result = result && getClassName()
+            .equals(other.getClassName());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasId()) {
         hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getId());
+        hash = (53 * hash) + hashLong(getId());
       }
       if (hasClassName()) {
         hash = (37 * hash) + CLASSNAME_FIELD_NUMBER;
         hash = (53 * hash) + getClassName().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -750,59 +663,46 @@ public final class TraceAdminPB {
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -810,16 +710,14 @@ public final class TraceAdminPB {
      * Protobuf type {@code hadoop.common.SpanReceiverListInfo}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.SpanReceiverListInfo)
-        org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_SpanReceiverListInfo_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_SpanReceiverListInfo_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -832,16 +730,18 @@ public final class TraceAdminPB {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -851,18 +751,19 @@ public final class TraceAdminPB {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_SpanReceiverListInfo_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo getDefaultInstanceForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo build() {
         org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo result = buildPartial();
         if (!result.isInitialized()) {
@@ -871,16 +772,15 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo buildPartial() {
         org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo result = new org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.id_ = id_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.className_ = className_;
@@ -889,39 +789,6 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo) {
           return mergeFrom((org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo)other);
@@ -941,23 +808,22 @@ public final class TraceAdminPB {
           className_ = other.className_;
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasId()) {
+          
           return false;
         }
         if (!hasClassName()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -967,7 +833,7 @@ public final class TraceAdminPB {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -977,27 +843,22 @@ public final class TraceAdminPB {
       }
       private int bitField0_;
 
+      // required int64 id = 1;
       private long id_ ;
       /**
        * <code>required int64 id = 1;</code>
-       * @return Whether the id field is set.
        */
-      @java.lang.Override
       public boolean hasId() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required int64 id = 1;</code>
-       * @return The id.
        */
-      @java.lang.Override
       public long getId() {
         return id_;
       }
       /**
        * <code>required int64 id = 1;</code>
-       * @param value The id to set.
-       * @return This builder for chaining.
        */
       public Builder setId(long value) {
         bitField0_ |= 0x00000001;
@@ -1007,7 +868,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required int64 id = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -1016,27 +876,23 @@ public final class TraceAdminPB {
         return this;
       }
 
+      // required string className = 2;
       private java.lang.Object className_ = "";
       /**
        * <code>required string className = 2;</code>
-       * @return Whether the className field is set.
        */
       public boolean hasClassName() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string className = 2;</code>
-       * @return The className.
        */
       public java.lang.String getClassName() {
         java.lang.Object ref = className_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            className_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          className_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1044,7 +900,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string className = 2;</code>
-       * @return The bytes for className.
        */
       public com.google.protobuf.ByteString
           getClassNameBytes() {
@@ -1061,8 +916,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string className = 2;</code>
-       * @param value The className to set.
-       * @return This builder for chaining.
        */
       public Builder setClassName(
           java.lang.String value) {
@@ -1076,7 +929,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string className = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearClassName() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -1086,8 +938,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string className = 2;</code>
-       * @param value The bytes for className to set.
-       * @return This builder for chaining.
        */
       public Builder setClassNameBytes(
           com.google.protobuf.ByteString value) {
@@ -1099,63 +949,22 @@ public final class TraceAdminPB {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.SpanReceiverListInfo)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.SpanReceiverListInfo)
-    private static final org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo();
+      defaultInstance = new SpanReceiverListInfo(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<SpanReceiverListInfo>
-        PARSER = new com.google.protobuf.AbstractParser<SpanReceiverListInfo>() {
-      @java.lang.Override
-      public SpanReceiverListInfo parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new SpanReceiverListInfo(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<SpanReceiverListInfo> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<SpanReceiverListInfo> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.SpanReceiverListInfo)
   }
 
-  public interface ListSpanReceiversResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.ListSpanReceiversResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ListSpanReceiversResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .hadoop.common.SpanReceiverListInfo descriptions = 1;
     /**
      * <code>repeated .hadoop.common.SpanReceiverListInfo descriptions = 1;</code>
      */
@@ -1184,38 +993,35 @@ public final class TraceAdminPB {
    * Protobuf type {@code hadoop.common.ListSpanReceiversResponseProto}
    */
   public static final class ListSpanReceiversResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.ListSpanReceiversResponseProto)
-      ListSpanReceiversResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements ListSpanReceiversResponseProtoOrBuilder {
     // Use ListSpanReceiversResponseProto.newBuilder() to construct.
-    private ListSpanReceiversResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private ListSpanReceiversResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private ListSpanReceiversResponseProto() {
-      descriptions_ = java.util.Collections.emptyList();
+    private ListSpanReceiversResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ListSpanReceiversResponseProto defaultInstance;
+    public static ListSpanReceiversResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new ListSpanReceiversResponseProto();
+    public ListSpanReceiversResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private ListSpanReceiversResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1227,20 +1033,19 @@ public final class TraceAdminPB {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 descriptions_ = new java.util.ArrayList<org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              descriptions_.add(
-                  input.readMessage(org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo.PARSER, extensionRegistry));
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              descriptions_.add(input.readMessage(org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo.PARSER, extensionRegistry));
               break;
             }
           }
@@ -1249,9 +1054,9 @@ public final class TraceAdminPB {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           descriptions_ = java.util.Collections.unmodifiableList(descriptions_);
         }
         this.unknownFields = unknownFields.build();
@@ -1263,27 +1068,40 @@ public final class TraceAdminPB {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ListSpanReceiversResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ListSpanReceiversResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto.class, org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<ListSpanReceiversResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<ListSpanReceiversResponseProto>() {
+      public ListSpanReceiversResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ListSpanReceiversResponseProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ListSpanReceiversResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    // repeated .hadoop.common.SpanReceiverListInfo descriptions = 1;
     public static final int DESCRIPTIONS_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo> descriptions_;
     /**
      * <code>repeated .hadoop.common.SpanReceiverListInfo descriptions = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo> getDescriptionsList() {
       return descriptions_;
     }
     /**
      * <code>repeated .hadoop.common.SpanReceiverListInfo descriptions = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<? extends org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfoOrBuilder> 
         getDescriptionsOrBuilderList() {
       return descriptions_;
@@ -1291,32 +1109,30 @@ public final class TraceAdminPB {
     /**
      * <code>repeated .hadoop.common.SpanReceiverListInfo descriptions = 1;</code>
      */
-    @java.lang.Override
     public int getDescriptionsCount() {
       return descriptions_.size();
     }
     /**
      * <code>repeated .hadoop.common.SpanReceiverListInfo descriptions = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo getDescriptions(int index) {
       return descriptions_.get(index);
     }
     /**
      * <code>repeated .hadoop.common.SpanReceiverListInfo descriptions = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfoOrBuilder getDescriptionsOrBuilder(
         int index) {
       return descriptions_.get(index);
     }
 
+    private void initFields() {
+      descriptions_ = java.util.Collections.emptyList();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getDescriptionsCount(); i++) {
         if (!getDescriptions(i).isInitialized()) {
@@ -1328,18 +1144,18 @@ public final class TraceAdminPB {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       for (int i = 0; i < descriptions_.size(); i++) {
         output.writeMessage(1, descriptions_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -1347,9 +1163,16 @@ public final class TraceAdminPB {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, descriptions_.get(i));
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1362,39 +1185,31 @@ public final class TraceAdminPB {
       }
       org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto other = (org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto) obj;
 
-      if (!getDescriptionsList()
-          .equals(other.getDescriptionsList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && getDescriptionsList()
+          .equals(other.getDescriptionsList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (getDescriptionsCount() > 0) {
         hash = (37 * hash) + DESCRIPTIONS_FIELD_NUMBER;
         hash = (53 * hash) + getDescriptionsList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1418,59 +1233,46 @@ public final class TraceAdminPB {
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1478,16 +1280,14 @@ public final class TraceAdminPB {
      * Protobuf type {@code hadoop.common.ListSpanReceiversResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.ListSpanReceiversResponseProto)
-        org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ListSpanReceiversResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ListSpanReceiversResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1500,17 +1300,19 @@ public final class TraceAdminPB {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getDescriptionsFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (descriptionsBuilder_ == null) {
@@ -1522,18 +1324,19 @@ public final class TraceAdminPB {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ListSpanReceiversResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto build() {
         org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1542,12 +1345,11 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto buildPartial() {
         org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto result = new org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto(this);
         int from_bitField0_ = bitField0_;
         if (descriptionsBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
             descriptions_ = java.util.Collections.unmodifiableList(descriptions_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -1559,39 +1361,6 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto) {
           return mergeFrom((org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto)other);
@@ -1622,29 +1391,27 @@ public final class TraceAdminPB {
               descriptions_ = other.descriptions_;
               bitField0_ = (bitField0_ & ~0x00000001);
               descriptionsBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getDescriptionsFieldBuilder() : null;
             } else {
               descriptionsBuilder_.addAllMessages(other.descriptions_);
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         for (int i = 0; i < getDescriptionsCount(); i++) {
           if (!getDescriptions(i).isInitialized()) {
+            
             return false;
           }
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1654,7 +1421,7 @@ public final class TraceAdminPB {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1664,16 +1431,17 @@ public final class TraceAdminPB {
       }
       private int bitField0_;
 
+      // repeated .hadoop.common.SpanReceiverListInfo descriptions = 1;
       private java.util.List<org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo> descriptions_ =
         java.util.Collections.emptyList();
       private void ensureDescriptionsIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           descriptions_ = new java.util.ArrayList<org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo>(descriptions_);
           bitField0_ |= 0x00000001;
          }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo, org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo.Builder, org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfoOrBuilder> descriptionsBuilder_;
 
       /**
@@ -1805,8 +1573,7 @@ public final class TraceAdminPB {
           java.lang.Iterable<? extends org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo> values) {
         if (descriptionsBuilder_ == null) {
           ensureDescriptionsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, descriptions_);
+          super.addAll(values, descriptions_);
           onChanged();
         } else {
           descriptionsBuilder_.addAllMessages(values);
@@ -1889,107 +1656,61 @@ public final class TraceAdminPB {
            getDescriptionsBuilderList() {
         return getDescriptionsFieldBuilder().getBuilderList();
       }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo, org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo.Builder, org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfoOrBuilder> 
           getDescriptionsFieldBuilder() {
         if (descriptionsBuilder_ == null) {
-          descriptionsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          descriptionsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo, org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfo.Builder, org.apache.hadoop.tracing.TraceAdminPB.SpanReceiverListInfoOrBuilder>(
                   descriptions_,
-                  ((bitField0_ & 0x00000001) != 0),
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
           descriptions_ = null;
         }
         return descriptionsBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.ListSpanReceiversResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.ListSpanReceiversResponseProto)
-    private static final org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto();
+      defaultInstance = new ListSpanReceiversResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<ListSpanReceiversResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<ListSpanReceiversResponseProto>() {
-      @java.lang.Override
-      public ListSpanReceiversResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ListSpanReceiversResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ListSpanReceiversResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ListSpanReceiversResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.tracing.TraceAdminPB.ListSpanReceiversResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.ListSpanReceiversResponseProto)
   }
 
-  public interface ConfigPairOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.ConfigPair)
-      com.google.protobuf.MessageOrBuilder {
+  public interface ConfigPairOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string key = 1;
     /**
      * <code>required string key = 1;</code>
-     * @return Whether the key field is set.
      */
     boolean hasKey();
     /**
      * <code>required string key = 1;</code>
-     * @return The key.
      */
     java.lang.String getKey();
     /**
      * <code>required string key = 1;</code>
-     * @return The bytes for key.
      */
     com.google.protobuf.ByteString
         getKeyBytes();
 
+    // required string value = 2;
     /**
      * <code>required string value = 2;</code>
-     * @return Whether the value field is set.
      */
     boolean hasValue();
     /**
      * <code>required string value = 2;</code>
-     * @return The value.
      */
     java.lang.String getValue();
     /**
      * <code>required string value = 2;</code>
-     * @return The bytes for value.
      */
     com.google.protobuf.ByteString
         getValueBytes();
@@ -1998,39 +1719,35 @@ public final class TraceAdminPB {
    * Protobuf type {@code hadoop.common.ConfigPair}
    */
   public static final class ConfigPair extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.ConfigPair)
-      ConfigPairOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements ConfigPairOrBuilder {
     // Use ConfigPair.newBuilder() to construct.
-    private ConfigPair(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private ConfigPair(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private ConfigPair() {
-      key_ = "";
-      value_ = "";
+    private ConfigPair(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ConfigPair defaultInstance;
+    public static ConfigPair getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new ConfigPair();
+    public ConfigPair getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private ConfigPair(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2042,23 +1759,21 @@ public final class TraceAdminPB {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              key_ = bs;
+              key_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              value_ = bs;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              value_ = input.readBytes();
               break;
             }
           }
@@ -2067,7 +1782,7 @@ public final class TraceAdminPB {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -2078,30 +1793,41 @@ public final class TraceAdminPB {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ConfigPair_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ConfigPair_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.tracing.TraceAdminPB.ConfigPair.class, org.apache.hadoop.tracing.TraceAdminPB.ConfigPair.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<ConfigPair> PARSER =
+        new com.google.protobuf.AbstractParser<ConfigPair>() {
+      public ConfigPair parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ConfigPair(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ConfigPair> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required string key = 1;
     public static final int KEY_FIELD_NUMBER = 1;
-    private volatile java.lang.Object key_;
+    private java.lang.Object key_;
     /**
      * <code>required string key = 1;</code>
-     * @return Whether the key field is set.
      */
-    @java.lang.Override
     public boolean hasKey() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string key = 1;</code>
-     * @return The key.
      */
-    @java.lang.Override
     public java.lang.String getKey() {
       java.lang.Object ref = key_;
       if (ref instanceof java.lang.String) {
@@ -2118,9 +1844,7 @@ public final class TraceAdminPB {
     }
     /**
      * <code>required string key = 1;</code>
-     * @return The bytes for key.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getKeyBytes() {
       java.lang.Object ref = key_;
@@ -2135,21 +1859,18 @@ public final class TraceAdminPB {
       }
     }
 
+    // required string value = 2;
     public static final int VALUE_FIELD_NUMBER = 2;
-    private volatile java.lang.Object value_;
+    private java.lang.Object value_;
     /**
      * <code>required string value = 2;</code>
-     * @return Whether the value field is set.
      */
-    @java.lang.Override
     public boolean hasValue() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string value = 2;</code>
-     * @return The value.
      */
-    @java.lang.Override
     public java.lang.String getValue() {
       java.lang.Object ref = value_;
       if (ref instanceof java.lang.String) {
@@ -2166,9 +1887,7 @@ public final class TraceAdminPB {
     }
     /**
      * <code>required string value = 2;</code>
-     * @return The bytes for value.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getValueBytes() {
       java.lang.Object ref = value_;
@@ -2183,12 +1902,14 @@ public final class TraceAdminPB {
       }
     }
 
+    private void initFields() {
+      key_ = "";
+      value_ = "";
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasKey()) {
         memoizedIsInitialized = 0;
@@ -2202,33 +1923,42 @@ public final class TraceAdminPB {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, key_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getKeyBytes());
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, value_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getValueBytes());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, key_);
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getKeyBytes());
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, value_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getValueBytes());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -2241,27 +1971,30 @@ public final class TraceAdminPB {
       }
       org.apache.hadoop.tracing.TraceAdminPB.ConfigPair other = (org.apache.hadoop.tracing.TraceAdminPB.ConfigPair) obj;
 
-      if (hasKey() != other.hasKey()) return false;
+      boolean result = true;
+      result = result && (hasKey() == other.hasKey());
       if (hasKey()) {
-        if (!getKey()
-            .equals(other.getKey())) return false;
+        result = result && getKey()
+            .equals(other.getKey());
       }
-      if (hasValue() != other.hasValue()) return false;
+      result = result && (hasValue() == other.hasValue());
       if (hasValue()) {
-        if (!getValue()
-            .equals(other.getValue())) return false;
+        result = result && getValue()
+            .equals(other.getValue());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasKey()) {
         hash = (37 * hash) + KEY_FIELD_NUMBER;
         hash = (53 * hash) + getKey().hashCode();
@@ -2270,22 +2003,11 @@ public final class TraceAdminPB {
         hash = (37 * hash) + VALUE_FIELD_NUMBER;
         hash = (53 * hash) + getValue().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.ConfigPair parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.tracing.TraceAdminPB.ConfigPair parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.tracing.TraceAdminPB.ConfigPair parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2309,59 +2031,46 @@ public final class TraceAdminPB {
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ConfigPair parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ConfigPair parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ConfigPair parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ConfigPair parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ConfigPair parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.ConfigPair parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.tracing.TraceAdminPB.ConfigPair prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -2369,16 +2078,14 @@ public final class TraceAdminPB {
      * Protobuf type {@code hadoop.common.ConfigPair}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.ConfigPair)
-        org.apache.hadoop.tracing.TraceAdminPB.ConfigPairOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.tracing.TraceAdminPB.ConfigPairOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ConfigPair_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ConfigPair_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -2391,16 +2098,18 @@ public final class TraceAdminPB {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         key_ = "";
@@ -2410,18 +2119,19 @@ public final class TraceAdminPB {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_ConfigPair_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.ConfigPair getDefaultInstanceForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.ConfigPair.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.ConfigPair build() {
         org.apache.hadoop.tracing.TraceAdminPB.ConfigPair result = buildPartial();
         if (!result.isInitialized()) {
@@ -2430,16 +2140,15 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.ConfigPair buildPartial() {
         org.apache.hadoop.tracing.TraceAdminPB.ConfigPair result = new org.apache.hadoop.tracing.TraceAdminPB.ConfigPair(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.key_ = key_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.value_ = value_;
@@ -2448,39 +2157,6 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.tracing.TraceAdminPB.ConfigPair) {
           return mergeFrom((org.apache.hadoop.tracing.TraceAdminPB.ConfigPair)other);
@@ -2502,23 +2178,22 @@ public final class TraceAdminPB {
           value_ = other.value_;
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasKey()) {
+          
           return false;
         }
         if (!hasValue()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2528,7 +2203,7 @@ public final class TraceAdminPB {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.tracing.TraceAdminPB.ConfigPair) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2538,27 +2213,23 @@ public final class TraceAdminPB {
       }
       private int bitField0_;
 
+      // required string key = 1;
       private java.lang.Object key_ = "";
       /**
        * <code>required string key = 1;</code>
-       * @return Whether the key field is set.
        */
       public boolean hasKey() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string key = 1;</code>
-       * @return The key.
        */
       public java.lang.String getKey() {
         java.lang.Object ref = key_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            key_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          key_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2566,7 +2237,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string key = 1;</code>
-       * @return The bytes for key.
        */
       public com.google.protobuf.ByteString
           getKeyBytes() {
@@ -2583,8 +2253,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string key = 1;</code>
-       * @param value The key to set.
-       * @return This builder for chaining.
        */
       public Builder setKey(
           java.lang.String value) {
@@ -2598,7 +2266,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string key = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearKey() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -2608,8 +2275,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string key = 1;</code>
-       * @param value The bytes for key to set.
-       * @return This builder for chaining.
        */
       public Builder setKeyBytes(
           com.google.protobuf.ByteString value) {
@@ -2622,27 +2287,23 @@ public final class TraceAdminPB {
         return this;
       }
 
+      // required string value = 2;
       private java.lang.Object value_ = "";
       /**
        * <code>required string value = 2;</code>
-       * @return Whether the value field is set.
        */
       public boolean hasValue() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string value = 2;</code>
-       * @return The value.
        */
       public java.lang.String getValue() {
         java.lang.Object ref = value_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            value_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          value_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2650,7 +2311,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string value = 2;</code>
-       * @return The bytes for value.
        */
       public com.google.protobuf.ByteString
           getValueBytes() {
@@ -2667,8 +2327,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string value = 2;</code>
-       * @param value The value to set.
-       * @return This builder for chaining.
        */
       public Builder setValue(
           java.lang.String value) {
@@ -2682,7 +2340,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string value = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearValue() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -2692,8 +2349,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string value = 2;</code>
-       * @param value The bytes for value to set.
-       * @return This builder for chaining.
        */
       public Builder setValueBytes(
           com.google.protobuf.ByteString value) {
@@ -2705,80 +2360,37 @@ public final class TraceAdminPB {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.ConfigPair)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.ConfigPair)
-    private static final org.apache.hadoop.tracing.TraceAdminPB.ConfigPair DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.tracing.TraceAdminPB.ConfigPair();
+      defaultInstance = new ConfigPair(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.ConfigPair getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<ConfigPair>
-        PARSER = new com.google.protobuf.AbstractParser<ConfigPair>() {
-      @java.lang.Override
-      public ConfigPair parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new ConfigPair(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<ConfigPair> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<ConfigPair> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.tracing.TraceAdminPB.ConfigPair getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.ConfigPair)
   }
 
-  public interface AddSpanReceiverRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.AddSpanReceiverRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface AddSpanReceiverRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string className = 1;
     /**
      * <code>required string className = 1;</code>
-     * @return Whether the className field is set.
      */
     boolean hasClassName();
     /**
      * <code>required string className = 1;</code>
-     * @return The className.
      */
     java.lang.String getClassName();
     /**
      * <code>required string className = 1;</code>
-     * @return The bytes for className.
      */
     com.google.protobuf.ByteString
         getClassNameBytes();
 
+    // repeated .hadoop.common.ConfigPair config = 2;
     /**
      * <code>repeated .hadoop.common.ConfigPair config = 2;</code>
      */
@@ -2807,39 +2419,35 @@ public final class TraceAdminPB {
    * Protobuf type {@code hadoop.common.AddSpanReceiverRequestProto}
    */
   public static final class AddSpanReceiverRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.AddSpanReceiverRequestProto)
-      AddSpanReceiverRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements AddSpanReceiverRequestProtoOrBuilder {
     // Use AddSpanReceiverRequestProto.newBuilder() to construct.
-    private AddSpanReceiverRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private AddSpanReceiverRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private AddSpanReceiverRequestProto() {
-      className_ = "";
-      config_ = java.util.Collections.emptyList();
+    private AddSpanReceiverRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final AddSpanReceiverRequestProto defaultInstance;
+    public static AddSpanReceiverRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new AddSpanReceiverRequestProto();
+    public AddSpanReceiverRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private AddSpanReceiverRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2851,26 +2459,24 @@ public final class TraceAdminPB {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              className_ = bs;
+              className_ = input.readBytes();
               break;
             }
             case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
                 config_ = new java.util.ArrayList<org.apache.hadoop.tracing.TraceAdminPB.ConfigPair>();
                 mutable_bitField0_ |= 0x00000002;
               }
-              config_.add(
-                  input.readMessage(org.apache.hadoop.tracing.TraceAdminPB.ConfigPair.PARSER, extensionRegistry));
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              config_.add(input.readMessage(org.apache.hadoop.tracing.TraceAdminPB.ConfigPair.PARSER, extensionRegistry));
               break;
             }
           }
@@ -2879,9 +2485,9 @@ public final class TraceAdminPB {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) != 0)) {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           config_ = java.util.Collections.unmodifiableList(config_);
         }
         this.unknownFields = unknownFields.build();
@@ -2893,30 +2499,41 @@ public final class TraceAdminPB {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_AddSpanReceiverRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_AddSpanReceiverRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto.class, org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<AddSpanReceiverRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<AddSpanReceiverRequestProto>() {
+      public AddSpanReceiverRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new AddSpanReceiverRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AddSpanReceiverRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required string className = 1;
     public static final int CLASSNAME_FIELD_NUMBER = 1;
-    private volatile java.lang.Object className_;
+    private java.lang.Object className_;
     /**
      * <code>required string className = 1;</code>
-     * @return Whether the className field is set.
      */
-    @java.lang.Override
     public boolean hasClassName() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string className = 1;</code>
-     * @return The className.
      */
-    @java.lang.Override
     public java.lang.String getClassName() {
       java.lang.Object ref = className_;
       if (ref instanceof java.lang.String) {
@@ -2933,9 +2550,7 @@ public final class TraceAdminPB {
     }
     /**
      * <code>required string className = 1;</code>
-     * @return The bytes for className.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getClassNameBytes() {
       java.lang.Object ref = className_;
@@ -2950,19 +2565,18 @@ public final class TraceAdminPB {
       }
     }
 
+    // repeated .hadoop.common.ConfigPair config = 2;
     public static final int CONFIG_FIELD_NUMBER = 2;
     private java.util.List<org.apache.hadoop.tracing.TraceAdminPB.ConfigPair> config_;
     /**
      * <code>repeated .hadoop.common.ConfigPair config = 2;</code>
      */
-    @java.lang.Override
     public java.util.List<org.apache.hadoop.tracing.TraceAdminPB.ConfigPair> getConfigList() {
       return config_;
     }
     /**
      * <code>repeated .hadoop.common.ConfigPair config = 2;</code>
      */
-    @java.lang.Override
     public java.util.List<? extends org.apache.hadoop.tracing.TraceAdminPB.ConfigPairOrBuilder> 
         getConfigOrBuilderList() {
       return config_;
@@ -2970,32 +2584,31 @@ public final class TraceAdminPB {
     /**
      * <code>repeated .hadoop.common.ConfigPair config = 2;</code>
      */
-    @java.lang.Override
     public int getConfigCount() {
       return config_.size();
     }
     /**
      * <code>repeated .hadoop.common.ConfigPair config = 2;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.tracing.TraceAdminPB.ConfigPair getConfig(int index) {
       return config_.get(index);
     }
     /**
      * <code>repeated .hadoop.common.ConfigPair config = 2;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.tracing.TraceAdminPB.ConfigPairOrBuilder getConfigOrBuilder(
         int index) {
       return config_.get(index);
     }
 
+    private void initFields() {
+      className_ = "";
+      config_ = java.util.Collections.emptyList();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasClassName()) {
         memoizedIsInitialized = 0;
@@ -3011,34 +2624,42 @@ public final class TraceAdminPB {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, className_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getClassNameBytes());
       }
       for (int i = 0; i < config_.size(); i++) {
         output.writeMessage(2, config_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, className_);
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getClassNameBytes());
       }
       for (int i = 0; i < config_.size(); i++) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, config_.get(i));
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -3051,24 +2672,27 @@ public final class TraceAdminPB {
       }
       org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto other = (org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto) obj;
 
-      if (hasClassName() != other.hasClassName()) return false;
+      boolean result = true;
+      result = result && (hasClassName() == other.hasClassName());
       if (hasClassName()) {
-        if (!getClassName()
-            .equals(other.getClassName())) return false;
+        result = result && getClassName()
+            .equals(other.getClassName());
       }
-      if (!getConfigList()
-          .equals(other.getConfigList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && getConfigList()
+          .equals(other.getConfigList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasClassName()) {
         hash = (37 * hash) + CLASSNAME_FIELD_NUMBER;
         hash = (53 * hash) + getClassName().hashCode();
@@ -3077,22 +2701,11 @@ public final class TraceAdminPB {
         hash = (37 * hash) + CONFIG_FIELD_NUMBER;
         hash = (53 * hash) + getConfigList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3116,59 +2729,46 @@ public final class TraceAdminPB {
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -3176,16 +2776,14 @@ public final class TraceAdminPB {
      * Protobuf type {@code hadoop.common.AddSpanReceiverRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.AddSpanReceiverRequestProto)
-        org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_AddSpanReceiverRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_AddSpanReceiverRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -3198,17 +2796,19 @@ public final class TraceAdminPB {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getConfigFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         className_ = "";
@@ -3222,18 +2822,19 @@ public final class TraceAdminPB {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_AddSpanReceiverRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto build() {
         org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -3242,17 +2843,16 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto buildPartial() {
         org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto result = new org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.className_ = className_;
         if (configBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) != 0)) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
             config_ = java.util.Collections.unmodifiableList(config_);
             bitField0_ = (bitField0_ & ~0x00000002);
           }
@@ -3265,39 +2865,6 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto) {
           return mergeFrom((org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto)other);
@@ -3333,32 +2900,31 @@ public final class TraceAdminPB {
               config_ = other.config_;
               bitField0_ = (bitField0_ & ~0x00000002);
               configBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getConfigFieldBuilder() : null;
             } else {
               configBuilder_.addAllMessages(other.config_);
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasClassName()) {
+          
           return false;
         }
         for (int i = 0; i < getConfigCount(); i++) {
           if (!getConfig(i).isInitialized()) {
+            
             return false;
           }
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3368,7 +2934,7 @@ public final class TraceAdminPB {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -3378,27 +2944,23 @@ public final class TraceAdminPB {
       }
       private int bitField0_;
 
+      // required string className = 1;
       private java.lang.Object className_ = "";
       /**
        * <code>required string className = 1;</code>
-       * @return Whether the className field is set.
        */
       public boolean hasClassName() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string className = 1;</code>
-       * @return The className.
        */
       public java.lang.String getClassName() {
         java.lang.Object ref = className_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            className_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          className_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3406,7 +2968,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string className = 1;</code>
-       * @return The bytes for className.
        */
       public com.google.protobuf.ByteString
           getClassNameBytes() {
@@ -3423,8 +2984,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string className = 1;</code>
-       * @param value The className to set.
-       * @return This builder for chaining.
        */
       public Builder setClassName(
           java.lang.String value) {
@@ -3438,7 +2997,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string className = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearClassName() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -3448,8 +3006,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required string className = 1;</code>
-       * @param value The bytes for className to set.
-       * @return This builder for chaining.
        */
       public Builder setClassNameBytes(
           com.google.protobuf.ByteString value) {
@@ -3462,16 +3018,17 @@ public final class TraceAdminPB {
         return this;
       }
 
+      // repeated .hadoop.common.ConfigPair config = 2;
       private java.util.List<org.apache.hadoop.tracing.TraceAdminPB.ConfigPair> config_ =
         java.util.Collections.emptyList();
       private void ensureConfigIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           config_ = new java.util.ArrayList<org.apache.hadoop.tracing.TraceAdminPB.ConfigPair>(config_);
           bitField0_ |= 0x00000002;
          }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.tracing.TraceAdminPB.ConfigPair, org.apache.hadoop.tracing.TraceAdminPB.ConfigPair.Builder, org.apache.hadoop.tracing.TraceAdminPB.ConfigPairOrBuilder> configBuilder_;
 
       /**
@@ -3603,8 +3160,7 @@ public final class TraceAdminPB {
           java.lang.Iterable<? extends org.apache.hadoop.tracing.TraceAdminPB.ConfigPair> values) {
         if (configBuilder_ == null) {
           ensureConfigIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, config_);
+          super.addAll(values, config_);
           onChanged();
         } else {
           configBuilder_.addAllMessages(values);
@@ -3687,85 +3243,42 @@ public final class TraceAdminPB {
            getConfigBuilderList() {
         return getConfigFieldBuilder().getBuilderList();
       }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.tracing.TraceAdminPB.ConfigPair, org.apache.hadoop.tracing.TraceAdminPB.ConfigPair.Builder, org.apache.hadoop.tracing.TraceAdminPB.ConfigPairOrBuilder> 
           getConfigFieldBuilder() {
         if (configBuilder_ == null) {
-          configBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          configBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               org.apache.hadoop.tracing.TraceAdminPB.ConfigPair, org.apache.hadoop.tracing.TraceAdminPB.ConfigPair.Builder, org.apache.hadoop.tracing.TraceAdminPB.ConfigPairOrBuilder>(
                   config_,
-                  ((bitField0_ & 0x00000002) != 0),
+                  ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
                   isClean());
           config_ = null;
         }
         return configBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.AddSpanReceiverRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.AddSpanReceiverRequestProto)
-    private static final org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto();
+      defaultInstance = new AddSpanReceiverRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<AddSpanReceiverRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<AddSpanReceiverRequestProto>() {
-      @java.lang.Override
-      public AddSpanReceiverRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new AddSpanReceiverRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<AddSpanReceiverRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<AddSpanReceiverRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.AddSpanReceiverRequestProto)
   }
 
-  public interface AddSpanReceiverResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.AddSpanReceiverResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface AddSpanReceiverResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int64 id = 1;
     /**
      * <code>required int64 id = 1;</code>
-     * @return Whether the id field is set.
      */
     boolean hasId();
     /**
      * <code>required int64 id = 1;</code>
-     * @return The id.
      */
     long getId();
   }
@@ -3773,37 +3286,35 @@ public final class TraceAdminPB {
    * Protobuf type {@code hadoop.common.AddSpanReceiverResponseProto}
    */
   public static final class AddSpanReceiverResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.AddSpanReceiverResponseProto)
-      AddSpanReceiverResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements AddSpanReceiverResponseProtoOrBuilder {
     // Use AddSpanReceiverResponseProto.newBuilder() to construct.
-    private AddSpanReceiverResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private AddSpanReceiverResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private AddSpanReceiverResponseProto() {
+    private AddSpanReceiverResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final AddSpanReceiverResponseProto defaultInstance;
+    public static AddSpanReceiverResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new AddSpanReceiverResponseProto();
+    public AddSpanReceiverResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private AddSpanReceiverResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -3815,16 +3326,16 @@ public final class TraceAdminPB {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               id_ = input.readInt64();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -3833,7 +3344,7 @@ public final class TraceAdminPB {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -3844,40 +3355,52 @@ public final class TraceAdminPB {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_AddSpanReceiverResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_AddSpanReceiverResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto.class, org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<AddSpanReceiverResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<AddSpanReceiverResponseProto>() {
+      public AddSpanReceiverResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new AddSpanReceiverResponseProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AddSpanReceiverResponseProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required int64 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private long id_;
     /**
      * <code>required int64 id = 1;</code>
-     * @return Whether the id field is set.
      */
-    @java.lang.Override
     public boolean hasId() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required int64 id = 1;</code>
-     * @return The id.
      */
-    @java.lang.Override
     public long getId() {
       return id_;
     }
 
+    private void initFields() {
+      id_ = 0L;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -3887,28 +3410,35 @@ public final class TraceAdminPB {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt64(1, id_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, id_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -3921,43 +3451,34 @@ public final class TraceAdminPB {
       }
       org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto other = (org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto) obj;
 
-      if (hasId() != other.hasId()) return false;
+      boolean result = true;
+      result = result && (hasId() == other.hasId());
       if (hasId()) {
-        if (getId()
-            != other.getId()) return false;
+        result = result && (getId()
+            == other.getId());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasId()) {
         hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getId());
+        hash = (53 * hash) + hashLong(getId());
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3981,59 +3502,46 @@ public final class TraceAdminPB {
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -4041,16 +3549,14 @@ public final class TraceAdminPB {
      * Protobuf type {@code hadoop.common.AddSpanReceiverResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.AddSpanReceiverResponseProto)
-        org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_AddSpanReceiverResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_AddSpanReceiverResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -4063,16 +3569,18 @@ public final class TraceAdminPB {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -4080,18 +3588,19 @@ public final class TraceAdminPB {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_AddSpanReceiverResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto build() {
         org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -4100,53 +3609,19 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto buildPartial() {
         org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto result = new org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
+        result.id_ = id_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto) {
           return mergeFrom((org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto)other);
@@ -4161,20 +3636,18 @@ public final class TraceAdminPB {
         if (other.hasId()) {
           setId(other.getId());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasId()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4184,7 +3657,7 @@ public final class TraceAdminPB {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -4194,27 +3667,22 @@ public final class TraceAdminPB {
       }
       private int bitField0_;
 
+      // required int64 id = 1;
       private long id_ ;
       /**
        * <code>required int64 id = 1;</code>
-       * @return Whether the id field is set.
        */
-      @java.lang.Override
       public boolean hasId() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required int64 id = 1;</code>
-       * @return The id.
        */
-      @java.lang.Override
       public long getId() {
         return id_;
       }
       /**
        * <code>required int64 id = 1;</code>
-       * @param value The id to set.
-       * @return This builder for chaining.
        */
       public Builder setId(long value) {
         bitField0_ |= 0x00000001;
@@ -4224,7 +3692,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required int64 id = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -4232,71 +3699,28 @@ public final class TraceAdminPB {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.AddSpanReceiverResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.AddSpanReceiverResponseProto)
-    private static final org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto();
+      defaultInstance = new AddSpanReceiverResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<AddSpanReceiverResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<AddSpanReceiverResponseProto>() {
-      @java.lang.Override
-      public AddSpanReceiverResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new AddSpanReceiverResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<AddSpanReceiverResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<AddSpanReceiverResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.tracing.TraceAdminPB.AddSpanReceiverResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.AddSpanReceiverResponseProto)
   }
 
-  public interface RemoveSpanReceiverRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.RemoveSpanReceiverRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RemoveSpanReceiverRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required int64 id = 1;
     /**
      * <code>required int64 id = 1;</code>
-     * @return Whether the id field is set.
      */
     boolean hasId();
     /**
      * <code>required int64 id = 1;</code>
-     * @return The id.
      */
     long getId();
   }
@@ -4304,37 +3728,35 @@ public final class TraceAdminPB {
    * Protobuf type {@code hadoop.common.RemoveSpanReceiverRequestProto}
    */
   public static final class RemoveSpanReceiverRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.RemoveSpanReceiverRequestProto)
-      RemoveSpanReceiverRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements RemoveSpanReceiverRequestProtoOrBuilder {
     // Use RemoveSpanReceiverRequestProto.newBuilder() to construct.
-    private RemoveSpanReceiverRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private RemoveSpanReceiverRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private RemoveSpanReceiverRequestProto() {
+    private RemoveSpanReceiverRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final RemoveSpanReceiverRequestProto defaultInstance;
+    public static RemoveSpanReceiverRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new RemoveSpanReceiverRequestProto();
+    public RemoveSpanReceiverRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private RemoveSpanReceiverRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -4346,16 +3768,16 @@ public final class TraceAdminPB {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               id_ = input.readInt64();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -4364,7 +3786,7 @@ public final class TraceAdminPB {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -4375,40 +3797,52 @@ public final class TraceAdminPB {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_RemoveSpanReceiverRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_RemoveSpanReceiverRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto.class, org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<RemoveSpanReceiverRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<RemoveSpanReceiverRequestProto>() {
+      public RemoveSpanReceiverRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new RemoveSpanReceiverRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<RemoveSpanReceiverRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required int64 id = 1;
     public static final int ID_FIELD_NUMBER = 1;
     private long id_;
     /**
      * <code>required int64 id = 1;</code>
-     * @return Whether the id field is set.
      */
-    @java.lang.Override
     public boolean hasId() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required int64 id = 1;</code>
-     * @return The id.
      */
-    @java.lang.Override
     public long getId() {
       return id_;
     }
 
+    private void initFields() {
+      id_ = 0L;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasId()) {
         memoizedIsInitialized = 0;
@@ -4418,28 +3852,35 @@ public final class TraceAdminPB {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt64(1, id_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt64Size(1, id_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -4452,43 +3893,34 @@ public final class TraceAdminPB {
       }
       org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto other = (org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto) obj;
 
-      if (hasId() != other.hasId()) return false;
+      boolean result = true;
+      result = result && (hasId() == other.hasId());
       if (hasId()) {
-        if (getId()
-            != other.getId()) return false;
+        result = result && (getId()
+            == other.getId());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasId()) {
         hash = (37 * hash) + ID_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getId());
+        hash = (53 * hash) + hashLong(getId());
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4512,59 +3944,46 @@ public final class TraceAdminPB {
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -4572,16 +3991,14 @@ public final class TraceAdminPB {
      * Protobuf type {@code hadoop.common.RemoveSpanReceiverRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.RemoveSpanReceiverRequestProto)
-        org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_RemoveSpanReceiverRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_RemoveSpanReceiverRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -4594,16 +4011,18 @@ public final class TraceAdminPB {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         id_ = 0L;
@@ -4611,18 +4030,19 @@ public final class TraceAdminPB {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_RemoveSpanReceiverRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto build() {
         org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -4631,53 +4051,19 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto buildPartial() {
         org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto result = new org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.id_ = id_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
+        result.id_ = id_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto) {
           return mergeFrom((org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto)other);
@@ -4692,20 +4078,18 @@ public final class TraceAdminPB {
         if (other.hasId()) {
           setId(other.getId());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasId()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4715,7 +4099,7 @@ public final class TraceAdminPB {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -4725,27 +4109,22 @@ public final class TraceAdminPB {
       }
       private int bitField0_;
 
+      // required int64 id = 1;
       private long id_ ;
       /**
        * <code>required int64 id = 1;</code>
-       * @return Whether the id field is set.
        */
-      @java.lang.Override
       public boolean hasId() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required int64 id = 1;</code>
-       * @return The id.
        */
-      @java.lang.Override
       public long getId() {
         return id_;
       }
       /**
        * <code>required int64 id = 1;</code>
-       * @param value The id to set.
-       * @return This builder for chaining.
        */
       public Builder setId(long value) {
         bitField0_ |= 0x00000001;
@@ -4755,7 +4134,6 @@ public final class TraceAdminPB {
       }
       /**
        * <code>required int64 id = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -4763,98 +4141,54 @@ public final class TraceAdminPB {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.RemoveSpanReceiverRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.RemoveSpanReceiverRequestProto)
-    private static final org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto();
+      defaultInstance = new RemoveSpanReceiverRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<RemoveSpanReceiverRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<RemoveSpanReceiverRequestProto>() {
-      @java.lang.Override
-      public RemoveSpanReceiverRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new RemoveSpanReceiverRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<RemoveSpanReceiverRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<RemoveSpanReceiverRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.RemoveSpanReceiverRequestProto)
   }
 
-  public interface RemoveSpanReceiverResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.RemoveSpanReceiverResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RemoveSpanReceiverResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
    * Protobuf type {@code hadoop.common.RemoveSpanReceiverResponseProto}
    */
   public static final class RemoveSpanReceiverResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.RemoveSpanReceiverResponseProto)
-      RemoveSpanReceiverResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements RemoveSpanReceiverResponseProtoOrBuilder {
     // Use RemoveSpanReceiverResponseProto.newBuilder() to construct.
-    private RemoveSpanReceiverResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private RemoveSpanReceiverResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private RemoveSpanReceiverResponseProto() {
+    private RemoveSpanReceiverResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final RemoveSpanReceiverResponseProto defaultInstance;
+    public static RemoveSpanReceiverResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new RemoveSpanReceiverResponseProto();
+    public RemoveSpanReceiverResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private RemoveSpanReceiverResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -4866,8 +4200,8 @@ public final class TraceAdminPB {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -4878,7 +4212,7 @@ public final class TraceAdminPB {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -4889,40 +4223,61 @@ public final class TraceAdminPB {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_RemoveSpanReceiverResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_RemoveSpanReceiverResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto.class, org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<RemoveSpanReceiverResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<RemoveSpanReceiverResponseProto>() {
+      public RemoveSpanReceiverResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new RemoveSpanReceiverResponseProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<RemoveSpanReceiverResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -4935,33 +4290,25 @@ public final class TraceAdminPB {
       }
       org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto other = (org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4985,59 +4332,46 @@ public final class TraceAdminPB {
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -5045,16 +4379,14 @@ public final class TraceAdminPB {
      * Protobuf type {@code hadoop.common.RemoveSpanReceiverResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.RemoveSpanReceiverResponseProto)
-        org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_RemoveSpanReceiverResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_RemoveSpanReceiverResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -5067,33 +4399,36 @@ public final class TraceAdminPB {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.internal_static_hadoop_common_RemoveSpanReceiverResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto build() {
         org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -5102,46 +4437,12 @@ public final class TraceAdminPB {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto buildPartial() {
         org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto result = new org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto) {
           return mergeFrom((org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto)other);
@@ -5153,17 +4454,14 @@ public final class TraceAdminPB {
 
       public Builder mergeFrom(org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto other) {
         if (other == org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -5173,7 +4471,7 @@ public final class TraceAdminPB {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -5181,57 +4479,16 @@ public final class TraceAdminPB {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.RemoveSpanReceiverResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.RemoveSpanReceiverResponseProto)
-    private static final org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto();
+      defaultInstance = new RemoveSpanReceiverResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<RemoveSpanReceiverResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<RemoveSpanReceiverResponseProto>() {
-      @java.lang.Override
-      public RemoveSpanReceiverResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new RemoveSpanReceiverResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<RemoveSpanReceiverResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<RemoveSpanReceiverResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.tracing.TraceAdminPB.RemoveSpanReceiverResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.RemoveSpanReceiverResponseProto)
   }
 
   /**
@@ -5608,52 +4865,52 @@ public final class TraceAdminPB {
     // @@protoc_insertion_point(class_scope:hadoop.common.TraceAdminService)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_ListSpanReceiversRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_ListSpanReceiversRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_SpanReceiverListInfo_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_SpanReceiverListInfo_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_ListSpanReceiversResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_ListSpanReceiversResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_ConfigPair_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_ConfigPair_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_AddSpanReceiverRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_AddSpanReceiverRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_AddSpanReceiverResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_AddSpanReceiverResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_RemoveSpanReceiverRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_RemoveSpanReceiverRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_RemoveSpanReceiverResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_RemoveSpanReceiverResponseProto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -5666,7 +4923,7 @@ public final class TraceAdminPB {
       "\t\022\r\n\005value\030\002 \002(\t\"[\n\033AddSpanReceiverReque" +
       "stProto\022\021\n\tclassName\030\001 \002(\t\022)\n\006config\030\002 \003" +
       "(\0132\031.hadoop.common.ConfigPair\"*\n\034AddSpan" +
-      "ReceiverResponseProto\022\n\n\002id\030\001 \002(\003\",\n\036Rem" +
+      "ReceiverResponseProto\022\n\n\002id\030\001 \002(\003\",\n\036Rem",
       "oveSpanReceiverRequestProto\022\n\n\002id\030\001 \002(\003\"" +
       "!\n\037RemoveSpanReceiverResponseProto2\346\002\n\021T" +
       "raceAdminService\022p\n\021listSpanReceivers\022,." +
@@ -5676,63 +4933,71 @@ public final class TraceAdminPB {
       "ommon.AddSpanReceiverRequestProto\032+.hado" +
       "op.common.AddSpanReceiverResponseProto\022s" +
       "\n\022removeSpanReceiver\022-.hadoop.common.Rem" +
-      "oveSpanReceiverRequestProto\032..hadoop.com" +
+      "oveSpanReceiverRequestProto\032..hadoop.com",
       "mon.RemoveSpanReceiverResponseProtoB/\n\031o" +
       "rg.apache.hadoop.tracingB\014TraceAdminPB\210\001" +
       "\001\240\001\001"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_hadoop_common_ListSpanReceiversRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_hadoop_common_ListSpanReceiversRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_ListSpanReceiversRequestProto_descriptor,
+              new java.lang.String[] { });
+          internal_static_hadoop_common_SpanReceiverListInfo_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_hadoop_common_SpanReceiverListInfo_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_SpanReceiverListInfo_descriptor,
+              new java.lang.String[] { "Id", "ClassName", });
+          internal_static_hadoop_common_ListSpanReceiversResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_hadoop_common_ListSpanReceiversResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_ListSpanReceiversResponseProto_descriptor,
+              new java.lang.String[] { "Descriptions", });
+          internal_static_hadoop_common_ConfigPair_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_hadoop_common_ConfigPair_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_ConfigPair_descriptor,
+              new java.lang.String[] { "Key", "Value", });
+          internal_static_hadoop_common_AddSpanReceiverRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_hadoop_common_AddSpanReceiverRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_AddSpanReceiverRequestProto_descriptor,
+              new java.lang.String[] { "ClassName", "Config", });
+          internal_static_hadoop_common_AddSpanReceiverResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_hadoop_common_AddSpanReceiverResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_AddSpanReceiverResponseProto_descriptor,
+              new java.lang.String[] { "Id", });
+          internal_static_hadoop_common_RemoveSpanReceiverRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(6);
+          internal_static_hadoop_common_RemoveSpanReceiverRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_RemoveSpanReceiverRequestProto_descriptor,
+              new java.lang.String[] { "Id", });
+          internal_static_hadoop_common_RemoveSpanReceiverResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(7);
+          internal_static_hadoop_common_RemoveSpanReceiverResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_RemoveSpanReceiverResponseProto_descriptor,
+              new java.lang.String[] { });
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_hadoop_common_ListSpanReceiversRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_hadoop_common_ListSpanReceiversRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_ListSpanReceiversRequestProto_descriptor,
-        new java.lang.String[] { });
-    internal_static_hadoop_common_SpanReceiverListInfo_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_hadoop_common_SpanReceiverListInfo_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_SpanReceiverListInfo_descriptor,
-        new java.lang.String[] { "Id", "ClassName", });
-    internal_static_hadoop_common_ListSpanReceiversResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_hadoop_common_ListSpanReceiversResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_ListSpanReceiversResponseProto_descriptor,
-        new java.lang.String[] { "Descriptions", });
-    internal_static_hadoop_common_ConfigPair_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_hadoop_common_ConfigPair_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_ConfigPair_descriptor,
-        new java.lang.String[] { "Key", "Value", });
-    internal_static_hadoop_common_AddSpanReceiverRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_hadoop_common_AddSpanReceiverRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_AddSpanReceiverRequestProto_descriptor,
-        new java.lang.String[] { "ClassName", "Config", });
-    internal_static_hadoop_common_AddSpanReceiverResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_hadoop_common_AddSpanReceiverResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_AddSpanReceiverResponseProto_descriptor,
-        new java.lang.String[] { "Id", });
-    internal_static_hadoop_common_RemoveSpanReceiverRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_hadoop_common_RemoveSpanReceiverRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_RemoveSpanReceiverRequestProto_descriptor,
-        new java.lang.String[] { "Id", });
-    internal_static_hadoop_common_RemoveSpanReceiverResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(7);
-    internal_static_hadoop_common_RemoveSpanReceiverResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_RemoveSpanReceiverResponseProto_descriptor,
-        new java.lang.String[] { });
+        }, assigner);
   }
 
   // @@protoc_insertion_point(outer_class_scope)

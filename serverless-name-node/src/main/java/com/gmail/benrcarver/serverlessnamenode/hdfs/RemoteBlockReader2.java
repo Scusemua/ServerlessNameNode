@@ -17,26 +17,26 @@
  */
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.DataTransferProtoUtil;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketReceiver;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.Sender;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ClientMmap;
 import com.google.common.annotations.VisibleForTesting;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.Status;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.BlockOpResponseProto;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.ClientReadStatusProto;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.ReadOption;
-import org.apache.hadoop.hdfs.net.Peer;
 import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.protocol.ExtendedBlock;
-import org.apache.hadoop.hdfs.protocol.datatransfer.DataTransferProtoUtil;
-import org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader;
-import org.apache.hadoop.hdfs.protocol.datatransfer.PacketReceiver;
-import org.apache.hadoop.hdfs.protocol.datatransfer.Sender;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BlockOpResponseProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.ClientReadStatusProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.ReadOpChecksumInfoProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status;
-import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
-import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
-import org.apache.hadoop.hdfs.shortcircuit.ClientMmap;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.util.DataChecksum;
@@ -416,7 +416,7 @@ public class RemoteBlockReader2 implements BlockReader {
     BlockOpResponseProto status =
         BlockOpResponseProto.parseFrom(PBHelper.vintPrefixed(in));
     checkSuccess(status, peer, block, file);
-    ReadOpChecksumInfoProto checksumInfo = status.getReadOpChecksumInfo();
+    DataTransferProtos.ReadOpChecksumInfoProto checksumInfo = status.getReadOpChecksumInfo();
     DataChecksum checksum =
         DataTransferProtoUtil.fromProto(checksumInfo.getChecksum());
     //Warning when we get CHECKSUM_NULL?

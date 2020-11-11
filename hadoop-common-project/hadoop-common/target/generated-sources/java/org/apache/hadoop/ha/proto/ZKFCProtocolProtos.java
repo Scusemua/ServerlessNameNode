@@ -6,26 +6,18 @@ package org.apache.hadoop.ha.proto;
 public final class ZKFCProtocolProtos {
   private ZKFCProtocolProtos() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface CedeActiveRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.CedeActiveRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface CedeActiveRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required uint32 millisToCede = 1;
     /**
      * <code>required uint32 millisToCede = 1;</code>
-     * @return Whether the millisToCede field is set.
      */
     boolean hasMillisToCede();
     /**
      * <code>required uint32 millisToCede = 1;</code>
-     * @return The millisToCede.
      */
     int getMillisToCede();
   }
@@ -33,37 +25,35 @@ public final class ZKFCProtocolProtos {
    * Protobuf type {@code hadoop.common.CedeActiveRequestProto}
    */
   public static final class CedeActiveRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.CedeActiveRequestProto)
-      CedeActiveRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements CedeActiveRequestProtoOrBuilder {
     // Use CedeActiveRequestProto.newBuilder() to construct.
-    private CedeActiveRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private CedeActiveRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private CedeActiveRequestProto() {
+    private CedeActiveRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final CedeActiveRequestProto defaultInstance;
+    public static CedeActiveRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new CedeActiveRequestProto();
+    public CedeActiveRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private CedeActiveRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -75,16 +65,16 @@ public final class ZKFCProtocolProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               millisToCede_ = input.readUInt32();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -93,7 +83,7 @@ public final class ZKFCProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -104,40 +94,52 @@ public final class ZKFCProtocolProtos {
       return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_CedeActiveRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_CedeActiveRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto.class, org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<CedeActiveRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<CedeActiveRequestProto>() {
+      public CedeActiveRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CedeActiveRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CedeActiveRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required uint32 millisToCede = 1;
     public static final int MILLISTOCEDE_FIELD_NUMBER = 1;
     private int millisToCede_;
     /**
      * <code>required uint32 millisToCede = 1;</code>
-     * @return Whether the millisToCede field is set.
      */
-    @java.lang.Override
     public boolean hasMillisToCede() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required uint32 millisToCede = 1;</code>
-     * @return The millisToCede.
      */
-    @java.lang.Override
     public int getMillisToCede() {
       return millisToCede_;
     }
 
+    private void initFields() {
+      millisToCede_ = 0;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasMillisToCede()) {
         memoizedIsInitialized = 0;
@@ -147,28 +149,35 @@ public final class ZKFCProtocolProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeUInt32(1, millisToCede_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(1, millisToCede_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -181,42 +190,34 @@ public final class ZKFCProtocolProtos {
       }
       org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto other = (org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto) obj;
 
-      if (hasMillisToCede() != other.hasMillisToCede()) return false;
+      boolean result = true;
+      result = result && (hasMillisToCede() == other.hasMillisToCede());
       if (hasMillisToCede()) {
-        if (getMillisToCede()
-            != other.getMillisToCede()) return false;
+        result = result && (getMillisToCede()
+            == other.getMillisToCede());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasMillisToCede()) {
         hash = (37 * hash) + MILLISTOCEDE_FIELD_NUMBER;
         hash = (53 * hash) + getMillisToCede();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -240,59 +241,46 @@ public final class ZKFCProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -300,16 +288,14 @@ public final class ZKFCProtocolProtos {
      * Protobuf type {@code hadoop.common.CedeActiveRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.CedeActiveRequestProto)
-        org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_CedeActiveRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_CedeActiveRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -322,16 +308,18 @@ public final class ZKFCProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         millisToCede_ = 0;
@@ -339,18 +327,19 @@ public final class ZKFCProtocolProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_CedeActiveRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto build() {
         org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -359,53 +348,19 @@ public final class ZKFCProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto buildPartial() {
         org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto result = new org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.millisToCede_ = millisToCede_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
+        result.millisToCede_ = millisToCede_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto)other);
@@ -420,20 +375,18 @@ public final class ZKFCProtocolProtos {
         if (other.hasMillisToCede()) {
           setMillisToCede(other.getMillisToCede());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasMillisToCede()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -443,7 +396,7 @@ public final class ZKFCProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -453,27 +406,22 @@ public final class ZKFCProtocolProtos {
       }
       private int bitField0_;
 
+      // required uint32 millisToCede = 1;
       private int millisToCede_ ;
       /**
        * <code>required uint32 millisToCede = 1;</code>
-       * @return Whether the millisToCede field is set.
        */
-      @java.lang.Override
       public boolean hasMillisToCede() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required uint32 millisToCede = 1;</code>
-       * @return The millisToCede.
        */
-      @java.lang.Override
       public int getMillisToCede() {
         return millisToCede_;
       }
       /**
        * <code>required uint32 millisToCede = 1;</code>
-       * @param value The millisToCede to set.
-       * @return This builder for chaining.
        */
       public Builder setMillisToCede(int value) {
         bitField0_ |= 0x00000001;
@@ -483,7 +431,6 @@ public final class ZKFCProtocolProtos {
       }
       /**
        * <code>required uint32 millisToCede = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearMillisToCede() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -491,98 +438,54 @@ public final class ZKFCProtocolProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.CedeActiveRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.CedeActiveRequestProto)
-    private static final org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto();
+      defaultInstance = new CedeActiveRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<CedeActiveRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<CedeActiveRequestProto>() {
-      @java.lang.Override
-      public CedeActiveRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CedeActiveRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<CedeActiveRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CedeActiveRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.CedeActiveRequestProto)
   }
 
-  public interface CedeActiveResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.CedeActiveResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface CedeActiveResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
    * Protobuf type {@code hadoop.common.CedeActiveResponseProto}
    */
   public static final class CedeActiveResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.CedeActiveResponseProto)
-      CedeActiveResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements CedeActiveResponseProtoOrBuilder {
     // Use CedeActiveResponseProto.newBuilder() to construct.
-    private CedeActiveResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private CedeActiveResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private CedeActiveResponseProto() {
+    private CedeActiveResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final CedeActiveResponseProto defaultInstance;
+    public static CedeActiveResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new CedeActiveResponseProto();
+    public CedeActiveResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private CedeActiveResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -594,8 +497,8 @@ public final class ZKFCProtocolProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -606,7 +509,7 @@ public final class ZKFCProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -617,40 +520,61 @@ public final class ZKFCProtocolProtos {
       return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_CedeActiveResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_CedeActiveResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto.class, org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<CedeActiveResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<CedeActiveResponseProto>() {
+      public CedeActiveResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CedeActiveResponseProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<CedeActiveResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -663,33 +587,25 @@ public final class ZKFCProtocolProtos {
       }
       org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto other = (org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -713,59 +629,46 @@ public final class ZKFCProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -773,16 +676,14 @@ public final class ZKFCProtocolProtos {
      * Protobuf type {@code hadoop.common.CedeActiveResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.CedeActiveResponseProto)
-        org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_CedeActiveResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_CedeActiveResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -795,33 +696,36 @@ public final class ZKFCProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_CedeActiveResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto build() {
         org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -830,46 +734,12 @@ public final class ZKFCProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto buildPartial() {
         org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto result = new org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto)other);
@@ -881,17 +751,14 @@ public final class ZKFCProtocolProtos {
 
       public Builder mergeFrom(org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto other) {
         if (other == org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -901,7 +768,7 @@ public final class ZKFCProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -909,98 +776,54 @@ public final class ZKFCProtocolProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.CedeActiveResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.CedeActiveResponseProto)
-    private static final org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto();
+      defaultInstance = new CedeActiveResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<CedeActiveResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<CedeActiveResponseProto>() {
-      @java.lang.Override
-      public CedeActiveResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CedeActiveResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<CedeActiveResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CedeActiveResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.CedeActiveResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.CedeActiveResponseProto)
   }
 
-  public interface GracefulFailoverRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GracefulFailoverRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GracefulFailoverRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
    * Protobuf type {@code hadoop.common.GracefulFailoverRequestProto}
    */
   public static final class GracefulFailoverRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GracefulFailoverRequestProto)
-      GracefulFailoverRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GracefulFailoverRequestProtoOrBuilder {
     // Use GracefulFailoverRequestProto.newBuilder() to construct.
-    private GracefulFailoverRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GracefulFailoverRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GracefulFailoverRequestProto() {
+    private GracefulFailoverRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GracefulFailoverRequestProto defaultInstance;
+    public static GracefulFailoverRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GracefulFailoverRequestProto();
+    public GracefulFailoverRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GracefulFailoverRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -1012,8 +835,8 @@ public final class ZKFCProtocolProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -1024,7 +847,7 @@ public final class ZKFCProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1035,40 +858,61 @@ public final class ZKFCProtocolProtos {
       return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_GracefulFailoverRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_GracefulFailoverRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto.class, org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<GracefulFailoverRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<GracefulFailoverRequestProto>() {
+      public GracefulFailoverRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GracefulFailoverRequestProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<GracefulFailoverRequestProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1081,33 +925,25 @@ public final class ZKFCProtocolProtos {
       }
       org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto other = (org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1131,59 +967,46 @@ public final class ZKFCProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1191,16 +1014,14 @@ public final class ZKFCProtocolProtos {
      * Protobuf type {@code hadoop.common.GracefulFailoverRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GracefulFailoverRequestProto)
-        org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_GracefulFailoverRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_GracefulFailoverRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1213,33 +1034,36 @@ public final class ZKFCProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_GracefulFailoverRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto build() {
         org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1248,46 +1072,12 @@ public final class ZKFCProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto buildPartial() {
         org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto result = new org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto)other);
@@ -1299,17 +1089,14 @@ public final class ZKFCProtocolProtos {
 
       public Builder mergeFrom(org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto other) {
         if (other == org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1319,7 +1106,7 @@ public final class ZKFCProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1327,98 +1114,54 @@ public final class ZKFCProtocolProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GracefulFailoverRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GracefulFailoverRequestProto)
-    private static final org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto();
+      defaultInstance = new GracefulFailoverRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GracefulFailoverRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<GracefulFailoverRequestProto>() {
-      @java.lang.Override
-      public GracefulFailoverRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GracefulFailoverRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GracefulFailoverRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GracefulFailoverRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GracefulFailoverRequestProto)
   }
 
-  public interface GracefulFailoverResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GracefulFailoverResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GracefulFailoverResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
    * Protobuf type {@code hadoop.common.GracefulFailoverResponseProto}
    */
   public static final class GracefulFailoverResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GracefulFailoverResponseProto)
-      GracefulFailoverResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GracefulFailoverResponseProtoOrBuilder {
     // Use GracefulFailoverResponseProto.newBuilder() to construct.
-    private GracefulFailoverResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GracefulFailoverResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GracefulFailoverResponseProto() {
+    private GracefulFailoverResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GracefulFailoverResponseProto defaultInstance;
+    public static GracefulFailoverResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GracefulFailoverResponseProto();
+    public GracefulFailoverResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GracefulFailoverResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -1430,8 +1173,8 @@ public final class ZKFCProtocolProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -1442,7 +1185,7 @@ public final class ZKFCProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1453,40 +1196,61 @@ public final class ZKFCProtocolProtos {
       return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_GracefulFailoverResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_GracefulFailoverResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto.class, org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<GracefulFailoverResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<GracefulFailoverResponseProto>() {
+      public GracefulFailoverResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GracefulFailoverResponseProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<GracefulFailoverResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1499,33 +1263,25 @@ public final class ZKFCProtocolProtos {
       }
       org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto other = (org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1549,59 +1305,46 @@ public final class ZKFCProtocolProtos {
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1609,16 +1352,14 @@ public final class ZKFCProtocolProtos {
      * Protobuf type {@code hadoop.common.GracefulFailoverResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GracefulFailoverResponseProto)
-        org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_GracefulFailoverResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_GracefulFailoverResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1631,33 +1372,36 @@ public final class ZKFCProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.internal_static_hadoop_common_GracefulFailoverResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto build() {
         org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1666,46 +1410,12 @@ public final class ZKFCProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto buildPartial() {
         org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto result = new org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto) {
           return mergeFrom((org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto)other);
@@ -1717,17 +1427,14 @@ public final class ZKFCProtocolProtos {
 
       public Builder mergeFrom(org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto other) {
         if (other == org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1737,7 +1444,7 @@ public final class ZKFCProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1745,66 +1452,25 @@ public final class ZKFCProtocolProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GracefulFailoverResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GracefulFailoverResponseProto)
-    private static final org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto();
+      defaultInstance = new GracefulFailoverResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GracefulFailoverResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<GracefulFailoverResponseProto>() {
-      @java.lang.Override
-      public GracefulFailoverResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GracefulFailoverResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GracefulFailoverResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GracefulFailoverResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ha.proto.ZKFCProtocolProtos.GracefulFailoverResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GracefulFailoverResponseProto)
   }
 
   /**
+   * Protobuf service {@code hadoop.common.ZKFCProtocolService}
+   *
    * <pre>
    **
    * Protocol provides manual control of the ZK Failover Controllers
    * </pre>
-   *
-   * Protobuf service {@code hadoop.common.ZKFCProtocolService}
    */
   public static abstract class ZKFCProtocolService
       implements com.google.protobuf.Service {
@@ -1812,13 +1478,13 @@ public final class ZKFCProtocolProtos {
 
     public interface Interface {
       /**
+       * <code>rpc cedeActive(.hadoop.common.CedeActiveRequestProto) returns (.hadoop.common.CedeActiveResponseProto);</code>
+       *
        * <pre>
        **
        * Request that the service cede its active state, and quit the election
        * for some amount of time
        * </pre>
-       *
-       * <code>rpc cedeActive(.hadoop.common.CedeActiveRequestProto) returns (.hadoop.common.CedeActiveResponseProto);</code>
        */
       public abstract void cedeActive(
           com.google.protobuf.RpcController controller,
@@ -1925,13 +1591,13 @@ public final class ZKFCProtocolProtos {
     }
 
     /**
+     * <code>rpc cedeActive(.hadoop.common.CedeActiveRequestProto) returns (.hadoop.common.CedeActiveResponseProto);</code>
+     *
      * <pre>
      **
      * Request that the service cede its active state, and quit the election
      * for some amount of time
      * </pre>
-     *
-     * <code>rpc cedeActive(.hadoop.common.CedeActiveRequestProto) returns (.hadoop.common.CedeActiveResponseProto);</code>
      */
     public abstract void cedeActive(
         com.google.protobuf.RpcController controller,
@@ -2118,32 +1784,32 @@ public final class ZKFCProtocolProtos {
     // @@protoc_insertion_point(class_scope:hadoop.common.ZKFCProtocolService)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_CedeActiveRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_CedeActiveRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_CedeActiveResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_CedeActiveResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GracefulFailoverRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GracefulFailoverRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GracefulFailoverResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GracefulFailoverResponseProto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -2156,38 +1822,46 @@ public final class ZKFCProtocolProtos {
       "RequestProto\032&.hadoop.common.CedeActiveR" +
       "esponseProto\022m\n\020gracefulFailover\022+.hadoo" +
       "p.common.GracefulFailoverRequestProto\032,." +
-      "hadoop.common.GracefulFailoverResponsePr" +
+      "hadoop.common.GracefulFailoverResponsePr",
       "otoB6\n\032org.apache.hadoop.ha.protoB\022ZKFCP" +
       "rotocolProtos\210\001\001\240\001\001"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_hadoop_common_CedeActiveRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_hadoop_common_CedeActiveRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_CedeActiveRequestProto_descriptor,
+              new java.lang.String[] { "MillisToCede", });
+          internal_static_hadoop_common_CedeActiveResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_hadoop_common_CedeActiveResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_CedeActiveResponseProto_descriptor,
+              new java.lang.String[] { });
+          internal_static_hadoop_common_GracefulFailoverRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_hadoop_common_GracefulFailoverRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GracefulFailoverRequestProto_descriptor,
+              new java.lang.String[] { });
+          internal_static_hadoop_common_GracefulFailoverResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_hadoop_common_GracefulFailoverResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GracefulFailoverResponseProto_descriptor,
+              new java.lang.String[] { });
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_hadoop_common_CedeActiveRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_hadoop_common_CedeActiveRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_CedeActiveRequestProto_descriptor,
-        new java.lang.String[] { "MillisToCede", });
-    internal_static_hadoop_common_CedeActiveResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_hadoop_common_CedeActiveResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_CedeActiveResponseProto_descriptor,
-        new java.lang.String[] { });
-    internal_static_hadoop_common_GracefulFailoverRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_hadoop_common_GracefulFailoverRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GracefulFailoverRequestProto_descriptor,
-        new java.lang.String[] { });
-    internal_static_hadoop_common_GracefulFailoverResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_hadoop_common_GracefulFailoverResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GracefulFailoverResponseProto_descriptor,
-        new java.lang.String[] { });
+        }, assigner);
   }
 
   // @@protoc_insertion_point(outer_class_scope)

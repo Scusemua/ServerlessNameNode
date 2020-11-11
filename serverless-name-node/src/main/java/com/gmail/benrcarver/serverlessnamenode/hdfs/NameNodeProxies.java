@@ -1,9 +1,8 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
@@ -11,6 +10,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hdfs.HAUtilClient;
+import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
+import org.apache.hadoop.hdfs.protocol.AlreadyBeingCreatedException;
+import org.apache.hadoop.hdfs.protocol.HdfsConstantsClient;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.retry.*;
 import org.apache.hadoop.ipc.ProtobufRpcEngine;

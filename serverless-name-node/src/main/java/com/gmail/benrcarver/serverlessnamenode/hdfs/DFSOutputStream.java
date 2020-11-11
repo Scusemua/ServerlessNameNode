@@ -3,9 +3,12 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
 import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LocatedBlock;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.QuotaByStorageTypeExceededException;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader;
 import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.erasure_coding.Codec;
 import io.hops.exception.OutOfDBExtentsException;
@@ -17,10 +20,7 @@ import org.apache.hadoop.crypto.CryptoProtocolVersion;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
-import org.apache.hadoop.hdfs.protocol.DSQuotaExceededException;
-import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
-import org.apache.hadoop.hdfs.protocol.ExtendedBlock;
-import org.apache.hadoop.hdfs.protocol.HdfsFileStatus;
+import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
 import org.apache.hadoop.io.EnumSetWritable;
 import org.apache.hadoop.security.token.Token;
@@ -35,6 +35,7 @@ import java.io.InterruptedIOException;
 import java.nio.channels.ClosedChannelException;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.concurrent.atomic.AtomicReference;
 
 /****************************************************************
  * DFSOutputStream creates files from a stream of bytes.

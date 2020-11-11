@@ -1,8 +1,8 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
 
 /**
  * Adds deprecated keys into the configuration.

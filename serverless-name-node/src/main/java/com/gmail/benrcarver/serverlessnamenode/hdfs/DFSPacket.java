@@ -17,10 +17,10 @@
  */
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ByteArrayManager;
 import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.hdfs.protocol.HdfsConstants;
-import org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader;
-import org.apache.hadoop.hdfs.util.ByteArrayManager;
 import org.apache.htrace.core.Span;
 import org.apache.htrace.core.SpanId;
 import org.apache.htrace.core.TraceScope;

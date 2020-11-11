@@ -6,34 +6,26 @@ package org.apache.hadoop.fs;
 public final class FSProtos {
   private FSProtos() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface FsPermissionProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.fs.FsPermissionProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface FsPermissionProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required uint32 perm = 1;
     /**
+     * <code>required uint32 perm = 1;</code>
+     *
      * <pre>
      * UNIX-style mode bits
      * </pre>
-     *
-     * <code>required uint32 perm = 1;</code>
-     * @return Whether the perm field is set.
      */
     boolean hasPerm();
     /**
+     * <code>required uint32 perm = 1;</code>
+     *
      * <pre>
      * UNIX-style mode bits
      * </pre>
-     *
-     * <code>required uint32 perm = 1;</code>
-     * @return The perm.
      */
     int getPerm();
   }
@@ -41,37 +33,35 @@ public final class FSProtos {
    * Protobuf type {@code hadoop.fs.FsPermissionProto}
    */
   public static final class FsPermissionProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.fs.FsPermissionProto)
-      FsPermissionProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements FsPermissionProtoOrBuilder {
     // Use FsPermissionProto.newBuilder() to construct.
-    private FsPermissionProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private FsPermissionProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private FsPermissionProto() {
+    private FsPermissionProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final FsPermissionProto defaultInstance;
+    public static FsPermissionProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new FsPermissionProto();
+    public FsPermissionProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private FsPermissionProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -83,16 +73,16 @@ public final class FSProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               perm_ = input.readUInt32();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -101,7 +91,7 @@ public final class FSProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -112,48 +102,60 @@ public final class FSProtos {
       return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_FsPermissionProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_FsPermissionProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.fs.FSProtos.FsPermissionProto.class, org.apache.hadoop.fs.FSProtos.FsPermissionProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<FsPermissionProto> PARSER =
+        new com.google.protobuf.AbstractParser<FsPermissionProto>() {
+      public FsPermissionProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new FsPermissionProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<FsPermissionProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required uint32 perm = 1;
     public static final int PERM_FIELD_NUMBER = 1;
     private int perm_;
     /**
+     * <code>required uint32 perm = 1;</code>
+     *
      * <pre>
      * UNIX-style mode bits
      * </pre>
-     *
-     * <code>required uint32 perm = 1;</code>
-     * @return Whether the perm field is set.
      */
-    @java.lang.Override
     public boolean hasPerm() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
+     * <code>required uint32 perm = 1;</code>
+     *
      * <pre>
      * UNIX-style mode bits
      * </pre>
-     *
-     * <code>required uint32 perm = 1;</code>
-     * @return The perm.
      */
-    @java.lang.Override
     public int getPerm() {
       return perm_;
     }
 
+    private void initFields() {
+      perm_ = 0;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasPerm()) {
         memoizedIsInitialized = 0;
@@ -163,28 +165,35 @@ public final class FSProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeUInt32(1, perm_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(1, perm_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -197,42 +206,34 @@ public final class FSProtos {
       }
       org.apache.hadoop.fs.FSProtos.FsPermissionProto other = (org.apache.hadoop.fs.FSProtos.FsPermissionProto) obj;
 
-      if (hasPerm() != other.hasPerm()) return false;
+      boolean result = true;
+      result = result && (hasPerm() == other.hasPerm());
       if (hasPerm()) {
-        if (getPerm()
-            != other.getPerm()) return false;
+        result = result && (getPerm()
+            == other.getPerm());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasPerm()) {
         hash = (37 * hash) + PERM_FIELD_NUMBER;
         hash = (53 * hash) + getPerm();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.fs.FSProtos.FsPermissionProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.fs.FSProtos.FsPermissionProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.fs.FSProtos.FsPermissionProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -256,59 +257,46 @@ public final class FSProtos {
     }
     public static org.apache.hadoop.fs.FSProtos.FsPermissionProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.fs.FSProtos.FsPermissionProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.fs.FSProtos.FsPermissionProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.fs.FSProtos.FsPermissionProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.fs.FSProtos.FsPermissionProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.fs.FSProtos.FsPermissionProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.fs.FSProtos.FsPermissionProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -316,16 +304,14 @@ public final class FSProtos {
      * Protobuf type {@code hadoop.fs.FsPermissionProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.fs.FsPermissionProto)
-        org.apache.hadoop.fs.FSProtos.FsPermissionProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.fs.FSProtos.FsPermissionProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_FsPermissionProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_FsPermissionProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -338,16 +324,18 @@ public final class FSProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         perm_ = 0;
@@ -355,18 +343,19 @@ public final class FSProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_FsPermissionProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.fs.FSProtos.FsPermissionProto getDefaultInstanceForType() {
         return org.apache.hadoop.fs.FSProtos.FsPermissionProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.fs.FSProtos.FsPermissionProto build() {
         org.apache.hadoop.fs.FSProtos.FsPermissionProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -375,53 +364,19 @@ public final class FSProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.fs.FSProtos.FsPermissionProto buildPartial() {
         org.apache.hadoop.fs.FSProtos.FsPermissionProto result = new org.apache.hadoop.fs.FSProtos.FsPermissionProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.perm_ = perm_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
+        result.perm_ = perm_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.fs.FSProtos.FsPermissionProto) {
           return mergeFrom((org.apache.hadoop.fs.FSProtos.FsPermissionProto)other);
@@ -436,20 +391,18 @@ public final class FSProtos {
         if (other.hasPerm()) {
           setPerm(other.getPerm());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasPerm()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -459,7 +412,7 @@ public final class FSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.fs.FSProtos.FsPermissionProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -469,39 +422,34 @@ public final class FSProtos {
       }
       private int bitField0_;
 
+      // required uint32 perm = 1;
       private int perm_ ;
       /**
+       * <code>required uint32 perm = 1;</code>
+       *
        * <pre>
        * UNIX-style mode bits
        * </pre>
-       *
-       * <code>required uint32 perm = 1;</code>
-       * @return Whether the perm field is set.
        */
-      @java.lang.Override
       public boolean hasPerm() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
+       * <code>required uint32 perm = 1;</code>
+       *
        * <pre>
        * UNIX-style mode bits
        * </pre>
-       *
-       * <code>required uint32 perm = 1;</code>
-       * @return The perm.
        */
-      @java.lang.Override
       public int getPerm() {
         return perm_;
       }
       /**
+       * <code>required uint32 perm = 1;</code>
+       *
        * <pre>
        * UNIX-style mode bits
        * </pre>
-       *
-       * <code>required uint32 perm = 1;</code>
-       * @param value The perm to set.
-       * @return This builder for chaining.
        */
       public Builder setPerm(int value) {
         bitField0_ |= 0x00000001;
@@ -510,12 +458,11 @@ public final class FSProtos {
         return this;
       }
       /**
+       * <code>required uint32 perm = 1;</code>
+       *
        * <pre>
        * UNIX-style mode bits
        * </pre>
-       *
-       * <code>required uint32 perm = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearPerm() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -523,110 +470,63 @@ public final class FSProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.fs.FsPermissionProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.fs.FsPermissionProto)
-    private static final org.apache.hadoop.fs.FSProtos.FsPermissionProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.fs.FSProtos.FsPermissionProto();
+      defaultInstance = new FsPermissionProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.fs.FSProtos.FsPermissionProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<FsPermissionProto>
-        PARSER = new com.google.protobuf.AbstractParser<FsPermissionProto>() {
-      @java.lang.Override
-      public FsPermissionProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new FsPermissionProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<FsPermissionProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<FsPermissionProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.fs.FSProtos.FsPermissionProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.fs.FsPermissionProto)
   }
 
-  public interface FileStatusProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.fs.FileStatusProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface FileStatusProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required .hadoop.fs.FileStatusProto.FileType fileType = 1;
     /**
      * <code>required .hadoop.fs.FileStatusProto.FileType fileType = 1;</code>
-     * @return Whether the fileType field is set.
      */
     boolean hasFileType();
     /**
      * <code>required .hadoop.fs.FileStatusProto.FileType fileType = 1;</code>
-     * @return The fileType.
      */
     org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType getFileType();
 
+    // required string path = 2;
     /**
      * <code>required string path = 2;</code>
-     * @return Whether the path field is set.
      */
     boolean hasPath();
     /**
      * <code>required string path = 2;</code>
-     * @return The path.
      */
     java.lang.String getPath();
     /**
      * <code>required string path = 2;</code>
-     * @return The bytes for path.
      */
     com.google.protobuf.ByteString
         getPathBytes();
 
+    // optional uint64 length = 3;
     /**
      * <code>optional uint64 length = 3;</code>
-     * @return Whether the length field is set.
      */
     boolean hasLength();
     /**
      * <code>optional uint64 length = 3;</code>
-     * @return The length.
      */
     long getLength();
 
+    // optional .hadoop.fs.FsPermissionProto permission = 4;
     /**
      * <code>optional .hadoop.fs.FsPermissionProto permission = 4;</code>
-     * @return Whether the permission field is set.
      */
     boolean hasPermission();
     /**
      * <code>optional .hadoop.fs.FsPermissionProto permission = 4;</code>
-     * @return The permission.
      */
     org.apache.hadoop.fs.FSProtos.FsPermissionProto getPermission();
     /**
@@ -634,202 +534,181 @@ public final class FSProtos {
      */
     org.apache.hadoop.fs.FSProtos.FsPermissionProtoOrBuilder getPermissionOrBuilder();
 
+    // optional string owner = 5;
     /**
      * <code>optional string owner = 5;</code>
-     * @return Whether the owner field is set.
      */
     boolean hasOwner();
     /**
      * <code>optional string owner = 5;</code>
-     * @return The owner.
      */
     java.lang.String getOwner();
     /**
      * <code>optional string owner = 5;</code>
-     * @return The bytes for owner.
      */
     com.google.protobuf.ByteString
         getOwnerBytes();
 
+    // optional string group = 6;
     /**
      * <code>optional string group = 6;</code>
-     * @return Whether the group field is set.
      */
     boolean hasGroup();
     /**
      * <code>optional string group = 6;</code>
-     * @return The group.
      */
     java.lang.String getGroup();
     /**
      * <code>optional string group = 6;</code>
-     * @return The bytes for group.
      */
     com.google.protobuf.ByteString
         getGroupBytes();
 
+    // optional uint64 modification_time = 7;
     /**
      * <code>optional uint64 modification_time = 7;</code>
-     * @return Whether the modificationTime field is set.
      */
     boolean hasModificationTime();
     /**
      * <code>optional uint64 modification_time = 7;</code>
-     * @return The modificationTime.
      */
     long getModificationTime();
 
+    // optional uint64 access_time = 8;
     /**
      * <code>optional uint64 access_time = 8;</code>
-     * @return Whether the accessTime field is set.
      */
     boolean hasAccessTime();
     /**
      * <code>optional uint64 access_time = 8;</code>
-     * @return The accessTime.
      */
     long getAccessTime();
 
+    // optional string symlink = 9;
     /**
      * <code>optional string symlink = 9;</code>
-     * @return Whether the symlink field is set.
      */
     boolean hasSymlink();
     /**
      * <code>optional string symlink = 9;</code>
-     * @return The symlink.
      */
     java.lang.String getSymlink();
     /**
      * <code>optional string symlink = 9;</code>
-     * @return The bytes for symlink.
      */
     com.google.protobuf.ByteString
         getSymlinkBytes();
 
+    // optional uint32 block_replication = 10;
     /**
      * <code>optional uint32 block_replication = 10;</code>
-     * @return Whether the blockReplication field is set.
      */
     boolean hasBlockReplication();
     /**
      * <code>optional uint32 block_replication = 10;</code>
-     * @return The blockReplication.
      */
     int getBlockReplication();
 
+    // optional uint64 block_size = 11;
     /**
      * <code>optional uint64 block_size = 11;</code>
-     * @return Whether the blockSize field is set.
      */
     boolean hasBlockSize();
     /**
      * <code>optional uint64 block_size = 11;</code>
-     * @return The blockSize.
      */
     long getBlockSize();
 
+    // optional bytes encryption_data = 15;
     /**
+     * <code>optional bytes encryption_data = 15;</code>
+     *
      * <pre>
      * locations                          = 12
      * alias                              = 13
      * childrenNum                        = 14
      * </pre>
-     *
-     * <code>optional bytes encryption_data = 15;</code>
-     * @return Whether the encryptionData field is set.
      */
     boolean hasEncryptionData();
     /**
+     * <code>optional bytes encryption_data = 15;</code>
+     *
      * <pre>
      * locations                          = 12
      * alias                              = 13
      * childrenNum                        = 14
      * </pre>
-     *
-     * <code>optional bytes encryption_data = 15;</code>
-     * @return The encryptionData.
      */
     com.google.protobuf.ByteString getEncryptionData();
 
+    // optional bytes ec_data = 17;
     /**
+     * <code>optional bytes ec_data = 17;</code>
+     *
      * <pre>
      * storagePolicy                      = 16
      * </pre>
-     *
-     * <code>optional bytes ec_data = 17;</code>
-     * @return Whether the ecData field is set.
      */
     boolean hasEcData();
     /**
+     * <code>optional bytes ec_data = 17;</code>
+     *
      * <pre>
      * storagePolicy                      = 16
      * </pre>
-     *
-     * <code>optional bytes ec_data = 17;</code>
-     * @return The ecData.
      */
     com.google.protobuf.ByteString getEcData();
 
+    // optional uint32 flags = 18 [default = 0];
     /**
      * <code>optional uint32 flags = 18 [default = 0];</code>
-     * @return Whether the flags field is set.
      */
     boolean hasFlags();
     /**
      * <code>optional uint32 flags = 18 [default = 0];</code>
-     * @return The flags.
      */
     int getFlags();
   }
   /**
+   * Protobuf type {@code hadoop.fs.FileStatusProto}
+   *
    * <pre>
+   *
    * FileStatus encoding. Field IDs match those from HdfsFileStatusProto, but
    * cross-serialization is not an explicitly supported use case. Unlike HDFS,
    * most fields are optional and do not define defaults.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.fs.FileStatusProto}
    */
   public static final class FileStatusProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.fs.FileStatusProto)
-      FileStatusProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements FileStatusProtoOrBuilder {
     // Use FileStatusProto.newBuilder() to construct.
-    private FileStatusProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private FileStatusProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private FileStatusProto() {
-      fileType_ = 1;
-      path_ = "";
-      owner_ = "";
-      group_ = "";
-      symlink_ = "";
-      encryptionData_ = com.google.protobuf.ByteString.EMPTY;
-      ecData_ = com.google.protobuf.ByteString.EMPTY;
+    private FileStatusProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final FileStatusProto defaultInstance;
+    public static FileStatusProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new FileStatusProto();
+    public FileStatusProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private FileStatusProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -841,22 +720,27 @@ public final class FSProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               int rawValue = input.readEnum();
-                @SuppressWarnings("deprecation")
               org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType value = org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(1, rawValue);
               } else {
                 bitField0_ |= 0x00000001;
-                fileType_ = rawValue;
+                fileType_ = value;
               }
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              path_ = bs;
+              path_ = input.readBytes();
               break;
             }
             case 24: {
@@ -866,7 +750,7 @@ public final class FSProtos {
             }
             case 34: {
               org.apache.hadoop.fs.FSProtos.FsPermissionProto.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000008) != 0)) {
+              if (((bitField0_ & 0x00000008) == 0x00000008)) {
                 subBuilder = permission_.toBuilder();
               }
               permission_ = input.readMessage(org.apache.hadoop.fs.FSProtos.FsPermissionProto.PARSER, extensionRegistry);
@@ -878,15 +762,13 @@ public final class FSProtos {
               break;
             }
             case 42: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000010;
-              owner_ = bs;
+              owner_ = input.readBytes();
               break;
             }
             case 50: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000020;
-              group_ = bs;
+              group_ = input.readBytes();
               break;
             }
             case 56: {
@@ -900,9 +782,8 @@ public final class FSProtos {
               break;
             }
             case 74: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000100;
-              symlink_ = bs;
+              symlink_ = input.readBytes();
               break;
             }
             case 80: {
@@ -930,20 +811,13 @@ public final class FSProtos {
               flags_ = input.readUInt32();
               break;
             }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -954,12 +828,26 @@ public final class FSProtos {
       return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_FileStatusProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_FileStatusProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.fs.FSProtos.FileStatusProto.class, org.apache.hadoop.fs.FSProtos.FileStatusProto.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<FileStatusProto> PARSER =
+        new com.google.protobuf.AbstractParser<FileStatusProto>() {
+      public FileStatusProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new FileStatusProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<FileStatusProto> getParserForType() {
+      return PARSER;
     }
 
     /**
@@ -970,15 +858,15 @@ public final class FSProtos {
       /**
        * <code>FT_DIR = 1;</code>
        */
-      FT_DIR(1),
+      FT_DIR(0, 1),
       /**
        * <code>FT_FILE = 2;</code>
        */
-      FT_FILE(2),
+      FT_FILE(1, 2),
       /**
        * <code>FT_SYMLINK = 3;</code>
        */
-      FT_SYMLINK(3),
+      FT_SYMLINK(2, 3),
       ;
 
       /**
@@ -995,25 +883,9 @@ public final class FSProtos {
       public static final int FT_SYMLINK_VALUE = 3;
 
 
-      public final int getNumber() {
-        return value;
-      }
+      public final int getNumber() { return value; }
 
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
       public static FileType valueOf(int value) {
-        return forNumber(value);
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
-      public static FileType forNumber(int value) {
         switch (value) {
           case 1: return FT_DIR;
           case 2: return FT_FILE;
@@ -1026,17 +898,17 @@ public final class FSProtos {
           internalGetValueMap() {
         return internalValueMap;
       }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          FileType> internalValueMap =
+      private static com.google.protobuf.Internal.EnumLiteMap<FileType>
+          internalValueMap =
             new com.google.protobuf.Internal.EnumLiteMap<FileType>() {
               public FileType findValueByNumber(int number) {
-                return FileType.forNumber(number);
+                return FileType.valueOf(number);
               }
             };
 
       public final com.google.protobuf.Descriptors.EnumValueDescriptor
           getValueDescriptor() {
-        return getDescriptor().getValues().get(ordinal());
+        return getDescriptor().getValues().get(index);
       }
       public final com.google.protobuf.Descriptors.EnumDescriptor
           getDescriptorForType() {
@@ -1058,9 +930,11 @@ public final class FSProtos {
         return VALUES[desc.getIndex()];
       }
 
+      private final int index;
       private final int value;
 
-      private FileType(int value) {
+      private FileType(int index, int value) {
+        this.index = index;
         this.value = value;
       }
 
@@ -1073,92 +947,76 @@ public final class FSProtos {
     public enum Flags
         implements com.google.protobuf.ProtocolMessageEnum {
       /**
+       * <code>HAS_ACL = 1;</code>
+       *
        * <pre>
        * has ACLs
        * </pre>
-       *
-       * <code>HAS_ACL = 1;</code>
        */
-      HAS_ACL(1),
+      HAS_ACL(0, 1),
       /**
+       * <code>HAS_CRYPT = 2;</code>
+       *
        * <pre>
        * encrypted
        * </pre>
-       *
-       * <code>HAS_CRYPT = 2;</code>
        */
-      HAS_CRYPT(2),
+      HAS_CRYPT(1, 2),
       /**
+       * <code>HAS_EC = 4;</code>
+       *
        * <pre>
        * erasure coded
        * </pre>
-       *
-       * <code>HAS_EC = 4;</code>
        */
-      HAS_EC(4),
+      HAS_EC(2, 4),
       /**
+       * <code>SNAPSHOT_ENABLED = 8;</code>
+       *
        * <pre>
        * snapshot enabled
        * </pre>
-       *
-       * <code>SNAPSHOT_ENABLED = 8;</code>
        */
-      SNAPSHOT_ENABLED(8),
+      SNAPSHOT_ENABLED(3, 8),
       ;
 
       /**
+       * <code>HAS_ACL = 1;</code>
+       *
        * <pre>
        * has ACLs
        * </pre>
-       *
-       * <code>HAS_ACL = 1;</code>
        */
       public static final int HAS_ACL_VALUE = 1;
       /**
+       * <code>HAS_CRYPT = 2;</code>
+       *
        * <pre>
        * encrypted
        * </pre>
-       *
-       * <code>HAS_CRYPT = 2;</code>
        */
       public static final int HAS_CRYPT_VALUE = 2;
       /**
+       * <code>HAS_EC = 4;</code>
+       *
        * <pre>
        * erasure coded
        * </pre>
-       *
-       * <code>HAS_EC = 4;</code>
        */
       public static final int HAS_EC_VALUE = 4;
       /**
+       * <code>SNAPSHOT_ENABLED = 8;</code>
+       *
        * <pre>
        * snapshot enabled
        * </pre>
-       *
-       * <code>SNAPSHOT_ENABLED = 8;</code>
        */
       public static final int SNAPSHOT_ENABLED_VALUE = 8;
 
 
-      public final int getNumber() {
-        return value;
-      }
+      public final int getNumber() { return value; }
 
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       * @deprecated Use {@link #forNumber(int)} instead.
-       */
-      @java.lang.Deprecated
       public static Flags valueOf(int value) {
-        return forNumber(value);
-      }
-
-      /**
-       * @param value The numeric wire value of the corresponding enum entry.
-       * @return The enum associated with the given numeric wire value.
-       */
-      public static Flags forNumber(int value) {
         switch (value) {
           case 1: return HAS_ACL;
           case 2: return HAS_CRYPT;
@@ -1172,17 +1030,17 @@ public final class FSProtos {
           internalGetValueMap() {
         return internalValueMap;
       }
-      private static final com.google.protobuf.Internal.EnumLiteMap<
-          Flags> internalValueMap =
+      private static com.google.protobuf.Internal.EnumLiteMap<Flags>
+          internalValueMap =
             new com.google.protobuf.Internal.EnumLiteMap<Flags>() {
               public Flags findValueByNumber(int number) {
-                return Flags.forNumber(number);
+                return Flags.valueOf(number);
               }
             };
 
       public final com.google.protobuf.Descriptors.EnumValueDescriptor
           getValueDescriptor() {
-        return getDescriptor().getValues().get(ordinal());
+        return getDescriptor().getValues().get(index);
       }
       public final com.google.protobuf.Descriptors.EnumDescriptor
           getDescriptorForType() {
@@ -1204,9 +1062,11 @@ public final class FSProtos {
         return VALUES[desc.getIndex()];
       }
 
+      private final int index;
       private final int value;
 
-      private Flags(int value) {
+      private Flags(int index, int value) {
+        this.index = index;
         this.value = value;
       }
 
@@ -1214,40 +1074,34 @@ public final class FSProtos {
     }
 
     private int bitField0_;
+    // required .hadoop.fs.FileStatusProto.FileType fileType = 1;
     public static final int FILETYPE_FIELD_NUMBER = 1;
-    private int fileType_;
+    private org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType fileType_;
     /**
      * <code>required .hadoop.fs.FileStatusProto.FileType fileType = 1;</code>
-     * @return Whether the fileType field is set.
      */
-    @java.lang.Override public boolean hasFileType() {
-      return ((bitField0_ & 0x00000001) != 0);
+    public boolean hasFileType() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required .hadoop.fs.FileStatusProto.FileType fileType = 1;</code>
-     * @return The fileType.
      */
-    @java.lang.Override public org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType getFileType() {
-      @SuppressWarnings("deprecation")
-      org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType result = org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType.valueOf(fileType_);
-      return result == null ? org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType.FT_DIR : result;
+    public org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType getFileType() {
+      return fileType_;
     }
 
+    // required string path = 2;
     public static final int PATH_FIELD_NUMBER = 2;
-    private volatile java.lang.Object path_;
+    private java.lang.Object path_;
     /**
      * <code>required string path = 2;</code>
-     * @return Whether the path field is set.
      */
-    @java.lang.Override
     public boolean hasPath() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required string path = 2;</code>
-     * @return The path.
      */
-    @java.lang.Override
     public java.lang.String getPath() {
       java.lang.Object ref = path_;
       if (ref instanceof java.lang.String) {
@@ -1264,9 +1118,7 @@ public final class FSProtos {
     }
     /**
      * <code>required string path = 2;</code>
-     * @return The bytes for path.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getPathBytes() {
       java.lang.Object ref = path_;
@@ -1281,66 +1133,56 @@ public final class FSProtos {
       }
     }
 
+    // optional uint64 length = 3;
     public static final int LENGTH_FIELD_NUMBER = 3;
     private long length_;
     /**
      * <code>optional uint64 length = 3;</code>
-     * @return Whether the length field is set.
      */
-    @java.lang.Override
     public boolean hasLength() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>optional uint64 length = 3;</code>
-     * @return The length.
      */
-    @java.lang.Override
     public long getLength() {
       return length_;
     }
 
+    // optional .hadoop.fs.FsPermissionProto permission = 4;
     public static final int PERMISSION_FIELD_NUMBER = 4;
     private org.apache.hadoop.fs.FSProtos.FsPermissionProto permission_;
     /**
      * <code>optional .hadoop.fs.FsPermissionProto permission = 4;</code>
-     * @return Whether the permission field is set.
      */
-    @java.lang.Override
     public boolean hasPermission() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>optional .hadoop.fs.FsPermissionProto permission = 4;</code>
-     * @return The permission.
      */
-    @java.lang.Override
     public org.apache.hadoop.fs.FSProtos.FsPermissionProto getPermission() {
-      return permission_ == null ? org.apache.hadoop.fs.FSProtos.FsPermissionProto.getDefaultInstance() : permission_;
+      return permission_;
     }
     /**
      * <code>optional .hadoop.fs.FsPermissionProto permission = 4;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.fs.FSProtos.FsPermissionProtoOrBuilder getPermissionOrBuilder() {
-      return permission_ == null ? org.apache.hadoop.fs.FSProtos.FsPermissionProto.getDefaultInstance() : permission_;
+      return permission_;
     }
 
+    // optional string owner = 5;
     public static final int OWNER_FIELD_NUMBER = 5;
-    private volatile java.lang.Object owner_;
+    private java.lang.Object owner_;
     /**
      * <code>optional string owner = 5;</code>
-     * @return Whether the owner field is set.
      */
-    @java.lang.Override
     public boolean hasOwner() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return ((bitField0_ & 0x00000010) == 0x00000010);
     }
     /**
      * <code>optional string owner = 5;</code>
-     * @return The owner.
      */
-    @java.lang.Override
     public java.lang.String getOwner() {
       java.lang.Object ref = owner_;
       if (ref instanceof java.lang.String) {
@@ -1357,9 +1199,7 @@ public final class FSProtos {
     }
     /**
      * <code>optional string owner = 5;</code>
-     * @return The bytes for owner.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getOwnerBytes() {
       java.lang.Object ref = owner_;
@@ -1374,21 +1214,18 @@ public final class FSProtos {
       }
     }
 
+    // optional string group = 6;
     public static final int GROUP_FIELD_NUMBER = 6;
-    private volatile java.lang.Object group_;
+    private java.lang.Object group_;
     /**
      * <code>optional string group = 6;</code>
-     * @return Whether the group field is set.
      */
-    @java.lang.Override
     public boolean hasGroup() {
-      return ((bitField0_ & 0x00000020) != 0);
+      return ((bitField0_ & 0x00000020) == 0x00000020);
     }
     /**
      * <code>optional string group = 6;</code>
-     * @return The group.
      */
-    @java.lang.Override
     public java.lang.String getGroup() {
       java.lang.Object ref = group_;
       if (ref instanceof java.lang.String) {
@@ -1405,9 +1242,7 @@ public final class FSProtos {
     }
     /**
      * <code>optional string group = 6;</code>
-     * @return The bytes for group.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getGroupBytes() {
       java.lang.Object ref = group_;
@@ -1422,59 +1257,50 @@ public final class FSProtos {
       }
     }
 
+    // optional uint64 modification_time = 7;
     public static final int MODIFICATION_TIME_FIELD_NUMBER = 7;
     private long modificationTime_;
     /**
      * <code>optional uint64 modification_time = 7;</code>
-     * @return Whether the modificationTime field is set.
      */
-    @java.lang.Override
     public boolean hasModificationTime() {
-      return ((bitField0_ & 0x00000040) != 0);
+      return ((bitField0_ & 0x00000040) == 0x00000040);
     }
     /**
      * <code>optional uint64 modification_time = 7;</code>
-     * @return The modificationTime.
      */
-    @java.lang.Override
     public long getModificationTime() {
       return modificationTime_;
     }
 
+    // optional uint64 access_time = 8;
     public static final int ACCESS_TIME_FIELD_NUMBER = 8;
     private long accessTime_;
     /**
      * <code>optional uint64 access_time = 8;</code>
-     * @return Whether the accessTime field is set.
      */
-    @java.lang.Override
     public boolean hasAccessTime() {
-      return ((bitField0_ & 0x00000080) != 0);
+      return ((bitField0_ & 0x00000080) == 0x00000080);
     }
     /**
      * <code>optional uint64 access_time = 8;</code>
-     * @return The accessTime.
      */
-    @java.lang.Override
     public long getAccessTime() {
       return accessTime_;
     }
 
+    // optional string symlink = 9;
     public static final int SYMLINK_FIELD_NUMBER = 9;
-    private volatile java.lang.Object symlink_;
+    private java.lang.Object symlink_;
     /**
      * <code>optional string symlink = 9;</code>
-     * @return Whether the symlink field is set.
      */
-    @java.lang.Override
     public boolean hasSymlink() {
-      return ((bitField0_ & 0x00000100) != 0);
+      return ((bitField0_ & 0x00000100) == 0x00000100);
     }
     /**
      * <code>optional string symlink = 9;</code>
-     * @return The symlink.
      */
-    @java.lang.Override
     public java.lang.String getSymlink() {
       java.lang.Object ref = symlink_;
       if (ref instanceof java.lang.String) {
@@ -1491,9 +1317,7 @@ public final class FSProtos {
     }
     /**
      * <code>optional string symlink = 9;</code>
-     * @return The bytes for symlink.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getSymlinkBytes() {
       java.lang.Object ref = symlink_;
@@ -1508,127 +1332,126 @@ public final class FSProtos {
       }
     }
 
+    // optional uint32 block_replication = 10;
     public static final int BLOCK_REPLICATION_FIELD_NUMBER = 10;
     private int blockReplication_;
     /**
      * <code>optional uint32 block_replication = 10;</code>
-     * @return Whether the blockReplication field is set.
      */
-    @java.lang.Override
     public boolean hasBlockReplication() {
-      return ((bitField0_ & 0x00000200) != 0);
+      return ((bitField0_ & 0x00000200) == 0x00000200);
     }
     /**
      * <code>optional uint32 block_replication = 10;</code>
-     * @return The blockReplication.
      */
-    @java.lang.Override
     public int getBlockReplication() {
       return blockReplication_;
     }
 
+    // optional uint64 block_size = 11;
     public static final int BLOCK_SIZE_FIELD_NUMBER = 11;
     private long blockSize_;
     /**
      * <code>optional uint64 block_size = 11;</code>
-     * @return Whether the blockSize field is set.
      */
-    @java.lang.Override
     public boolean hasBlockSize() {
-      return ((bitField0_ & 0x00000400) != 0);
+      return ((bitField0_ & 0x00000400) == 0x00000400);
     }
     /**
      * <code>optional uint64 block_size = 11;</code>
-     * @return The blockSize.
      */
-    @java.lang.Override
     public long getBlockSize() {
       return blockSize_;
     }
 
+    // optional bytes encryption_data = 15;
     public static final int ENCRYPTION_DATA_FIELD_NUMBER = 15;
     private com.google.protobuf.ByteString encryptionData_;
     /**
+     * <code>optional bytes encryption_data = 15;</code>
+     *
      * <pre>
      * locations                          = 12
      * alias                              = 13
      * childrenNum                        = 14
      * </pre>
-     *
-     * <code>optional bytes encryption_data = 15;</code>
-     * @return Whether the encryptionData field is set.
      */
-    @java.lang.Override
     public boolean hasEncryptionData() {
-      return ((bitField0_ & 0x00000800) != 0);
+      return ((bitField0_ & 0x00000800) == 0x00000800);
     }
     /**
+     * <code>optional bytes encryption_data = 15;</code>
+     *
      * <pre>
      * locations                          = 12
      * alias                              = 13
      * childrenNum                        = 14
      * </pre>
-     *
-     * <code>optional bytes encryption_data = 15;</code>
-     * @return The encryptionData.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString getEncryptionData() {
       return encryptionData_;
     }
 
+    // optional bytes ec_data = 17;
     public static final int EC_DATA_FIELD_NUMBER = 17;
     private com.google.protobuf.ByteString ecData_;
     /**
+     * <code>optional bytes ec_data = 17;</code>
+     *
      * <pre>
      * storagePolicy                      = 16
      * </pre>
-     *
-     * <code>optional bytes ec_data = 17;</code>
-     * @return Whether the ecData field is set.
      */
-    @java.lang.Override
     public boolean hasEcData() {
-      return ((bitField0_ & 0x00001000) != 0);
+      return ((bitField0_ & 0x00001000) == 0x00001000);
     }
     /**
+     * <code>optional bytes ec_data = 17;</code>
+     *
      * <pre>
      * storagePolicy                      = 16
      * </pre>
-     *
-     * <code>optional bytes ec_data = 17;</code>
-     * @return The ecData.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString getEcData() {
       return ecData_;
     }
 
+    // optional uint32 flags = 18 [default = 0];
     public static final int FLAGS_FIELD_NUMBER = 18;
     private int flags_;
     /**
      * <code>optional uint32 flags = 18 [default = 0];</code>
-     * @return Whether the flags field is set.
      */
-    @java.lang.Override
     public boolean hasFlags() {
-      return ((bitField0_ & 0x00002000) != 0);
+      return ((bitField0_ & 0x00002000) == 0x00002000);
     }
     /**
      * <code>optional uint32 flags = 18 [default = 0];</code>
-     * @return The flags.
      */
-    @java.lang.Override
     public int getFlags() {
       return flags_;
     }
 
+    private void initFields() {
+      fileType_ = org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType.FT_DIR;
+      path_ = "";
+      length_ = 0L;
+      permission_ = org.apache.hadoop.fs.FSProtos.FsPermissionProto.getDefaultInstance();
+      owner_ = "";
+      group_ = "";
+      modificationTime_ = 0L;
+      accessTime_ = 0L;
+      symlink_ = "";
+      blockReplication_ = 0;
+      blockSize_ = 0L;
+      encryptionData_ = com.google.protobuf.ByteString.EMPTY;
+      ecData_ = com.google.protobuf.ByteString.EMPTY;
+      flags_ = 0;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasFileType()) {
         memoizedIsInitialized = 0;
@@ -1648,115 +1471,126 @@ public final class FSProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeEnum(1, fileType_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeEnum(1, fileType_.getNumber());
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, path_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getPathBytes());
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeUInt64(3, length_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
-        output.writeMessage(4, getPermission());
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeMessage(4, permission_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, owner_);
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeBytes(5, getOwnerBytes());
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, group_);
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        output.writeBytes(6, getGroupBytes());
       }
-      if (((bitField0_ & 0x00000040) != 0)) {
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         output.writeUInt64(7, modificationTime_);
       }
-      if (((bitField0_ & 0x00000080) != 0)) {
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
         output.writeUInt64(8, accessTime_);
       }
-      if (((bitField0_ & 0x00000100) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 9, symlink_);
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        output.writeBytes(9, getSymlinkBytes());
       }
-      if (((bitField0_ & 0x00000200) != 0)) {
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
         output.writeUInt32(10, blockReplication_);
       }
-      if (((bitField0_ & 0x00000400) != 0)) {
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
         output.writeUInt64(11, blockSize_);
       }
-      if (((bitField0_ & 0x00000800) != 0)) {
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
         output.writeBytes(15, encryptionData_);
       }
-      if (((bitField0_ & 0x00001000) != 0)) {
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
         output.writeBytes(17, ecData_);
       }
-      if (((bitField0_ & 0x00002000) != 0)) {
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
         output.writeUInt32(18, flags_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeEnumSize(1, fileType_);
+          .computeEnumSize(1, fileType_.getNumber());
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, path_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getPathBytes());
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(3, length_);
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, getPermission());
+          .computeMessageSize(4, permission_);
       }
-      if (((bitField0_ & 0x00000010) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, owner_);
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(5, getOwnerBytes());
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, group_);
+      if (((bitField0_ & 0x00000020) == 0x00000020)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(6, getGroupBytes());
       }
-      if (((bitField0_ & 0x00000040) != 0)) {
+      if (((bitField0_ & 0x00000040) == 0x00000040)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(7, modificationTime_);
       }
-      if (((bitField0_ & 0x00000080) != 0)) {
+      if (((bitField0_ & 0x00000080) == 0x00000080)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(8, accessTime_);
       }
-      if (((bitField0_ & 0x00000100) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, symlink_);
+      if (((bitField0_ & 0x00000100) == 0x00000100)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(9, getSymlinkBytes());
       }
-      if (((bitField0_ & 0x00000200) != 0)) {
+      if (((bitField0_ & 0x00000200) == 0x00000200)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(10, blockReplication_);
       }
-      if (((bitField0_ & 0x00000400) != 0)) {
+      if (((bitField0_ & 0x00000400) == 0x00000400)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(11, blockSize_);
       }
-      if (((bitField0_ & 0x00000800) != 0)) {
+      if (((bitField0_ & 0x00000800) == 0x00000800)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(15, encryptionData_);
       }
-      if (((bitField0_ & 0x00001000) != 0)) {
+      if (((bitField0_ & 0x00001000) == 0x00001000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(17, ecData_);
       }
-      if (((bitField0_ & 0x00002000) != 0)) {
+      if (((bitField0_ & 0x00002000) == 0x00002000)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(18, flags_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1769,89 +1603,93 @@ public final class FSProtos {
       }
       org.apache.hadoop.fs.FSProtos.FileStatusProto other = (org.apache.hadoop.fs.FSProtos.FileStatusProto) obj;
 
-      if (hasFileType() != other.hasFileType()) return false;
+      boolean result = true;
+      result = result && (hasFileType() == other.hasFileType());
       if (hasFileType()) {
-        if (fileType_ != other.fileType_) return false;
+        result = result &&
+            (getFileType() == other.getFileType());
       }
-      if (hasPath() != other.hasPath()) return false;
+      result = result && (hasPath() == other.hasPath());
       if (hasPath()) {
-        if (!getPath()
-            .equals(other.getPath())) return false;
+        result = result && getPath()
+            .equals(other.getPath());
       }
-      if (hasLength() != other.hasLength()) return false;
+      result = result && (hasLength() == other.hasLength());
       if (hasLength()) {
-        if (getLength()
-            != other.getLength()) return false;
+        result = result && (getLength()
+            == other.getLength());
       }
-      if (hasPermission() != other.hasPermission()) return false;
+      result = result && (hasPermission() == other.hasPermission());
       if (hasPermission()) {
-        if (!getPermission()
-            .equals(other.getPermission())) return false;
+        result = result && getPermission()
+            .equals(other.getPermission());
       }
-      if (hasOwner() != other.hasOwner()) return false;
+      result = result && (hasOwner() == other.hasOwner());
       if (hasOwner()) {
-        if (!getOwner()
-            .equals(other.getOwner())) return false;
+        result = result && getOwner()
+            .equals(other.getOwner());
       }
-      if (hasGroup() != other.hasGroup()) return false;
+      result = result && (hasGroup() == other.hasGroup());
       if (hasGroup()) {
-        if (!getGroup()
-            .equals(other.getGroup())) return false;
+        result = result && getGroup()
+            .equals(other.getGroup());
       }
-      if (hasModificationTime() != other.hasModificationTime()) return false;
+      result = result && (hasModificationTime() == other.hasModificationTime());
       if (hasModificationTime()) {
-        if (getModificationTime()
-            != other.getModificationTime()) return false;
+        result = result && (getModificationTime()
+            == other.getModificationTime());
       }
-      if (hasAccessTime() != other.hasAccessTime()) return false;
+      result = result && (hasAccessTime() == other.hasAccessTime());
       if (hasAccessTime()) {
-        if (getAccessTime()
-            != other.getAccessTime()) return false;
+        result = result && (getAccessTime()
+            == other.getAccessTime());
       }
-      if (hasSymlink() != other.hasSymlink()) return false;
+      result = result && (hasSymlink() == other.hasSymlink());
       if (hasSymlink()) {
-        if (!getSymlink()
-            .equals(other.getSymlink())) return false;
+        result = result && getSymlink()
+            .equals(other.getSymlink());
       }
-      if (hasBlockReplication() != other.hasBlockReplication()) return false;
+      result = result && (hasBlockReplication() == other.hasBlockReplication());
       if (hasBlockReplication()) {
-        if (getBlockReplication()
-            != other.getBlockReplication()) return false;
+        result = result && (getBlockReplication()
+            == other.getBlockReplication());
       }
-      if (hasBlockSize() != other.hasBlockSize()) return false;
+      result = result && (hasBlockSize() == other.hasBlockSize());
       if (hasBlockSize()) {
-        if (getBlockSize()
-            != other.getBlockSize()) return false;
+        result = result && (getBlockSize()
+            == other.getBlockSize());
       }
-      if (hasEncryptionData() != other.hasEncryptionData()) return false;
+      result = result && (hasEncryptionData() == other.hasEncryptionData());
       if (hasEncryptionData()) {
-        if (!getEncryptionData()
-            .equals(other.getEncryptionData())) return false;
+        result = result && getEncryptionData()
+            .equals(other.getEncryptionData());
       }
-      if (hasEcData() != other.hasEcData()) return false;
+      result = result && (hasEcData() == other.hasEcData());
       if (hasEcData()) {
-        if (!getEcData()
-            .equals(other.getEcData())) return false;
+        result = result && getEcData()
+            .equals(other.getEcData());
       }
-      if (hasFlags() != other.hasFlags()) return false;
+      result = result && (hasFlags() == other.hasFlags());
       if (hasFlags()) {
-        if (getFlags()
-            != other.getFlags()) return false;
+        result = result && (getFlags()
+            == other.getFlags());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasFileType()) {
         hash = (37 * hash) + FILETYPE_FIELD_NUMBER;
-        hash = (53 * hash) + fileType_;
+        hash = (53 * hash) + hashEnum(getFileType());
       }
       if (hasPath()) {
         hash = (37 * hash) + PATH_FIELD_NUMBER;
@@ -1859,8 +1697,7 @@ public final class FSProtos {
       }
       if (hasLength()) {
         hash = (37 * hash) + LENGTH_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getLength());
+        hash = (53 * hash) + hashLong(getLength());
       }
       if (hasPermission()) {
         hash = (37 * hash) + PERMISSION_FIELD_NUMBER;
@@ -1876,13 +1713,11 @@ public final class FSProtos {
       }
       if (hasModificationTime()) {
         hash = (37 * hash) + MODIFICATION_TIME_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getModificationTime());
+        hash = (53 * hash) + hashLong(getModificationTime());
       }
       if (hasAccessTime()) {
         hash = (37 * hash) + ACCESS_TIME_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getAccessTime());
+        hash = (53 * hash) + hashLong(getAccessTime());
       }
       if (hasSymlink()) {
         hash = (37 * hash) + SYMLINK_FIELD_NUMBER;
@@ -1894,8 +1729,7 @@ public final class FSProtos {
       }
       if (hasBlockSize()) {
         hash = (37 * hash) + BLOCK_SIZE_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getBlockSize());
+        hash = (53 * hash) + hashLong(getBlockSize());
       }
       if (hasEncryptionData()) {
         hash = (37 * hash) + ENCRYPTION_DATA_FIELD_NUMBER;
@@ -1909,22 +1743,11 @@ public final class FSProtos {
         hash = (37 * hash) + FLAGS_FIELD_NUMBER;
         hash = (53 * hash) + getFlags();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.fs.FSProtos.FileStatusProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.fs.FSProtos.FileStatusProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.fs.FSProtos.FileStatusProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1948,82 +1771,68 @@ public final class FSProtos {
     }
     public static org.apache.hadoop.fs.FSProtos.FileStatusProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.fs.FSProtos.FileStatusProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.fs.FSProtos.FileStatusProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.fs.FSProtos.FileStatusProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.fs.FSProtos.FileStatusProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.fs.FSProtos.FileStatusProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.fs.FSProtos.FileStatusProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.fs.FileStatusProto}
+     *
      * <pre>
+     *
      * FileStatus encoding. Field IDs match those from HdfsFileStatusProto, but
      * cross-serialization is not an explicitly supported use case. Unlike HDFS,
      * most fields are optional and do not define defaults.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.fs.FileStatusProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.fs.FileStatusProto)
-        org.apache.hadoop.fs.FSProtos.FileStatusProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.fs.FSProtos.FileStatusProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_FileStatusProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_FileStatusProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -2036,27 +1845,29 @@ public final class FSProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getPermissionFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
-        fileType_ = 1;
+        fileType_ = org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType.FT_DIR;
         bitField0_ = (bitField0_ & ~0x00000001);
         path_ = "";
         bitField0_ = (bitField0_ & ~0x00000002);
         length_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000004);
         if (permissionBuilder_ == null) {
-          permission_ = null;
+          permission_ = org.apache.hadoop.fs.FSProtos.FsPermissionProto.getDefaultInstance();
         } else {
           permissionBuilder_.clear();
         }
@@ -2084,18 +1895,19 @@ public final class FSProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_FileStatusProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.fs.FSProtos.FileStatusProto getDefaultInstanceForType() {
         return org.apache.hadoop.fs.FSProtos.FileStatusProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.fs.FSProtos.FileStatusProto build() {
         org.apache.hadoop.fs.FSProtos.FileStatusProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -2104,109 +1916,75 @@ public final class FSProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.fs.FSProtos.FileStatusProto buildPartial() {
         org.apache.hadoop.fs.FSProtos.FileStatusProto result = new org.apache.hadoop.fs.FSProtos.FileStatusProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.fileType_ = fileType_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.path_ = path_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
-          result.length_ = length_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          if (permissionBuilder_ == null) {
-            result.permission_ = permission_;
-          } else {
-            result.permission_ = permissionBuilder_.build();
-          }
+        result.length_ = length_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
-        if (((from_bitField0_ & 0x00000010) != 0)) {
+        if (permissionBuilder_ == null) {
+          result.permission_ = permission_;
+        } else {
+          result.permission_ = permissionBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
           to_bitField0_ |= 0x00000010;
         }
         result.owner_ = owner_;
-        if (((from_bitField0_ & 0x00000020) != 0)) {
+        if (((from_bitField0_ & 0x00000020) == 0x00000020)) {
           to_bitField0_ |= 0x00000020;
         }
         result.group_ = group_;
-        if (((from_bitField0_ & 0x00000040) != 0)) {
-          result.modificationTime_ = modificationTime_;
+        if (((from_bitField0_ & 0x00000040) == 0x00000040)) {
           to_bitField0_ |= 0x00000040;
         }
-        if (((from_bitField0_ & 0x00000080) != 0)) {
-          result.accessTime_ = accessTime_;
+        result.modificationTime_ = modificationTime_;
+        if (((from_bitField0_ & 0x00000080) == 0x00000080)) {
           to_bitField0_ |= 0x00000080;
         }
-        if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.accessTime_ = accessTime_;
+        if (((from_bitField0_ & 0x00000100) == 0x00000100)) {
           to_bitField0_ |= 0x00000100;
         }
         result.symlink_ = symlink_;
-        if (((from_bitField0_ & 0x00000200) != 0)) {
-          result.blockReplication_ = blockReplication_;
+        if (((from_bitField0_ & 0x00000200) == 0x00000200)) {
           to_bitField0_ |= 0x00000200;
         }
-        if (((from_bitField0_ & 0x00000400) != 0)) {
-          result.blockSize_ = blockSize_;
+        result.blockReplication_ = blockReplication_;
+        if (((from_bitField0_ & 0x00000400) == 0x00000400)) {
           to_bitField0_ |= 0x00000400;
         }
-        if (((from_bitField0_ & 0x00000800) != 0)) {
+        result.blockSize_ = blockSize_;
+        if (((from_bitField0_ & 0x00000800) == 0x00000800)) {
           to_bitField0_ |= 0x00000800;
         }
         result.encryptionData_ = encryptionData_;
-        if (((from_bitField0_ & 0x00001000) != 0)) {
+        if (((from_bitField0_ & 0x00001000) == 0x00001000)) {
           to_bitField0_ |= 0x00001000;
         }
         result.ecData_ = ecData_;
-        if (((from_bitField0_ & 0x00002000) != 0)) {
-          result.flags_ = flags_;
+        if (((from_bitField0_ & 0x00002000) == 0x00002000)) {
           to_bitField0_ |= 0x00002000;
         }
+        result.flags_ = flags_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.fs.FSProtos.FileStatusProto) {
           return mergeFrom((org.apache.hadoop.fs.FSProtos.FileStatusProto)other);
@@ -2268,28 +2046,28 @@ public final class FSProtos {
         if (other.hasFlags()) {
           setFlags(other.getFlags());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasFileType()) {
+          
           return false;
         }
         if (!hasPath()) {
+          
           return false;
         }
         if (hasPermission()) {
           if (!getPermission().isInitialized()) {
+            
             return false;
           }
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2299,7 +2077,7 @@ public final class FSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.fs.FSProtos.FileStatusProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2309,70 +2087,59 @@ public final class FSProtos {
       }
       private int bitField0_;
 
-      private int fileType_ = 1;
+      // required .hadoop.fs.FileStatusProto.FileType fileType = 1;
+      private org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType fileType_ = org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType.FT_DIR;
       /**
        * <code>required .hadoop.fs.FileStatusProto.FileType fileType = 1;</code>
-       * @return Whether the fileType field is set.
        */
-      @java.lang.Override public boolean hasFileType() {
-        return ((bitField0_ & 0x00000001) != 0);
+      public boolean hasFileType() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required .hadoop.fs.FileStatusProto.FileType fileType = 1;</code>
-       * @return The fileType.
        */
-      @java.lang.Override
       public org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType getFileType() {
-        @SuppressWarnings("deprecation")
-        org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType result = org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType.valueOf(fileType_);
-        return result == null ? org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType.FT_DIR : result;
+        return fileType_;
       }
       /**
        * <code>required .hadoop.fs.FileStatusProto.FileType fileType = 1;</code>
-       * @param value The fileType to set.
-       * @return This builder for chaining.
        */
       public Builder setFileType(org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType value) {
         if (value == null) {
           throw new NullPointerException();
         }
         bitField0_ |= 0x00000001;
-        fileType_ = value.getNumber();
+        fileType_ = value;
         onChanged();
         return this;
       }
       /**
        * <code>required .hadoop.fs.FileStatusProto.FileType fileType = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearFileType() {
         bitField0_ = (bitField0_ & ~0x00000001);
-        fileType_ = 1;
+        fileType_ = org.apache.hadoop.fs.FSProtos.FileStatusProto.FileType.FT_DIR;
         onChanged();
         return this;
       }
 
+      // required string path = 2;
       private java.lang.Object path_ = "";
       /**
        * <code>required string path = 2;</code>
-       * @return Whether the path field is set.
        */
       public boolean hasPath() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required string path = 2;</code>
-       * @return The path.
        */
       public java.lang.String getPath() {
         java.lang.Object ref = path_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            path_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          path_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2380,7 +2147,6 @@ public final class FSProtos {
       }
       /**
        * <code>required string path = 2;</code>
-       * @return The bytes for path.
        */
       public com.google.protobuf.ByteString
           getPathBytes() {
@@ -2397,8 +2163,6 @@ public final class FSProtos {
       }
       /**
        * <code>required string path = 2;</code>
-       * @param value The path to set.
-       * @return This builder for chaining.
        */
       public Builder setPath(
           java.lang.String value) {
@@ -2412,7 +2176,6 @@ public final class FSProtos {
       }
       /**
        * <code>required string path = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearPath() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -2422,8 +2185,6 @@ public final class FSProtos {
       }
       /**
        * <code>required string path = 2;</code>
-       * @param value The bytes for path to set.
-       * @return This builder for chaining.
        */
       public Builder setPathBytes(
           com.google.protobuf.ByteString value) {
@@ -2436,27 +2197,22 @@ public final class FSProtos {
         return this;
       }
 
+      // optional uint64 length = 3;
       private long length_ ;
       /**
        * <code>optional uint64 length = 3;</code>
-       * @return Whether the length field is set.
        */
-      @java.lang.Override
       public boolean hasLength() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>optional uint64 length = 3;</code>
-       * @return The length.
        */
-      @java.lang.Override
       public long getLength() {
         return length_;
       }
       /**
        * <code>optional uint64 length = 3;</code>
-       * @param value The length to set.
-       * @return This builder for chaining.
        */
       public Builder setLength(long value) {
         bitField0_ |= 0x00000004;
@@ -2466,7 +2222,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional uint64 length = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearLength() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -2475,23 +2230,22 @@ public final class FSProtos {
         return this;
       }
 
-      private org.apache.hadoop.fs.FSProtos.FsPermissionProto permission_;
-      private com.google.protobuf.SingleFieldBuilderV3<
+      // optional .hadoop.fs.FsPermissionProto permission = 4;
+      private org.apache.hadoop.fs.FSProtos.FsPermissionProto permission_ = org.apache.hadoop.fs.FSProtos.FsPermissionProto.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.fs.FSProtos.FsPermissionProto, org.apache.hadoop.fs.FSProtos.FsPermissionProto.Builder, org.apache.hadoop.fs.FSProtos.FsPermissionProtoOrBuilder> permissionBuilder_;
       /**
        * <code>optional .hadoop.fs.FsPermissionProto permission = 4;</code>
-       * @return Whether the permission field is set.
        */
       public boolean hasPermission() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>optional .hadoop.fs.FsPermissionProto permission = 4;</code>
-       * @return The permission.
        */
       public org.apache.hadoop.fs.FSProtos.FsPermissionProto getPermission() {
         if (permissionBuilder_ == null) {
-          return permission_ == null ? org.apache.hadoop.fs.FSProtos.FsPermissionProto.getDefaultInstance() : permission_;
+          return permission_;
         } else {
           return permissionBuilder_.getMessage();
         }
@@ -2531,8 +2285,7 @@ public final class FSProtos {
        */
       public Builder mergePermission(org.apache.hadoop.fs.FSProtos.FsPermissionProto value) {
         if (permissionBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0) &&
-              permission_ != null &&
+          if (((bitField0_ & 0x00000008) == 0x00000008) &&
               permission_ != org.apache.hadoop.fs.FSProtos.FsPermissionProto.getDefaultInstance()) {
             permission_ =
               org.apache.hadoop.fs.FSProtos.FsPermissionProto.newBuilder(permission_).mergeFrom(value).buildPartial();
@@ -2551,7 +2304,7 @@ public final class FSProtos {
        */
       public Builder clearPermission() {
         if (permissionBuilder_ == null) {
-          permission_ = null;
+          permission_ = org.apache.hadoop.fs.FSProtos.FsPermissionProto.getDefaultInstance();
           onChanged();
         } else {
           permissionBuilder_.clear();
@@ -2574,20 +2327,19 @@ public final class FSProtos {
         if (permissionBuilder_ != null) {
           return permissionBuilder_.getMessageOrBuilder();
         } else {
-          return permission_ == null ?
-              org.apache.hadoop.fs.FSProtos.FsPermissionProto.getDefaultInstance() : permission_;
+          return permission_;
         }
       }
       /**
        * <code>optional .hadoop.fs.FsPermissionProto permission = 4;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.fs.FSProtos.FsPermissionProto, org.apache.hadoop.fs.FSProtos.FsPermissionProto.Builder, org.apache.hadoop.fs.FSProtos.FsPermissionProtoOrBuilder> 
           getPermissionFieldBuilder() {
         if (permissionBuilder_ == null) {
-          permissionBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          permissionBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.fs.FSProtos.FsPermissionProto, org.apache.hadoop.fs.FSProtos.FsPermissionProto.Builder, org.apache.hadoop.fs.FSProtos.FsPermissionProtoOrBuilder>(
-                  getPermission(),
+                  permission_,
                   getParentForChildren(),
                   isClean());
           permission_ = null;
@@ -2595,27 +2347,23 @@ public final class FSProtos {
         return permissionBuilder_;
       }
 
+      // optional string owner = 5;
       private java.lang.Object owner_ = "";
       /**
        * <code>optional string owner = 5;</code>
-       * @return Whether the owner field is set.
        */
       public boolean hasOwner() {
-        return ((bitField0_ & 0x00000010) != 0);
+        return ((bitField0_ & 0x00000010) == 0x00000010);
       }
       /**
        * <code>optional string owner = 5;</code>
-       * @return The owner.
        */
       public java.lang.String getOwner() {
         java.lang.Object ref = owner_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            owner_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          owner_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2623,7 +2371,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string owner = 5;</code>
-       * @return The bytes for owner.
        */
       public com.google.protobuf.ByteString
           getOwnerBytes() {
@@ -2640,8 +2387,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string owner = 5;</code>
-       * @param value The owner to set.
-       * @return This builder for chaining.
        */
       public Builder setOwner(
           java.lang.String value) {
@@ -2655,7 +2400,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string owner = 5;</code>
-       * @return This builder for chaining.
        */
       public Builder clearOwner() {
         bitField0_ = (bitField0_ & ~0x00000010);
@@ -2665,8 +2409,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string owner = 5;</code>
-       * @param value The bytes for owner to set.
-       * @return This builder for chaining.
        */
       public Builder setOwnerBytes(
           com.google.protobuf.ByteString value) {
@@ -2679,27 +2421,23 @@ public final class FSProtos {
         return this;
       }
 
+      // optional string group = 6;
       private java.lang.Object group_ = "";
       /**
        * <code>optional string group = 6;</code>
-       * @return Whether the group field is set.
        */
       public boolean hasGroup() {
-        return ((bitField0_ & 0x00000020) != 0);
+        return ((bitField0_ & 0x00000020) == 0x00000020);
       }
       /**
        * <code>optional string group = 6;</code>
-       * @return The group.
        */
       public java.lang.String getGroup() {
         java.lang.Object ref = group_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            group_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          group_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2707,7 +2445,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string group = 6;</code>
-       * @return The bytes for group.
        */
       public com.google.protobuf.ByteString
           getGroupBytes() {
@@ -2724,8 +2461,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string group = 6;</code>
-       * @param value The group to set.
-       * @return This builder for chaining.
        */
       public Builder setGroup(
           java.lang.String value) {
@@ -2739,7 +2474,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string group = 6;</code>
-       * @return This builder for chaining.
        */
       public Builder clearGroup() {
         bitField0_ = (bitField0_ & ~0x00000020);
@@ -2749,8 +2483,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string group = 6;</code>
-       * @param value The bytes for group to set.
-       * @return This builder for chaining.
        */
       public Builder setGroupBytes(
           com.google.protobuf.ByteString value) {
@@ -2763,27 +2495,22 @@ public final class FSProtos {
         return this;
       }
 
+      // optional uint64 modification_time = 7;
       private long modificationTime_ ;
       /**
        * <code>optional uint64 modification_time = 7;</code>
-       * @return Whether the modificationTime field is set.
        */
-      @java.lang.Override
       public boolean hasModificationTime() {
-        return ((bitField0_ & 0x00000040) != 0);
+        return ((bitField0_ & 0x00000040) == 0x00000040);
       }
       /**
        * <code>optional uint64 modification_time = 7;</code>
-       * @return The modificationTime.
        */
-      @java.lang.Override
       public long getModificationTime() {
         return modificationTime_;
       }
       /**
        * <code>optional uint64 modification_time = 7;</code>
-       * @param value The modificationTime to set.
-       * @return This builder for chaining.
        */
       public Builder setModificationTime(long value) {
         bitField0_ |= 0x00000040;
@@ -2793,7 +2520,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional uint64 modification_time = 7;</code>
-       * @return This builder for chaining.
        */
       public Builder clearModificationTime() {
         bitField0_ = (bitField0_ & ~0x00000040);
@@ -2802,27 +2528,22 @@ public final class FSProtos {
         return this;
       }
 
+      // optional uint64 access_time = 8;
       private long accessTime_ ;
       /**
        * <code>optional uint64 access_time = 8;</code>
-       * @return Whether the accessTime field is set.
        */
-      @java.lang.Override
       public boolean hasAccessTime() {
-        return ((bitField0_ & 0x00000080) != 0);
+        return ((bitField0_ & 0x00000080) == 0x00000080);
       }
       /**
        * <code>optional uint64 access_time = 8;</code>
-       * @return The accessTime.
        */
-      @java.lang.Override
       public long getAccessTime() {
         return accessTime_;
       }
       /**
        * <code>optional uint64 access_time = 8;</code>
-       * @param value The accessTime to set.
-       * @return This builder for chaining.
        */
       public Builder setAccessTime(long value) {
         bitField0_ |= 0x00000080;
@@ -2832,7 +2553,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional uint64 access_time = 8;</code>
-       * @return This builder for chaining.
        */
       public Builder clearAccessTime() {
         bitField0_ = (bitField0_ & ~0x00000080);
@@ -2841,27 +2561,23 @@ public final class FSProtos {
         return this;
       }
 
+      // optional string symlink = 9;
       private java.lang.Object symlink_ = "";
       /**
        * <code>optional string symlink = 9;</code>
-       * @return Whether the symlink field is set.
        */
       public boolean hasSymlink() {
-        return ((bitField0_ & 0x00000100) != 0);
+        return ((bitField0_ & 0x00000100) == 0x00000100);
       }
       /**
        * <code>optional string symlink = 9;</code>
-       * @return The symlink.
        */
       public java.lang.String getSymlink() {
         java.lang.Object ref = symlink_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            symlink_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          symlink_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -2869,7 +2585,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string symlink = 9;</code>
-       * @return The bytes for symlink.
        */
       public com.google.protobuf.ByteString
           getSymlinkBytes() {
@@ -2886,8 +2601,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string symlink = 9;</code>
-       * @param value The symlink to set.
-       * @return This builder for chaining.
        */
       public Builder setSymlink(
           java.lang.String value) {
@@ -2901,7 +2614,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string symlink = 9;</code>
-       * @return This builder for chaining.
        */
       public Builder clearSymlink() {
         bitField0_ = (bitField0_ & ~0x00000100);
@@ -2911,8 +2623,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string symlink = 9;</code>
-       * @param value The bytes for symlink to set.
-       * @return This builder for chaining.
        */
       public Builder setSymlinkBytes(
           com.google.protobuf.ByteString value) {
@@ -2925,27 +2635,22 @@ public final class FSProtos {
         return this;
       }
 
+      // optional uint32 block_replication = 10;
       private int blockReplication_ ;
       /**
        * <code>optional uint32 block_replication = 10;</code>
-       * @return Whether the blockReplication field is set.
        */
-      @java.lang.Override
       public boolean hasBlockReplication() {
-        return ((bitField0_ & 0x00000200) != 0);
+        return ((bitField0_ & 0x00000200) == 0x00000200);
       }
       /**
        * <code>optional uint32 block_replication = 10;</code>
-       * @return The blockReplication.
        */
-      @java.lang.Override
       public int getBlockReplication() {
         return blockReplication_;
       }
       /**
        * <code>optional uint32 block_replication = 10;</code>
-       * @param value The blockReplication to set.
-       * @return This builder for chaining.
        */
       public Builder setBlockReplication(int value) {
         bitField0_ |= 0x00000200;
@@ -2955,7 +2660,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional uint32 block_replication = 10;</code>
-       * @return This builder for chaining.
        */
       public Builder clearBlockReplication() {
         bitField0_ = (bitField0_ & ~0x00000200);
@@ -2964,27 +2668,22 @@ public final class FSProtos {
         return this;
       }
 
+      // optional uint64 block_size = 11;
       private long blockSize_ ;
       /**
        * <code>optional uint64 block_size = 11;</code>
-       * @return Whether the blockSize field is set.
        */
-      @java.lang.Override
       public boolean hasBlockSize() {
-        return ((bitField0_ & 0x00000400) != 0);
+        return ((bitField0_ & 0x00000400) == 0x00000400);
       }
       /**
        * <code>optional uint64 block_size = 11;</code>
-       * @return The blockSize.
        */
-      @java.lang.Override
       public long getBlockSize() {
         return blockSize_;
       }
       /**
        * <code>optional uint64 block_size = 11;</code>
-       * @param value The blockSize to set.
-       * @return This builder for chaining.
        */
       public Builder setBlockSize(long value) {
         bitField0_ |= 0x00000400;
@@ -2994,7 +2693,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional uint64 block_size = 11;</code>
-       * @return This builder for chaining.
        */
       public Builder clearBlockSize() {
         bitField0_ = (bitField0_ & ~0x00000400);
@@ -3003,45 +2701,40 @@ public final class FSProtos {
         return this;
       }
 
+      // optional bytes encryption_data = 15;
       private com.google.protobuf.ByteString encryptionData_ = com.google.protobuf.ByteString.EMPTY;
       /**
+       * <code>optional bytes encryption_data = 15;</code>
+       *
        * <pre>
        * locations                          = 12
        * alias                              = 13
        * childrenNum                        = 14
        * </pre>
-       *
-       * <code>optional bytes encryption_data = 15;</code>
-       * @return Whether the encryptionData field is set.
        */
-      @java.lang.Override
       public boolean hasEncryptionData() {
-        return ((bitField0_ & 0x00000800) != 0);
+        return ((bitField0_ & 0x00000800) == 0x00000800);
       }
       /**
+       * <code>optional bytes encryption_data = 15;</code>
+       *
        * <pre>
        * locations                          = 12
        * alias                              = 13
        * childrenNum                        = 14
        * </pre>
-       *
-       * <code>optional bytes encryption_data = 15;</code>
-       * @return The encryptionData.
        */
-      @java.lang.Override
       public com.google.protobuf.ByteString getEncryptionData() {
         return encryptionData_;
       }
       /**
+       * <code>optional bytes encryption_data = 15;</code>
+       *
        * <pre>
        * locations                          = 12
        * alias                              = 13
        * childrenNum                        = 14
        * </pre>
-       *
-       * <code>optional bytes encryption_data = 15;</code>
-       * @param value The encryptionData to set.
-       * @return This builder for chaining.
        */
       public Builder setEncryptionData(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -3053,14 +2746,13 @@ public final class FSProtos {
         return this;
       }
       /**
+       * <code>optional bytes encryption_data = 15;</code>
+       *
        * <pre>
        * locations                          = 12
        * alias                              = 13
        * childrenNum                        = 14
        * </pre>
-       *
-       * <code>optional bytes encryption_data = 15;</code>
-       * @return This builder for chaining.
        */
       public Builder clearEncryptionData() {
         bitField0_ = (bitField0_ & ~0x00000800);
@@ -3069,39 +2761,34 @@ public final class FSProtos {
         return this;
       }
 
+      // optional bytes ec_data = 17;
       private com.google.protobuf.ByteString ecData_ = com.google.protobuf.ByteString.EMPTY;
       /**
+       * <code>optional bytes ec_data = 17;</code>
+       *
        * <pre>
        * storagePolicy                      = 16
        * </pre>
-       *
-       * <code>optional bytes ec_data = 17;</code>
-       * @return Whether the ecData field is set.
        */
-      @java.lang.Override
       public boolean hasEcData() {
-        return ((bitField0_ & 0x00001000) != 0);
+        return ((bitField0_ & 0x00001000) == 0x00001000);
       }
       /**
+       * <code>optional bytes ec_data = 17;</code>
+       *
        * <pre>
        * storagePolicy                      = 16
        * </pre>
-       *
-       * <code>optional bytes ec_data = 17;</code>
-       * @return The ecData.
        */
-      @java.lang.Override
       public com.google.protobuf.ByteString getEcData() {
         return ecData_;
       }
       /**
+       * <code>optional bytes ec_data = 17;</code>
+       *
        * <pre>
        * storagePolicy                      = 16
        * </pre>
-       *
-       * <code>optional bytes ec_data = 17;</code>
-       * @param value The ecData to set.
-       * @return This builder for chaining.
        */
       public Builder setEcData(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -3113,12 +2800,11 @@ public final class FSProtos {
         return this;
       }
       /**
+       * <code>optional bytes ec_data = 17;</code>
+       *
        * <pre>
        * storagePolicy                      = 16
        * </pre>
-       *
-       * <code>optional bytes ec_data = 17;</code>
-       * @return This builder for chaining.
        */
       public Builder clearEcData() {
         bitField0_ = (bitField0_ & ~0x00001000);
@@ -3127,27 +2813,22 @@ public final class FSProtos {
         return this;
       }
 
+      // optional uint32 flags = 18 [default = 0];
       private int flags_ ;
       /**
        * <code>optional uint32 flags = 18 [default = 0];</code>
-       * @return Whether the flags field is set.
        */
-      @java.lang.Override
       public boolean hasFlags() {
-        return ((bitField0_ & 0x00002000) != 0);
+        return ((bitField0_ & 0x00002000) == 0x00002000);
       }
       /**
        * <code>optional uint32 flags = 18 [default = 0];</code>
-       * @return The flags.
        */
-      @java.lang.Override
       public int getFlags() {
         return flags_;
       }
       /**
        * <code>optional uint32 flags = 18 [default = 0];</code>
-       * @param value The flags to set.
-       * @return This builder for chaining.
        */
       public Builder setFlags(int value) {
         bitField0_ |= 0x00002000;
@@ -3157,7 +2838,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional uint32 flags = 18 [default = 0];</code>
-       * @return This builder for chaining.
        */
       public Builder clearFlags() {
         bitField0_ = (bitField0_ & ~0x00002000);
@@ -3165,132 +2845,84 @@ public final class FSProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.fs.FileStatusProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.fs.FileStatusProto)
-    private static final org.apache.hadoop.fs.FSProtos.FileStatusProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.fs.FSProtos.FileStatusProto();
+      defaultInstance = new FileStatusProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.fs.FSProtos.FileStatusProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<FileStatusProto>
-        PARSER = new com.google.protobuf.AbstractParser<FileStatusProto>() {
-      @java.lang.Override
-      public FileStatusProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new FileStatusProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<FileStatusProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<FileStatusProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.fs.FSProtos.FileStatusProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.fs.FileStatusProto)
   }
 
-  public interface LocalFileSystemPathHandleProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.fs.LocalFileSystemPathHandleProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface LocalFileSystemPathHandleProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional uint64 mtime = 1;
     /**
      * <code>optional uint64 mtime = 1;</code>
-     * @return Whether the mtime field is set.
      */
     boolean hasMtime();
     /**
      * <code>optional uint64 mtime = 1;</code>
-     * @return The mtime.
      */
     long getMtime();
 
+    // optional string path = 2;
     /**
      * <code>optional string path = 2;</code>
-     * @return Whether the path field is set.
      */
     boolean hasPath();
     /**
      * <code>optional string path = 2;</code>
-     * @return The path.
      */
     java.lang.String getPath();
     /**
      * <code>optional string path = 2;</code>
-     * @return The bytes for path.
      */
     com.google.protobuf.ByteString
         getPathBytes();
   }
   /**
+   * Protobuf type {@code hadoop.fs.LocalFileSystemPathHandleProto}
+   *
    * <pre>
    **
    * Placeholder type for consistent basic FileSystem operations.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.fs.LocalFileSystemPathHandleProto}
    */
   public static final class LocalFileSystemPathHandleProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.fs.LocalFileSystemPathHandleProto)
-      LocalFileSystemPathHandleProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements LocalFileSystemPathHandleProtoOrBuilder {
     // Use LocalFileSystemPathHandleProto.newBuilder() to construct.
-    private LocalFileSystemPathHandleProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private LocalFileSystemPathHandleProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private LocalFileSystemPathHandleProto() {
-      path_ = "";
+    private LocalFileSystemPathHandleProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final LocalFileSystemPathHandleProto defaultInstance;
+    public static LocalFileSystemPathHandleProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new LocalFileSystemPathHandleProto();
+    public LocalFileSystemPathHandleProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private LocalFileSystemPathHandleProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -3302,22 +2934,21 @@ public final class FSProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               mtime_ = input.readUInt64();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              path_ = bs;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              path_ = input.readBytes();
               break;
             }
           }
@@ -3326,7 +2957,7 @@ public final class FSProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -3337,49 +2968,57 @@ public final class FSProtos {
       return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_LocalFileSystemPathHandleProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_LocalFileSystemPathHandleProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto.class, org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<LocalFileSystemPathHandleProto> PARSER =
+        new com.google.protobuf.AbstractParser<LocalFileSystemPathHandleProto>() {
+      public LocalFileSystemPathHandleProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new LocalFileSystemPathHandleProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<LocalFileSystemPathHandleProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // optional uint64 mtime = 1;
     public static final int MTIME_FIELD_NUMBER = 1;
     private long mtime_;
     /**
      * <code>optional uint64 mtime = 1;</code>
-     * @return Whether the mtime field is set.
      */
-    @java.lang.Override
     public boolean hasMtime() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>optional uint64 mtime = 1;</code>
-     * @return The mtime.
      */
-    @java.lang.Override
     public long getMtime() {
       return mtime_;
     }
 
+    // optional string path = 2;
     public static final int PATH_FIELD_NUMBER = 2;
-    private volatile java.lang.Object path_;
+    private java.lang.Object path_;
     /**
      * <code>optional string path = 2;</code>
-     * @return Whether the path field is set.
      */
-    @java.lang.Override
     public boolean hasPath() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>optional string path = 2;</code>
-     * @return The path.
      */
-    @java.lang.Override
     public java.lang.String getPath() {
       java.lang.Object ref = path_;
       if (ref instanceof java.lang.String) {
@@ -3396,9 +3035,7 @@ public final class FSProtos {
     }
     /**
      * <code>optional string path = 2;</code>
-     * @return The bytes for path.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getPathBytes() {
       java.lang.Object ref = path_;
@@ -3413,45 +3050,55 @@ public final class FSProtos {
       }
     }
 
+    private void initFields() {
+      mtime_ = 0L;
+      path_ = "";
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeUInt64(1, mtime_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, path_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getPathBytes());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, mtime_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, path_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getPathBytes());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -3464,52 +3111,43 @@ public final class FSProtos {
       }
       org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto other = (org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto) obj;
 
-      if (hasMtime() != other.hasMtime()) return false;
+      boolean result = true;
+      result = result && (hasMtime() == other.hasMtime());
       if (hasMtime()) {
-        if (getMtime()
-            != other.getMtime()) return false;
+        result = result && (getMtime()
+            == other.getMtime());
       }
-      if (hasPath() != other.hasPath()) return false;
+      result = result && (hasPath() == other.hasPath());
       if (hasPath()) {
-        if (!getPath()
-            .equals(other.getPath())) return false;
+        result = result && getPath()
+            .equals(other.getPath());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasMtime()) {
         hash = (37 * hash) + MTIME_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getMtime());
+        hash = (53 * hash) + hashLong(getMtime());
       }
       if (hasPath()) {
         hash = (37 * hash) + PATH_FIELD_NUMBER;
         hash = (53 * hash) + getPath().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3533,81 +3171,66 @@ public final class FSProtos {
     }
     public static org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.fs.LocalFileSystemPathHandleProto}
+     *
      * <pre>
      **
      * Placeholder type for consistent basic FileSystem operations.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.fs.LocalFileSystemPathHandleProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.fs.LocalFileSystemPathHandleProto)
-        org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_LocalFileSystemPathHandleProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_LocalFileSystemPathHandleProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -3620,16 +3243,18 @@ public final class FSProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         mtime_ = 0L;
@@ -3639,18 +3264,19 @@ public final class FSProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.fs.FSProtos.internal_static_hadoop_fs_LocalFileSystemPathHandleProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto getDefaultInstanceForType() {
         return org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto build() {
         org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -3659,16 +3285,15 @@ public final class FSProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto buildPartial() {
         org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto result = new org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.mtime_ = mtime_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.mtime_ = mtime_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.path_ = path_;
@@ -3677,39 +3302,6 @@ public final class FSProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto) {
           return mergeFrom((org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto)other);
@@ -3729,17 +3321,14 @@ public final class FSProtos {
           path_ = other.path_;
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3749,7 +3338,7 @@ public final class FSProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -3759,27 +3348,22 @@ public final class FSProtos {
       }
       private int bitField0_;
 
+      // optional uint64 mtime = 1;
       private long mtime_ ;
       /**
        * <code>optional uint64 mtime = 1;</code>
-       * @return Whether the mtime field is set.
        */
-      @java.lang.Override
       public boolean hasMtime() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>optional uint64 mtime = 1;</code>
-       * @return The mtime.
        */
-      @java.lang.Override
       public long getMtime() {
         return mtime_;
       }
       /**
        * <code>optional uint64 mtime = 1;</code>
-       * @param value The mtime to set.
-       * @return This builder for chaining.
        */
       public Builder setMtime(long value) {
         bitField0_ |= 0x00000001;
@@ -3789,7 +3373,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional uint64 mtime = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearMtime() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -3798,27 +3381,23 @@ public final class FSProtos {
         return this;
       }
 
+      // optional string path = 2;
       private java.lang.Object path_ = "";
       /**
        * <code>optional string path = 2;</code>
-       * @return Whether the path field is set.
        */
       public boolean hasPath() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>optional string path = 2;</code>
-       * @return The path.
        */
       public java.lang.String getPath() {
         java.lang.Object ref = path_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            path_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          path_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3826,7 +3405,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string path = 2;</code>
-       * @return The bytes for path.
        */
       public com.google.protobuf.ByteString
           getPathBytes() {
@@ -3843,8 +3421,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string path = 2;</code>
-       * @param value The path to set.
-       * @return This builder for chaining.
        */
       public Builder setPath(
           java.lang.String value) {
@@ -3858,7 +3434,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string path = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearPath() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -3868,8 +3443,6 @@ public final class FSProtos {
       }
       /**
        * <code>optional string path = 2;</code>
-       * @param value The bytes for path to set.
-       * @return This builder for chaining.
        */
       public Builder setPathBytes(
           com.google.protobuf.ByteString value) {
@@ -3881,80 +3454,39 @@ public final class FSProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.fs.LocalFileSystemPathHandleProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.fs.LocalFileSystemPathHandleProto)
-    private static final org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto();
+      defaultInstance = new LocalFileSystemPathHandleProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<LocalFileSystemPathHandleProto>
-        PARSER = new com.google.protobuf.AbstractParser<LocalFileSystemPathHandleProto>() {
-      @java.lang.Override
-      public LocalFileSystemPathHandleProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new LocalFileSystemPathHandleProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<LocalFileSystemPathHandleProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<LocalFileSystemPathHandleProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.fs.FSProtos.LocalFileSystemPathHandleProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.fs.LocalFileSystemPathHandleProto)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_fs_FsPermissionProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_fs_FsPermissionProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_fs_FileStatusProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_fs_FileStatusProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_fs_LocalFileSystemPathHandleProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_fs_LocalFileSystemPathHandleProto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -3967,7 +3499,7 @@ public final class FSProtos {
       "p\030\006 \001(\t\022\031\n\021modification_time\030\007 \001(\004\022\023\n\013ac" +
       "cess_time\030\010 \001(\004\022\017\n\007symlink\030\t \001(\t\022\031\n\021bloc" +
       "k_replication\030\n \001(\r\022\022\n\nblock_size\030\013 \001(\004\022" +
-      "\027\n\017encryption_data\030\017 \001(\014\022\017\n\007ec_data\030\021 \001(" +
+      "\027\n\017encryption_data\030\017 \001(\014\022\017\n\007ec_data\030\021 \001(",
       "\014\022\020\n\005flags\030\022 \001(\r:\0010\"3\n\010FileType\022\n\n\006FT_DI" +
       "R\020\001\022\013\n\007FT_FILE\020\002\022\016\n\nFT_SYMLINK\020\003\"E\n\005Flag" +
       "s\022\013\n\007HAS_ACL\020\001\022\r\n\tHAS_CRYPT\020\002\022\n\n\006HAS_EC\020" +
@@ -3976,28 +3508,36 @@ public final class FSProtos {
       "\030\002 \001(\tB&\n\024org.apache.hadoop.fsB\010FSProtos" +
       "\210\001\001\240\001\001"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_hadoop_fs_FsPermissionProto_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_hadoop_fs_FsPermissionProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_fs_FsPermissionProto_descriptor,
+              new java.lang.String[] { "Perm", });
+          internal_static_hadoop_fs_FileStatusProto_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_hadoop_fs_FileStatusProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_fs_FileStatusProto_descriptor,
+              new java.lang.String[] { "FileType", "Path", "Length", "Permission", "Owner", "Group", "ModificationTime", "AccessTime", "Symlink", "BlockReplication", "BlockSize", "EncryptionData", "EcData", "Flags", });
+          internal_static_hadoop_fs_LocalFileSystemPathHandleProto_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_hadoop_fs_LocalFileSystemPathHandleProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_fs_LocalFileSystemPathHandleProto_descriptor,
+              new java.lang.String[] { "Mtime", "Path", });
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_hadoop_fs_FsPermissionProto_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_hadoop_fs_FsPermissionProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_fs_FsPermissionProto_descriptor,
-        new java.lang.String[] { "Perm", });
-    internal_static_hadoop_fs_FileStatusProto_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_hadoop_fs_FileStatusProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_fs_FileStatusProto_descriptor,
-        new java.lang.String[] { "FileType", "Path", "Length", "Permission", "Owner", "Group", "ModificationTime", "AccessTime", "Symlink", "BlockReplication", "BlockSize", "EncryptionData", "EcData", "Flags", });
-    internal_static_hadoop_fs_LocalFileSystemPathHandleProto_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_hadoop_fs_LocalFileSystemPathHandleProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_fs_LocalFileSystemPathHandleProto_descriptor,
-        new java.lang.String[] { "Mtime", "Path", });
+        }, assigner);
   }
 
   // @@protoc_insertion_point(outer_class_scope)

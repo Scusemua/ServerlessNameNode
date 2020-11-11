@@ -6,118 +6,99 @@ package org.apache.hadoop.security.proto;
 public final class SecurityProtos {
   private SecurityProtos() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface TokenProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.TokenProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface TokenProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required bytes identifier = 1;
     /**
      * <code>required bytes identifier = 1;</code>
-     * @return Whether the identifier field is set.
      */
     boolean hasIdentifier();
     /**
      * <code>required bytes identifier = 1;</code>
-     * @return The identifier.
      */
     com.google.protobuf.ByteString getIdentifier();
 
+    // required bytes password = 2;
     /**
      * <code>required bytes password = 2;</code>
-     * @return Whether the password field is set.
      */
     boolean hasPassword();
     /**
      * <code>required bytes password = 2;</code>
-     * @return The password.
      */
     com.google.protobuf.ByteString getPassword();
 
+    // required string kind = 3;
     /**
      * <code>required string kind = 3;</code>
-     * @return Whether the kind field is set.
      */
     boolean hasKind();
     /**
      * <code>required string kind = 3;</code>
-     * @return The kind.
      */
     java.lang.String getKind();
     /**
      * <code>required string kind = 3;</code>
-     * @return The bytes for kind.
      */
     com.google.protobuf.ByteString
         getKindBytes();
 
+    // required string service = 4;
     /**
      * <code>required string service = 4;</code>
-     * @return Whether the service field is set.
      */
     boolean hasService();
     /**
      * <code>required string service = 4;</code>
-     * @return The service.
      */
     java.lang.String getService();
     /**
      * <code>required string service = 4;</code>
-     * @return The bytes for service.
      */
     com.google.protobuf.ByteString
         getServiceBytes();
   }
   /**
+   * Protobuf type {@code hadoop.common.TokenProto}
+   *
    * <pre>
    **
    * Security token identifier
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.TokenProto}
    */
   public static final class TokenProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.TokenProto)
-      TokenProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements TokenProtoOrBuilder {
     // Use TokenProto.newBuilder() to construct.
-    private TokenProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private TokenProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private TokenProto() {
-      identifier_ = com.google.protobuf.ByteString.EMPTY;
-      password_ = com.google.protobuf.ByteString.EMPTY;
-      kind_ = "";
-      service_ = "";
+    private TokenProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final TokenProto defaultInstance;
+    public static TokenProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new TokenProto();
+    public TokenProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private TokenProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -129,6 +110,13 @@ public final class SecurityProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               bitField0_ |= 0x00000001;
               identifier_ = input.readBytes();
@@ -140,22 +128,13 @@ public final class SecurityProtos {
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              kind_ = bs;
+              kind_ = input.readBytes();
               break;
             }
             case 34: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000008;
-              service_ = bs;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              service_ = input.readBytes();
               break;
             }
           }
@@ -164,7 +143,7 @@ public final class SecurityProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -175,68 +154,73 @@ public final class SecurityProtos {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_TokenProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_TokenProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto.class, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<TokenProto> PARSER =
+        new com.google.protobuf.AbstractParser<TokenProto>() {
+      public TokenProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TokenProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TokenProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required bytes identifier = 1;
     public static final int IDENTIFIER_FIELD_NUMBER = 1;
     private com.google.protobuf.ByteString identifier_;
     /**
      * <code>required bytes identifier = 1;</code>
-     * @return Whether the identifier field is set.
      */
-    @java.lang.Override
     public boolean hasIdentifier() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required bytes identifier = 1;</code>
-     * @return The identifier.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString getIdentifier() {
       return identifier_;
     }
 
+    // required bytes password = 2;
     public static final int PASSWORD_FIELD_NUMBER = 2;
     private com.google.protobuf.ByteString password_;
     /**
      * <code>required bytes password = 2;</code>
-     * @return Whether the password field is set.
      */
-    @java.lang.Override
     public boolean hasPassword() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>required bytes password = 2;</code>
-     * @return The password.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString getPassword() {
       return password_;
     }
 
+    // required string kind = 3;
     public static final int KIND_FIELD_NUMBER = 3;
-    private volatile java.lang.Object kind_;
+    private java.lang.Object kind_;
     /**
      * <code>required string kind = 3;</code>
-     * @return Whether the kind field is set.
      */
-    @java.lang.Override
     public boolean hasKind() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>required string kind = 3;</code>
-     * @return The kind.
      */
-    @java.lang.Override
     public java.lang.String getKind() {
       java.lang.Object ref = kind_;
       if (ref instanceof java.lang.String) {
@@ -253,9 +237,7 @@ public final class SecurityProtos {
     }
     /**
      * <code>required string kind = 3;</code>
-     * @return The bytes for kind.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getKindBytes() {
       java.lang.Object ref = kind_;
@@ -270,21 +252,18 @@ public final class SecurityProtos {
       }
     }
 
+    // required string service = 4;
     public static final int SERVICE_FIELD_NUMBER = 4;
-    private volatile java.lang.Object service_;
+    private java.lang.Object service_;
     /**
      * <code>required string service = 4;</code>
-     * @return Whether the service field is set.
      */
-    @java.lang.Override
     public boolean hasService() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000008) == 0x00000008);
     }
     /**
      * <code>required string service = 4;</code>
-     * @return The service.
      */
-    @java.lang.Override
     public java.lang.String getService() {
       java.lang.Object ref = service_;
       if (ref instanceof java.lang.String) {
@@ -301,9 +280,7 @@ public final class SecurityProtos {
     }
     /**
      * <code>required string service = 4;</code>
-     * @return The bytes for service.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getServiceBytes() {
       java.lang.Object ref = service_;
@@ -318,12 +295,16 @@ public final class SecurityProtos {
       }
     }
 
+    private void initFields() {
+      identifier_ = com.google.protobuf.ByteString.EMPTY;
+      password_ = com.google.protobuf.ByteString.EMPTY;
+      kind_ = "";
+      service_ = "";
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasIdentifier()) {
         memoizedIsInitialized = 0;
@@ -345,47 +326,56 @@ public final class SecurityProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeBytes(1, identifier_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         output.writeBytes(2, password_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, kind_);
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getKindBytes());
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, service_);
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeBytes(4, getServiceBytes());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(1, identifier_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(2, password_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, kind_);
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getKindBytes());
       }
-      if (((bitField0_ & 0x00000008) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, service_);
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(4, getServiceBytes());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -398,37 +388,40 @@ public final class SecurityProtos {
       }
       org.apache.hadoop.security.proto.SecurityProtos.TokenProto other = (org.apache.hadoop.security.proto.SecurityProtos.TokenProto) obj;
 
-      if (hasIdentifier() != other.hasIdentifier()) return false;
+      boolean result = true;
+      result = result && (hasIdentifier() == other.hasIdentifier());
       if (hasIdentifier()) {
-        if (!getIdentifier()
-            .equals(other.getIdentifier())) return false;
+        result = result && getIdentifier()
+            .equals(other.getIdentifier());
       }
-      if (hasPassword() != other.hasPassword()) return false;
+      result = result && (hasPassword() == other.hasPassword());
       if (hasPassword()) {
-        if (!getPassword()
-            .equals(other.getPassword())) return false;
+        result = result && getPassword()
+            .equals(other.getPassword());
       }
-      if (hasKind() != other.hasKind()) return false;
+      result = result && (hasKind() == other.hasKind());
       if (hasKind()) {
-        if (!getKind()
-            .equals(other.getKind())) return false;
+        result = result && getKind()
+            .equals(other.getKind());
       }
-      if (hasService() != other.hasService()) return false;
+      result = result && (hasService() == other.hasService());
       if (hasService()) {
-        if (!getService()
-            .equals(other.getService())) return false;
+        result = result && getService()
+            .equals(other.getService());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasIdentifier()) {
         hash = (37 * hash) + IDENTIFIER_FIELD_NUMBER;
         hash = (53 * hash) + getIdentifier().hashCode();
@@ -445,22 +438,11 @@ public final class SecurityProtos {
         hash = (37 * hash) + SERVICE_FIELD_NUMBER;
         hash = (53 * hash) + getService().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.TokenProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.SecurityProtos.TokenProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.SecurityProtos.TokenProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -484,81 +466,66 @@ public final class SecurityProtos {
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.TokenProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.TokenProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.TokenProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.TokenProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.TokenProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.TokenProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.SecurityProtos.TokenProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.TokenProto}
+     *
      * <pre>
      **
      * Security token identifier
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.TokenProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.TokenProto)
-        org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_TokenProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_TokenProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -571,16 +538,18 @@ public final class SecurityProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         identifier_ = com.google.protobuf.ByteString.EMPTY;
@@ -594,18 +563,19 @@ public final class SecurityProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_TokenProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.TokenProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.TokenProto build() {
         org.apache.hadoop.security.proto.SecurityProtos.TokenProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -614,24 +584,23 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.TokenProto buildPartial() {
         org.apache.hadoop.security.proto.SecurityProtos.TokenProto result = new org.apache.hadoop.security.proto.SecurityProtos.TokenProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.identifier_ = identifier_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.password_ = password_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
         result.kind_ = kind_;
-        if (((from_bitField0_ & 0x00000008) != 0)) {
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
           to_bitField0_ |= 0x00000008;
         }
         result.service_ = service_;
@@ -640,39 +609,6 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.SecurityProtos.TokenProto) {
           return mergeFrom((org.apache.hadoop.security.proto.SecurityProtos.TokenProto)other);
@@ -700,29 +636,30 @@ public final class SecurityProtos {
           service_ = other.service_;
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasIdentifier()) {
+          
           return false;
         }
         if (!hasPassword()) {
+          
           return false;
         }
         if (!hasKind()) {
+          
           return false;
         }
         if (!hasService()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -732,7 +669,7 @@ public final class SecurityProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.SecurityProtos.TokenProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -742,27 +679,22 @@ public final class SecurityProtos {
       }
       private int bitField0_;
 
+      // required bytes identifier = 1;
       private com.google.protobuf.ByteString identifier_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes identifier = 1;</code>
-       * @return Whether the identifier field is set.
        */
-      @java.lang.Override
       public boolean hasIdentifier() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required bytes identifier = 1;</code>
-       * @return The identifier.
        */
-      @java.lang.Override
       public com.google.protobuf.ByteString getIdentifier() {
         return identifier_;
       }
       /**
        * <code>required bytes identifier = 1;</code>
-       * @param value The identifier to set.
-       * @return This builder for chaining.
        */
       public Builder setIdentifier(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -775,7 +707,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required bytes identifier = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearIdentifier() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -784,27 +715,22 @@ public final class SecurityProtos {
         return this;
       }
 
+      // required bytes password = 2;
       private com.google.protobuf.ByteString password_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>required bytes password = 2;</code>
-       * @return Whether the password field is set.
        */
-      @java.lang.Override
       public boolean hasPassword() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>required bytes password = 2;</code>
-       * @return The password.
        */
-      @java.lang.Override
       public com.google.protobuf.ByteString getPassword() {
         return password_;
       }
       /**
        * <code>required bytes password = 2;</code>
-       * @param value The password to set.
-       * @return This builder for chaining.
        */
       public Builder setPassword(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -817,7 +743,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required bytes password = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearPassword() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -826,27 +751,23 @@ public final class SecurityProtos {
         return this;
       }
 
+      // required string kind = 3;
       private java.lang.Object kind_ = "";
       /**
        * <code>required string kind = 3;</code>
-       * @return Whether the kind field is set.
        */
       public boolean hasKind() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>required string kind = 3;</code>
-       * @return The kind.
        */
       public java.lang.String getKind() {
         java.lang.Object ref = kind_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            kind_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          kind_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -854,7 +775,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string kind = 3;</code>
-       * @return The bytes for kind.
        */
       public com.google.protobuf.ByteString
           getKindBytes() {
@@ -871,8 +791,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string kind = 3;</code>
-       * @param value The kind to set.
-       * @return This builder for chaining.
        */
       public Builder setKind(
           java.lang.String value) {
@@ -886,7 +804,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string kind = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearKind() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -896,8 +813,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string kind = 3;</code>
-       * @param value The bytes for kind to set.
-       * @return This builder for chaining.
        */
       public Builder setKindBytes(
           com.google.protobuf.ByteString value) {
@@ -910,27 +825,23 @@ public final class SecurityProtos {
         return this;
       }
 
+      // required string service = 4;
       private java.lang.Object service_ = "";
       /**
        * <code>required string service = 4;</code>
-       * @return Whether the service field is set.
        */
       public boolean hasService() {
-        return ((bitField0_ & 0x00000008) != 0);
+        return ((bitField0_ & 0x00000008) == 0x00000008);
       }
       /**
        * <code>required string service = 4;</code>
-       * @return The service.
        */
       public java.lang.String getService() {
         java.lang.Object ref = service_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            service_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          service_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -938,7 +849,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string service = 4;</code>
-       * @return The bytes for service.
        */
       public com.google.protobuf.ByteString
           getServiceBytes() {
@@ -955,8 +865,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string service = 4;</code>
-       * @param value The service to set.
-       * @return This builder for chaining.
        */
       public Builder setService(
           java.lang.String value) {
@@ -970,7 +878,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string service = 4;</code>
-       * @return This builder for chaining.
        */
       public Builder clearService() {
         bitField0_ = (bitField0_ & ~0x00000008);
@@ -980,8 +887,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string service = 4;</code>
-       * @param value The bytes for service to set.
-       * @return This builder for chaining.
        */
       public Builder setServiceBytes(
           com.google.protobuf.ByteString value) {
@@ -993,88 +898,43 @@ public final class SecurityProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.TokenProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.TokenProto)
-    private static final org.apache.hadoop.security.proto.SecurityProtos.TokenProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.SecurityProtos.TokenProto();
+      defaultInstance = new TokenProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.TokenProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<TokenProto>
-        PARSER = new com.google.protobuf.AbstractParser<TokenProto>() {
-      @java.lang.Override
-      public TokenProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new TokenProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<TokenProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<TokenProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.SecurityProtos.TokenProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.TokenProto)
   }
 
-  public interface CredentialsKVProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.CredentialsKVProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface CredentialsKVProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string alias = 1;
     /**
      * <code>required string alias = 1;</code>
-     * @return Whether the alias field is set.
      */
     boolean hasAlias();
     /**
      * <code>required string alias = 1;</code>
-     * @return The alias.
      */
     java.lang.String getAlias();
     /**
      * <code>required string alias = 1;</code>
-     * @return The bytes for alias.
      */
     com.google.protobuf.ByteString
         getAliasBytes();
 
+    // optional .hadoop.common.TokenProto token = 2;
     /**
      * <code>optional .hadoop.common.TokenProto token = 2;</code>
-     * @return Whether the token field is set.
      */
     boolean hasToken();
     /**
      * <code>optional .hadoop.common.TokenProto token = 2;</code>
-     * @return The token.
      */
     org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken();
     /**
@@ -1082,14 +942,13 @@ public final class SecurityProtos {
      */
     org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder getTokenOrBuilder();
 
+    // optional bytes secret = 3;
     /**
      * <code>optional bytes secret = 3;</code>
-     * @return Whether the secret field is set.
      */
     boolean hasSecret();
     /**
      * <code>optional bytes secret = 3;</code>
-     * @return The secret.
      */
     com.google.protobuf.ByteString getSecret();
   }
@@ -1097,39 +956,35 @@ public final class SecurityProtos {
    * Protobuf type {@code hadoop.common.CredentialsKVProto}
    */
   public static final class CredentialsKVProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.CredentialsKVProto)
-      CredentialsKVProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements CredentialsKVProtoOrBuilder {
     // Use CredentialsKVProto.newBuilder() to construct.
-    private CredentialsKVProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private CredentialsKVProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private CredentialsKVProto() {
-      alias_ = "";
-      secret_ = com.google.protobuf.ByteString.EMPTY;
+    private CredentialsKVProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final CredentialsKVProto defaultInstance;
+    public static CredentialsKVProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new CredentialsKVProto();
+    public CredentialsKVProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private CredentialsKVProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1141,15 +996,21 @@ public final class SecurityProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              alias_ = bs;
+              alias_ = input.readBytes();
               break;
             }
             case 18: {
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000002) != 0)) {
+              if (((bitField0_ & 0x00000002) == 0x00000002)) {
                 subBuilder = token_.toBuilder();
               }
               token_ = input.readMessage(org.apache.hadoop.security.proto.SecurityProtos.TokenProto.PARSER, extensionRegistry);
@@ -1165,20 +1026,13 @@ public final class SecurityProtos {
               secret_ = input.readBytes();
               break;
             }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1189,30 +1043,41 @@ public final class SecurityProtos {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CredentialsKVProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CredentialsKVProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.class, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<CredentialsKVProto> PARSER =
+        new com.google.protobuf.AbstractParser<CredentialsKVProto>() {
+      public CredentialsKVProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CredentialsKVProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CredentialsKVProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required string alias = 1;
     public static final int ALIAS_FIELD_NUMBER = 1;
-    private volatile java.lang.Object alias_;
+    private java.lang.Object alias_;
     /**
      * <code>required string alias = 1;</code>
-     * @return Whether the alias field is set.
      */
-    @java.lang.Override
     public boolean hasAlias() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string alias = 1;</code>
-     * @return The alias.
      */
-    @java.lang.Override
     public java.lang.String getAlias() {
       java.lang.Object ref = alias_;
       if (ref instanceof java.lang.String) {
@@ -1229,9 +1094,7 @@ public final class SecurityProtos {
     }
     /**
      * <code>required string alias = 1;</code>
-     * @return The bytes for alias.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getAliasBytes() {
       java.lang.Object ref = alias_;
@@ -1246,57 +1109,53 @@ public final class SecurityProtos {
       }
     }
 
+    // optional .hadoop.common.TokenProto token = 2;
     public static final int TOKEN_FIELD_NUMBER = 2;
     private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_;
     /**
      * <code>optional .hadoop.common.TokenProto token = 2;</code>
-     * @return Whether the token field is set.
      */
-    @java.lang.Override
     public boolean hasToken() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
      * <code>optional .hadoop.common.TokenProto token = 2;</code>
-     * @return The token.
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken() {
-      return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+      return token_;
     }
     /**
      * <code>optional .hadoop.common.TokenProto token = 2;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder getTokenOrBuilder() {
-      return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+      return token_;
     }
 
+    // optional bytes secret = 3;
     public static final int SECRET_FIELD_NUMBER = 3;
     private com.google.protobuf.ByteString secret_;
     /**
      * <code>optional bytes secret = 3;</code>
-     * @return Whether the secret field is set.
      */
-    @java.lang.Override
     public boolean hasSecret() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>optional bytes secret = 3;</code>
-     * @return The secret.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString getSecret() {
       return secret_;
     }
 
+    private void initFields() {
+      alias_ = "";
+      token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
+      secret_ = com.google.protobuf.ByteString.EMPTY;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasAlias()) {
         memoizedIsInitialized = 0;
@@ -1312,41 +1171,49 @@ public final class SecurityProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, alias_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getAliasBytes());
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        output.writeMessage(2, getToken());
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeMessage(2, token_);
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeBytes(3, secret_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, alias_);
-      }
-      if (((bitField0_ & 0x00000002) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(2, getToken());
+          .computeBytesSize(1, getAliasBytes());
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(2, token_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(3, secret_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1359,32 +1226,35 @@ public final class SecurityProtos {
       }
       org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto other = (org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto) obj;
 
-      if (hasAlias() != other.hasAlias()) return false;
+      boolean result = true;
+      result = result && (hasAlias() == other.hasAlias());
       if (hasAlias()) {
-        if (!getAlias()
-            .equals(other.getAlias())) return false;
+        result = result && getAlias()
+            .equals(other.getAlias());
       }
-      if (hasToken() != other.hasToken()) return false;
+      result = result && (hasToken() == other.hasToken());
       if (hasToken()) {
-        if (!getToken()
-            .equals(other.getToken())) return false;
+        result = result && getToken()
+            .equals(other.getToken());
       }
-      if (hasSecret() != other.hasSecret()) return false;
+      result = result && (hasSecret() == other.hasSecret());
       if (hasSecret()) {
-        if (!getSecret()
-            .equals(other.getSecret())) return false;
+        result = result && getSecret()
+            .equals(other.getSecret());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasAlias()) {
         hash = (37 * hash) + ALIAS_FIELD_NUMBER;
         hash = (53 * hash) + getAlias().hashCode();
@@ -1397,22 +1267,11 @@ public final class SecurityProtos {
         hash = (37 * hash) + SECRET_FIELD_NUMBER;
         hash = (53 * hash) + getSecret().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1436,59 +1295,46 @@ public final class SecurityProtos {
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -1496,16 +1342,14 @@ public final class SecurityProtos {
      * Protobuf type {@code hadoop.common.CredentialsKVProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.CredentialsKVProto)
-        org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CredentialsKVProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CredentialsKVProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1518,23 +1362,25 @@ public final class SecurityProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getTokenFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         alias_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
         if (tokenBuilder_ == null) {
-          token_ = null;
+          token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
         } else {
           tokenBuilder_.clear();
         }
@@ -1544,18 +1390,19 @@ public final class SecurityProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CredentialsKVProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto build() {
         org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1564,24 +1411,23 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto buildPartial() {
         org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto result = new org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.alias_ = alias_;
-        if (((from_bitField0_ & 0x00000002) != 0)) {
-          if (tokenBuilder_ == null) {
-            result.token_ = token_;
-          } else {
-            result.token_ = tokenBuilder_.build();
-          }
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        if (tokenBuilder_ == null) {
+          result.token_ = token_;
+        } else {
+          result.token_ = tokenBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
         result.secret_ = secret_;
@@ -1590,39 +1436,6 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto) {
           return mergeFrom((org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto)other);
@@ -1645,25 +1458,24 @@ public final class SecurityProtos {
         if (other.hasSecret()) {
           setSecret(other.getSecret());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasAlias()) {
+          
           return false;
         }
         if (hasToken()) {
           if (!getToken().isInitialized()) {
+            
             return false;
           }
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1673,7 +1485,7 @@ public final class SecurityProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1683,27 +1495,23 @@ public final class SecurityProtos {
       }
       private int bitField0_;
 
+      // required string alias = 1;
       private java.lang.Object alias_ = "";
       /**
        * <code>required string alias = 1;</code>
-       * @return Whether the alias field is set.
        */
       public boolean hasAlias() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string alias = 1;</code>
-       * @return The alias.
        */
       public java.lang.String getAlias() {
         java.lang.Object ref = alias_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            alias_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          alias_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -1711,7 +1519,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string alias = 1;</code>
-       * @return The bytes for alias.
        */
       public com.google.protobuf.ByteString
           getAliasBytes() {
@@ -1728,8 +1535,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string alias = 1;</code>
-       * @param value The alias to set.
-       * @return This builder for chaining.
        */
       public Builder setAlias(
           java.lang.String value) {
@@ -1743,7 +1548,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string alias = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearAlias() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -1753,8 +1557,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string alias = 1;</code>
-       * @param value The bytes for alias to set.
-       * @return This builder for chaining.
        */
       public Builder setAliasBytes(
           com.google.protobuf.ByteString value) {
@@ -1767,23 +1569,22 @@ public final class SecurityProtos {
         return this;
       }
 
-      private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_;
-      private com.google.protobuf.SingleFieldBuilderV3<
+      // optional .hadoop.common.TokenProto token = 2;
+      private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder> tokenBuilder_;
       /**
        * <code>optional .hadoop.common.TokenProto token = 2;</code>
-       * @return Whether the token field is set.
        */
       public boolean hasToken() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
        * <code>optional .hadoop.common.TokenProto token = 2;</code>
-       * @return The token.
        */
       public org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken() {
         if (tokenBuilder_ == null) {
-          return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+          return token_;
         } else {
           return tokenBuilder_.getMessage();
         }
@@ -1823,8 +1624,7 @@ public final class SecurityProtos {
        */
       public Builder mergeToken(org.apache.hadoop.security.proto.SecurityProtos.TokenProto value) {
         if (tokenBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) != 0) &&
-              token_ != null &&
+          if (((bitField0_ & 0x00000002) == 0x00000002) &&
               token_ != org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance()) {
             token_ =
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto.newBuilder(token_).mergeFrom(value).buildPartial();
@@ -1843,7 +1643,7 @@ public final class SecurityProtos {
        */
       public Builder clearToken() {
         if (tokenBuilder_ == null) {
-          token_ = null;
+          token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
           onChanged();
         } else {
           tokenBuilder_.clear();
@@ -1866,20 +1666,19 @@ public final class SecurityProtos {
         if (tokenBuilder_ != null) {
           return tokenBuilder_.getMessageOrBuilder();
         } else {
-          return token_ == null ?
-              org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+          return token_;
         }
       }
       /**
        * <code>optional .hadoop.common.TokenProto token = 2;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder> 
           getTokenFieldBuilder() {
         if (tokenBuilder_ == null) {
-          tokenBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          tokenBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder>(
-                  getToken(),
+                  token_,
                   getParentForChildren(),
                   isClean());
           token_ = null;
@@ -1887,27 +1686,22 @@ public final class SecurityProtos {
         return tokenBuilder_;
       }
 
+      // optional bytes secret = 3;
       private com.google.protobuf.ByteString secret_ = com.google.protobuf.ByteString.EMPTY;
       /**
        * <code>optional bytes secret = 3;</code>
-       * @return Whether the secret field is set.
        */
-      @java.lang.Override
       public boolean hasSecret() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>optional bytes secret = 3;</code>
-       * @return The secret.
        */
-      @java.lang.Override
       public com.google.protobuf.ByteString getSecret() {
         return secret_;
       }
       /**
        * <code>optional bytes secret = 3;</code>
-       * @param value The secret to set.
-       * @return This builder for chaining.
        */
       public Builder setSecret(com.google.protobuf.ByteString value) {
         if (value == null) {
@@ -1920,7 +1714,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>optional bytes secret = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearSecret() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -1928,63 +1721,22 @@ public final class SecurityProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.CredentialsKVProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.CredentialsKVProto)
-    private static final org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto();
+      defaultInstance = new CredentialsKVProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<CredentialsKVProto>
-        PARSER = new com.google.protobuf.AbstractParser<CredentialsKVProto>() {
-      @java.lang.Override
-      public CredentialsKVProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CredentialsKVProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<CredentialsKVProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CredentialsKVProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.CredentialsKVProto)
   }
 
-  public interface CredentialsProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.CredentialsProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface CredentialsProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .hadoop.common.CredentialsKVProto tokens = 1;
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto tokens = 1;</code>
      */
@@ -2009,6 +1761,7 @@ public final class SecurityProtos {
     org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder getTokensOrBuilder(
         int index);
 
+    // repeated .hadoop.common.CredentialsKVProto secrets = 2;
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto secrets = 2;</code>
      */
@@ -2037,39 +1790,35 @@ public final class SecurityProtos {
    * Protobuf type {@code hadoop.common.CredentialsProto}
    */
   public static final class CredentialsProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.CredentialsProto)
-      CredentialsProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements CredentialsProtoOrBuilder {
     // Use CredentialsProto.newBuilder() to construct.
-    private CredentialsProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private CredentialsProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private CredentialsProto() {
-      tokens_ = java.util.Collections.emptyList();
-      secrets_ = java.util.Collections.emptyList();
+    private CredentialsProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final CredentialsProto defaultInstance;
+    public static CredentialsProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new CredentialsProto();
+    public CredentialsProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private CredentialsProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -2081,29 +1830,27 @@ public final class SecurityProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 tokens_ = new java.util.ArrayList<org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              tokens_.add(
-                  input.readMessage(org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.PARSER, extensionRegistry));
+              tokens_.add(input.readMessage(org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.PARSER, extensionRegistry));
               break;
             }
             case 18: {
-              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
                 secrets_ = new java.util.ArrayList<org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto>();
                 mutable_bitField0_ |= 0x00000002;
               }
-              secrets_.add(
-                  input.readMessage(org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.PARSER, extensionRegistry));
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              secrets_.add(input.readMessage(org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.PARSER, extensionRegistry));
               break;
             }
           }
@@ -2112,12 +1859,12 @@ public final class SecurityProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           tokens_ = java.util.Collections.unmodifiableList(tokens_);
         }
-        if (((mutable_bitField0_ & 0x00000002) != 0)) {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
           secrets_ = java.util.Collections.unmodifiableList(secrets_);
         }
         this.unknownFields = unknownFields.build();
@@ -2129,27 +1876,40 @@ public final class SecurityProtos {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CredentialsProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CredentialsProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto.class, org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<CredentialsProto> PARSER =
+        new com.google.protobuf.AbstractParser<CredentialsProto>() {
+      public CredentialsProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CredentialsProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CredentialsProto> getParserForType() {
+      return PARSER;
+    }
+
+    // repeated .hadoop.common.CredentialsKVProto tokens = 1;
     public static final int TOKENS_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto> tokens_;
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto tokens = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto> getTokensList() {
       return tokens_;
     }
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto tokens = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<? extends org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder> 
         getTokensOrBuilderList() {
       return tokens_;
@@ -2157,39 +1917,35 @@ public final class SecurityProtos {
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto tokens = 1;</code>
      */
-    @java.lang.Override
     public int getTokensCount() {
       return tokens_.size();
     }
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto tokens = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto getTokens(int index) {
       return tokens_.get(index);
     }
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto tokens = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder getTokensOrBuilder(
         int index) {
       return tokens_.get(index);
     }
 
+    // repeated .hadoop.common.CredentialsKVProto secrets = 2;
     public static final int SECRETS_FIELD_NUMBER = 2;
     private java.util.List<org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto> secrets_;
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto secrets = 2;</code>
      */
-    @java.lang.Override
     public java.util.List<org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto> getSecretsList() {
       return secrets_;
     }
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto secrets = 2;</code>
      */
-    @java.lang.Override
     public java.util.List<? extends org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder> 
         getSecretsOrBuilderList() {
       return secrets_;
@@ -2197,32 +1953,31 @@ public final class SecurityProtos {
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto secrets = 2;</code>
      */
-    @java.lang.Override
     public int getSecretsCount() {
       return secrets_.size();
     }
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto secrets = 2;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto getSecrets(int index) {
       return secrets_.get(index);
     }
     /**
      * <code>repeated .hadoop.common.CredentialsKVProto secrets = 2;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder getSecretsOrBuilder(
         int index) {
       return secrets_.get(index);
     }
 
+    private void initFields() {
+      tokens_ = java.util.Collections.emptyList();
+      secrets_ = java.util.Collections.emptyList();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       for (int i = 0; i < getTokensCount(); i++) {
         if (!getTokens(i).isInitialized()) {
@@ -2240,21 +1995,21 @@ public final class SecurityProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       for (int i = 0; i < tokens_.size(); i++) {
         output.writeMessage(1, tokens_.get(i));
       }
       for (int i = 0; i < secrets_.size(); i++) {
         output.writeMessage(2, secrets_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -2266,9 +2021,16 @@ public final class SecurityProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, secrets_.get(i));
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -2281,21 +2043,24 @@ public final class SecurityProtos {
       }
       org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto other = (org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto) obj;
 
-      if (!getTokensList()
-          .equals(other.getTokensList())) return false;
-      if (!getSecretsList()
-          .equals(other.getSecretsList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && getTokensList()
+          .equals(other.getTokensList());
+      result = result && getSecretsList()
+          .equals(other.getSecretsList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (getTokensCount() > 0) {
         hash = (37 * hash) + TOKENS_FIELD_NUMBER;
         hash = (53 * hash) + getTokensList().hashCode();
@@ -2304,22 +2069,11 @@ public final class SecurityProtos {
         hash = (37 * hash) + SECRETS_FIELD_NUMBER;
         hash = (53 * hash) + getSecretsList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2343,59 +2097,46 @@ public final class SecurityProtos {
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -2403,16 +2144,14 @@ public final class SecurityProtos {
      * Protobuf type {@code hadoop.common.CredentialsProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.CredentialsProto)
-        org.apache.hadoop.security.proto.SecurityProtos.CredentialsProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.SecurityProtos.CredentialsProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CredentialsProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CredentialsProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -2425,18 +2164,20 @@ public final class SecurityProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getTokensFieldBuilder();
           getSecretsFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (tokensBuilder_ == null) {
@@ -2454,18 +2195,19 @@ public final class SecurityProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CredentialsProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto build() {
         org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -2474,12 +2216,11 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto buildPartial() {
         org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto result = new org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto(this);
         int from_bitField0_ = bitField0_;
         if (tokensBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
             tokens_ = java.util.Collections.unmodifiableList(tokens_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -2488,7 +2229,7 @@ public final class SecurityProtos {
           result.tokens_ = tokensBuilder_.build();
         }
         if (secretsBuilder_ == null) {
-          if (((bitField0_ & 0x00000002) != 0)) {
+          if (((bitField0_ & 0x00000002) == 0x00000002)) {
             secrets_ = java.util.Collections.unmodifiableList(secrets_);
             bitField0_ = (bitField0_ & ~0x00000002);
           }
@@ -2500,39 +2241,6 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto) {
           return mergeFrom((org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto)other);
@@ -2563,7 +2271,7 @@ public final class SecurityProtos {
               tokens_ = other.tokens_;
               bitField0_ = (bitField0_ & ~0x00000001);
               tokensBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getTokensFieldBuilder() : null;
             } else {
               tokensBuilder_.addAllMessages(other.tokens_);
@@ -2589,34 +2297,33 @@ public final class SecurityProtos {
               secrets_ = other.secrets_;
               bitField0_ = (bitField0_ & ~0x00000002);
               secretsBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getSecretsFieldBuilder() : null;
             } else {
               secretsBuilder_.addAllMessages(other.secrets_);
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         for (int i = 0; i < getTokensCount(); i++) {
           if (!getTokens(i).isInitialized()) {
+            
             return false;
           }
         }
         for (int i = 0; i < getSecretsCount(); i++) {
           if (!getSecrets(i).isInitialized()) {
+            
             return false;
           }
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2626,7 +2333,7 @@ public final class SecurityProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2636,16 +2343,17 @@ public final class SecurityProtos {
       }
       private int bitField0_;
 
+      // repeated .hadoop.common.CredentialsKVProto tokens = 1;
       private java.util.List<org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto> tokens_ =
         java.util.Collections.emptyList();
       private void ensureTokensIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           tokens_ = new java.util.ArrayList<org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto>(tokens_);
           bitField0_ |= 0x00000001;
          }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder> tokensBuilder_;
 
       /**
@@ -2777,8 +2485,7 @@ public final class SecurityProtos {
           java.lang.Iterable<? extends org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto> values) {
         if (tokensBuilder_ == null) {
           ensureTokensIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, tokens_);
+          super.addAll(values, tokens_);
           onChanged();
         } else {
           tokensBuilder_.addAllMessages(values);
@@ -2861,14 +2568,14 @@ public final class SecurityProtos {
            getTokensBuilderList() {
         return getTokensFieldBuilder().getBuilderList();
       }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder> 
           getTokensFieldBuilder() {
         if (tokensBuilder_ == null) {
-          tokensBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          tokensBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder>(
                   tokens_,
-                  ((bitField0_ & 0x00000001) != 0),
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
           tokens_ = null;
@@ -2876,16 +2583,17 @@ public final class SecurityProtos {
         return tokensBuilder_;
       }
 
+      // repeated .hadoop.common.CredentialsKVProto secrets = 2;
       private java.util.List<org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto> secrets_ =
         java.util.Collections.emptyList();
       private void ensureSecretsIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           secrets_ = new java.util.ArrayList<org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto>(secrets_);
           bitField0_ |= 0x00000002;
          }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder> secretsBuilder_;
 
       /**
@@ -3017,8 +2725,7 @@ public final class SecurityProtos {
           java.lang.Iterable<? extends org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto> values) {
         if (secretsBuilder_ == null) {
           ensureSecretsIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, secrets_);
+          super.addAll(values, secrets_);
           onChanged();
         } else {
           secretsBuilder_.addAllMessages(values);
@@ -3101,90 +2808,46 @@ public final class SecurityProtos {
            getSecretsBuilderList() {
         return getSecretsFieldBuilder().getBuilderList();
       }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder> 
           getSecretsFieldBuilder() {
         if (secretsBuilder_ == null) {
-          secretsBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          secretsBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.CredentialsKVProtoOrBuilder>(
                   secrets_,
-                  ((bitField0_ & 0x00000002) != 0),
+                  ((bitField0_ & 0x00000002) == 0x00000002),
                   getParentForChildren(),
                   isClean());
           secrets_ = null;
         }
         return secretsBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.CredentialsProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.CredentialsProto)
-    private static final org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto();
+      defaultInstance = new CredentialsProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<CredentialsProto>
-        PARSER = new com.google.protobuf.AbstractParser<CredentialsProto>() {
-      @java.lang.Override
-      public CredentialsProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CredentialsProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<CredentialsProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CredentialsProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.SecurityProtos.CredentialsProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.CredentialsProto)
   }
 
-  public interface GetDelegationTokenRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GetDelegationTokenRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetDelegationTokenRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required string renewer = 1;
     /**
      * <code>required string renewer = 1;</code>
-     * @return Whether the renewer field is set.
      */
     boolean hasRenewer();
     /**
      * <code>required string renewer = 1;</code>
-     * @return The renewer.
      */
     java.lang.String getRenewer();
     /**
      * <code>required string renewer = 1;</code>
-     * @return The bytes for renewer.
      */
     com.google.protobuf.ByteString
         getRenewerBytes();
@@ -3193,38 +2856,35 @@ public final class SecurityProtos {
    * Protobuf type {@code hadoop.common.GetDelegationTokenRequestProto}
    */
   public static final class GetDelegationTokenRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GetDelegationTokenRequestProto)
-      GetDelegationTokenRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GetDelegationTokenRequestProtoOrBuilder {
     // Use GetDelegationTokenRequestProto.newBuilder() to construct.
-    private GetDelegationTokenRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GetDelegationTokenRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GetDelegationTokenRequestProto() {
-      renewer_ = "";
+    private GetDelegationTokenRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetDelegationTokenRequestProto defaultInstance;
+    public static GetDelegationTokenRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GetDelegationTokenRequestProto();
+    public GetDelegationTokenRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GetDelegationTokenRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -3236,17 +2896,16 @@ public final class SecurityProtos {
             case 0:
               done = true;
               break;
-            case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              bitField0_ |= 0x00000001;
-              renewer_ = bs;
-              break;
-            }
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
+              break;
+            }
+            case 10: {
+              bitField0_ |= 0x00000001;
+              renewer_ = input.readBytes();
               break;
             }
           }
@@ -3255,7 +2914,7 @@ public final class SecurityProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -3266,30 +2925,41 @@ public final class SecurityProtos {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_GetDelegationTokenRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_GetDelegationTokenRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto.class, org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GetDelegationTokenRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<GetDelegationTokenRequestProto>() {
+      public GetDelegationTokenRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetDelegationTokenRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetDelegationTokenRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required string renewer = 1;
     public static final int RENEWER_FIELD_NUMBER = 1;
-    private volatile java.lang.Object renewer_;
+    private java.lang.Object renewer_;
     /**
      * <code>required string renewer = 1;</code>
-     * @return Whether the renewer field is set.
      */
-    @java.lang.Override
     public boolean hasRenewer() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required string renewer = 1;</code>
-     * @return The renewer.
      */
-    @java.lang.Override
     public java.lang.String getRenewer() {
       java.lang.Object ref = renewer_;
       if (ref instanceof java.lang.String) {
@@ -3306,9 +2976,7 @@ public final class SecurityProtos {
     }
     /**
      * <code>required string renewer = 1;</code>
-     * @return The bytes for renewer.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getRenewerBytes() {
       java.lang.Object ref = renewer_;
@@ -3323,12 +2991,13 @@ public final class SecurityProtos {
       }
     }
 
+    private void initFields() {
+      renewer_ = "";
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasRenewer()) {
         memoizedIsInitialized = 0;
@@ -3338,27 +3007,35 @@ public final class SecurityProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, renewer_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getRenewerBytes());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, renewer_);
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getRenewerBytes());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -3371,42 +3048,34 @@ public final class SecurityProtos {
       }
       org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto other = (org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto) obj;
 
-      if (hasRenewer() != other.hasRenewer()) return false;
+      boolean result = true;
+      result = result && (hasRenewer() == other.hasRenewer());
       if (hasRenewer()) {
-        if (!getRenewer()
-            .equals(other.getRenewer())) return false;
+        result = result && getRenewer()
+            .equals(other.getRenewer());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasRenewer()) {
         hash = (37 * hash) + RENEWER_FIELD_NUMBER;
         hash = (53 * hash) + getRenewer().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -3430,59 +3099,46 @@ public final class SecurityProtos {
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -3490,16 +3146,14 @@ public final class SecurityProtos {
      * Protobuf type {@code hadoop.common.GetDelegationTokenRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GetDelegationTokenRequestProto)
-        org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_GetDelegationTokenRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_GetDelegationTokenRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -3512,16 +3166,18 @@ public final class SecurityProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         renewer_ = "";
@@ -3529,18 +3185,19 @@ public final class SecurityProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_GetDelegationTokenRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto build() {
         org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -3549,12 +3206,11 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto buildPartial() {
         org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto result = new org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.renewer_ = renewer_;
@@ -3563,39 +3219,6 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto) {
           return mergeFrom((org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto)other);
@@ -3612,20 +3235,18 @@ public final class SecurityProtos {
           renewer_ = other.renewer_;
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasRenewer()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -3635,7 +3256,7 @@ public final class SecurityProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -3645,27 +3266,23 @@ public final class SecurityProtos {
       }
       private int bitField0_;
 
+      // required string renewer = 1;
       private java.lang.Object renewer_ = "";
       /**
        * <code>required string renewer = 1;</code>
-       * @return Whether the renewer field is set.
        */
       public boolean hasRenewer() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required string renewer = 1;</code>
-       * @return The renewer.
        */
       public java.lang.String getRenewer() {
         java.lang.Object ref = renewer_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            renewer_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          renewer_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -3673,7 +3290,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string renewer = 1;</code>
-       * @return The bytes for renewer.
        */
       public com.google.protobuf.ByteString
           getRenewerBytes() {
@@ -3690,8 +3306,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string renewer = 1;</code>
-       * @param value The renewer to set.
-       * @return This builder for chaining.
        */
       public Builder setRenewer(
           java.lang.String value) {
@@ -3705,7 +3319,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string renewer = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearRenewer() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -3715,8 +3328,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required string renewer = 1;</code>
-       * @param value The bytes for renewer to set.
-       * @return This builder for chaining.
        */
       public Builder setRenewerBytes(
           com.google.protobuf.ByteString value) {
@@ -3728,71 +3339,28 @@ public final class SecurityProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GetDelegationTokenRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GetDelegationTokenRequestProto)
-    private static final org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto();
+      defaultInstance = new GetDelegationTokenRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetDelegationTokenRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<GetDelegationTokenRequestProto>() {
-      @java.lang.Override
-      public GetDelegationTokenRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetDelegationTokenRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetDelegationTokenRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetDelegationTokenRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GetDelegationTokenRequestProto)
   }
 
-  public interface GetDelegationTokenResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GetDelegationTokenResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GetDelegationTokenResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional .hadoop.common.TokenProto token = 1;
     /**
      * <code>optional .hadoop.common.TokenProto token = 1;</code>
-     * @return Whether the token field is set.
      */
     boolean hasToken();
     /**
      * <code>optional .hadoop.common.TokenProto token = 1;</code>
-     * @return The token.
      */
     org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken();
     /**
@@ -3804,37 +3372,35 @@ public final class SecurityProtos {
    * Protobuf type {@code hadoop.common.GetDelegationTokenResponseProto}
    */
   public static final class GetDelegationTokenResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GetDelegationTokenResponseProto)
-      GetDelegationTokenResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GetDelegationTokenResponseProtoOrBuilder {
     // Use GetDelegationTokenResponseProto.newBuilder() to construct.
-    private GetDelegationTokenResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GetDelegationTokenResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GetDelegationTokenResponseProto() {
+    private GetDelegationTokenResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GetDelegationTokenResponseProto defaultInstance;
+    public static GetDelegationTokenResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GetDelegationTokenResponseProto();
+    public GetDelegationTokenResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GetDelegationTokenResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -3846,9 +3412,16 @@ public final class SecurityProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000001) != 0)) {
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
                 subBuilder = token_.toBuilder();
               }
               token_ = input.readMessage(org.apache.hadoop.security.proto.SecurityProtos.TokenProto.PARSER, extensionRegistry);
@@ -3859,20 +3432,13 @@ public final class SecurityProtos {
               bitField0_ |= 0x00000001;
               break;
             }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -3883,47 +3449,58 @@ public final class SecurityProtos {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_GetDelegationTokenResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_GetDelegationTokenResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto.class, org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GetDelegationTokenResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<GetDelegationTokenResponseProto>() {
+      public GetDelegationTokenResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GetDelegationTokenResponseProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GetDelegationTokenResponseProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // optional .hadoop.common.TokenProto token = 1;
     public static final int TOKEN_FIELD_NUMBER = 1;
     private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_;
     /**
      * <code>optional .hadoop.common.TokenProto token = 1;</code>
-     * @return Whether the token field is set.
      */
-    @java.lang.Override
     public boolean hasToken() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>optional .hadoop.common.TokenProto token = 1;</code>
-     * @return The token.
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken() {
-      return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+      return token_;
     }
     /**
      * <code>optional .hadoop.common.TokenProto token = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder getTokenOrBuilder() {
-      return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+      return token_;
     }
 
+    private void initFields() {
+      token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (hasToken()) {
         if (!getToken().isInitialized()) {
@@ -3935,28 +3512,35 @@ public final class SecurityProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(1, getToken());
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, token_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getToken());
+          .computeMessageSize(1, token_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -3969,42 +3553,34 @@ public final class SecurityProtos {
       }
       org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto other = (org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto) obj;
 
-      if (hasToken() != other.hasToken()) return false;
+      boolean result = true;
+      result = result && (hasToken() == other.hasToken());
       if (hasToken()) {
-        if (!getToken()
-            .equals(other.getToken())) return false;
+        result = result && getToken()
+            .equals(other.getToken());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasToken()) {
         hash = (37 * hash) + TOKEN_FIELD_NUMBER;
         hash = (53 * hash) + getToken().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4028,59 +3604,46 @@ public final class SecurityProtos {
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -4088,16 +3651,14 @@ public final class SecurityProtos {
      * Protobuf type {@code hadoop.common.GetDelegationTokenResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GetDelegationTokenResponseProto)
-        org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_GetDelegationTokenResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_GetDelegationTokenResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -4110,21 +3671,23 @@ public final class SecurityProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getTokenFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (tokenBuilder_ == null) {
-          token_ = null;
+          token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
         } else {
           tokenBuilder_.clear();
         }
@@ -4132,18 +3695,19 @@ public final class SecurityProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_GetDelegationTokenResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto build() {
         org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -4152,57 +3716,23 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto buildPartial() {
         org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto result = new org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          if (tokenBuilder_ == null) {
-            result.token_ = token_;
-          } else {
-            result.token_ = tokenBuilder_.build();
-          }
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
+        }
+        if (tokenBuilder_ == null) {
+          result.token_ = token_;
+        } else {
+          result.token_ = tokenBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto) {
           return mergeFrom((org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto)other);
@@ -4217,22 +3747,20 @@ public final class SecurityProtos {
         if (other.hasToken()) {
           mergeToken(other.getToken());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (hasToken()) {
           if (!getToken().isInitialized()) {
+            
             return false;
           }
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4242,7 +3770,7 @@ public final class SecurityProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -4252,23 +3780,22 @@ public final class SecurityProtos {
       }
       private int bitField0_;
 
-      private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_;
-      private com.google.protobuf.SingleFieldBuilderV3<
+      // optional .hadoop.common.TokenProto token = 1;
+      private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder> tokenBuilder_;
       /**
        * <code>optional .hadoop.common.TokenProto token = 1;</code>
-       * @return Whether the token field is set.
        */
       public boolean hasToken() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>optional .hadoop.common.TokenProto token = 1;</code>
-       * @return The token.
        */
       public org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken() {
         if (tokenBuilder_ == null) {
-          return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+          return token_;
         } else {
           return tokenBuilder_.getMessage();
         }
@@ -4308,8 +3835,7 @@ public final class SecurityProtos {
        */
       public Builder mergeToken(org.apache.hadoop.security.proto.SecurityProtos.TokenProto value) {
         if (tokenBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0) &&
-              token_ != null &&
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
               token_ != org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance()) {
             token_ =
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto.newBuilder(token_).mergeFrom(value).buildPartial();
@@ -4328,7 +3854,7 @@ public final class SecurityProtos {
        */
       public Builder clearToken() {
         if (tokenBuilder_ == null) {
-          token_ = null;
+          token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
           onChanged();
         } else {
           tokenBuilder_.clear();
@@ -4351,91 +3877,47 @@ public final class SecurityProtos {
         if (tokenBuilder_ != null) {
           return tokenBuilder_.getMessageOrBuilder();
         } else {
-          return token_ == null ?
-              org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+          return token_;
         }
       }
       /**
        * <code>optional .hadoop.common.TokenProto token = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder> 
           getTokenFieldBuilder() {
         if (tokenBuilder_ == null) {
-          tokenBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          tokenBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder>(
-                  getToken(),
+                  token_,
                   getParentForChildren(),
                   isClean());
           token_ = null;
         }
         return tokenBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GetDelegationTokenResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GetDelegationTokenResponseProto)
-    private static final org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto();
+      defaultInstance = new GetDelegationTokenResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GetDelegationTokenResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<GetDelegationTokenResponseProto>() {
-      @java.lang.Override
-      public GetDelegationTokenResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GetDelegationTokenResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GetDelegationTokenResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GetDelegationTokenResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.SecurityProtos.GetDelegationTokenResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GetDelegationTokenResponseProto)
   }
 
-  public interface RenewDelegationTokenRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.RenewDelegationTokenRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RenewDelegationTokenRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required .hadoop.common.TokenProto token = 1;
     /**
      * <code>required .hadoop.common.TokenProto token = 1;</code>
-     * @return Whether the token field is set.
      */
     boolean hasToken();
     /**
      * <code>required .hadoop.common.TokenProto token = 1;</code>
-     * @return The token.
      */
     org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken();
     /**
@@ -4447,37 +3929,35 @@ public final class SecurityProtos {
    * Protobuf type {@code hadoop.common.RenewDelegationTokenRequestProto}
    */
   public static final class RenewDelegationTokenRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.RenewDelegationTokenRequestProto)
-      RenewDelegationTokenRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements RenewDelegationTokenRequestProtoOrBuilder {
     // Use RenewDelegationTokenRequestProto.newBuilder() to construct.
-    private RenewDelegationTokenRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private RenewDelegationTokenRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private RenewDelegationTokenRequestProto() {
+    private RenewDelegationTokenRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final RenewDelegationTokenRequestProto defaultInstance;
+    public static RenewDelegationTokenRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new RenewDelegationTokenRequestProto();
+    public RenewDelegationTokenRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private RenewDelegationTokenRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -4489,9 +3969,16 @@ public final class SecurityProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000001) != 0)) {
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
                 subBuilder = token_.toBuilder();
               }
               token_ = input.readMessage(org.apache.hadoop.security.proto.SecurityProtos.TokenProto.PARSER, extensionRegistry);
@@ -4502,20 +3989,13 @@ public final class SecurityProtos {
               bitField0_ |= 0x00000001;
               break;
             }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -4526,47 +4006,58 @@ public final class SecurityProtos {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_RenewDelegationTokenRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_RenewDelegationTokenRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto.class, org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<RenewDelegationTokenRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<RenewDelegationTokenRequestProto>() {
+      public RenewDelegationTokenRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new RenewDelegationTokenRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<RenewDelegationTokenRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required .hadoop.common.TokenProto token = 1;
     public static final int TOKEN_FIELD_NUMBER = 1;
     private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_;
     /**
      * <code>required .hadoop.common.TokenProto token = 1;</code>
-     * @return Whether the token field is set.
      */
-    @java.lang.Override
     public boolean hasToken() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required .hadoop.common.TokenProto token = 1;</code>
-     * @return The token.
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken() {
-      return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+      return token_;
     }
     /**
      * <code>required .hadoop.common.TokenProto token = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder getTokenOrBuilder() {
-      return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+      return token_;
     }
 
+    private void initFields() {
+      token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasToken()) {
         memoizedIsInitialized = 0;
@@ -4580,28 +4071,35 @@ public final class SecurityProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(1, getToken());
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, token_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getToken());
+          .computeMessageSize(1, token_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -4614,42 +4112,34 @@ public final class SecurityProtos {
       }
       org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto other = (org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto) obj;
 
-      if (hasToken() != other.hasToken()) return false;
+      boolean result = true;
+      result = result && (hasToken() == other.hasToken());
       if (hasToken()) {
-        if (!getToken()
-            .equals(other.getToken())) return false;
+        result = result && getToken()
+            .equals(other.getToken());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasToken()) {
         hash = (37 * hash) + TOKEN_FIELD_NUMBER;
         hash = (53 * hash) + getToken().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -4673,59 +4163,46 @@ public final class SecurityProtos {
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -4733,16 +4210,14 @@ public final class SecurityProtos {
      * Protobuf type {@code hadoop.common.RenewDelegationTokenRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.RenewDelegationTokenRequestProto)
-        org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_RenewDelegationTokenRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_RenewDelegationTokenRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -4755,21 +4230,23 @@ public final class SecurityProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getTokenFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (tokenBuilder_ == null) {
-          token_ = null;
+          token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
         } else {
           tokenBuilder_.clear();
         }
@@ -4777,18 +4254,19 @@ public final class SecurityProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_RenewDelegationTokenRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto build() {
         org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -4797,57 +4275,23 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto buildPartial() {
         org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto result = new org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          if (tokenBuilder_ == null) {
-            result.token_ = token_;
-          } else {
-            result.token_ = tokenBuilder_.build();
-          }
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
+        }
+        if (tokenBuilder_ == null) {
+          result.token_ = token_;
+        } else {
+          result.token_ = tokenBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto) {
           return mergeFrom((org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto)other);
@@ -4862,23 +4306,22 @@ public final class SecurityProtos {
         if (other.hasToken()) {
           mergeToken(other.getToken());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasToken()) {
+          
           return false;
         }
         if (!getToken().isInitialized()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -4888,7 +4331,7 @@ public final class SecurityProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -4898,23 +4341,22 @@ public final class SecurityProtos {
       }
       private int bitField0_;
 
-      private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_;
-      private com.google.protobuf.SingleFieldBuilderV3<
+      // required .hadoop.common.TokenProto token = 1;
+      private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder> tokenBuilder_;
       /**
        * <code>required .hadoop.common.TokenProto token = 1;</code>
-       * @return Whether the token field is set.
        */
       public boolean hasToken() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required .hadoop.common.TokenProto token = 1;</code>
-       * @return The token.
        */
       public org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken() {
         if (tokenBuilder_ == null) {
-          return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+          return token_;
         } else {
           return tokenBuilder_.getMessage();
         }
@@ -4954,8 +4396,7 @@ public final class SecurityProtos {
        */
       public Builder mergeToken(org.apache.hadoop.security.proto.SecurityProtos.TokenProto value) {
         if (tokenBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0) &&
-              token_ != null &&
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
               token_ != org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance()) {
             token_ =
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto.newBuilder(token_).mergeFrom(value).buildPartial();
@@ -4974,7 +4415,7 @@ public final class SecurityProtos {
        */
       public Builder clearToken() {
         if (tokenBuilder_ == null) {
-          token_ = null;
+          token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
           onChanged();
         } else {
           tokenBuilder_.clear();
@@ -4997,91 +4438,47 @@ public final class SecurityProtos {
         if (tokenBuilder_ != null) {
           return tokenBuilder_.getMessageOrBuilder();
         } else {
-          return token_ == null ?
-              org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+          return token_;
         }
       }
       /**
        * <code>required .hadoop.common.TokenProto token = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder> 
           getTokenFieldBuilder() {
         if (tokenBuilder_ == null) {
-          tokenBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          tokenBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder>(
-                  getToken(),
+                  token_,
                   getParentForChildren(),
                   isClean());
           token_ = null;
         }
         return tokenBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.RenewDelegationTokenRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.RenewDelegationTokenRequestProto)
-    private static final org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto();
+      defaultInstance = new RenewDelegationTokenRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<RenewDelegationTokenRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<RenewDelegationTokenRequestProto>() {
-      @java.lang.Override
-      public RenewDelegationTokenRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new RenewDelegationTokenRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<RenewDelegationTokenRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<RenewDelegationTokenRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.RenewDelegationTokenRequestProto)
   }
 
-  public interface RenewDelegationTokenResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.RenewDelegationTokenResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface RenewDelegationTokenResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required uint64 newExpiryTime = 1;
     /**
      * <code>required uint64 newExpiryTime = 1;</code>
-     * @return Whether the newExpiryTime field is set.
      */
     boolean hasNewExpiryTime();
     /**
      * <code>required uint64 newExpiryTime = 1;</code>
-     * @return The newExpiryTime.
      */
     long getNewExpiryTime();
   }
@@ -5089,37 +4486,35 @@ public final class SecurityProtos {
    * Protobuf type {@code hadoop.common.RenewDelegationTokenResponseProto}
    */
   public static final class RenewDelegationTokenResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.RenewDelegationTokenResponseProto)
-      RenewDelegationTokenResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements RenewDelegationTokenResponseProtoOrBuilder {
     // Use RenewDelegationTokenResponseProto.newBuilder() to construct.
-    private RenewDelegationTokenResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private RenewDelegationTokenResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private RenewDelegationTokenResponseProto() {
+    private RenewDelegationTokenResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final RenewDelegationTokenResponseProto defaultInstance;
+    public static RenewDelegationTokenResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new RenewDelegationTokenResponseProto();
+    public RenewDelegationTokenResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private RenewDelegationTokenResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -5131,16 +4526,16 @@ public final class SecurityProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               newExpiryTime_ = input.readUInt64();
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
               break;
             }
           }
@@ -5149,7 +4544,7 @@ public final class SecurityProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -5160,40 +4555,52 @@ public final class SecurityProtos {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_RenewDelegationTokenResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_RenewDelegationTokenResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto.class, org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<RenewDelegationTokenResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<RenewDelegationTokenResponseProto>() {
+      public RenewDelegationTokenResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new RenewDelegationTokenResponseProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<RenewDelegationTokenResponseProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required uint64 newExpiryTime = 1;
     public static final int NEWEXPIRYTIME_FIELD_NUMBER = 1;
     private long newExpiryTime_;
     /**
      * <code>required uint64 newExpiryTime = 1;</code>
-     * @return Whether the newExpiryTime field is set.
      */
-    @java.lang.Override
     public boolean hasNewExpiryTime() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required uint64 newExpiryTime = 1;</code>
-     * @return The newExpiryTime.
      */
-    @java.lang.Override
     public long getNewExpiryTime() {
       return newExpiryTime_;
     }
 
+    private void initFields() {
+      newExpiryTime_ = 0L;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasNewExpiryTime()) {
         memoizedIsInitialized = 0;
@@ -5203,28 +4610,35 @@ public final class SecurityProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeUInt64(1, newExpiryTime_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt64Size(1, newExpiryTime_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -5237,43 +4651,34 @@ public final class SecurityProtos {
       }
       org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto other = (org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto) obj;
 
-      if (hasNewExpiryTime() != other.hasNewExpiryTime()) return false;
+      boolean result = true;
+      result = result && (hasNewExpiryTime() == other.hasNewExpiryTime());
       if (hasNewExpiryTime()) {
-        if (getNewExpiryTime()
-            != other.getNewExpiryTime()) return false;
+        result = result && (getNewExpiryTime()
+            == other.getNewExpiryTime());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasNewExpiryTime()) {
         hash = (37 * hash) + NEWEXPIRYTIME_FIELD_NUMBER;
-        hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
-            getNewExpiryTime());
+        hash = (53 * hash) + hashLong(getNewExpiryTime());
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -5297,59 +4702,46 @@ public final class SecurityProtos {
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -5357,16 +4749,14 @@ public final class SecurityProtos {
      * Protobuf type {@code hadoop.common.RenewDelegationTokenResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.RenewDelegationTokenResponseProto)
-        org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_RenewDelegationTokenResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_RenewDelegationTokenResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -5379,16 +4769,18 @@ public final class SecurityProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         newExpiryTime_ = 0L;
@@ -5396,18 +4788,19 @@ public final class SecurityProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_RenewDelegationTokenResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto build() {
         org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -5416,53 +4809,19 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto buildPartial() {
         org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto result = new org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.newExpiryTime_ = newExpiryTime_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
+        result.newExpiryTime_ = newExpiryTime_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto) {
           return mergeFrom((org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto)other);
@@ -5477,20 +4836,18 @@ public final class SecurityProtos {
         if (other.hasNewExpiryTime()) {
           setNewExpiryTime(other.getNewExpiryTime());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasNewExpiryTime()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -5500,7 +4857,7 @@ public final class SecurityProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -5510,27 +4867,22 @@ public final class SecurityProtos {
       }
       private int bitField0_;
 
+      // required uint64 newExpiryTime = 1;
       private long newExpiryTime_ ;
       /**
        * <code>required uint64 newExpiryTime = 1;</code>
-       * @return Whether the newExpiryTime field is set.
        */
-      @java.lang.Override
       public boolean hasNewExpiryTime() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required uint64 newExpiryTime = 1;</code>
-       * @return The newExpiryTime.
        */
-      @java.lang.Override
       public long getNewExpiryTime() {
         return newExpiryTime_;
       }
       /**
        * <code>required uint64 newExpiryTime = 1;</code>
-       * @param value The newExpiryTime to set.
-       * @return This builder for chaining.
        */
       public Builder setNewExpiryTime(long value) {
         bitField0_ |= 0x00000001;
@@ -5540,7 +4892,6 @@ public final class SecurityProtos {
       }
       /**
        * <code>required uint64 newExpiryTime = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearNewExpiryTime() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -5548,71 +4899,28 @@ public final class SecurityProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.RenewDelegationTokenResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.RenewDelegationTokenResponseProto)
-    private static final org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto();
+      defaultInstance = new RenewDelegationTokenResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<RenewDelegationTokenResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<RenewDelegationTokenResponseProto>() {
-      @java.lang.Override
-      public RenewDelegationTokenResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new RenewDelegationTokenResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<RenewDelegationTokenResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<RenewDelegationTokenResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.SecurityProtos.RenewDelegationTokenResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.RenewDelegationTokenResponseProto)
   }
 
-  public interface CancelDelegationTokenRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.CancelDelegationTokenRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface CancelDelegationTokenRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // required .hadoop.common.TokenProto token = 1;
     /**
      * <code>required .hadoop.common.TokenProto token = 1;</code>
-     * @return Whether the token field is set.
      */
     boolean hasToken();
     /**
      * <code>required .hadoop.common.TokenProto token = 1;</code>
-     * @return The token.
      */
     org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken();
     /**
@@ -5624,37 +4932,35 @@ public final class SecurityProtos {
    * Protobuf type {@code hadoop.common.CancelDelegationTokenRequestProto}
    */
   public static final class CancelDelegationTokenRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.CancelDelegationTokenRequestProto)
-      CancelDelegationTokenRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements CancelDelegationTokenRequestProtoOrBuilder {
     // Use CancelDelegationTokenRequestProto.newBuilder() to construct.
-    private CancelDelegationTokenRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private CancelDelegationTokenRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private CancelDelegationTokenRequestProto() {
+    private CancelDelegationTokenRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final CancelDelegationTokenRequestProto defaultInstance;
+    public static CancelDelegationTokenRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new CancelDelegationTokenRequestProto();
+    public CancelDelegationTokenRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private CancelDelegationTokenRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -5666,9 +4972,16 @@ public final class SecurityProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder subBuilder = null;
-              if (((bitField0_ & 0x00000001) != 0)) {
+              if (((bitField0_ & 0x00000001) == 0x00000001)) {
                 subBuilder = token_.toBuilder();
               }
               token_ = input.readMessage(org.apache.hadoop.security.proto.SecurityProtos.TokenProto.PARSER, extensionRegistry);
@@ -5679,20 +4992,13 @@ public final class SecurityProtos {
               bitField0_ |= 0x00000001;
               break;
             }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -5703,47 +5009,58 @@ public final class SecurityProtos {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CancelDelegationTokenRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CancelDelegationTokenRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto.class, org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<CancelDelegationTokenRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<CancelDelegationTokenRequestProto>() {
+      public CancelDelegationTokenRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CancelDelegationTokenRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<CancelDelegationTokenRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // required .hadoop.common.TokenProto token = 1;
     public static final int TOKEN_FIELD_NUMBER = 1;
     private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_;
     /**
      * <code>required .hadoop.common.TokenProto token = 1;</code>
-     * @return Whether the token field is set.
      */
-    @java.lang.Override
     public boolean hasToken() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>required .hadoop.common.TokenProto token = 1;</code>
-     * @return The token.
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken() {
-      return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+      return token_;
     }
     /**
      * <code>required .hadoop.common.TokenProto token = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder getTokenOrBuilder() {
-      return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+      return token_;
     }
 
+    private void initFields() {
+      token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       if (!hasToken()) {
         memoizedIsInitialized = 0;
@@ -5757,28 +5074,35 @@ public final class SecurityProtos {
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        output.writeMessage(1, getToken());
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeMessage(1, token_);
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(1, getToken());
+          .computeMessageSize(1, token_);
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -5791,42 +5115,34 @@ public final class SecurityProtos {
       }
       org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto other = (org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto) obj;
 
-      if (hasToken() != other.hasToken()) return false;
+      boolean result = true;
+      result = result && (hasToken() == other.hasToken());
       if (hasToken()) {
-        if (!getToken()
-            .equals(other.getToken())) return false;
+        result = result && getToken()
+            .equals(other.getToken());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasToken()) {
         hash = (37 * hash) + TOKEN_FIELD_NUMBER;
         hash = (53 * hash) + getToken().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -5850,59 +5166,46 @@ public final class SecurityProtos {
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -5910,16 +5213,14 @@ public final class SecurityProtos {
      * Protobuf type {@code hadoop.common.CancelDelegationTokenRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.CancelDelegationTokenRequestProto)
-        org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CancelDelegationTokenRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CancelDelegationTokenRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -5932,21 +5233,23 @@ public final class SecurityProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getTokenFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (tokenBuilder_ == null) {
-          token_ = null;
+          token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
         } else {
           tokenBuilder_.clear();
         }
@@ -5954,18 +5257,19 @@ public final class SecurityProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CancelDelegationTokenRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto build() {
         org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -5974,57 +5278,23 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto buildPartial() {
         org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto result = new org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          if (tokenBuilder_ == null) {
-            result.token_ = token_;
-          } else {
-            result.token_ = tokenBuilder_.build();
-          }
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
+        }
+        if (tokenBuilder_ == null) {
+          result.token_ = token_;
+        } else {
+          result.token_ = tokenBuilder_.build();
         }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto) {
           return mergeFrom((org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto)other);
@@ -6039,23 +5309,22 @@ public final class SecurityProtos {
         if (other.hasToken()) {
           mergeToken(other.getToken());
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         if (!hasToken()) {
+          
           return false;
         }
         if (!getToken().isInitialized()) {
+          
           return false;
         }
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -6065,7 +5334,7 @@ public final class SecurityProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -6075,23 +5344,22 @@ public final class SecurityProtos {
       }
       private int bitField0_;
 
-      private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_;
-      private com.google.protobuf.SingleFieldBuilderV3<
+      // required .hadoop.common.TokenProto token = 1;
+      private org.apache.hadoop.security.proto.SecurityProtos.TokenProto token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder> tokenBuilder_;
       /**
        * <code>required .hadoop.common.TokenProto token = 1;</code>
-       * @return Whether the token field is set.
        */
       public boolean hasToken() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>required .hadoop.common.TokenProto token = 1;</code>
-       * @return The token.
        */
       public org.apache.hadoop.security.proto.SecurityProtos.TokenProto getToken() {
         if (tokenBuilder_ == null) {
-          return token_ == null ? org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+          return token_;
         } else {
           return tokenBuilder_.getMessage();
         }
@@ -6131,8 +5399,7 @@ public final class SecurityProtos {
        */
       public Builder mergeToken(org.apache.hadoop.security.proto.SecurityProtos.TokenProto value) {
         if (tokenBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0) &&
-              token_ != null &&
+          if (((bitField0_ & 0x00000001) == 0x00000001) &&
               token_ != org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance()) {
             token_ =
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto.newBuilder(token_).mergeFrom(value).buildPartial();
@@ -6151,7 +5418,7 @@ public final class SecurityProtos {
        */
       public Builder clearToken() {
         if (tokenBuilder_ == null) {
-          token_ = null;
+          token_ = org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance();
           onChanged();
         } else {
           tokenBuilder_.clear();
@@ -6174,122 +5441,77 @@ public final class SecurityProtos {
         if (tokenBuilder_ != null) {
           return tokenBuilder_.getMessageOrBuilder();
         } else {
-          return token_ == null ?
-              org.apache.hadoop.security.proto.SecurityProtos.TokenProto.getDefaultInstance() : token_;
+          return token_;
         }
       }
       /**
        * <code>required .hadoop.common.TokenProto token = 1;</code>
        */
-      private com.google.protobuf.SingleFieldBuilderV3<
+      private com.google.protobuf.SingleFieldBuilder<
           org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder> 
           getTokenFieldBuilder() {
         if (tokenBuilder_ == null) {
-          tokenBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+          tokenBuilder_ = new com.google.protobuf.SingleFieldBuilder<
               org.apache.hadoop.security.proto.SecurityProtos.TokenProto, org.apache.hadoop.security.proto.SecurityProtos.TokenProto.Builder, org.apache.hadoop.security.proto.SecurityProtos.TokenProtoOrBuilder>(
-                  getToken(),
+                  token_,
                   getParentForChildren(),
                   isClean());
           token_ = null;
         }
         return tokenBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.CancelDelegationTokenRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.CancelDelegationTokenRequestProto)
-    private static final org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto();
+      defaultInstance = new CancelDelegationTokenRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<CancelDelegationTokenRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<CancelDelegationTokenRequestProto>() {
-      @java.lang.Override
-      public CancelDelegationTokenRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CancelDelegationTokenRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<CancelDelegationTokenRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CancelDelegationTokenRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.CancelDelegationTokenRequestProto)
   }
 
-  public interface CancelDelegationTokenResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.CancelDelegationTokenResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface CancelDelegationTokenResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
   }
   /**
+   * Protobuf type {@code hadoop.common.CancelDelegationTokenResponseProto}
+   *
    * <pre>
    * void response
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.CancelDelegationTokenResponseProto}
    */
   public static final class CancelDelegationTokenResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.CancelDelegationTokenResponseProto)
-      CancelDelegationTokenResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements CancelDelegationTokenResponseProtoOrBuilder {
     // Use CancelDelegationTokenResponseProto.newBuilder() to construct.
-    private CancelDelegationTokenResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private CancelDelegationTokenResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private CancelDelegationTokenResponseProto() {
+    private CancelDelegationTokenResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final CancelDelegationTokenResponseProto defaultInstance;
+    public static CancelDelegationTokenResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new CancelDelegationTokenResponseProto();
+    public CancelDelegationTokenResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private CancelDelegationTokenResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -6301,8 +5523,8 @@ public final class SecurityProtos {
               done = true;
               break;
             default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
                 done = true;
               }
               break;
@@ -6313,7 +5535,7 @@ public final class SecurityProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -6324,40 +5546,61 @@ public final class SecurityProtos {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CancelDelegationTokenResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CancelDelegationTokenResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto.class, org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto.Builder.class);
     }
 
-    private byte memoizedIsInitialized = -1;
+    public static com.google.protobuf.Parser<CancelDelegationTokenResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<CancelDelegationTokenResponseProto>() {
+      public CancelDelegationTokenResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new CancelDelegationTokenResponseProto(input, extensionRegistry);
+      }
+    };
+
     @java.lang.Override
+    public com.google.protobuf.Parser<CancelDelegationTokenResponseProto> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      unknownFields.writeTo(output);
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -6370,33 +5613,25 @@ public final class SecurityProtos {
       }
       org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto other = (org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto) obj;
 
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -6420,80 +5655,65 @@ public final class SecurityProtos {
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.CancelDelegationTokenResponseProto}
+     *
      * <pre>
      * void response
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.CancelDelegationTokenResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.CancelDelegationTokenResponseProto)
-        org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CancelDelegationTokenResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CancelDelegationTokenResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -6506,33 +5726,36 @@ public final class SecurityProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.internal_static_hadoop_common_CancelDelegationTokenResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto build() {
         org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -6541,46 +5764,12 @@ public final class SecurityProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto buildPartial() {
         org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto result = new org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto(this);
         onBuilt();
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto) {
           return mergeFrom((org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto)other);
@@ -6592,17 +5781,14 @@ public final class SecurityProtos {
 
       public Builder mergeFrom(org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto other) {
         if (other == org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto.getDefaultInstance()) return this;
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -6612,7 +5798,7 @@ public final class SecurityProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -6620,110 +5806,69 @@ public final class SecurityProtos {
         }
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.CancelDelegationTokenResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.CancelDelegationTokenResponseProto)
-    private static final org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto();
+      defaultInstance = new CancelDelegationTokenResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<CancelDelegationTokenResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<CancelDelegationTokenResponseProto>() {
-      @java.lang.Override
-      public CancelDelegationTokenResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new CancelDelegationTokenResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<CancelDelegationTokenResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<CancelDelegationTokenResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.security.proto.SecurityProtos.CancelDelegationTokenResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.CancelDelegationTokenResponseProto)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_TokenProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_TokenProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_CredentialsKVProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_CredentialsKVProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_CredentialsProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_CredentialsProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GetDelegationTokenRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GetDelegationTokenRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GetDelegationTokenResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GetDelegationTokenResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_RenewDelegationTokenRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_RenewDelegationTokenRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_RenewDelegationTokenResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_RenewDelegationTokenResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_CancelDelegationTokenRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_CancelDelegationTokenRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_CancelDelegationTokenResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_CancelDelegationTokenResponseProto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -6736,7 +5881,7 @@ public final class SecurityProtos {
       "\001 \003(\0132!.hadoop.common.CredentialsKVProto" +
       "\0222\n\007secrets\030\002 \003(\0132!.hadoop.common.Creden" +
       "tialsKVProto\"1\n\036GetDelegationTokenReques" +
-      "tProto\022\017\n\007renewer\030\001 \002(\t\"K\n\037GetDelegation" +
+      "tProto\022\017\n\007renewer\030\001 \002(\t\"K\n\037GetDelegation",
       "TokenResponseProto\022(\n\005token\030\001 \001(\0132\031.hado" +
       "op.common.TokenProto\"L\n RenewDelegationT" +
       "okenRequestProto\022(\n\005token\030\001 \002(\0132\031.hadoop" +
@@ -6748,64 +5893,72 @@ public final class SecurityProtos {
       "rg.apache.hadoop.security.protoB\016Securit" +
       "yProtos\210\001\001\240\001\001"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_hadoop_common_TokenProto_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_hadoop_common_TokenProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_TokenProto_descriptor,
+              new java.lang.String[] { "Identifier", "Password", "Kind", "Service", });
+          internal_static_hadoop_common_CredentialsKVProto_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_hadoop_common_CredentialsKVProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_CredentialsKVProto_descriptor,
+              new java.lang.String[] { "Alias", "Token", "Secret", });
+          internal_static_hadoop_common_CredentialsProto_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_hadoop_common_CredentialsProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_CredentialsProto_descriptor,
+              new java.lang.String[] { "Tokens", "Secrets", });
+          internal_static_hadoop_common_GetDelegationTokenRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(3);
+          internal_static_hadoop_common_GetDelegationTokenRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GetDelegationTokenRequestProto_descriptor,
+              new java.lang.String[] { "Renewer", });
+          internal_static_hadoop_common_GetDelegationTokenResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(4);
+          internal_static_hadoop_common_GetDelegationTokenResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GetDelegationTokenResponseProto_descriptor,
+              new java.lang.String[] { "Token", });
+          internal_static_hadoop_common_RenewDelegationTokenRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(5);
+          internal_static_hadoop_common_RenewDelegationTokenRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_RenewDelegationTokenRequestProto_descriptor,
+              new java.lang.String[] { "Token", });
+          internal_static_hadoop_common_RenewDelegationTokenResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(6);
+          internal_static_hadoop_common_RenewDelegationTokenResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_RenewDelegationTokenResponseProto_descriptor,
+              new java.lang.String[] { "NewExpiryTime", });
+          internal_static_hadoop_common_CancelDelegationTokenRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(7);
+          internal_static_hadoop_common_CancelDelegationTokenRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_CancelDelegationTokenRequestProto_descriptor,
+              new java.lang.String[] { "Token", });
+          internal_static_hadoop_common_CancelDelegationTokenResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(8);
+          internal_static_hadoop_common_CancelDelegationTokenResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_CancelDelegationTokenResponseProto_descriptor,
+              new java.lang.String[] { });
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_hadoop_common_TokenProto_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_hadoop_common_TokenProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_TokenProto_descriptor,
-        new java.lang.String[] { "Identifier", "Password", "Kind", "Service", });
-    internal_static_hadoop_common_CredentialsKVProto_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_hadoop_common_CredentialsKVProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_CredentialsKVProto_descriptor,
-        new java.lang.String[] { "Alias", "Token", "Secret", });
-    internal_static_hadoop_common_CredentialsProto_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_hadoop_common_CredentialsProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_CredentialsProto_descriptor,
-        new java.lang.String[] { "Tokens", "Secrets", });
-    internal_static_hadoop_common_GetDelegationTokenRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_hadoop_common_GetDelegationTokenRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GetDelegationTokenRequestProto_descriptor,
-        new java.lang.String[] { "Renewer", });
-    internal_static_hadoop_common_GetDelegationTokenResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_hadoop_common_GetDelegationTokenResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GetDelegationTokenResponseProto_descriptor,
-        new java.lang.String[] { "Token", });
-    internal_static_hadoop_common_RenewDelegationTokenRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_hadoop_common_RenewDelegationTokenRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_RenewDelegationTokenRequestProto_descriptor,
-        new java.lang.String[] { "Token", });
-    internal_static_hadoop_common_RenewDelegationTokenResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_hadoop_common_RenewDelegationTokenResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_RenewDelegationTokenResponseProto_descriptor,
-        new java.lang.String[] { "NewExpiryTime", });
-    internal_static_hadoop_common_CancelDelegationTokenRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(7);
-    internal_static_hadoop_common_CancelDelegationTokenRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_CancelDelegationTokenRequestProto_descriptor,
-        new java.lang.String[] { "Token", });
-    internal_static_hadoop_common_CancelDelegationTokenResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(8);
-    internal_static_hadoop_common_CancelDelegationTokenResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_CancelDelegationTokenResponseProto_descriptor,
-        new java.lang.String[] { });
+        }, assigner);
   }
 
   // @@protoc_insertion_point(outer_class_scope)

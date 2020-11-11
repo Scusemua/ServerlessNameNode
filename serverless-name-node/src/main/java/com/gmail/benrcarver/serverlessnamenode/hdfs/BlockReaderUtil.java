@@ -28,7 +28,7 @@ import java.io.IOException;
 class BlockReaderUtil {
 
   /* See {@link BlockReader#readAll(byte[], int, int)} */
-  public static int readAll(org.apache.hadoop.hdfs.BlockReader reader, byte[] buf, int offset, int len)
+  public static int readAll(BlockReader reader, byte[] buf, int offset, int len)
       throws IOException {
     int n = 0;
     for (; ; ) {
@@ -44,7 +44,7 @@ class BlockReaderUtil {
   }
 
   /* See {@link BlockReader#readFully(byte[], int, int)} */
-  public static void readFully(org.apache.hadoop.hdfs.BlockReader reader, byte[] buf, int off, int len)
+  public static void readFully(BlockReader reader, byte[] buf, int off, int len)
       throws IOException {
     int toRead = len;
     while (toRead > 0) {

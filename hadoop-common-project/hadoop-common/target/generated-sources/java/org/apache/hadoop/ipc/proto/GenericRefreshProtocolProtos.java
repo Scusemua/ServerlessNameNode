@@ -6,102 +6,84 @@ package org.apache.hadoop.ipc.proto;
 public final class GenericRefreshProtocolProtos {
   private GenericRefreshProtocolProtos() {}
   public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
-
-  public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface GenericRefreshRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GenericRefreshRequestProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GenericRefreshRequestProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional string identifier = 1;
     /**
      * <code>optional string identifier = 1;</code>
-     * @return Whether the identifier field is set.
      */
     boolean hasIdentifier();
     /**
      * <code>optional string identifier = 1;</code>
-     * @return The identifier.
      */
     java.lang.String getIdentifier();
     /**
      * <code>optional string identifier = 1;</code>
-     * @return The bytes for identifier.
      */
     com.google.protobuf.ByteString
         getIdentifierBytes();
 
+    // repeated string args = 2;
     /**
      * <code>repeated string args = 2;</code>
-     * @return A list containing the args.
      */
     java.util.List<java.lang.String>
-        getArgsList();
+    getArgsList();
     /**
      * <code>repeated string args = 2;</code>
-     * @return The count of args.
      */
     int getArgsCount();
     /**
      * <code>repeated string args = 2;</code>
-     * @param index The index of the element to return.
-     * @return The args at the given index.
      */
     java.lang.String getArgs(int index);
     /**
      * <code>repeated string args = 2;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the args at the given index.
      */
     com.google.protobuf.ByteString
         getArgsBytes(int index);
   }
   /**
+   * Protobuf type {@code hadoop.common.GenericRefreshRequestProto}
+   *
    * <pre>
    **
    *  Refresh request.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GenericRefreshRequestProto}
    */
   public static final class GenericRefreshRequestProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GenericRefreshRequestProto)
-      GenericRefreshRequestProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GenericRefreshRequestProtoOrBuilder {
     // Use GenericRefreshRequestProto.newBuilder() to construct.
-    private GenericRefreshRequestProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GenericRefreshRequestProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GenericRefreshRequestProto() {
-      identifier_ = "";
-      args_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    private GenericRefreshRequestProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GenericRefreshRequestProto defaultInstance;
+    public static GenericRefreshRequestProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GenericRefreshRequestProto();
+    public GenericRefreshRequestProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GenericRefreshRequestProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -113,26 +95,24 @@ public final class GenericRefreshProtocolProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000001;
-              identifier_ = bs;
+              identifier_ = input.readBytes();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
-              if (!((mutable_bitField0_ & 0x00000002) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
                 args_ = new com.google.protobuf.LazyStringArrayList();
                 mutable_bitField0_ |= 0x00000002;
               }
-              args_.add(bs);
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              args_.add(input.readBytes());
               break;
             }
           }
@@ -141,10 +121,10 @@ public final class GenericRefreshProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000002) != 0)) {
-          args_ = args_.getUnmodifiableView();
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          args_ = new com.google.protobuf.UnmodifiableLazyStringList(args_);
         }
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -155,30 +135,41 @@ public final class GenericRefreshProtocolProtos {
       return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshRequestProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto.class, org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GenericRefreshRequestProto> PARSER =
+        new com.google.protobuf.AbstractParser<GenericRefreshRequestProto>() {
+      public GenericRefreshRequestProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GenericRefreshRequestProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GenericRefreshRequestProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // optional string identifier = 1;
     public static final int IDENTIFIER_FIELD_NUMBER = 1;
-    private volatile java.lang.Object identifier_;
+    private java.lang.Object identifier_;
     /**
      * <code>optional string identifier = 1;</code>
-     * @return Whether the identifier field is set.
      */
-    @java.lang.Override
     public boolean hasIdentifier() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
      * <code>optional string identifier = 1;</code>
-     * @return The identifier.
      */
-    @java.lang.Override
     public java.lang.String getIdentifier() {
       java.lang.Object ref = identifier_;
       if (ref instanceof java.lang.String) {
@@ -195,9 +186,7 @@ public final class GenericRefreshProtocolProtos {
     }
     /**
      * <code>optional string identifier = 1;</code>
-     * @return The bytes for identifier.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getIdentifierBytes() {
       java.lang.Object ref = identifier_;
@@ -212,84 +201,90 @@ public final class GenericRefreshProtocolProtos {
       }
     }
 
+    // repeated string args = 2;
     public static final int ARGS_FIELD_NUMBER = 2;
     private com.google.protobuf.LazyStringList args_;
     /**
      * <code>repeated string args = 2;</code>
-     * @return A list containing the args.
      */
-    public com.google.protobuf.ProtocolStringList
+    public java.util.List<java.lang.String>
         getArgsList() {
       return args_;
     }
     /**
      * <code>repeated string args = 2;</code>
-     * @return The count of args.
      */
     public int getArgsCount() {
       return args_.size();
     }
     /**
      * <code>repeated string args = 2;</code>
-     * @param index The index of the element to return.
-     * @return The args at the given index.
      */
     public java.lang.String getArgs(int index) {
       return args_.get(index);
     }
     /**
      * <code>repeated string args = 2;</code>
-     * @param index The index of the value to return.
-     * @return The bytes of the args at the given index.
      */
     public com.google.protobuf.ByteString
         getArgsBytes(int index) {
       return args_.getByteString(index);
     }
 
+    private void initFields() {
+      identifier_ = "";
+      args_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, identifier_);
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getIdentifierBytes());
       }
       for (int i = 0; i < args_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, args_.getRaw(i));
+        output.writeBytes(2, args_.getByteString(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, identifier_);
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getIdentifierBytes());
       }
       {
         int dataSize = 0;
         for (int i = 0; i < args_.size(); i++) {
-          dataSize += computeStringSizeNoTag(args_.getRaw(i));
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeBytesSizeNoTag(args_.getByteString(i));
         }
         size += dataSize;
         size += 1 * getArgsList().size();
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -302,24 +297,27 @@ public final class GenericRefreshProtocolProtos {
       }
       org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto other = (org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto) obj;
 
-      if (hasIdentifier() != other.hasIdentifier()) return false;
+      boolean result = true;
+      result = result && (hasIdentifier() == other.hasIdentifier());
       if (hasIdentifier()) {
-        if (!getIdentifier()
-            .equals(other.getIdentifier())) return false;
+        result = result && getIdentifier()
+            .equals(other.getIdentifier());
       }
-      if (!getArgsList()
-          .equals(other.getArgsList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result && getArgsList()
+          .equals(other.getArgsList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasIdentifier()) {
         hash = (37 * hash) + IDENTIFIER_FIELD_NUMBER;
         hash = (53 * hash) + getIdentifier().hashCode();
@@ -328,22 +326,11 @@ public final class GenericRefreshProtocolProtos {
         hash = (37 * hash) + ARGS_FIELD_NUMBER;
         hash = (53 * hash) + getArgsList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -367,81 +354,66 @@ public final class GenericRefreshProtocolProtos {
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GenericRefreshRequestProto}
+     *
      * <pre>
      **
      *  Refresh request.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GenericRefreshRequestProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GenericRefreshRequestProto)
-        org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshRequestProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -454,16 +426,18 @@ public final class GenericRefreshProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         identifier_ = "";
@@ -473,18 +447,19 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshRequestProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto getDefaultInstanceForType() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto build() {
         org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -493,17 +468,17 @@ public final class GenericRefreshProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto buildPartial() {
         org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto result = new org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
         result.identifier_ = identifier_;
-        if (((bitField0_ & 0x00000002) != 0)) {
-          args_ = args_.getUnmodifiableView();
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          args_ = new com.google.protobuf.UnmodifiableLazyStringList(
+              args_);
           bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.args_ = args_;
@@ -512,39 +487,6 @@ public final class GenericRefreshProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto) {
           return mergeFrom((org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto)other);
@@ -571,17 +513,14 @@ public final class GenericRefreshProtocolProtos {
           }
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -591,7 +530,7 @@ public final class GenericRefreshProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -601,27 +540,23 @@ public final class GenericRefreshProtocolProtos {
       }
       private int bitField0_;
 
+      // optional string identifier = 1;
       private java.lang.Object identifier_ = "";
       /**
        * <code>optional string identifier = 1;</code>
-       * @return Whether the identifier field is set.
        */
       public boolean hasIdentifier() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
        * <code>optional string identifier = 1;</code>
-       * @return The identifier.
        */
       public java.lang.String getIdentifier() {
         java.lang.Object ref = identifier_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            identifier_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          identifier_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
@@ -629,7 +564,6 @@ public final class GenericRefreshProtocolProtos {
       }
       /**
        * <code>optional string identifier = 1;</code>
-       * @return The bytes for identifier.
        */
       public com.google.protobuf.ByteString
           getIdentifierBytes() {
@@ -646,8 +580,6 @@ public final class GenericRefreshProtocolProtos {
       }
       /**
        * <code>optional string identifier = 1;</code>
-       * @param value The identifier to set.
-       * @return This builder for chaining.
        */
       public Builder setIdentifier(
           java.lang.String value) {
@@ -661,7 +593,6 @@ public final class GenericRefreshProtocolProtos {
       }
       /**
        * <code>optional string identifier = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearIdentifier() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -671,8 +602,6 @@ public final class GenericRefreshProtocolProtos {
       }
       /**
        * <code>optional string identifier = 1;</code>
-       * @param value The bytes for identifier to set.
-       * @return This builder for chaining.
        */
       public Builder setIdentifierBytes(
           com.google.protobuf.ByteString value) {
@@ -685,40 +614,35 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
 
+      // repeated string args = 2;
       private com.google.protobuf.LazyStringList args_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       private void ensureArgsIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
           args_ = new com.google.protobuf.LazyStringArrayList(args_);
           bitField0_ |= 0x00000002;
          }
       }
       /**
        * <code>repeated string args = 2;</code>
-       * @return A list containing the args.
        */
-      public com.google.protobuf.ProtocolStringList
+      public java.util.List<java.lang.String>
           getArgsList() {
-        return args_.getUnmodifiableView();
+        return java.util.Collections.unmodifiableList(args_);
       }
       /**
        * <code>repeated string args = 2;</code>
-       * @return The count of args.
        */
       public int getArgsCount() {
         return args_.size();
       }
       /**
        * <code>repeated string args = 2;</code>
-       * @param index The index of the element to return.
-       * @return The args at the given index.
        */
       public java.lang.String getArgs(int index) {
         return args_.get(index);
       }
       /**
        * <code>repeated string args = 2;</code>
-       * @param index The index of the value to return.
-       * @return The bytes of the args at the given index.
        */
       public com.google.protobuf.ByteString
           getArgsBytes(int index) {
@@ -726,9 +650,6 @@ public final class GenericRefreshProtocolProtos {
       }
       /**
        * <code>repeated string args = 2;</code>
-       * @param index The index to set the value at.
-       * @param value The args to set.
-       * @return This builder for chaining.
        */
       public Builder setArgs(
           int index, java.lang.String value) {
@@ -742,8 +663,6 @@ public final class GenericRefreshProtocolProtos {
       }
       /**
        * <code>repeated string args = 2;</code>
-       * @param value The args to add.
-       * @return This builder for chaining.
        */
       public Builder addArgs(
           java.lang.String value) {
@@ -757,20 +676,16 @@ public final class GenericRefreshProtocolProtos {
       }
       /**
        * <code>repeated string args = 2;</code>
-       * @param values The args to add.
-       * @return This builder for chaining.
        */
       public Builder addAllArgs(
           java.lang.Iterable<java.lang.String> values) {
         ensureArgsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, args_);
+        super.addAll(values, args_);
         onChanged();
         return this;
       }
       /**
        * <code>repeated string args = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearArgs() {
         args_ = com.google.protobuf.LazyStringArrayList.EMPTY;
@@ -780,8 +695,6 @@ public final class GenericRefreshProtocolProtos {
       }
       /**
        * <code>repeated string args = 2;</code>
-       * @param value The bytes of the args to add.
-       * @return This builder for chaining.
        */
       public Builder addArgsBytes(
           com.google.protobuf.ByteString value) {
@@ -793,182 +706,131 @@ public final class GenericRefreshProtocolProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GenericRefreshRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GenericRefreshRequestProto)
-    private static final org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto();
+      defaultInstance = new GenericRefreshRequestProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GenericRefreshRequestProto>
-        PARSER = new com.google.protobuf.AbstractParser<GenericRefreshRequestProto>() {
-      @java.lang.Override
-      public GenericRefreshRequestProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GenericRefreshRequestProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GenericRefreshRequestProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GenericRefreshRequestProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshRequestProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GenericRefreshRequestProto)
   }
 
-  public interface GenericRefreshResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GenericRefreshResponseProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GenericRefreshResponseProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // optional int32 exitStatus = 1;
     /**
+     * <code>optional int32 exitStatus = 1;</code>
+     *
      * <pre>
      * unix exit status to return
      * </pre>
-     *
-     * <code>optional int32 exitStatus = 1;</code>
-     * @return Whether the exitStatus field is set.
      */
     boolean hasExitStatus();
     /**
+     * <code>optional int32 exitStatus = 1;</code>
+     *
      * <pre>
      * unix exit status to return
      * </pre>
-     *
-     * <code>optional int32 exitStatus = 1;</code>
-     * @return The exitStatus.
      */
     int getExitStatus();
 
+    // optional string userMessage = 2;
     /**
+     * <code>optional string userMessage = 2;</code>
+     *
      * <pre>
      * to be displayed to the user
      * </pre>
-     *
-     * <code>optional string userMessage = 2;</code>
-     * @return Whether the userMessage field is set.
      */
     boolean hasUserMessage();
     /**
+     * <code>optional string userMessage = 2;</code>
+     *
      * <pre>
      * to be displayed to the user
      * </pre>
-     *
-     * <code>optional string userMessage = 2;</code>
-     * @return The userMessage.
      */
     java.lang.String getUserMessage();
     /**
+     * <code>optional string userMessage = 2;</code>
+     *
      * <pre>
      * to be displayed to the user
      * </pre>
-     *
-     * <code>optional string userMessage = 2;</code>
-     * @return The bytes for userMessage.
      */
     com.google.protobuf.ByteString
         getUserMessageBytes();
 
+    // optional string senderName = 3;
     /**
+     * <code>optional string senderName = 3;</code>
+     *
      * <pre>
      * which handler sent this message
      * </pre>
-     *
-     * <code>optional string senderName = 3;</code>
-     * @return Whether the senderName field is set.
      */
     boolean hasSenderName();
     /**
+     * <code>optional string senderName = 3;</code>
+     *
      * <pre>
      * which handler sent this message
      * </pre>
-     *
-     * <code>optional string senderName = 3;</code>
-     * @return The senderName.
      */
     java.lang.String getSenderName();
     /**
+     * <code>optional string senderName = 3;</code>
+     *
      * <pre>
      * which handler sent this message
      * </pre>
-     *
-     * <code>optional string senderName = 3;</code>
-     * @return The bytes for senderName.
      */
     com.google.protobuf.ByteString
         getSenderNameBytes();
   }
   /**
+   * Protobuf type {@code hadoop.common.GenericRefreshResponseProto}
+   *
    * <pre>
    **
    * A single response from a refresh handler.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GenericRefreshResponseProto}
    */
   public static final class GenericRefreshResponseProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GenericRefreshResponseProto)
-      GenericRefreshResponseProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GenericRefreshResponseProtoOrBuilder {
     // Use GenericRefreshResponseProto.newBuilder() to construct.
-    private GenericRefreshResponseProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GenericRefreshResponseProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GenericRefreshResponseProto() {
-      userMessage_ = "";
-      senderName_ = "";
+    private GenericRefreshResponseProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GenericRefreshResponseProto defaultInstance;
+    public static GenericRefreshResponseProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GenericRefreshResponseProto();
+    public GenericRefreshResponseProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GenericRefreshResponseProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -980,28 +842,26 @@ public final class GenericRefreshProtocolProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 8: {
               bitField0_ |= 0x00000001;
               exitStatus_ = input.readInt32();
               break;
             }
             case 18: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000002;
-              userMessage_ = bs;
+              userMessage_ = input.readBytes();
               break;
             }
             case 26: {
-              com.google.protobuf.ByteString bs = input.readBytes();
               bitField0_ |= 0x00000004;
-              senderName_ = bs;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              senderName_ = input.readBytes();
               break;
             }
           }
@@ -1010,7 +870,7 @@ public final class GenericRefreshProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
         this.unknownFields = unknownFields.build();
         makeExtensionsImmutable();
@@ -1021,65 +881,73 @@ public final class GenericRefreshProtocolProtos {
       return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshResponseProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto.class, org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GenericRefreshResponseProto> PARSER =
+        new com.google.protobuf.AbstractParser<GenericRefreshResponseProto>() {
+      public GenericRefreshResponseProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GenericRefreshResponseProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GenericRefreshResponseProto> getParserForType() {
+      return PARSER;
+    }
+
     private int bitField0_;
+    // optional int32 exitStatus = 1;
     public static final int EXITSTATUS_FIELD_NUMBER = 1;
     private int exitStatus_;
     /**
+     * <code>optional int32 exitStatus = 1;</code>
+     *
      * <pre>
      * unix exit status to return
      * </pre>
-     *
-     * <code>optional int32 exitStatus = 1;</code>
-     * @return Whether the exitStatus field is set.
      */
-    @java.lang.Override
     public boolean hasExitStatus() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000001) == 0x00000001);
     }
     /**
+     * <code>optional int32 exitStatus = 1;</code>
+     *
      * <pre>
      * unix exit status to return
      * </pre>
-     *
-     * <code>optional int32 exitStatus = 1;</code>
-     * @return The exitStatus.
      */
-    @java.lang.Override
     public int getExitStatus() {
       return exitStatus_;
     }
 
+    // optional string userMessage = 2;
     public static final int USERMESSAGE_FIELD_NUMBER = 2;
-    private volatile java.lang.Object userMessage_;
+    private java.lang.Object userMessage_;
     /**
+     * <code>optional string userMessage = 2;</code>
+     *
      * <pre>
      * to be displayed to the user
      * </pre>
-     *
-     * <code>optional string userMessage = 2;</code>
-     * @return Whether the userMessage field is set.
      */
-    @java.lang.Override
     public boolean hasUserMessage() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
+     * <code>optional string userMessage = 2;</code>
+     *
      * <pre>
      * to be displayed to the user
      * </pre>
-     *
-     * <code>optional string userMessage = 2;</code>
-     * @return The userMessage.
      */
-    @java.lang.Override
     public java.lang.String getUserMessage() {
       java.lang.Object ref = userMessage_;
       if (ref instanceof java.lang.String) {
@@ -1095,14 +963,12 @@ public final class GenericRefreshProtocolProtos {
       }
     }
     /**
+     * <code>optional string userMessage = 2;</code>
+     *
      * <pre>
      * to be displayed to the user
      * </pre>
-     *
-     * <code>optional string userMessage = 2;</code>
-     * @return The bytes for userMessage.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getUserMessageBytes() {
       java.lang.Object ref = userMessage_;
@@ -1117,29 +983,26 @@ public final class GenericRefreshProtocolProtos {
       }
     }
 
+    // optional string senderName = 3;
     public static final int SENDERNAME_FIELD_NUMBER = 3;
-    private volatile java.lang.Object senderName_;
+    private java.lang.Object senderName_;
     /**
+     * <code>optional string senderName = 3;</code>
+     *
      * <pre>
      * which handler sent this message
      * </pre>
-     *
-     * <code>optional string senderName = 3;</code>
-     * @return Whether the senderName field is set.
      */
-    @java.lang.Override
     public boolean hasSenderName() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
+     * <code>optional string senderName = 3;</code>
+     *
      * <pre>
      * which handler sent this message
      * </pre>
-     *
-     * <code>optional string senderName = 3;</code>
-     * @return The senderName.
      */
-    @java.lang.Override
     public java.lang.String getSenderName() {
       java.lang.Object ref = senderName_;
       if (ref instanceof java.lang.String) {
@@ -1155,14 +1018,12 @@ public final class GenericRefreshProtocolProtos {
       }
     }
     /**
+     * <code>optional string senderName = 3;</code>
+     *
      * <pre>
      * which handler sent this message
      * </pre>
-     *
-     * <code>optional string senderName = 3;</code>
-     * @return The bytes for senderName.
      */
-    @java.lang.Override
     public com.google.protobuf.ByteString
         getSenderNameBytes() {
       java.lang.Object ref = senderName_;
@@ -1177,51 +1038,63 @@ public final class GenericRefreshProtocolProtos {
       }
     }
 
+    private void initFields() {
+      exitStatus_ = 0;
+      userMessage_ = "";
+      senderName_ = "";
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      if (((bitField0_ & 0x00000001) != 0)) {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         output.writeInt32(1, exitStatus_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, userMessage_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeBytes(2, getUserMessageBytes());
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, senderName_);
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getSenderNameBytes());
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
-      if (((bitField0_ & 0x00000001) != 0)) {
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, exitStatus_);
       }
-      if (((bitField0_ & 0x00000002) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, userMessage_);
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, getUserMessageBytes());
       }
-      if (((bitField0_ & 0x00000004) != 0)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, senderName_);
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getSenderNameBytes());
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -1234,32 +1107,35 @@ public final class GenericRefreshProtocolProtos {
       }
       org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto other = (org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto) obj;
 
-      if (hasExitStatus() != other.hasExitStatus()) return false;
+      boolean result = true;
+      result = result && (hasExitStatus() == other.hasExitStatus());
       if (hasExitStatus()) {
-        if (getExitStatus()
-            != other.getExitStatus()) return false;
+        result = result && (getExitStatus()
+            == other.getExitStatus());
       }
-      if (hasUserMessage() != other.hasUserMessage()) return false;
+      result = result && (hasUserMessage() == other.hasUserMessage());
       if (hasUserMessage()) {
-        if (!getUserMessage()
-            .equals(other.getUserMessage())) return false;
+        result = result && getUserMessage()
+            .equals(other.getUserMessage());
       }
-      if (hasSenderName() != other.hasSenderName()) return false;
+      result = result && (hasSenderName() == other.hasSenderName());
       if (hasSenderName()) {
-        if (!getSenderName()
-            .equals(other.getSenderName())) return false;
+        result = result && getSenderName()
+            .equals(other.getSenderName());
       }
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (hasExitStatus()) {
         hash = (37 * hash) + EXITSTATUS_FIELD_NUMBER;
         hash = (53 * hash) + getExitStatus();
@@ -1272,22 +1148,11 @@ public final class GenericRefreshProtocolProtos {
         hash = (37 * hash) + SENDERNAME_FIELD_NUMBER;
         hash = (53 * hash) + getSenderName().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -1311,81 +1176,66 @@ public final class GenericRefreshProtocolProtos {
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GenericRefreshResponseProto}
+     *
      * <pre>
      **
      * A single response from a refresh handler.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GenericRefreshResponseProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GenericRefreshResponseProto)
-        org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshResponseProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -1398,16 +1248,18 @@ public final class GenericRefreshProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         exitStatus_ = 0;
@@ -1419,18 +1271,19 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshResponseProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto getDefaultInstanceForType() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto build() {
         org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -1439,20 +1292,19 @@ public final class GenericRefreshProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto buildPartial() {
         org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto result = new org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
-        if (((from_bitField0_ & 0x00000001) != 0)) {
-          result.exitStatus_ = exitStatus_;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
           to_bitField0_ |= 0x00000001;
         }
-        if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.exitStatus_ = exitStatus_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
         result.userMessage_ = userMessage_;
-        if (((from_bitField0_ & 0x00000004) != 0)) {
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
         }
         result.senderName_ = senderName_;
@@ -1461,39 +1313,6 @@ public final class GenericRefreshProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto) {
           return mergeFrom((org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto)other);
@@ -1518,17 +1337,14 @@ public final class GenericRefreshProtocolProtos {
           senderName_ = other.senderName_;
           onChanged();
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1538,7 +1354,7 @@ public final class GenericRefreshProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -1548,39 +1364,34 @@ public final class GenericRefreshProtocolProtos {
       }
       private int bitField0_;
 
+      // optional int32 exitStatus = 1;
       private int exitStatus_ ;
       /**
+       * <code>optional int32 exitStatus = 1;</code>
+       *
        * <pre>
        * unix exit status to return
        * </pre>
-       *
-       * <code>optional int32 exitStatus = 1;</code>
-       * @return Whether the exitStatus field is set.
        */
-      @java.lang.Override
       public boolean hasExitStatus() {
-        return ((bitField0_ & 0x00000001) != 0);
+        return ((bitField0_ & 0x00000001) == 0x00000001);
       }
       /**
+       * <code>optional int32 exitStatus = 1;</code>
+       *
        * <pre>
        * unix exit status to return
        * </pre>
-       *
-       * <code>optional int32 exitStatus = 1;</code>
-       * @return The exitStatus.
        */
-      @java.lang.Override
       public int getExitStatus() {
         return exitStatus_;
       }
       /**
+       * <code>optional int32 exitStatus = 1;</code>
+       *
        * <pre>
        * unix exit status to return
        * </pre>
-       *
-       * <code>optional int32 exitStatus = 1;</code>
-       * @param value The exitStatus to set.
-       * @return This builder for chaining.
        */
       public Builder setExitStatus(int value) {
         bitField0_ |= 0x00000001;
@@ -1589,12 +1400,11 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
       /**
+       * <code>optional int32 exitStatus = 1;</code>
+       *
        * <pre>
        * unix exit status to return
        * </pre>
-       *
-       * <code>optional int32 exitStatus = 1;</code>
-       * @return This builder for chaining.
        */
       public Builder clearExitStatus() {
         bitField0_ = (bitField0_ & ~0x00000001);
@@ -1603,47 +1413,42 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
 
+      // optional string userMessage = 2;
       private java.lang.Object userMessage_ = "";
       /**
+       * <code>optional string userMessage = 2;</code>
+       *
        * <pre>
        * to be displayed to the user
        * </pre>
-       *
-       * <code>optional string userMessage = 2;</code>
-       * @return Whether the userMessage field is set.
        */
       public boolean hasUserMessage() {
-        return ((bitField0_ & 0x00000002) != 0);
+        return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
+       * <code>optional string userMessage = 2;</code>
+       *
        * <pre>
        * to be displayed to the user
        * </pre>
-       *
-       * <code>optional string userMessage = 2;</code>
-       * @return The userMessage.
        */
       public java.lang.String getUserMessage() {
         java.lang.Object ref = userMessage_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            userMessage_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          userMessage_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
+       * <code>optional string userMessage = 2;</code>
+       *
        * <pre>
        * to be displayed to the user
        * </pre>
-       *
-       * <code>optional string userMessage = 2;</code>
-       * @return The bytes for userMessage.
        */
       public com.google.protobuf.ByteString
           getUserMessageBytes() {
@@ -1659,13 +1464,11 @@ public final class GenericRefreshProtocolProtos {
         }
       }
       /**
+       * <code>optional string userMessage = 2;</code>
+       *
        * <pre>
        * to be displayed to the user
        * </pre>
-       *
-       * <code>optional string userMessage = 2;</code>
-       * @param value The userMessage to set.
-       * @return This builder for chaining.
        */
       public Builder setUserMessage(
           java.lang.String value) {
@@ -1678,12 +1481,11 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
       /**
+       * <code>optional string userMessage = 2;</code>
+       *
        * <pre>
        * to be displayed to the user
        * </pre>
-       *
-       * <code>optional string userMessage = 2;</code>
-       * @return This builder for chaining.
        */
       public Builder clearUserMessage() {
         bitField0_ = (bitField0_ & ~0x00000002);
@@ -1692,13 +1494,11 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
       /**
+       * <code>optional string userMessage = 2;</code>
+       *
        * <pre>
        * to be displayed to the user
        * </pre>
-       *
-       * <code>optional string userMessage = 2;</code>
-       * @param value The bytes for userMessage to set.
-       * @return This builder for chaining.
        */
       public Builder setUserMessageBytes(
           com.google.protobuf.ByteString value) {
@@ -1711,47 +1511,42 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
 
+      // optional string senderName = 3;
       private java.lang.Object senderName_ = "";
       /**
+       * <code>optional string senderName = 3;</code>
+       *
        * <pre>
        * which handler sent this message
        * </pre>
-       *
-       * <code>optional string senderName = 3;</code>
-       * @return Whether the senderName field is set.
        */
       public boolean hasSenderName() {
-        return ((bitField0_ & 0x00000004) != 0);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
+       * <code>optional string senderName = 3;</code>
+       *
        * <pre>
        * which handler sent this message
        * </pre>
-       *
-       * <code>optional string senderName = 3;</code>
-       * @return The senderName.
        */
       public java.lang.String getSenderName() {
         java.lang.Object ref = senderName_;
         if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          if (bs.isValidUtf8()) {
-            senderName_ = s;
-          }
+          java.lang.String s = ((com.google.protobuf.ByteString) ref)
+              .toStringUtf8();
+          senderName_ = s;
           return s;
         } else {
           return (java.lang.String) ref;
         }
       }
       /**
+       * <code>optional string senderName = 3;</code>
+       *
        * <pre>
        * which handler sent this message
        * </pre>
-       *
-       * <code>optional string senderName = 3;</code>
-       * @return The bytes for senderName.
        */
       public com.google.protobuf.ByteString
           getSenderNameBytes() {
@@ -1767,13 +1562,11 @@ public final class GenericRefreshProtocolProtos {
         }
       }
       /**
+       * <code>optional string senderName = 3;</code>
+       *
        * <pre>
        * which handler sent this message
        * </pre>
-       *
-       * <code>optional string senderName = 3;</code>
-       * @param value The senderName to set.
-       * @return This builder for chaining.
        */
       public Builder setSenderName(
           java.lang.String value) {
@@ -1786,12 +1579,11 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
       /**
+       * <code>optional string senderName = 3;</code>
+       *
        * <pre>
        * which handler sent this message
        * </pre>
-       *
-       * <code>optional string senderName = 3;</code>
-       * @return This builder for chaining.
        */
       public Builder clearSenderName() {
         bitField0_ = (bitField0_ & ~0x00000004);
@@ -1800,13 +1592,11 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
       /**
+       * <code>optional string senderName = 3;</code>
+       *
        * <pre>
        * which handler sent this message
        * </pre>
-       *
-       * <code>optional string senderName = 3;</code>
-       * @param value The bytes for senderName to set.
-       * @return This builder for chaining.
        */
       public Builder setSenderNameBytes(
           com.google.protobuf.ByteString value) {
@@ -1818,63 +1608,22 @@ public final class GenericRefreshProtocolProtos {
         onChanged();
         return this;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GenericRefreshResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GenericRefreshResponseProto)
-    private static final org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto();
+      defaultInstance = new GenericRefreshResponseProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GenericRefreshResponseProto>
-        PARSER = new com.google.protobuf.AbstractParser<GenericRefreshResponseProto>() {
-      @java.lang.Override
-      public GenericRefreshResponseProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GenericRefreshResponseProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GenericRefreshResponseProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GenericRefreshResponseProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GenericRefreshResponseProto)
   }
 
-  public interface GenericRefreshResponseCollectionProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:hadoop.common.GenericRefreshResponseCollectionProto)
-      com.google.protobuf.MessageOrBuilder {
+  public interface GenericRefreshResponseCollectionProtoOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
 
+    // repeated .hadoop.common.GenericRefreshResponseProto responses = 1;
     /**
      * <code>repeated .hadoop.common.GenericRefreshResponseProto responses = 1;</code>
      */
@@ -1900,46 +1649,43 @@ public final class GenericRefreshProtocolProtos {
         int index);
   }
   /**
+   * Protobuf type {@code hadoop.common.GenericRefreshResponseCollectionProto}
+   *
    * <pre>
    **
    * Collection of responses from zero or more handlers.
    * </pre>
-   *
-   * Protobuf type {@code hadoop.common.GenericRefreshResponseCollectionProto}
    */
   public static final class GenericRefreshResponseCollectionProto extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:hadoop.common.GenericRefreshResponseCollectionProto)
-      GenericRefreshResponseCollectionProtoOrBuilder {
-  private static final long serialVersionUID = 0L;
+      com.google.protobuf.GeneratedMessage
+      implements GenericRefreshResponseCollectionProtoOrBuilder {
     // Use GenericRefreshResponseCollectionProto.newBuilder() to construct.
-    private GenericRefreshResponseCollectionProto(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    private GenericRefreshResponseCollectionProto(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
+      this.unknownFields = builder.getUnknownFields();
     }
-    private GenericRefreshResponseCollectionProto() {
-      responses_ = java.util.Collections.emptyList();
+    private GenericRefreshResponseCollectionProto(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final GenericRefreshResponseCollectionProto defaultInstance;
+    public static GenericRefreshResponseCollectionProto getDefaultInstance() {
+      return defaultInstance;
     }
 
-    @java.lang.Override
-    @SuppressWarnings({"unused"})
-    protected java.lang.Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new GenericRefreshResponseCollectionProto();
+    public GenericRefreshResponseCollectionProto getDefaultInstanceForType() {
+      return defaultInstance;
     }
 
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
     @java.lang.Override
     public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
+        getUnknownFields() {
       return this.unknownFields;
     }
     private GenericRefreshResponseCollectionProto(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new java.lang.NullPointerException();
-      }
+      initFields();
       int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
@@ -1951,20 +1697,19 @@ public final class GenericRefreshProtocolProtos {
             case 0:
               done = true;
               break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
             case 10: {
-              if (!((mutable_bitField0_ & 0x00000001) != 0)) {
+              if (!((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
                 responses_ = new java.util.ArrayList<org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto>();
                 mutable_bitField0_ |= 0x00000001;
               }
-              responses_.add(
-                  input.readMessage(org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto.PARSER, extensionRegistry));
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
+              responses_.add(input.readMessage(org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto.PARSER, extensionRegistry));
               break;
             }
           }
@@ -1973,9 +1718,9 @@ public final class GenericRefreshProtocolProtos {
         throw e.setUnfinishedMessage(this);
       } catch (java.io.IOException e) {
         throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
+            e.getMessage()).setUnfinishedMessage(this);
       } finally {
-        if (((mutable_bitField0_ & 0x00000001) != 0)) {
+        if (((mutable_bitField0_ & 0x00000001) == 0x00000001)) {
           responses_ = java.util.Collections.unmodifiableList(responses_);
         }
         this.unknownFields = unknownFields.build();
@@ -1987,27 +1732,40 @@ public final class GenericRefreshProtocolProtos {
       return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshResponseCollectionProto_descriptor;
     }
 
-    @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
       return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshResponseCollectionProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto.class, org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto.Builder.class);
     }
 
+    public static com.google.protobuf.Parser<GenericRefreshResponseCollectionProto> PARSER =
+        new com.google.protobuf.AbstractParser<GenericRefreshResponseCollectionProto>() {
+      public GenericRefreshResponseCollectionProto parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new GenericRefreshResponseCollectionProto(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<GenericRefreshResponseCollectionProto> getParserForType() {
+      return PARSER;
+    }
+
+    // repeated .hadoop.common.GenericRefreshResponseProto responses = 1;
     public static final int RESPONSES_FIELD_NUMBER = 1;
     private java.util.List<org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto> responses_;
     /**
      * <code>repeated .hadoop.common.GenericRefreshResponseProto responses = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto> getResponsesList() {
       return responses_;
     }
     /**
      * <code>repeated .hadoop.common.GenericRefreshResponseProto responses = 1;</code>
      */
-    @java.lang.Override
     public java.util.List<? extends org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProtoOrBuilder> 
         getResponsesOrBuilderList() {
       return responses_;
@@ -2015,49 +1773,47 @@ public final class GenericRefreshProtocolProtos {
     /**
      * <code>repeated .hadoop.common.GenericRefreshResponseProto responses = 1;</code>
      */
-    @java.lang.Override
     public int getResponsesCount() {
       return responses_.size();
     }
     /**
      * <code>repeated .hadoop.common.GenericRefreshResponseProto responses = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto getResponses(int index) {
       return responses_.get(index);
     }
     /**
      * <code>repeated .hadoop.common.GenericRefreshResponseProto responses = 1;</code>
      */
-    @java.lang.Override
     public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProtoOrBuilder getResponsesOrBuilder(
         int index) {
       return responses_.get(index);
     }
 
+    private void initFields() {
+      responses_ = java.util.Collections.emptyList();
+    }
     private byte memoizedIsInitialized = -1;
-    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
+      if (isInitialized != -1) return isInitialized == 1;
 
       memoizedIsInitialized = 1;
       return true;
     }
 
-    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
+      getSerializedSize();
       for (int i = 0; i < responses_.size(); i++) {
         output.writeMessage(1, responses_.get(i));
       }
-      unknownFields.writeTo(output);
+      getUnknownFields().writeTo(output);
     }
 
-    @java.lang.Override
+    private int memoizedSerializedSize = -1;
     public int getSerializedSize() {
-      int size = memoizedSize;
+      int size = memoizedSerializedSize;
       if (size != -1) return size;
 
       size = 0;
@@ -2065,9 +1821,16 @@ public final class GenericRefreshProtocolProtos {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(1, responses_.get(i));
       }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
       return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
     }
 
     @java.lang.Override
@@ -2080,39 +1843,31 @@ public final class GenericRefreshProtocolProtos {
       }
       org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto other = (org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto) obj;
 
-      if (!getResponsesList()
-          .equals(other.getResponsesList())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
+      boolean result = true;
+      result = result && getResponsesList()
+          .equals(other.getResponsesList());
+      result = result &&
+          getUnknownFields().equals(other.getUnknownFields());
+      return result;
     }
 
+    private int memoizedHashCode = 0;
     @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
       }
       int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (19 * hash) + getDescriptorForType().hashCode();
       if (getResponsesCount() > 0) {
         hash = (37 * hash) + RESPONSES_FIELD_NUMBER;
         hash = (53 * hash) + getResponsesList().hashCode();
       }
-      hash = (29 * hash) + unknownFields.hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -2136,81 +1891,66 @@ public final class GenericRefreshProtocolProtos {
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
+      return PARSER.parseDelimitedFrom(input);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
+      return PARSER.parseFrom(input);
     }
     public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
+      return PARSER.parseFrom(input, extensionRegistry);
     }
 
-    @java.lang.Override
+    public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
     public static Builder newBuilder(org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+      return newBuilder().mergeFrom(prototype);
     }
-    @java.lang.Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
+    public Builder toBuilder() { return newBuilder(this); }
 
     @java.lang.Override
     protected Builder newBuilderForType(
-        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
     /**
+     * Protobuf type {@code hadoop.common.GenericRefreshResponseCollectionProto}
+     *
      * <pre>
      **
      * Collection of responses from zero or more handlers.
      * </pre>
-     *
-     * Protobuf type {@code hadoop.common.GenericRefreshResponseCollectionProto}
      */
     public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:hadoop.common.GenericRefreshResponseCollectionProto)
-        org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProtoOrBuilder {
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshResponseCollectionProto_descriptor;
       }
 
-      @java.lang.Override
-      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshResponseCollectionProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
@@ -2223,17 +1963,19 @@ public final class GenericRefreshProtocolProtos {
       }
 
       private Builder(
-          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
         super(parent);
         maybeForceBuilderInitialization();
       }
       private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getResponsesFieldBuilder();
         }
       }
-      @java.lang.Override
+      private static Builder create() {
+        return new Builder();
+      }
+
       public Builder clear() {
         super.clear();
         if (responsesBuilder_ == null) {
@@ -2245,18 +1987,19 @@ public final class GenericRefreshProtocolProtos {
         return this;
       }
 
-      @java.lang.Override
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.internal_static_hadoop_common_GenericRefreshResponseCollectionProto_descriptor;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto getDefaultInstanceForType() {
         return org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto.getDefaultInstance();
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto build() {
         org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto result = buildPartial();
         if (!result.isInitialized()) {
@@ -2265,12 +2008,11 @@ public final class GenericRefreshProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
       public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto buildPartial() {
         org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto result = new org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto(this);
         int from_bitField0_ = bitField0_;
         if (responsesBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
             responses_ = java.util.Collections.unmodifiableList(responses_);
             bitField0_ = (bitField0_ & ~0x00000001);
           }
@@ -2282,39 +2024,6 @@ public final class GenericRefreshProtocolProtos {
         return result;
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto) {
           return mergeFrom((org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto)other);
@@ -2345,24 +2054,21 @@ public final class GenericRefreshProtocolProtos {
               responses_ = other.responses_;
               bitField0_ = (bitField0_ & ~0x00000001);
               responsesBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
                    getResponsesFieldBuilder() : null;
             } else {
               responsesBuilder_.addAllMessages(other.responses_);
             }
           }
         }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
+        this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
-      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2372,7 +2078,7 @@ public final class GenericRefreshProtocolProtos {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
           parsedMessage = (org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
+          throw e;
         } finally {
           if (parsedMessage != null) {
             mergeFrom(parsedMessage);
@@ -2382,16 +2088,17 @@ public final class GenericRefreshProtocolProtos {
       }
       private int bitField0_;
 
+      // repeated .hadoop.common.GenericRefreshResponseProto responses = 1;
       private java.util.List<org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto> responses_ =
         java.util.Collections.emptyList();
       private void ensureResponsesIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
           responses_ = new java.util.ArrayList<org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto>(responses_);
           bitField0_ |= 0x00000001;
          }
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto, org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto.Builder, org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProtoOrBuilder> responsesBuilder_;
 
       /**
@@ -2523,8 +2230,7 @@ public final class GenericRefreshProtocolProtos {
           java.lang.Iterable<? extends org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto> values) {
         if (responsesBuilder_ == null) {
           ensureResponsesIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, responses_);
+          super.addAll(values, responses_);
           onChanged();
         } else {
           responsesBuilder_.addAllMessages(values);
@@ -2607,80 +2313,39 @@ public final class GenericRefreshProtocolProtos {
            getResponsesBuilderList() {
         return getResponsesFieldBuilder().getBuilderList();
       }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
+      private com.google.protobuf.RepeatedFieldBuilder<
           org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto, org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto.Builder, org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProtoOrBuilder> 
           getResponsesFieldBuilder() {
         if (responsesBuilder_ == null) {
-          responsesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+          responsesBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
               org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto, org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProto.Builder, org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseProtoOrBuilder>(
                   responses_,
-                  ((bitField0_ & 0x00000001) != 0),
+                  ((bitField0_ & 0x00000001) == 0x00000001),
                   getParentForChildren(),
                   isClean());
           responses_ = null;
         }
         return responsesBuilder_;
       }
-      @java.lang.Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @java.lang.Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
 
       // @@protoc_insertion_point(builder_scope:hadoop.common.GenericRefreshResponseCollectionProto)
     }
 
-    // @@protoc_insertion_point(class_scope:hadoop.common.GenericRefreshResponseCollectionProto)
-    private static final org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto();
+      defaultInstance = new GenericRefreshResponseCollectionProto(true);
+      defaultInstance.initFields();
     }
 
-    public static org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    @java.lang.Deprecated public static final com.google.protobuf.Parser<GenericRefreshResponseCollectionProto>
-        PARSER = new com.google.protobuf.AbstractParser<GenericRefreshResponseCollectionProto>() {
-      @java.lang.Override
-      public GenericRefreshResponseCollectionProto parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new GenericRefreshResponseCollectionProto(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<GenericRefreshResponseCollectionProto> parser() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public com.google.protobuf.Parser<GenericRefreshResponseCollectionProto> getParserForType() {
-      return PARSER;
-    }
-
-    @java.lang.Override
-    public org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshResponseCollectionProto getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
+    // @@protoc_insertion_point(class_scope:hadoop.common.GenericRefreshResponseCollectionProto)
   }
 
   /**
+   * Protobuf service {@code hadoop.common.GenericRefreshProtocolService}
+   *
    * <pre>
    **
    * Protocol which is used to refresh a user-specified feature.
    * </pre>
-   *
-   * Protobuf service {@code hadoop.common.GenericRefreshProtocolService}
    */
   public static abstract class GenericRefreshProtocolService
       implements com.google.protobuf.Service {
@@ -2911,27 +2576,27 @@ public final class GenericRefreshProtocolProtos {
     // @@protoc_insertion_point(class_scope:hadoop.common.GenericRefreshProtocolService)
   }
 
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GenericRefreshRequestProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GenericRefreshRequestProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GenericRefreshResponseProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GenericRefreshResponseProto_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
+  private static com.google.protobuf.Descriptors.Descriptor
     internal_static_hadoop_common_GenericRefreshResponseCollectionProto_descriptor;
-  private static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hadoop_common_GenericRefreshResponseCollectionProto_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
+  private static com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
     java.lang.String[] descriptorData = {
@@ -2944,33 +2609,41 @@ public final class GenericRefreshProtocolProtos {
       "to\022=\n\tresponses\030\001 \003(\0132*.hadoop.common.Ge" +
       "nericRefreshResponseProto2\213\001\n\035GenericRef" +
       "reshProtocolService\022j\n\007refresh\022).hadoop." +
-      "common.GenericRefreshRequestProto\0324.hado" +
+      "common.GenericRefreshRequestProto\0324.hado",
       "op.common.GenericRefreshResponseCollecti" +
       "onProtoBA\n\033org.apache.hadoop.ipc.protoB\034" +
       "GenericRefreshProtocolProtos\210\001\001\240\001\001"
     };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
+    com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
+      new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
+        public com.google.protobuf.ExtensionRegistry assignDescriptors(
+            com.google.protobuf.Descriptors.FileDescriptor root) {
+          descriptor = root;
+          internal_static_hadoop_common_GenericRefreshRequestProto_descriptor =
+            getDescriptor().getMessageTypes().get(0);
+          internal_static_hadoop_common_GenericRefreshRequestProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GenericRefreshRequestProto_descriptor,
+              new java.lang.String[] { "Identifier", "Args", });
+          internal_static_hadoop_common_GenericRefreshResponseProto_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_hadoop_common_GenericRefreshResponseProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GenericRefreshResponseProto_descriptor,
+              new java.lang.String[] { "ExitStatus", "UserMessage", "SenderName", });
+          internal_static_hadoop_common_GenericRefreshResponseCollectionProto_descriptor =
+            getDescriptor().getMessageTypes().get(2);
+          internal_static_hadoop_common_GenericRefreshResponseCollectionProto_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_hadoop_common_GenericRefreshResponseCollectionProto_descriptor,
+              new java.lang.String[] { "Responses", });
+          return null;
+        }
+      };
+    com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_hadoop_common_GenericRefreshRequestProto_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_hadoop_common_GenericRefreshRequestProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GenericRefreshRequestProto_descriptor,
-        new java.lang.String[] { "Identifier", "Args", });
-    internal_static_hadoop_common_GenericRefreshResponseProto_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_hadoop_common_GenericRefreshResponseProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GenericRefreshResponseProto_descriptor,
-        new java.lang.String[] { "ExitStatus", "UserMessage", "SenderName", });
-    internal_static_hadoop_common_GenericRefreshResponseCollectionProto_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_hadoop_common_GenericRefreshResponseCollectionProto_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_hadoop_common_GenericRefreshResponseCollectionProto_descriptor,
-        new java.lang.String[] { "Responses", });
+        }, assigner);
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -17,6 +17,16 @@
  */
 package com.gmail.benrcarver.serverlessnamenode.hdfs;
 
+import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.QuotaByStorageTypeExceededException;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.*;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ByteArrayManager;
 import com.google.common.cache.*;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.logging.Log;
@@ -24,17 +34,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
-import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
 import org.apache.hadoop.hdfs.protocol.*;
-import org.apache.hadoop.hdfs.protocol.datatransfer.*;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BlockOpResponseProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status;
-import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
-import org.apache.hadoop.hdfs.server.blockmanagement.BlockStoragePolicySuite;
-import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
-import org.apache.hadoop.hdfs.server.namenode.NotReplicatedYetException;
-import org.apache.hadoop.hdfs.util.ByteArrayManager;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.MultipleIOException;
 import org.apache.hadoop.ipc.RemoteException;
@@ -63,7 +64,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status.SUCCESS;
+import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.Status.SUCCESS;
 
 /*********************************************************************
  *
@@ -897,7 +898,7 @@ class DataStreamer extends Daemon {
           // processes response status from datanodes.
           ArrayList<DatanodeInfo> congestedNodesFromAck = new ArrayList<>();
           for (int i = ack.getNumOfReplies()-1; i >=0  && dfsClient.clientRunning; i--) {
-            final Status reply = PipelineAck.getStatusFromHeader(ack
+            final DataTransferProtos.Status reply = PipelineAck.getStatusFromHeader(ack
                 .getHeaderFlag(i));
             if (PipelineAck.getECNFromHeader(ack.getHeaderFlag(i)) ==
                 PipelineAck.ECN.CONGESTED) {
@@ -1187,8 +1188,8 @@ class DataStreamer extends Daemon {
       out.flush();
 
       //ack
-      BlockOpResponseProto response =
-          BlockOpResponseProto.parseFrom(PBHelper.vintPrefixed(in));
+      DataTransferProtos.BlockOpResponseProto response =
+          DataTransferProtos.BlockOpResponseProto.parseFrom(PBHelper.vintPrefixed(in));
       if (SUCCESS != response.getStatus()) {
         throw new IOException("Failed to add a datanode");
       }
@@ -1494,7 +1495,7 @@ class DataStreamer extends Daemon {
       LOG.info("nodes are empty for write pipeline of " + block);
       return false;
     }
-    Status pipelineStatus = SUCCESS;
+    DataTransferProtos.Status pipelineStatus = SUCCESS;
     String firstBadLink = "";
     boolean checkRestart = false;
     if (LOG.isDebugEnabled()) {
@@ -1544,7 +1545,7 @@ class DataStreamer extends Daemon {
             (targetPinnings == null ? false : targetPinnings[0]), targetPinnings);
 
         // receive ack for connect
-        BlockOpResponseProto resp = BlockOpResponseProto.parseFrom(
+        DataTransferProtos.BlockOpResponseProto resp = DataTransferProtos.BlockOpResponseProto.parseFrom(
             PBHelper.vintPrefixed(blockReplyStream));
         pipelineStatus = resp.getStatus();
         firstBadLink = resp.getFirstBadLink();
