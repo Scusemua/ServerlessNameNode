@@ -1,0 +1,183 @@
+2020-11-10 10:43:44,512 INFO  MiniKdc - Configuration:
+2020-11-10 10:43:44,513 INFO  MiniKdc - ---------------------------------------------------------------
+2020-11-10 10:43:44,513 INFO  MiniKdc -   debug: false
+2020-11-10 10:43:44,513 INFO  MiniKdc -   transport: TCP
+2020-11-10 10:43:44,513 INFO  MiniKdc -   max.ticket.lifetime: 86400000
+2020-11-10 10:43:44,513 INFO  MiniKdc -   org.name: EXAMPLE
+2020-11-10 10:43:44,513 INFO  MiniKdc -   kdc.port: 0
+2020-11-10 10:43:44,513 INFO  MiniKdc -   org.domain: COM
+2020-11-10 10:43:44,513 INFO  MiniKdc -   max.renewable.lifetime: 604800000
+2020-11-10 10:43:44,513 INFO  MiniKdc -   instance: DefaultKrbServer
+2020-11-10 10:43:44,513 INFO  MiniKdc -   kdc.bind.address: localhost
+2020-11-10 10:43:44,513 INFO  MiniKdc - ---------------------------------------------------------------
+2020-11-10 10:43:44,895 INFO  MiniKdc - MiniKdc started.
+2020-11-10 10:43:44,942 INFO  log - Logging initialized @1310ms
+2020-11-10 10:43:45,017 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:43:45,102 INFO  MultiSchemeAuthenticationHandler - multi-scheme-auth-handler.schemes : negotiate
+2020-11-10 10:43:45,102 INFO  MultiSchemeAuthenticationHandler - kerberos.keytab : G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-auth\target\fe06189f-1594-4b2a-a817-d1bd08085535
+2020-11-10 10:43:45,102 INFO  MultiSchemeAuthenticationHandler - type : multi-scheme
+2020-11-10 10:43:45,103 INFO  MultiSchemeAuthenticationHandler - multi-scheme-auth-handler.schemes.negotiate.handler : kerberos
+2020-11-10 10:43:45,103 INFO  MultiSchemeAuthenticationHandler - kerberos.name.rules : RULE:[1:$1@$0](.*@EXAMPLE.COM)s/@.*//
+
+2020-11-10 10:43:45,103 INFO  MultiSchemeAuthenticationHandler - kerberos.principal : HTTP/localhost@EXAMPLE.COM
+2020-11-10 10:43:45,107 INFO  KerberosAuthenticationHandler - Using keytab G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-auth\target\fe06189f-1594-4b2a-a817-d1bd08085535, for principal HTTP/localhost@EXAMPLE.COM
+2020-11-10 10:43:45,194 INFO  MultiSchemeAuthenticationHandler - Successfully initialized Authentication handler of type org.apache.hadoop.security.authentication.server.KerberosAuthenticationHandler
+2020-11-10 10:43:45,194 INFO  MultiSchemeAuthenticationHandler - Successfully initialized MultiSchemeAuthenticationHandler
+2020-11-10 10:43:45,197 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@e10d16{/foo,null,AVAILABLE}
+2020-11-10 10:43:45,223 INFO  AbstractConnector - Started ServerConnector@1d421c9{HTTP/1.1,[http/1.1]}{localhost:51540}
+2020-11-10 10:43:45,223 INFO  Server - Started @1591ms
+Running embedded servlet container at: http://localhost:51540
+2020-11-10 10:43:45,629 INFO  AbstractConnector - Stopped ServerConnector@1d421c9{HTTP/1.1,[http/1.1]}{localhost:51540}
+2020-11-10 10:43:45,631 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@e10d16{/foo,null,UNAVAILABLE}
+2020-11-10 10:43:45,632 INFO  DefaultInternalKdcServerImpl - Default Internal kdc server stopped.
+2020-11-10 10:43:46,652 INFO  MiniKdc - MiniKdc stopped.
+2020-11-10 10:43:46,655 INFO  MiniKdc - Configuration:
+2020-11-10 10:43:46,655 INFO  MiniKdc - ---------------------------------------------------------------
+2020-11-10 10:43:46,655 INFO  MiniKdc -   debug: false
+2020-11-10 10:43:46,655 INFO  MiniKdc -   transport: TCP
+2020-11-10 10:43:46,655 INFO  MiniKdc -   max.ticket.lifetime: 86400000
+2020-11-10 10:43:46,655 INFO  MiniKdc -   org.name: EXAMPLE
+2020-11-10 10:43:46,655 INFO  MiniKdc -   kdc.port: 0
+2020-11-10 10:43:46,655 INFO  MiniKdc -   org.domain: COM
+2020-11-10 10:43:46,655 INFO  MiniKdc -   max.renewable.lifetime: 604800000
+2020-11-10 10:43:46,655 INFO  MiniKdc -   instance: DefaultKrbServer
+2020-11-10 10:43:46,655 INFO  MiniKdc -   kdc.bind.address: localhost
+2020-11-10 10:43:46,655 INFO  MiniKdc - ---------------------------------------------------------------
+2020-11-10 10:43:46,695 INFO  MiniKdc - MiniKdc started.
+Debug is  true storeKey true useTicketCache true useKeyTab true doNotPrompt true ticketCache is null isInitiator true KeyTab is G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-auth\target\fe06189f-1594-4b2a-a817-d1bd08085535 refreshKrb5Config is true principal is client@EXAMPLE.COM tryFirstPass is false useFirstPass is false storePass is false clearPass is false
+Refreshing Kerberos configuration
+Acquire TGT from Cache
+Principal is client@EXAMPLE.COM
+null credentials from Ticket Cache
+2020-11-10 10:43:46,897 INFO  KdcRequest - The preauth data is empty.
+2020-11-10 10:43:46,906 INFO  KdcHandler - KRB error occurred while processing request: Additional pre-authentication required
+2020-11-10 10:43:47,102 INFO  AsRequest - AS_REQ ISSUE: authtime 1605023027100,client@EXAMPLE.COM for krbtgt/EXAMPLE.COM@EXAMPLE.COM
+principal is client@EXAMPLE.COM
+Will use keytab
+Commit Succeeded 
+
+2020-11-10 10:43:47,113 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:43:47,115 INFO  MultiSchemeAuthenticationHandler - multi-scheme-auth-handler.schemes : negotiate
+2020-11-10 10:43:47,115 INFO  MultiSchemeAuthenticationHandler - kerberos.keytab : G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-auth\target\fe06189f-1594-4b2a-a817-d1bd08085535
+2020-11-10 10:43:47,115 INFO  MultiSchemeAuthenticationHandler - type : multi-scheme
+2020-11-10 10:43:47,115 INFO  MultiSchemeAuthenticationHandler - multi-scheme-auth-handler.schemes.negotiate.handler : kerberos
+2020-11-10 10:43:47,115 INFO  MultiSchemeAuthenticationHandler - kerberos.name.rules : RULE:[1:$1@$0](.*@EXAMPLE.COM)s/@.*//
+
+2020-11-10 10:43:47,115 INFO  MultiSchemeAuthenticationHandler - kerberos.principal : HTTP/localhost@EXAMPLE.COM
+2020-11-10 10:43:47,116 INFO  KerberosAuthenticationHandler - Using keytab G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-auth\target\fe06189f-1594-4b2a-a817-d1bd08085535, for principal HTTP/localhost@EXAMPLE.COM
+2020-11-10 10:43:47,116 INFO  MultiSchemeAuthenticationHandler - Successfully initialized Authentication handler of type org.apache.hadoop.security.authentication.server.KerberosAuthenticationHandler
+2020-11-10 10:43:47,116 INFO  MultiSchemeAuthenticationHandler - Successfully initialized MultiSchemeAuthenticationHandler
+2020-11-10 10:43:47,116 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@b169f{/foo,null,AVAILABLE}
+2020-11-10 10:43:47,123 INFO  AbstractConnector - Started ServerConnector@1605788{HTTP/1.1,[http/1.1]}{localhost:51556}
+2020-11-10 10:43:47,123 INFO  Server - Started @3491ms
+Running embedded servlet container at: http://localhost:51556
+2020-11-10 10:43:47,366 ERROR KdcRequest - Principal: HTTP/kubernetes.docker.internal@EXAMPLE.COM is not known
+2020-11-10 10:43:47,368 WARN  HttpAuthenticator - NEGOTIATE authentication error: No valid credentials provided (Mechanism level: No valid credentials provided (Mechanism level: Server not found in Kerberos database (7) - Server not found in Kerberos database))
+2020-11-10 10:43:47,378 INFO  AbstractConnector - Stopped ServerConnector@1605788{HTTP/1.1,[http/1.1]}{localhost:51556}
+2020-11-10 10:43:47,378 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@b169f{/foo,null,UNAVAILABLE}
+		[Krb5LoginModule]: Entering logout
+		[Krb5LoginModule]: logged out Subject
+2020-11-10 10:43:47,379 INFO  DefaultInternalKdcServerImpl - Default Internal kdc server stopped.
+2020-11-10 10:43:48,385 INFO  MiniKdc - MiniKdc stopped.
+2020-11-10 10:43:48,390 INFO  MiniKdc - Configuration:
+2020-11-10 10:43:48,390 INFO  MiniKdc - ---------------------------------------------------------------
+2020-11-10 10:43:48,390 INFO  MiniKdc -   debug: false
+2020-11-10 10:43:48,390 INFO  MiniKdc -   transport: TCP
+2020-11-10 10:43:48,390 INFO  MiniKdc -   max.ticket.lifetime: 86400000
+2020-11-10 10:43:48,390 INFO  MiniKdc -   org.name: EXAMPLE
+2020-11-10 10:43:48,390 INFO  MiniKdc -   kdc.port: 0
+2020-11-10 10:43:48,390 INFO  MiniKdc -   org.domain: COM
+2020-11-10 10:43:48,394 INFO  MiniKdc -   max.renewable.lifetime: 604800000
+2020-11-10 10:43:48,394 INFO  MiniKdc -   instance: DefaultKrbServer
+2020-11-10 10:43:48,394 INFO  MiniKdc -   kdc.bind.address: localhost
+2020-11-10 10:43:48,394 INFO  MiniKdc - ---------------------------------------------------------------
+2020-11-10 10:43:48,412 INFO  MiniKdc - MiniKdc started.
+2020-11-10 10:43:48,429 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:43:48,431 INFO  KerberosAuthenticationHandler - Using keytab G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-auth\target\fe06189f-1594-4b2a-a817-d1bd08085535, for principal HTTP/localhost@EXAMPLE.COM
+2020-11-10 10:43:48,431 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@181d704{/foo,null,AVAILABLE}
+2020-11-10 10:43:48,438 INFO  AbstractConnector - Started ServerConnector@34513c{HTTP/1.1,[http/1.1]}{localhost:51571}
+2020-11-10 10:43:48,438 INFO  Server - Started @4806ms
+Running embedded servlet container at: http://localhost:51571
+2020-11-10 10:43:48,447 INFO  AbstractConnector - Stopped ServerConnector@34513c{HTTP/1.1,[http/1.1]}{localhost:51571}
+2020-11-10 10:43:48,447 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@181d704{/foo,null,UNAVAILABLE}
+2020-11-10 10:43:48,449 INFO  DefaultInternalKdcServerImpl - Default Internal kdc server stopped.
+2020-11-10 10:43:49,466 INFO  MiniKdc - MiniKdc stopped.
+2020-11-10 10:43:49,468 INFO  MiniKdc - Configuration:
+2020-11-10 10:43:49,468 INFO  MiniKdc - ---------------------------------------------------------------
+2020-11-10 10:43:49,468 INFO  MiniKdc -   debug: false
+2020-11-10 10:43:49,468 INFO  MiniKdc -   transport: TCP
+2020-11-10 10:43:49,468 INFO  MiniKdc -   max.ticket.lifetime: 86400000
+2020-11-10 10:43:49,468 INFO  MiniKdc -   org.name: EXAMPLE
+2020-11-10 10:43:49,468 INFO  MiniKdc -   kdc.port: 0
+2020-11-10 10:43:49,468 INFO  MiniKdc -   org.domain: COM
+2020-11-10 10:43:49,468 INFO  MiniKdc -   max.renewable.lifetime: 604800000
+2020-11-10 10:43:49,468 INFO  MiniKdc -   instance: DefaultKrbServer
+2020-11-10 10:43:49,469 INFO  MiniKdc -   kdc.bind.address: localhost
+2020-11-10 10:43:49,469 INFO  MiniKdc - ---------------------------------------------------------------
+2020-11-10 10:43:49,492 INFO  MiniKdc - MiniKdc started.
+Debug is  true storeKey true useTicketCache true useKeyTab true doNotPrompt true ticketCache is null isInitiator true KeyTab is G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-auth\target\fe06189f-1594-4b2a-a817-d1bd08085535 refreshKrb5Config is true principal is client@EXAMPLE.COM tryFirstPass is false useFirstPass is false storePass is false clearPass is false
+Refreshing Kerberos configuration
+Acquire TGT from Cache
+Principal is client@EXAMPLE.COM
+null credentials from Ticket Cache
+2020-11-10 10:43:49,525 INFO  KdcRequest - The preauth data is empty.
+2020-11-10 10:43:49,560 INFO  KdcHandler - KRB error occurred while processing request: Additional pre-authentication required
+2020-11-10 10:43:49,569 INFO  AsRequest - AS_REQ ISSUE: authtime 1605023029568,client@EXAMPLE.COM for krbtgt/EXAMPLE.COM@EXAMPLE.COM
+principal is client@EXAMPLE.COM
+Will use keytab
+Commit Succeeded 
+
+2020-11-10 10:43:49,574 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:43:49,577 INFO  KerberosAuthenticationHandler - Using keytab G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-auth\target\fe06189f-1594-4b2a-a817-d1bd08085535, for principal HTTP/localhost@EXAMPLE.COM
+2020-11-10 10:43:49,578 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@14ec890{/foo,null,AVAILABLE}
+2020-11-10 10:43:49,586 INFO  AbstractConnector - Started ServerConnector@6480ee{HTTP/1.1,[http/1.1]}{localhost:51585}
+2020-11-10 10:43:49,587 INFO  Server - Started @5955ms
+Running embedded servlet container at: http://localhost:51585
+2020-11-10 10:43:49,607 ERROR KdcRequest - Principal: HTTP/kubernetes.docker.internal@EXAMPLE.COM is not known
+2020-11-10 10:43:49,609 WARN  HttpAuthenticator - NEGOTIATE authentication error: No valid credentials provided (Mechanism level: No valid credentials provided (Mechanism level: Server not found in Kerberos database (7) - Server not found in Kerberos database))
+2020-11-10 10:43:49,614 INFO  AbstractConnector - Stopped ServerConnector@6480ee{HTTP/1.1,[http/1.1]}{localhost:51585}
+2020-11-10 10:43:49,614 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@14ec890{/foo,null,UNAVAILABLE}
+		[Krb5LoginModule]: Entering logout
+		[Krb5LoginModule]: logged out Subject
+2020-11-10 10:43:49,616 INFO  DefaultInternalKdcServerImpl - Default Internal kdc server stopped.
+2020-11-10 10:43:50,621 INFO  MiniKdc - MiniKdc stopped.
+2020-11-10 10:43:50,625 INFO  MiniKdc - Configuration:
+2020-11-10 10:43:50,625 INFO  MiniKdc - ---------------------------------------------------------------
+2020-11-10 10:43:50,625 INFO  MiniKdc -   debug: false
+2020-11-10 10:43:50,625 INFO  MiniKdc -   transport: TCP
+2020-11-10 10:43:50,625 INFO  MiniKdc -   max.ticket.lifetime: 86400000
+2020-11-10 10:43:50,625 INFO  MiniKdc -   org.name: EXAMPLE
+2020-11-10 10:43:50,625 INFO  MiniKdc -   kdc.port: 0
+2020-11-10 10:43:50,625 INFO  MiniKdc -   org.domain: COM
+2020-11-10 10:43:50,625 INFO  MiniKdc -   max.renewable.lifetime: 604800000
+2020-11-10 10:43:50,625 INFO  MiniKdc -   instance: DefaultKrbServer
+2020-11-10 10:43:50,625 INFO  MiniKdc -   kdc.bind.address: localhost
+2020-11-10 10:43:50,625 INFO  MiniKdc - ---------------------------------------------------------------
+2020-11-10 10:43:50,650 INFO  MiniKdc - MiniKdc started.
+Debug is  true storeKey true useTicketCache true useKeyTab true doNotPrompt true ticketCache is null isInitiator true KeyTab is G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-auth\target\fe06189f-1594-4b2a-a817-d1bd08085535 refreshKrb5Config is true principal is client@EXAMPLE.COM tryFirstPass is false useFirstPass is false storePass is false clearPass is false
+Refreshing Kerberos configuration
+Acquire TGT from Cache
+Principal is client@EXAMPLE.COM
+null credentials from Ticket Cache
+2020-11-10 10:43:50,702 INFO  KdcRequest - The preauth data is empty.
+2020-11-10 10:43:50,703 INFO  KdcHandler - KRB error occurred while processing request: Additional pre-authentication required
+2020-11-10 10:43:50,714 INFO  AsRequest - AS_REQ ISSUE: authtime 1605023030712,client@EXAMPLE.COM for krbtgt/EXAMPLE.COM@EXAMPLE.COM
+principal is client@EXAMPLE.COM
+Will use keytab
+Commit Succeeded 
+
+2020-11-10 10:43:50,719 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:43:50,721 INFO  KerberosAuthenticationHandler - Using keytab G:\Documents\School\College\MasonLeapLab_Research\ServerlessMDS\ServerlessNameNode\hadoop-common-project\hadoop-auth\target\fe06189f-1594-4b2a-a817-d1bd08085535, for principal HTTP/localhost@EXAMPLE.COM
+2020-11-10 10:43:50,722 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@26f20b{/foo,null,AVAILABLE}
+2020-11-10 10:43:50,729 INFO  AbstractConnector - Started ServerConnector@4c1641{HTTP/1.1,[http/1.1]}{localhost:51602}
+2020-11-10 10:43:50,730 INFO  Server - Started @7098ms
+Running embedded servlet container at: http://localhost:51602
+2020-11-10 10:43:50,801 INFO  TgsRequest - TGS_REQ ISSUE: authtime 1605023030800,client@EXAMPLE.COM for HTTP/localhost@EXAMPLE.COM
+2020-11-10 10:43:50,846 INFO  AbstractConnector - Stopped ServerConnector@4c1641{HTTP/1.1,[http/1.1]}{localhost:51602}
+2020-11-10 10:43:50,847 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@26f20b{/foo,null,UNAVAILABLE}
+		[Krb5LoginModule]: Entering logout
+		[Krb5LoginModule]: logged out Subject
+2020-11-10 10:43:50,849 INFO  DefaultInternalKdcServerImpl - Default Internal kdc server stopped.
+2020-11-10 10:43:51,862 INFO  MiniKdc - MiniKdc stopped.
+2020-11-10 10:43:51,863 INFO  MiniKdc - Configuration:
+2020-11-10 10:43:51,863 INFO  MiniKdc - --------------

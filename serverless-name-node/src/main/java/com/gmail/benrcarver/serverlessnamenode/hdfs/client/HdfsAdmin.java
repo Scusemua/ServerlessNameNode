@@ -18,18 +18,13 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.client;
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DistributedFileSystem;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveEntry;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveInfo;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CachePoolInfo;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.*;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.fs.RemoteIterator;
-import org.apache.hadoop.fs.StorageType;
+import org.apache.hadoop.fs.*;
 import org.apache.hadoop.security.AccessControlException;
+import org.apache.hadoop.hdfs.protocol.EncryptionZone;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -42,7 +37,7 @@ import java.util.EnumSet;
  * applications against HDFS should prefer this interface to directly accessing
  * functionality in DistributedFileSystem or DFSClient.
  * <p/>
- * Note that this is distinct from the similarly-named {@link DFSAdmin}, which
+ * Note that this is distinct from the similarly-named DFSAdmin, which
  * is a class that provides the functionality for the CLI `hdfs dfsadmin ...'
  * commands.
  */

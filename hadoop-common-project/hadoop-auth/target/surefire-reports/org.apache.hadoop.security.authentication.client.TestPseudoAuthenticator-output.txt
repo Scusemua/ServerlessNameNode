@@ -1,0 +1,42 @@
+2020-11-10 10:42:00,665 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:42:00,668 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@10eb4b4{/foo,null,AVAILABLE}
+2020-11-10 10:42:00,681 INFO  AbstractConnector - Started ServerConnector@33f1a9{HTTP/1.1,[http/1.1]}{localhost:51140}
+2020-11-10 10:42:00,681 INFO  Server - Started @14277ms
+Running embedded servlet container at: http://localhost:51140
+2020-11-10 10:42:00,693 INFO  AbstractConnector - Stopped ServerConnector@33f1a9{HTTP/1.1,[http/1.1]}{localhost:51140}
+2020-11-10 10:42:00,694 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@10eb4b4{/foo,null,UNAVAILABLE}
+2020-11-10 10:42:00,696 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:42:00,698 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@18dfcc1{/foo,null,AVAILABLE}
+2020-11-10 10:42:00,709 INFO  AbstractConnector - Started ServerConnector@19f7dcf{HTTP/1.1,[http/1.1]}{localhost:51150}
+2020-11-10 10:42:00,709 INFO  Server - Started @14306ms
+Running embedded servlet container at: http://localhost:51150
+2020-11-10 10:42:00,723 INFO  AbstractConnector - Stopped ServerConnector@19f7dcf{HTTP/1.1,[http/1.1]}{localhost:51150}
+2020-11-10 10:42:00,724 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@18dfcc1{/foo,null,UNAVAILABLE}
+2020-11-10 10:42:00,726 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:42:00,728 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@9bf450{/foo,null,AVAILABLE}
+2020-11-10 10:42:00,744 INFO  AbstractConnector - Started ServerConnector@d8f54a{HTTP/1.1,[http/1.1]}{localhost:51160}
+2020-11-10 10:42:00,745 INFO  Server - Started @14341ms
+Running embedded servlet container at: http://localhost:51160
+2020-11-10 10:42:00,754 INFO  AbstractConnector - Stopped ServerConnector@d8f54a{HTTP/1.1,[http/1.1]}{localhost:51160}
+2020-11-10 10:42:00,754 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@9bf450{/foo,null,UNAVAILABLE}
+2020-11-10 10:42:00,756 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:42:00,759 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@1304f14{/foo,null,AVAILABLE}
+2020-11-10 10:42:00,767 INFO  AbstractConnector - Started ServerConnector@a3d150{HTTP/1.1,[http/1.1]}{localhost:51170}
+2020-11-10 10:42:00,768 INFO  Server - Started @14364ms
+Running embedded servlet container at: http://localhost:51170
+2020-11-10 10:42:00,782 INFO  AbstractConnector - Stopped ServerConnector@a3d150{HTTP/1.1,[http/1.1]}{localhost:51170}
+2020-11-10 10:42:00,782 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@1304f14{/foo,null,UNAVAILABLE}
+2020-11-10 10:42:00,784 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:42:00,787 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@1141def{/foo,null,AVAILABLE}
+2020-11-10 10:42:00,797 INFO  AbstractConnector - Started ServerConnector@1182842{HTTP/1.1,[http/1.1]}{localhost:51180}
+2020-11-10 10:42:00,798 INFO  Server - Started @14394ms
+Running embedded servlet container at: http://localhost:51180
+2020-11-10 10:42:00,809 INFO  AbstractConnector - Stopped ServerConnector@1182842{HTTP/1.1,[http/1.1]}{localhost:51180}
+2020-11-10 10:42:00,809 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@1141def{/foo,null,UNAVAILABLE}
+2020-11-10 10:42:00,812 INFO  Server - jetty-9.3.19.v20170502
+2020-11-10 10:42:00,821 INFO  ContextHandler - Started o.e.j.s.ServletContextHandler@190fc5b{/foo,null,AVAILABLE}
+2020-11-10 10:42:00,832 INFO  AbstractConnector - Started ServerConnector@197fbdb{HTTP/1.1,[http/1.1]}{localhost:51190}
+2020-11-10 10:42:00,832 INFO  Server - Started @14429ms
+Running embedded servlet container at: http://localhost:51190
+2020-11-10 10:42:00,847 INFO  AbstractConnector - Stopped ServerConnector@197fbdb{HTTP/1.1,[http/1.1]}{localhost:51190}
+2020-11-10 10:42:00,847 INFO  ContextHandler - Stopped o.e.j.s.ServletContextHandler@190fc5b{/foo,null,UNAVAILABLE}

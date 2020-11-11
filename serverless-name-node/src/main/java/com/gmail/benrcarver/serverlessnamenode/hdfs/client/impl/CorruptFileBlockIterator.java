@@ -20,10 +20,10 @@ package com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl;
 
 
 import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSClient;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.CorruptFileBlocks;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.RemoteIterator;
+import org.apache.hadoop.hdfs.protocol.CorruptFileBlocks;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;

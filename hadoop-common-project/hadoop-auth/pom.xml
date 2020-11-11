@@ -36,6 +36,9 @@
     <!--The following two properties are defined in the base-level POM file, but they won't resolve so I've redefined them here... -->
     <apacheds.version>2.0.0-M21</apacheds.version>
     <ldap-api.version>1.0.0-M33</ldap-api.version>
+
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -63,25 +66,25 @@
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util</artifactId>
       <scope>test</scope>
-      <version>LATEST</version>
+      <version>9.3.19.v20170502</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-server -->
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
-      <scope>test</scope>
-      <version>LATEST</version>
+      <version>9.3.19.v20170502</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-servlet</artifactId>
       <scope>test</scope>
-      <version>LATEST</version>
+      <version>9.3.19.v20170502</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <scope>provided</scope>
-      <version>LATEST</version>
+      <version>3.1.0</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>

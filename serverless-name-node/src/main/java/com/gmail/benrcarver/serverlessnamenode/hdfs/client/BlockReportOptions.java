@@ -47,8 +47,8 @@ public final class BlockReportOptions {
       return this;
     }
 
-    public org.apache.hadoop.hdfs.client.BlockReportOptions build() {
-      return new org.apache.hadoop.hdfs.client.BlockReportOptions(incremental);
+    public com.gmail.benrcarver.serverlessnamenode.hdfs.client.BlockReportOptions build() {
+      return new com.gmail.benrcarver.serverlessnamenode.hdfs.client.BlockReportOptions(incremental);
     }
   }
 

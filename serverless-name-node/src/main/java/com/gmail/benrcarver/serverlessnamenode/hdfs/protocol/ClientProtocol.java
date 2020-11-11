@@ -1,11 +1,14 @@
 package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.NSQuotaExceededException;
-import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.CorruptFileBlocks;
+import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.SafeModeException;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.ParentNotDirectoryException;
+import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.fs.UnresolvedLinkException;
+import org.apache.hadoop.hdfs.protocol.CorruptFileBlocks;
+import org.apache.hadoop.hdfs.protocol.DSQuotaExceededException;
+import org.apache.hadoop.hdfs.protocol.NSQuotaExceededException;
+import org.apache.hadoop.hdfs.protocol.QuotaExceededException;
 import org.apache.hadoop.io.retry.Idempotent;
 
 import java.io.FileNotFoundException;
@@ -87,6 +90,38 @@ public interface ClientProtocol {
     @Idempotent
     public boolean setSafeMode(HdfsConstants.SafeModeAction action,
                                boolean isChecked) throws IOException;
+
+    /**
+     * Set the quota for a directory.
+     * @param path  The string representation of the path to the directory
+     * @param namespaceQuota Limit on the number of names in the tree rooted
+     *                       at the directory
+     * @param storagespaceQuota Limit on storage space occupied all the files under
+     *                       this directory.
+     * @param type StorageType that the space quota is intended to be set on.
+     *             It may be null when called by traditional space/namespace quota.
+     *             When type is is not null, the storagespaceQuota parameter is for
+     *             type specified and namespaceQuota must be
+     *             {@link HdfsConstants#QUOTA_DONT_SET}.
+     *
+     * <br><br>
+     *
+     * The quota can have three types of values : (1) 0 or more will set
+     * the quota to that value, (2) {@link HdfsConstants#QUOTA_DONT_SET}  implies
+     * the quota will not be changed, and (3) {@link HdfsConstants#QUOTA_RESET}
+     * implies the quota will be reset. Any other value is a runtime error.
+     *
+     * @throws AccessControlException permission denied
+     * @throws FileNotFoundException file <code>path</code> is not found
+     * @throws QuotaExceededException if the directory size
+     *           is greater than the given quota
+     * @throws UnresolvedLinkException if the <code>path</code> contains a symlink.
+     * @throws IOException If an I/O error occurred
+     */
+    @Idempotent
+    public void setQuota(String path, long namespaceQuota, long storagespaceQuota,
+                         StorageType type) throws AccessControlException, FileNotFoundException,
+            UnresolvedLinkException, IOException;
 
     /**
      * @return CorruptFileBlocks, containing a list of corrupt files (with
