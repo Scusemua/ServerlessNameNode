@@ -1,7 +1,7 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.util.EnumCounters;
 import org.apache.hadoop.fs.StorageType;
+import org.apache.hadoop.hdfs.util.EnumCounters;
 
 /**
  * Counters for namespace, storage space and storage type space quota and usage.

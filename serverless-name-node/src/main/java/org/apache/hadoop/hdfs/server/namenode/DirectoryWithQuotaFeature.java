@@ -1,17 +1,12 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.QuotaByStorageTypeExceededException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.util.EnumCounters;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.metadata.common.FinderType;
 import io.hops.transaction.EntityManager;
 import org.apache.hadoop.fs.StorageType;
-import org.apache.hadoop.hdfs.protocol.DSQuotaExceededException;
-import org.apache.hadoop.hdfs.protocol.NSQuotaExceededException;
-import org.apache.hadoop.hdfs.protocol.QuotaExceededException;
+import org.apache.hadoop.hdfs.protocol.*;
+import org.apache.hadoop.hdfs.util.EnumCounters;
 
 /**
  * Quota feature for {@link com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory}
