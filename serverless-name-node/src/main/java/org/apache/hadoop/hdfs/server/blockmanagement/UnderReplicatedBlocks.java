@@ -32,7 +32,8 @@ import io.hops.transaction.handler.LightWeightRequestHandler;
 import io.hops.transaction.lock.LockFactory;
 import io.hops.transaction.lock.TransactionLockTypes;
 import io.hops.transaction.lock.TransactionLocks;
-import org.apache.hadoop.hdfs.server.namenode.NameNode;
+import org.apache.hadoop.hdfs.protocol.Block;
+import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode;
 
 import java.io.IOException;
 import java.util.*;
@@ -245,7 +246,7 @@ class UnderReplicatedBlocks implements Iterable<Block> {
     int priLevel = getPriority(block, curReplicas, decomissionedReplicas,
                                expectedReplicas);
     if(add(block, priLevel, expectedReplicas)) {
-      NameNode.blockStateChangeLog.debug(
+      ServerlessNameNode.blockStateChangeLog.debug(
           "BLOCK* NameSystem.UnderReplicationBlock.add: {}"
               + " has only {} replicas and need {} replicas so is added to" +
               " neededReplications at priority level {}", block, curReplicas,
@@ -287,7 +288,7 @@ class UnderReplicatedBlocks implements Iterable<Block> {
       throws StorageException, TransactionContextException {
     UnderReplicatedBlock urb = getUnderReplicatedBlock(block);
     if (remove(urb)) {
-      NameNode.blockStateChangeLog.debug(
+      ServerlessNameNode.blockStateChangeLog.debug(
         "BLOCK* NameSystem.UnderReplicationBlock.remove: Removing block {}" +
             " from priority queue {}", block, urb.getLevel());
       return true;
@@ -327,8 +328,8 @@ class UnderReplicatedBlocks implements Iterable<Block> {
         curExpectedReplicas);
     int oldPri = getPriority(block, oldReplicas, decommissionedReplicas,
         oldExpectedReplicas);
-    if (NameNode.stateChangeLog.isDebugEnabled()) {
-      NameNode.stateChangeLog.debug("UnderReplicationBlocks.update " +
+    if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+      ServerlessNameNode.stateChangeLog.debug("UnderReplicationBlocks.update " +
           block +
           " curReplicas " + curReplicas +
           " curExpectedReplicas " + curExpectedReplicas +
@@ -344,7 +345,7 @@ class UnderReplicatedBlocks implements Iterable<Block> {
 //      remove(block);
 //    }
     if(add(block, curPri, curExpectedReplicas, true)) {
-      NameNode.blockStateChangeLog.debug(
+      ServerlessNameNode.blockStateChangeLog.debug(
           "BLOCK* NameSystem.UnderReplicationBlock.update: {} has only {} " +
               "replicas and needs {} replicas so is added to " +
               "neededReplications at priority level {}", block, curReplicas,

@@ -1,18 +1,25 @@
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
+import com.google.common.base.Preconditions;
+import com.google.common.primitives.Longs;
 import io.hops.metadata.blockmanagement.ExcessReplicasMap;
 import io.hops.metadata.security.token.block.NameNodeBlockTokenSecretManager;
+import io.hops.transaction.lock.TransactionLockTypes;
 import org.apache.hadoop.HadoopIllegalArgumentException;
+import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier.AccessMode;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenSecretManager;
+import org.apache.hadoop.hdfs.server.protocol.BlocksWithLocations.BlockWithLocations;
 import org.apache.hadoop.hdfs.security.token.block.DataEncryptionKey;
 import org.apache.hadoop.hdfs.security.token.block.ExportedBlockKeys;
 import org.apache.hadoop.hdfs.server.blockmanagement.CorruptReplicasMap;
+import org.apache.hadoop.hdfs.server.blockmanagement.CorruptReplicasMap.Reason;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.BlockUCState;
 import org.apache.hadoop.hdfs.server.namenode.*;
 import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.hdfs.server.protocol.*;
@@ -57,7 +64,11 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
+import static io.hops.transaction.lock.TransactionLockTypes.*;
 import static org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos.DatanodeCommandProto.Type.KeyUpdateCommand;
+import static org.apache.hadoop.hdfs.server.blockmanagement.DatanodeStorageInfo.*;
+import static org.apache.hadoop.hdfs.server.protocol.DatanodeStorage.*;
+import static org.apache.hadoop.util.ExitUtil.terminate;
 
 /**
  * Keeps information related to the blocks stored in the Hadoop cluster.
@@ -1164,7 +1175,7 @@ public class BlockManager {
             public Object call() throws Exception {
                 try {
                     Map<Long, Long> allBlocksAndInodesIds = node.getAllStorageReplicas(numBuckets, blockFetcherNBThreads,
-                            blockFetcherBucketsPerThread, ((FSNamesystem) namesystem).getFSOperationsExecutor());
+                            blockFetcherBucketsPerThread, ((FSNameSystem) namesystem).getFSOperationsExecutor());
 
                     removeBlocks(allBlocksAndInodesIds, node);
 
@@ -1212,7 +1223,7 @@ public class BlockManager {
             public Object call() throws Exception {
                 try {
                     Map<Long, Long> allBlocksAndInodesIds = storageInfo.getAllStorageReplicas(numBuckets, blockFetcherNBThreads,
-                            blockFetcherBucketsPerThread, ((FSNamesystem) namesystem).getFSOperationsExecutor());
+                            blockFetcherBucketsPerThread, ((FSNameSystem) namesystem).getFSOperationsExecutor());
                     final DatanodeDescriptor node = storageInfo.getDatanodeDescriptor();
 
                     removeBlocks(allBlocksAndInodesIds, node);
@@ -1244,9 +1255,9 @@ public class BlockManager {
             @Override
             public Object call() throws Exception {
                 try {
-                    Map<Long, Long> allBlocksAndInodesIds = DatanodeStorageInfo.getAllStorageReplicas(numBuckets, sid,
+                    Map<Long, Long> allBlocksAndInodesIds = getAllStorageReplicas(numBuckets, sid,
                             blockFetcherNBThreads, blockFetcherBucketsPerThread,
-                            ((FSNamesystem) namesystem).getFSOperationsExecutor());
+                            ((FSNameSystem) namesystem).getFSOperationsExecutor());
 
                     removeBlocks(allBlocksAndInodesIds, sid);
 
@@ -1302,7 +1313,7 @@ public class BlockManager {
         StringBuilder datanodes = new StringBuilder();
         BlockInfoContiguous block = getBlockInfo(b);
 
-        DatanodeStorageInfo[] storages = getBlockInfo(block).getStorages(datanodeManager, DatanodeStorage.State.NORMAL);
+        DatanodeStorageInfo[] storages = getBlockInfo(block).getStorages(datanodeManager, State.NORMAL);
         for(DatanodeStorageInfo storage : storages) {
             final DatanodeDescriptor node = storage.getDatanodeDescriptor();
             invalidateBlocks.add(block, storage, false);
@@ -1361,7 +1372,7 @@ public class BlockManager {
                         .add(lf.getIndividualBlockLock(blk.getBlockId(), inodeIdentifier))
                         .add(lf.getBlockRelated(LockFactory.BLK.RE, LockFactory.BLK.ER, LockFactory.BLK.CR, LockFactory.BLK.UR, LockFactory.BLK.UC,
                                 LockFactory.BLK.IV));
-                if (((FSNamesystem) namesystem).isErasureCodingEnabled() &&
+                if (((FSNameSystem) namesystem).isErasureCodingEnabled() &&
                         inodeIdentifier != null) {
                     locks.add(lf.getIndivdualEncodingStatusLock(LockType.WRITE,
                             inodeIdentifier.getInodeId()));
@@ -1451,7 +1462,7 @@ public class BlockManager {
         // HDFS stops here, but we have to check if Erasure Coding is enabled,
         // and if we need to use it to restore this block. If there are no
         // replicas of this block, we can still restore using the parity blocks:
-        FSNamesystem fsNamesystem = (FSNamesystem) namesystem;
+        FSNameSystem fsNamesystem = (FSNameSystem) namesystem;
         if (!fsNamesystem.isErasureCodingEnabled()) {
             return;
         }
@@ -1746,12 +1757,12 @@ public class BlockManager {
                 // Add block to the to be replicated list
                 rw.srcNode.addBlockToBeReplicated(block, targets);
                 scheduledWork++;
-                DatanodeStorageInfo.incrementBlocksScheduled(targets);
+                incrementBlocksScheduled(targets);
 
                 // Move the block-replication into a "pending" state.
                 // The reason we use 'pending' is so we can retry
                 // replications that fail after an appropriate amount of time.
-                pendingReplications.increment(getBlockInfo(block), DatanodeStorageInfo.toDatanodeDescriptors(targets));
+                pendingReplications.increment(getBlockInfo(block), toDatanodeDescriptors(targets));
                 if (blockLog.isDebugEnabled()) {
                     blockLog.debug("BLOCK* block {} is moved from neededReplications to "
                             + "pendingReplications", block);
@@ -2434,7 +2445,7 @@ public class BlockManager {
                     "reported.", maxNumBlocksToLog, numBlocksLogged);
         }
         try {
-            List<Future<Object>> futures = ((FSNamesystem) namesystem).getFSOperationsExecutor().invokeAll(addTasks);
+            List<Future<Object>> futures = ((FSNameSystem) namesystem).getFSOperationsExecutor().invokeAll(addTasks);
             //Check for exceptions
             for (Future<Object> maybeException : futures){
                 maybeException.get();
@@ -2471,12 +2482,12 @@ public class BlockManager {
     public void removeBlocks(List<Long> allBlockIds, final DatanodeDescriptor node) throws IOException {
 
         final Map<Long, List<Long>> inodeIdsToBlockMap = INodeUtil.getINodeIdsForBlockIds(allBlockIds,
-                slicerBatchSize, slicerNbThreads, ((FSNamesystem) namesystem).getFSOperationsExecutor());
+                slicerBatchSize, slicerNbThreads, ((FSNameSystem) namesystem).getFSOperationsExecutor());
         final List<Long> inodeIds = new ArrayList<>(inodeIdsToBlockMap.keySet());
 
         try {
             Slicer.slice(inodeIds.size(), slicerBatchSize, slicerNbThreads,
-                    ((FSNamesystem) namesystem).getFSOperationsExecutor(),
+                    ((FSNameSystem) namesystem).getFSOperationsExecutor(),
                     new Slicer.OperationHandler() {
                         @Override
                         public void handle(int startIndex, int endIndex)
@@ -2506,7 +2517,7 @@ public class BlockManager {
 
         try {
             Slicer.slice(inodeIds.size(), slicerBatchSize, slicerNbThreads,
-                    ((FSNamesystem) namesystem).getFSOperationsExecutor(),
+                    ((FSNameSystem) namesystem).getFSOperationsExecutor(),
                     new Slicer.OperationHandler() {
                         @Override
                         public void handle(int startIndex, int endIndex)
@@ -2535,7 +2546,7 @@ public class BlockManager {
 
         try {
             Slicer.slice(inodeIds.size(), slicerBatchSize, slicerNbThreads,
-                    ((FSNamesystem) namesystem).getFSOperationsExecutor(),
+                    ((FSNameSystem) namesystem).getFSOperationsExecutor(),
                     new Slicer.OperationHandler() {
                         @Override
                         public void handle(int startIndex, int endIndex)
@@ -2602,7 +2613,7 @@ public class BlockManager {
         }
 
         try {
-            List<Future<Map<Long, Long>>> futures = ((FSNamesystem) namesystem)
+            List<Future<Map<Long, Long>>> futures = ((FSNameSystem) namesystem)
                     .getFSOperationsExecutor().invokeAll(subTasks);
             for (Future<Map<Long, Long>> maybeException : futures){
                 mismatchedBlocksAndInodes.putAll(maybeException.get());
@@ -2710,7 +2721,7 @@ public class BlockManager {
         }
 
         try {
-            List<Future<Void>> futures = ((FSNamesystem) namesystem).getFSOperationsExecutor().invokeAll(subTasks);
+            List<Future<Void>> futures = ((FSNameSystem) namesystem).getFSOperationsExecutor().invokeAll(subTasks);
             for (Future<Void> maybeException : futures){
                 maybeException.get();
             }
@@ -3215,7 +3226,7 @@ public class BlockManager {
         BlockCollection bc = storedBlock.getBlockCollection();
         assert bc != null : "Block must belong to a file";
 
-        FSNamesystem fsNamesystem = (FSNamesystem) namesystem;
+        FSNameSystem fsNamesystem = (FSNameSystem) namesystem;
         NumberReplicas numBeforeAdding = null;
         if (fsNamesystem.isErasureCodingEnabled()) {
             numBeforeAdding = countNodes(block);
@@ -3565,7 +3576,7 @@ public class BlockManager {
 
         try {
             Slicer.slice(allINodes.size(), slicerBatchSize, slicerNbThreads,
-                    ((FSNamesystem) namesystem).getFSOperationsExecutor(),
+                    ((FSNameSystem) namesystem).getFSOperationsExecutor(),
                     new Slicer.OperationHandler() {
                         @Override
                         public void handle(int startIndex, int endIndex)
@@ -3834,7 +3845,7 @@ public class BlockManager {
                 storagePolicySuite.getPolicy(bc.getStoragePolicyID());
 
         final List<StorageType> excessTypes = storagePolicy.chooseExcess(
-                replication, DatanodeStorageInfo.toStorageTypes(nonExcess));
+                replication, toStorageTypes(nonExcess));
 
         final Map<String, List<DatanodeStorageInfo>> rackMap
                 = new HashMap<String, List<DatanodeStorageInfo>>();
@@ -3851,9 +3862,9 @@ public class BlockManager {
         // otherwise one node with least space from remains
         boolean firstOne = true;
         final DatanodeStorageInfo delNodeHintStorage
-                = DatanodeStorageInfo.getDatanodeStorageInfo(nonExcess, delNodeHint);
+                = getDatanodeStorageInfo(nonExcess, delNodeHint);
         final DatanodeStorageInfo addedNodeStorage
-                = DatanodeStorageInfo.getDatanodeStorageInfo(nonExcess, addedNode);
+                = getDatanodeStorageInfo(nonExcess, addedNode);
         while (nonExcess.size() - replication > 0) {
             final DatanodeStorageInfo cur;
             if (useDelHint(firstOne, delNodeHintStorage, addedNodeStorage,
@@ -3963,7 +3974,7 @@ public class BlockManager {
         // Remove the replica from corruptReplicas
         corruptReplicas.removeFromCorruptReplicasMap(getBlockInfo(block), node);
 
-        FSNamesystem fsNamesystem = (FSNamesystem) namesystem;
+        FSNameSystem fsNamesystem = (FSNameSystem) namesystem;
         if (fsNamesystem.isErasureCodingEnabled()) {
             BlockInfoContiguous blockInfo = getStoredBlock(block);
             EncodingStatus status = EntityManager
@@ -4037,7 +4048,7 @@ public class BlockManager {
         // Remove the replica from corruptReplicas
         corruptReplicas.forceRemoveFromCorruptReplicasMap(getBlockInfo(block), sid);
 
-        FSNamesystem fsNamesystem = (FSNamesystem) namesystem;
+        FSNameSystem fsNamesystem = (FSNameSystem) namesystem;
         if (fsNamesystem.isErasureCodingEnabled()) {
             BlockInfoContiguous blockInfo = getStoredBlock(block);
             EncodingStatus status = EntityManager
@@ -4099,13 +4110,13 @@ public class BlockManager {
         }
 
         final Map<Long, List<Long>> inodeIdsToBlockMap = INodeUtil.getINodeIdsForBlockIds(blockIds,
-                slicerBatchSize, slicerNbThreads, ((FSNamesystem) namesystem).getFSOperationsExecutor());
+                slicerBatchSize, slicerNbThreads, ((FSNameSystem) namesystem).getFSOperationsExecutor());
         final List<Long> allInodeIds = new ArrayList<>(inodeIdsToBlockMap.keySet());
         final Map<Block, List<DatanodeStorageInfo>> locationsMap = new ConcurrentHashMap<>();
 
         try{
             Slicer.slice(allInodeIds.size(), slicerBatchSize, slicerNbThreads,
-                    ((FSNamesystem) namesystem).getFSOperationsExecutor(),
+                    ((FSNameSystem) namesystem).getFSOperationsExecutor(),
                     new Slicer.OperationHandler() {
                         @Override
                         public void handle(int startIndex, int endIndex)
@@ -4322,7 +4333,7 @@ public class BlockManager {
                         if (!rdbi.isDeletedBlock()) {
                             locks.add(lf.getBlockRelated(LockFactory.BLK.PE, LockFactory.BLK.UC, LockFactory.BLK.IV));
                         }
-                        if (((FSNamesystem) namesystem).isErasureCodingEnabled() &&
+                        if (((FSNameSystem) namesystem).isErasureCodingEnabled() &&
                                 inodeIdentifier != null) {
                             locks.add(lf.getIndivdualEncodingStatusLock(LockType.WRITE,
                                     inodeIdentifier.getInodeId()));
@@ -4494,7 +4505,7 @@ public class BlockManager {
         }
         final int[] numOverReplicated = {0};
         Map<Long, Long> blocksOnNode = srcNode.getAllStorageReplicas(numBuckets, blockFetcherNBThreads,
-                blockFetcherBucketsPerThread, ((FSNamesystem) namesystem).getFSOperationsExecutor());
+                blockFetcherBucketsPerThread, ((FSNameSystem) namesystem).getFSOperationsExecutor());
 
         final Map<Long, List<Long>> inodeIdsToBlockMap = new HashMap<>();
         for (Map.Entry<Long, Long> entry : blocksOnNode.entrySet()) {
@@ -4510,7 +4521,7 @@ public class BlockManager {
 
         try {
             Slicer.slice(inodeIds.size(), slicerBatchSize, slicerNbThreads,
-                    ((FSNamesystem) namesystem).getFSOperationsExecutor(),
+                    ((FSNameSystem) namesystem).getFSOperationsExecutor(),
                     new Slicer.OperationHandler() {
                         @Override
                         public void handle(int startIndex, int endIndex)
@@ -4999,9 +5010,9 @@ public class BlockManager {
             long startOffset, boolean corrupt) {
         // startOffset is unknown
         return new LocatedBlock(
-                b, DatanodeStorageInfo.toDatanodeInfos(storages),
-                DatanodeStorageInfo.toStorageIDs(storages),
-                DatanodeStorageInfo.toStorageTypes(storages),
+                b, toDatanodeInfos(storages),
+                toStorageIDs(storages),
+                toStorageTypes(storages),
                 startOffset, corrupt,
                 null);
     }
@@ -5105,7 +5116,7 @@ public class BlockManager {
                         lf.getBlockRelated(LockFactory.BLK.RE, LockFactory.BLK.IV, LockFactory.BLK.CR, LockFactory.BLK.UR,
                                 LockFactory.BLK.ER));
 
-                if (((FSNamesystem) namesystem).isErasureCodingEnabled() && inodeIdentifiers != null) {
+                if (((FSNameSystem) namesystem).isErasureCodingEnabled() && inodeIdentifiers != null) {
                     locks.add(lf.getBatchedEncodingStatusLock(LockType.WRITE, inodeIdentifiers));
                 }
             }
@@ -5146,7 +5157,7 @@ public class BlockManager {
                         lf.getSqlBatchedBlocksRelated(LockFactory.BLK.RE, LockFactory.BLK.IV, LockFactory.BLK.CR, LockFactory.BLK.UR,
                                 LockFactory.BLK.ER));
 
-                if (((FSNamesystem) namesystem).isErasureCodingEnabled() && inodeIdentifiers != null) {
+                if (((FSNameSystem) namesystem).isErasureCodingEnabled() && inodeIdentifiers != null) {
                     locks.add(lf.getBatchedEncodingStatusLock(LockType.WRITE, inodeIdentifiers));
                 }
             }
@@ -5248,7 +5259,7 @@ public class BlockManager {
                         lf.getIndividualINodeLock(INodeLockType.WRITE, inodeIdentifier))
                         .add(lf.getIndividualBlockLock(timedOutItemId, inodeIdentifier))
                         .add(lf.getBlockRelated(LockFactory.BLK.RE, LockFactory.BLK.ER, LockFactory.BLK.CR, LockFactory.BLK.PE, LockFactory.BLK.UR));
-                if (((FSNamesystem) namesystem).isErasureCodingEnabled() &&
+                if (((FSNameSystem) namesystem).isErasureCodingEnabled() &&
                         inodeIdentifier != null) {
                     locks.add(lf.getIndivdualEncodingStatusLock(LockType.WRITE,
                             inodeIdentifier.getInodeId()));
@@ -5309,7 +5320,7 @@ public class BlockManager {
                 locks.add(lf.getINodesLocks(INodeLockType.WRITE, inodeIdentifiers))
                         .add(lf.getBlockReportingLocks(Longs.toArray(blockIds), Longs.toArray(inodeIds) , new long[0], 0)).add(
                         lf.getBlockRelated(LockFactory.BLK.RE, LockFactory.BLK.ER, LockFactory.BLK.CR, LockFactory.BLK.PE, LockFactory.BLK.IV, LockFactory.BLK.UR));
-                if (((FSNamesystem) namesystem).isErasureCodingEnabled() &&
+                if (((FSNameSystem) namesystem).isErasureCodingEnabled() &&
                         !inodeIdentifiers.isEmpty()) {
                     locks.add(lf.getBatchedEncodingStatusLock(LockType.WRITE,
                             inodeIdentifiers));
@@ -5346,7 +5357,7 @@ public class BlockManager {
                         .add(lf.getIndividualBlockLock(ucBlock.reportedBlock.getBlockId(), inodeIdentifier))
                         .add(lf.getBlockRelated(LockFactory.BLK.RE, LockFactory.BLK.UC, LockFactory.BLK.ER, LockFactory.BLK.CR, LockFactory.BLK.PE,
                                 LockFactory.BLK.UR));
-                if (((FSNamesystem) namesystem).isErasureCodingEnabled() &&
+                if (((FSNameSystem) namesystem).isErasureCodingEnabled() &&
                         inodeIdentifier != null) {
                     locks.add(lf.getIndivdualEncodingStatusLock(LockType.WRITE,
                             inodeIdentifier.getInodeId()));
@@ -5385,7 +5396,7 @@ public class BlockManager {
                         .add(lf.getIndividualBlockLock(b.corrupted.getBlockId(),
                                 inodeIdentifier)).add(
                         lf.getBlockRelated(LockFactory.BLK.RE, LockFactory.BLK.ER, LockFactory.BLK.CR, LockFactory.BLK.UR, LockFactory.BLK.UC, LockFactory.BLK.IV));
-                if (((FSNamesystem) namesystem).isErasureCodingEnabled() &&
+                if (((FSNameSystem) namesystem).isErasureCodingEnabled() &&
                         inodeIdentifier != null) {
                     locks.add(lf.getIndivdualEncodingStatusLock(LockType.WRITE,
                             inodeIdentifier.getInodeId()));
@@ -5425,7 +5436,7 @@ public class BlockManager {
                         .add(lf.getIndividualBlockLock(block.getBlockId(), inodeIdentifier))
                         .add(lf.getBlockRelated(LockFactory.BLK.RE, LockFactory.BLK.UC, LockFactory.BLK.CR, LockFactory.BLK.ER, LockFactory.BLK.PE,
                                 LockFactory.BLK.UR));
-                if (((FSNamesystem) namesystem).isErasureCodingEnabled() &&
+                if (((FSNameSystem) namesystem).isErasureCodingEnabled() &&
                         inodeIdentifier != null) {
                     locks.add(lf.getIndivdualEncodingStatusLock(LockType.WRITE,
                             inodeIdentifier.getInodeId()));
@@ -5474,7 +5485,7 @@ public class BlockManager {
                 locks.add(lf.getINodesLocks(INodeLockType.WRITE, inodeIdentifiers))
                         .add(lf.getBlockLock()).add(
                         lf.getBlockRelated(LockFactory.BLK.RE, LockFactory.BLK.ER, LockFactory.BLK.CR, LockFactory.BLK.PE, LockFactory.BLK.IV, LockFactory.BLK.UR));
-                if (((FSNamesystem) namesystem).isErasureCodingEnabled() &&
+                if (((FSNameSystem) namesystem).isErasureCodingEnabled() &&
                         !inodeIdentifiers.isEmpty()) {
                     locks.add(lf.getBatchedEncodingStatusLock(LockType.WRITE,
                             inodeIdentifiers));

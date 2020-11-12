@@ -2396,6 +2396,25 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         return JSON.toString(info);
     }
 
+    /**
+     * Adjust the total number of blocks safe and expected during safe mode.
+     * If safe mode is not currently on, this is a no-op.
+     *
+     * @param deltaSafe
+     *     the change in number of safe blocks
+     * @param deltaTotal
+     *     the change i number of total blocks expected
+     */
+    public void adjustSafeModeBlockTotals(List<Block> deltaSafe, int deltaTotal)
+            throws IOException {
+        // safeMode is volatile, and may be set to null at any time
+        SafeModeInfo safeMode = this.safeMode();
+        if (safeMode == null) {
+            return;
+        }
+        safeMode.adjustBlockTotals(deltaSafe, deltaTotal);
+    }
+
     public RollingUpgradeInfo getRollingUpgradeInfoTX() throws IOException {
         return (RollingUpgradeInfo) new HopsTransactionalRequestHandler(HDFSOperationType.GET_ROLLING_UPGRADE_INFO) {
             @Override
@@ -2574,9 +2593,6 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         }
     }
 
-    /**
-     * @see ClientProtocol#getAdditionalDatanode(String, ExtendedBlock, DatanodeInfo[], String[], DatanodeInfo[], int, String)
-     */
     LocatedBlock getAdditionalDatanode(final String srcArg, final long fileId, final ExtendedBlock blk,
                                        final DatanodeInfo[] existings, final String[] storageIDs,
                                        final HashSet<Node> excludes, final int numAdditionalNodes,
@@ -4534,6 +4550,27 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
     // exposed for unit tests
     protected void setImageLoaded(boolean flag) {
         imageLoaded = flag;
+    }
+
+    /**
+     * Change the indicated filename.
+     * @deprecated Use {@link #renameTo(String, String, Options.Rename...)} instead.
+     */
+    @Deprecated
+    boolean renameTo(String src, String dst)
+            throws IOException {
+        //only for testing
+        saveTimes();
+        boolean ret = false;
+        try {
+            checkNameNodeSafeMode("Cannot rename " + src);
+            ret = FSDirRenameOp.renameToInt(dir, src, dst);
+        } catch (AccessControlException e)  {
+            logAuditEvent(false, "rename", src, dst, null);
+            throw e;
+        }
+
+        return ret;
     }
 
     void renameTo(final String src, final String dst,

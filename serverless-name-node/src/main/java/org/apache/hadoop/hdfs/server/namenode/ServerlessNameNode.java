@@ -1190,6 +1190,24 @@ public class ServerlessNameNode {
     }
 
     /**
+     * @return NameNode service RPC address if configured, the NameNode RPC
+     * address otherwise
+     */
+    public InetSocketAddress getServiceRpcAddress() {
+        final InetSocketAddress serviceAddr = rpcServer.getServiceRpcAddress();
+        return serviceAddr == null ? rpcServer.getRpcAddress() : serviceAddr;
+    }
+
+    /**
+     * Return the {@link LeaderElection} object.
+     *
+     * @return {@link LeaderElection} object.
+     */
+    public LeaderElection getLeaderElectionInstance() {
+        return leaderElection;
+    }
+
+    /**
      * Returns the id of this namenode
      */
     public long getId() {

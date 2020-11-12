@@ -1,5 +1,7 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
+import io.hops.metadata.hdfs.entity.EncodingStatus;
+import io.hops.metadata.hdfs.entity.RetryCacheEntry;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HDFSPolicyProvider;
@@ -8,6 +10,9 @@ import org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos;
 import org.apache.hadoop.hdfs.protocol.NamenodeProtocols;
 import org.apache.hadoop.hdfs.protocolPB.*;
 import org.apache.hadoop.hdfs.server.blockmanagement.BRLoadBalancingOverloadException;
+import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
+import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
+import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.protocol.ClientNamenodeProtocolProtos;
 import com.google.protobuf.BlockingService;
 import org.apache.hadoop.HadoopIllegalArgumentException;
@@ -58,7 +63,7 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
     // Dependencies from other parts of NN.
     protected final ServerlessNameNode nn;
     protected FSNameSystem namesystem;
-    //private final NameNodeMetrics metrics;
+    private final NameNodeMetrics metrics;
 
     /**
      * The RPC server that listens to requests from DataNodes
@@ -80,14 +85,10 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
     private static final Logger stateChangeLog = ServerlessNameNode.stateChangeLog;
     private static final Logger blockStateChangeLog = ServerlessNameNode.blockStateChangeLog;
 
-    public ServerlessNameNodeRpcServer(ServerlessNameNode nameNode) {
-        this.nn = nameNode;
-    }
-
     public ServerlessNameNodeRpcServer(Configuration conf, ServerlessNameNode nn) throws IOException {
         this.nn = nn;
         this.namesystem = nn.getNamesystem();
-        //this.metrics = ServerlessNameNode.getNameNodeMetrics();
+        this.metrics = ServerlessNameNode.getNameNodeMetrics();
 
         int handlerCount = conf.getInt(DFS_NAMENODE_HANDLER_COUNT_KEY,
                 DFS_NAMENODE_HANDLER_COUNT_DEFAULT);
@@ -277,6 +278,16 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         }
     }
 
+    /**
+     * Start client and service RPC servers.
+     */
+    void start() {
+        clientRpcServer.start();
+        if (serviceRpcServer != null) {
+            serviceRpcServer.start();
+        }
+    }
+
     InetSocketAddress getServiceRpcAddress() {
         return serviceRPCAddress;
     }
@@ -335,6 +346,12 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
     }
 
     @Override // ClientProtocol
+    public long getBlockChecksum(String src, int blockIndex) throws IOException {
+        checkNNStartup();
+        return namesystem.getBlockChecksum(src, blockIndex);
+    }
+
+    @Override // ClientProtocol
     public void updatePipeline(String clientName, ExtendedBlock oldBlock,
                                ExtendedBlock newBlock, DatanodeID[] newNodes, String[] newStorageIDs)
             throws IOException {
@@ -366,6 +383,26 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
             metrics.incrAddBlockOps();
         }*/
         return locatedBlock;
+    }
+
+    private static String getClientMachine() {
+        String clientMachine = NamenodeWebHdfsMethods.getRemoteAddress();
+        if (clientMachine == null) { //not a web client
+            clientMachine = Server.getRemoteAddress();
+        }
+        if (clientMachine == null) { //not a RPC client
+            clientMachine = "";
+        }
+        return clientMachine;
+    }
+
+    @Override // ClientProtocol
+    public LocatedBlocks getBlockLocations(String src, long offset, long length)
+            throws IOException {
+        checkNNStartup();
+        metrics.incrGetBlockLocations();
+        return namesystem
+                .getBlockLocations(getClientMachine(), src, offset, length);
     }
 
     @Override // ClientProtocol
@@ -407,9 +444,28 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
                 existingStorageIDs, excludeSet, numAdditionalNodes, clientName);
     }
 
-    @Override
-    public boolean setSafeMode(HdfsConstants.SafeModeAction action, boolean isChecked) throws IOException {
-        return false;
+    @Override // ClientProtocol
+    public boolean delete(String src, boolean recursive) throws IOException {
+        checkNNStartup();
+        if (stateChangeLog.isDebugEnabled()) {
+            stateChangeLog.debug(
+                    "*DIR* Namenode.delete: src=" + src + ", recursive=" + recursive);
+        }
+
+        boolean ret;
+        ret = namesystem.delete(src, recursive);
+
+        if (ret) {
+            metrics.incrDeleteFileOps();
+        }
+        return ret;
+    }
+
+    @Override // ClientProtocol
+    public boolean setSafeMode(HdfsConstants.SafeModeAction action, boolean isChecked)
+            throws IOException {
+        checkNNStartup();
+        return namesystem.setSafeMode(action);
     }
 
     @Override // ClientProtocol
@@ -443,9 +499,34 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         return namesystem.updateBlockForPipeline(block, clientName);
     }
 
-    @Override
-    public boolean rename(String src, String dst) throws UnresolvedLinkException, IOException {
-        return false;
+    @Deprecated
+    @Override // ClientProtocol
+    public boolean rename(String src, String dst) throws IOException {
+        checkNNStartup();
+        if (stateChangeLog.isDebugEnabled()) {
+            stateChangeLog.debug("*DIR* NameNode.rename: " + src + " to " + dst);
+        }
+        if (!checkPathLength(dst)) {
+            throw new IOException(
+                    "rename: Pathname too long.  Limit " + MAX_PATH_LENGTH +
+                            " characters, " + MAX_PATH_DEPTH + " levels.");
+        }
+
+        RetryCacheEntry cacheEntry = LightWeightCacheDistributed.getTransactional();
+        if (cacheEntry != null && cacheEntry.isSuccess()) {
+            return true; // Return previous response
+        }
+
+        boolean ret = false;
+        try{
+            ret = namesystem.renameTo(src, dst);
+        } finally {
+            LightWeightCacheDistributed.putTransactional(ret);
+        }
+        if (ret) {
+            metrics.incrFilesRenamed();
+        }
+        return ret;
     }
 
     @Override
@@ -479,6 +560,18 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
             /*LightWeightCacheDistributed.putTransactional(success);*/
         }
         //metrics.incrFilesRenamed();
+    }
+
+    @Override // ClientProtocol
+    public EncodingStatus getEncodingStatus(String filePath) throws IOException {
+        checkNNStartup();
+        EncodingStatus status = namesystem.getEncodingStatus(filePath);
+
+        if (status.getStatus() == EncodingStatus.Status.DELETED) {
+            throw new IOException("Trying to read encoding status of a deleted file");
+        }
+
+        return status;
     }
 
     @Override // RefreshAuthorizationPolicyProtocol
