@@ -117,6 +117,45 @@ public interface ClientProtocol {
             NotReplicatedYetException, SafeModeException, UnresolvedLinkException,
             IOException;
 
+    ///////////////////////////////////////
+    // File contents
+    ///////////////////////////////////////
+
+    /**
+     * Get locations of the blocks of the specified file within the specified
+     * range.
+     * DataNode locations for each block are sorted by
+     * the proximity to the client.
+     * <p/>
+     * Return {@link LocatedBlocks} which contains
+     * file length, blocks and their locations.
+     * DataNode locations for each block are sorted by
+     * the distance to the client's address.
+     * <p/>
+     * The client will then have to contact
+     * one of the indicated DataNodes to obtain the actual data.
+     *
+     * @param src
+     *     file name
+     * @param offset
+     *     range start offset
+     * @param length
+     *     range length
+     * @return file length and array of blocks with their locations
+     * @throws AccessControlException
+     *     If access is denied
+     * @throws FileNotFoundException
+     *     If file <code>src</code> does not exist
+     * @throws UnresolvedLinkException
+     *     If <code>src</code> contains a symlink
+     * @throws IOException
+     *     If an I/O error occurred
+     */
+    @Idempotent
+    public LocatedBlocks getBlockLocations(String src, long offset, long length)
+            throws AccessControlException, FileNotFoundException,
+            UnresolvedLinkException, IOException;
+
     /**
      * Get a datanode for an existing pipeline.
      *
@@ -153,6 +192,35 @@ public interface ClientProtocol {
                                               final DatanodeInfo[] excludes,
                                               final int numAdditionalNodes,
                                               final String clientName)
+            throws AccessControlException, FileNotFoundException, SafeModeException,
+            UnresolvedLinkException, IOException;
+
+    /**
+     * Delete the given file or directory from the file system.
+     * <p/>
+     * same as delete but provides a way to avoid accidentally
+     * deleting non empty directories programmatically.
+     *
+     * @param src
+     *     existing name
+     * @param recursive
+     *     if true deletes a non empty directory recursively,
+     *     else throws an exception.
+     * @return true only if the existing file or directory was actually removed
+     * from the file system.
+     * @throws AccessControlException
+     *     If access is denied
+     * @throws FileNotFoundException
+     *     If file <code>src</code> is not found
+     * @throws SafeModeException
+     *     create not allowed in safemode
+     * @throws UnresolvedLinkException
+     *     If <code>src</code> contains a symlink
+     * @throws IOException
+     *     If an I/O error occurred
+     */
+    @AtMostOnce
+    public boolean delete(String src, boolean recursive)
             throws AccessControlException, FileNotFoundException, SafeModeException,
             UnresolvedLinkException, IOException;
 

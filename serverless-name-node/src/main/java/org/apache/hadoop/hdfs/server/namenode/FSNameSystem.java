@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.protobuf.InvalidProtocolBufferException;
+import io.hops.common.CountersQueue;
 import io.hops.common.IDsGeneratorFactory;
 import io.hops.common.IDsMonitor;
 import io.hops.common.INodeUtil;
@@ -146,6 +147,11 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
     private volatile boolean hasResourcesAvailable = true;
     private volatile boolean fsRunning = true;
 
+    /**
+     * The start time of the namesystem.
+     */
+    private final long startTime = now();
+
     private ServerlessNameNode nameNode;
 
     // Tracks whether the default audit logger is the only configured audit
@@ -186,12 +192,6 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
     private static final Step STEP_AWAITING_REPORTED_BLOCKS =
             new Step(StepType.AWAITING_REPORTED_BLOCKS);
 
-    // Tracks whether the default audit logger is the only configured audit
-    // logger; this allows isAuditEnabled() to return false in case the
-    // underlying logger is disabled, and avoid some unnecessary work.
-    private final boolean isDefaultAuditLogger;
-    private final List<AuditLogger> auditLoggers;
-
     /**
      * The namespace tree.
      */
@@ -200,12 +200,7 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
     private final CacheManager cacheManager;
     private final DatanodeStatistics datanodeStatistics;
 
-    // Block pool ID used by this namenode
-    //HOP made it final and now its value is read from the config file. all
-    // namenodes should have same block pool id
-    private final String blockPoolId;
-
-    final org.apache.hadoop.hdfs.server.namenode.LeaseManager leaseManager = new org.apache.hadoop.hdfs.server.namenode.LeaseManager(this);
+    final LeaseManager leaseManager = new LeaseManager(this);
 
     volatile private Daemon smmthread = null;  // SafeModeMonitor thread
 
@@ -233,7 +228,7 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
 
     private final FsServerDefaults serverDefaults;
     private final boolean supportAppends;
-    private final HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure dtpReplaceDatanodeOnFailure;
+    private final ReplaceDatanodeOnFailure dtpReplaceDatanodeOnFailure;
 
     private AtomicBoolean inSafeMode = new AtomicBoolean(false); // safe mode information
 
@@ -285,16 +280,7 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
 
     private volatile AtomicBoolean forceReadTheSafeModeFromDB = new AtomicBoolean(true);
 
-    @VisibleForTesting
-    public final EncryptionZoneManager ezManager;
-
     private KeyProviderCryptoExtension provider = null;
-
-    /**
-     * Caches frequently used file names used in {@link INode} to reuse
-     * byte[] objects and reduce heap usage.
-     */
-    private final NameCache<ByteArray> nameCache;
 
     private final TopConf topConf;
     private TopMetrics topMetrics;
@@ -412,7 +398,7 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
                     conf.getBoolean(DFS_SUPPORT_APPEND_KEY, DFS_SUPPORT_APPEND_DEFAULT);
             LOG.info("Append Enabled: " + supportAppends);
 
-            this.dtpReplaceDatanodeOnFailure = HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure.get(conf);
+            this.dtpReplaceDatanodeOnFailure = ReplaceDatanodeOnFailure.get(conf);
 
 
             // For testing purposes, allow the DT secret manager to be started regardless
@@ -1072,6 +1058,11 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         mxbeanName = MBeans.register("NameNode", "NameNodeInfo", this);
     }
 
+    @Override // FSNamesystemMBean
+    public String getFSState() throws IOException {
+        return isInSafeMode() ? "safeMode" : "Operational";
+    }
+
     /**
      * Get the total number of blocks in the system.
      */
@@ -1079,6 +1070,84 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
     @Metric
     public long getBlocksTotal() throws IOException {
         return blockManager.getTotalBlocks();
+    }
+
+    @Override // FSNamesystemMBean
+    @Metric({"CapacityTotal", "Total raw capacity of data nodes in bytes"})
+    public long getCapacityTotal() {
+        return datanodeStatistics.getCapacityTotal();
+    }
+
+    @Metric({"CapacityTotalGB", "Total raw capacity of data nodes in GB"})
+    public float getCapacityTotalGB() {
+        return DFSUtil.roundBytesToGB(getCapacityTotal());
+    }
+
+    @Override // FSNamesystemMBean
+    @Metric(
+            {"CapacityUsed", "Total used capacity across all data nodes in bytes"})
+    public long getCapacityUsed() {
+        return datanodeStatistics.getCapacityUsed();
+    }
+
+    @Metric({"CapacityUsedGB", "Total used capacity across all data nodes in GB"})
+    public float getCapacityUsedGB() {
+        return DFSUtil.roundBytesToGB(getCapacityUsed());
+    }
+
+    @Override // FSNamesystemMBean
+    @Metric({"CapacityRemaining", "Remaining capacity in bytes"})
+    public long getCapacityRemaining() {
+        return datanodeStatistics.getCapacityRemaining();
+    }
+
+    @Metric({"CapacityRemainingGB", "Remaining capacity in GB"})
+    public float getCapacityRemainingGB() {
+        return DFSUtil.roundBytesToGB(getCapacityRemaining());
+    }
+
+    @Metric({"CapacityUsedNonDFS",
+            "Total space used by data nodes for non DFS purposes in bytes"})
+    public long getCapacityUsedNonDFS() {
+        return datanodeStatistics.getCapacityUsedNonDFS();
+    }
+
+    @Override // FSNamesystemMBean
+    @Metric
+    public long getFilesTotal() {
+        try {
+            return this.dir.totalInodes();
+        } catch (Exception ex) {
+            LOG.error(ex);
+            return -1;
+        }
+    }
+
+    @Override // FSNamesystemMBean
+    @Metric
+    public long getPendingReplicationBlocks() {
+        return blockManager.getPendingReplicationBlocksCount();
+    }
+
+    @Override // FSNamesystemMBean
+    @Metric
+    public long getUnderReplicatedBlocks() {
+        return blockManager.getUnderReplicatedBlocksCount();
+    }
+
+    @Override // FSNamesystemMBean
+    @Metric
+    public long getScheduledReplicationBlocks() {
+        return blockManager.getScheduledReplicationBlocksCount();
+    }
+
+    /**
+     * Total number of connections.
+     */
+    @Override // FSNamesystemMBean
+    @Metric
+    public int getTotalLoad() {
+        return datanodeStatistics.getXceiverCount();
     }
 
     /**
@@ -1105,6 +1174,46 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         SafeModeInfo safeMode = safeMode();
         if(safeMode!=null){
             safeMode.leave();
+        }
+    }
+
+    /**
+     * Periodically check whether it is time to leave safe mode.
+     * This thread starts when the threshold level is reached.
+     */
+    class SafeModeMonitor implements Runnable {
+        /**
+         * interval in ms for checking safe mode: {@value}
+         */
+        private static final long recheckInterval = 1000;
+
+        /**
+         */
+        @Override
+        public void run() {
+            try {
+                while (fsRunning) {
+                    SafeModeInfo safeMode = safeMode();
+                    if (safeMode == null) { // Not in safe mode.
+                        break;
+                    }
+                    if (safeMode.canLeave()) {
+                        // Leave safe mode.
+                        safeMode.leave();
+                        smmthread = null;
+                        break;
+                    }
+                    try {
+                        Thread.sleep(recheckInterval);
+                    } catch (InterruptedException ie) {
+                    }
+                }
+                if (!fsRunning) {
+                    LOG.info("NameNode is being shutdown, exit SafeModeMonitor thread");
+                }
+            } catch (IOException ex) {
+                LOG.error(ex);
+            }
         }
     }
 
@@ -1319,23 +1428,6 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         return inodesInPath;
     }
 
-    /**
-     * We kept the name from apache hadoop for meging simplification but the only purpose of this
-     * function is to remove the encryptionZones as the InodeMap is the DB.
-     */
-    public final void removeFromInodeMap(List<? extends INode> inodes) throws IOException {
-        if (inodes != null) {
-            for (INode inode : inodes) {
-                if (inode != null) {
-                    inode.remove();
-                    if (inode instanceof INodeWithAdditionalFields) {
-                        ezManager.removeEncryptionZone(inode.getId());
-                    }
-                }
-            }
-        }
-    }
-
     INode getInodeTX(final long id) throws IOException {
         HopsTransactionalRequestHandler getInodeHandler =
                 new HopsTransactionalRequestHandler(
@@ -1496,14 +1588,501 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         }
     }
 
+    /**
+     * Class representing Namenode information for JMX interfaces
+     */
+    @Override // NameNodeMXBean
+    public String getVersion() {
+        return VersionInfo.getVersion() + ", r" + VersionInfo.getRevision();
+    }
+
+    @Override // NameNodeMXBean
+    public long getUsed() {
+        return this.getCapacityUsed();
+    }
+
+    @Override // NameNodeMXBean
+    public long getFree() {
+        return this.getCapacityRemaining();
+    }
+
+    @Override // NameNodeMXBean
+    public long getTotal() {
+        return this.getCapacityTotal();
+    }
+
+    @Override // NameNodeMXBean
+    public String getSafemode() throws IOException {
+        if (!this.isInSafeMode()) {
+            return "";
+        }
+        return "Safe mode is ON. " + this.getSafeModeTip();
+    }
+
+    String getSafeModeTip() throws IOException {
+        if (!isInSafeMode()) {
+            return "";
+        }
+        // There is no need to take readLock.
+        // Don't use isInSafeMode as this.safeMode might be set to null.
+        // after isInSafeMode returns.
+        boolean inSafeMode;
+        SafeModeInfo safeMode = safeMode();
+        if (safeMode == null) {
+            inSafeMode = false;
+        } else {
+            if(safeMode.isOn() && !isLeader()){
+                safeMode.tryToHelpToGetOut();
+            }
+            inSafeMode = safeMode.isOn();
+        }
+        if (!inSafeMode) {
+            return "";
+        } else {
+            return safeMode.getTurnOffTip();
+        }
+    }
+
+    //  @Override // NameNodeMXBean
+    public boolean isUpgradeFinalized() {
+        throw new UnsupportedOperationException("HOP: Upgrade is not supported");
+    }
+
+    @Override // NameNodeMXBean
+    public long getNonDfsUsedSpace() {
+        return datanodeStatistics.getCapacityUsedNonDFS();
+    }
+
+    @Override // NameNodeMXBean
+    public float getPercentUsed() {
+        return datanodeStatistics.getCapacityUsedPercent();
+    }
+
+    @Override // NameNodeMXBean
+    public long getBlockPoolUsedSpace() {
+        return datanodeStatistics.getBlockPoolUsed();
+    }
+
+    @Override // NameNodeMXBean
+    public float getPercentBlockPoolUsed() {
+        return datanodeStatistics.getPercentBlockPoolUsed();
+    }
+
+    @Override // NameNodeMXBean
+    public float getPercentRemaining() {
+        return datanodeStatistics.getCapacityRemainingPercent();
+    }
+
+    @Override // NameNodeMXBean
+    public long getTotalBlocks() throws IOException {
+        return getBlocksTotal();
+    }
+
+    @Override // NameNodeMXBean
+    @Metric
+    public long getTotalFiles() {
+        return getFilesTotal();
+    }
+
+    @Metric({"MissingBlocks", "Number of missing blocks"})
+    public long getMissingBlocksCount() throws IOException {
+        // not locking
+        return blockManager.getMissingBlocksCount();
+    }
+
+    @Metric({"MissingReplOneBlocks", "Number of missing blocks " +
+            "with replication factor 1"})
+    public long getMissingReplOneBlocksCount() throws IOException {
+        // not locking
+        return blockManager.getMissingReplOneBlocksCount();
+    }
+
+    @Override // NameNodeMXBean
+    public long getNumberOfMissingBlocks() throws IOException {
+        return getMissingBlocksCount();
+    }
+
+    @Override // NameNodeMXBean
+    public long getNumberOfMissingBlocksWithReplicationFactorOne() throws IOException {
+        return getMissingReplOneBlocksCount();
+    }
+
+    @Override // NameNodeMXBean
+    public int getThreads() {
+        return ManagementFactory.getThreadMXBean().getThreadCount();
+    }
+
+    private long getLastContact(DatanodeDescriptor alivenode) {
+        return (monotonicNow() - alivenode.getLastUpdateMonotonic())/1000;
+    }
+
+    private long getDfsUsed(DatanodeDescriptor aliveNode) {
+        return aliveNode.getDfsUsed();
+    }
+
+    /**
+     * Returned information is a JSON representation of map with host name as the
+     * key and value is a map of live node attribute keys to its values
+     */
+    @Override // NameNodeMXBean
+    public String getLiveNodes() throws IOException {
+        final Map<String, Map<String, Object>> info =
+                new HashMap<>();
+        final List<DatanodeDescriptor> live = new ArrayList<>();
+        blockManager.getDatanodeManager().fetchDatanodes(live, null, true);
+        for (DatanodeDescriptor node : live) {
+            ImmutableMap.Builder<String, Object> innerinfo =
+                    ImmutableMap.<String,Object>builder();
+            innerinfo
+                    .put("infoAddr", node.getInfoAddr())
+                    .put("infoSecureAddr", node.getInfoSecureAddr())
+                    .put("xferaddr", node.getXferAddr())
+                    .put("lastContact", getLastContact(node))
+                    .put("usedSpace", getDfsUsed(node))
+                    .put("adminState", node.getAdminState().toString())
+                    .put("nonDfsUsedSpace", node.getNonDfsUsed())
+                    .put("capacity", node.getCapacity())
+                    .put("numBlocks", node.numBlocks())
+                    .put("version", node.getSoftwareVersion())
+                    .put("used", node.getDfsUsed())
+                    .put("remaining", node.getRemaining())
+                    .put("blockScheduled", node.getBlocksScheduled())
+                    .put("blockPoolUsed", node.getBlockPoolUsed())
+                    .put("blockPoolUsedPercent", node.getBlockPoolUsedPercent())
+                    .put("volfails", node.getVolumeFailures());
+            VolumeFailureSummary volumeFailureSummary = node.getVolumeFailureSummary();
+            if (volumeFailureSummary != null) {
+                innerinfo
+                        .put("failedStorageLocations",
+                                volumeFailureSummary.getFailedStorageLocations())
+                        .put("lastVolumeFailureDate",
+                                volumeFailureSummary.getLastVolumeFailureDate())
+                        .put("estimatedCapacityLostTotal",
+                                volumeFailureSummary.getEstimatedCapacityLostTotal());
+            }
+            info.put(node.getHostName() + ":" + node.getXferPort(), innerinfo.build());
+        }
+        return JSON.toString(info);
+    }
+
+    public RollingUpgradeInfo getRollingUpgradeInfoTX() throws IOException {
+        return (RollingUpgradeInfo) new HopsTransactionalRequestHandler(HDFSOperationType.GET_ROLLING_UPGRADE_INFO) {
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = LockFactory.getInstance();
+                locks.add(lf.getVariableLock(Variable.Finder.RollingUpgradeInfo, TransactionLockTypes.LockType.READ));
+            }
+
+            @Override
+            public Object performTask() throws StorageException, IOException {
+                return HdfsVariables.getRollingUpgradeInfo();
+            }
+        }.handle();
+    }
+
+    @Override  // NameNodeMXBean
+    public RollingUpgradeInfo.Bean getRollingUpgradeStatus() {
+        RollingUpgradeInfo upgradeInfo = null;
+        try{
+            upgradeInfo = getRollingUpgradeInfoTX();
+        }catch(IOException ex){
+            LOG.warn(ex);
+        }
+        if (upgradeInfo != null) {
+            return new RollingUpgradeInfo.Bean(upgradeInfo);
+        }
+        return null;
+    }
+
+    @Override // NameNodeMXBean
+    public long getCacheCapacity() {
+        return datanodeStatistics.getCacheCapacity();
+    }
+
+    @Override // NameNodeMXBean
+    public long getCacheUsed() {
+        return datanodeStatistics.getCacheUsed();
+    }
+
+    /**
+     * Returned information is a JSON representation of map with host name as the
+     * key and value is a map of dead node attribute keys to its values
+     */
+    @Override // NameNodeMXBean
+    public String getDeadNodes() {
+        final Map<String, Map<String, Object>> info =
+                new HashMap<>();
+        final List<DatanodeDescriptor> dead = new ArrayList<>();
+        blockManager.getDatanodeManager().fetchDatanodes(null, dead, true);
+        for (DatanodeDescriptor node : dead) {
+            Map<String, Object> innerInfo = ImmutableMap.<String, Object>builder()
+                    .put("lastContact", getLastContact(node))
+                    .put("decommissioned", node.isDecommissioned())
+                    .put("xferaddr", node.getXferAddr())
+                    .build();
+            info.put(node.getHostName() + ":" + node.getXferPort(), innerInfo);
+        }
+        return JSON.toString(info);
+    }
+
+    /**
+     * Returned information is a JSON representation of map with host name as the
+     * key and value is a map of decommissioning node attribute keys to its values
+     */
+    @Override // NameNodeMXBean
+    public String getDecomNodes() {
+        final Map<String, Map<String, Object>> info =
+                new HashMap<>();
+        final List<DatanodeDescriptor> decomNodeList =
+                blockManager.getDatanodeManager().getDecommissioningNodes();
+        for (DatanodeDescriptor node : decomNodeList) {
+            Map<String, Object> innerInfo = ImmutableMap
+                    .<String, Object> builder()
+                    .put("xferaddr", node.getXferAddr())
+                    .put("underReplicatedBlocks",
+                            node.decommissioningStatus.getUnderReplicatedBlocks())
+                    .put("decommissionOnlyReplicas",
+                            node.decommissioningStatus.getDecommissionOnlyReplicas())
+                    .put("underReplicateInOpenFiles",
+                            node.decommissioningStatus.getUnderReplicatedInOpenFiles())
+                    .build();
+            info.put(node.getHostName() + ":" + node.getXferPort(), innerInfo);
+        }
+        return JSON.toString(info);
+    }
+
+    @Override  // NameNodeMXBean
+    public String getClusterId() {
+        String cid = "";
+        try {
+            cid = StorageInfo.getStorageInfoFromDB().getClusterID();
+        } catch (IOException e) {
+        }
+        return cid;
+
+    }
+
     @Override
     public String getBlockPoolId() {
         return blockPoolId;
     }
 
+    @Override // NameNodeMXBean
+    public String getNodeUsage() {
+        float median = 0;
+        float max = 0;
+        float min = 0;
+        float dev = 0;
+
+        final Map<String, Map<String,Object>> info =
+                new HashMap<String, Map<String,Object>>();
+        final List<DatanodeDescriptor> live = new ArrayList<DatanodeDescriptor>();
+        blockManager.getDatanodeManager().fetchDatanodes(live, null, true);
+
+        if (live.size() > 0) {
+            float totalDfsUsed = 0;
+            float[] usages = new float[live.size()];
+            int i = 0;
+            for (DatanodeDescriptor dn : live) {
+                usages[i++] = dn.getDfsUsedPercent();
+                totalDfsUsed += dn.getDfsUsedPercent();
+            }
+            totalDfsUsed /= live.size();
+            Arrays.sort(usages);
+            median = usages[usages.length / 2];
+            max = usages[usages.length - 1];
+            min = usages[0];
+
+            for (i = 0; i < usages.length; i++) {
+                dev += (usages[i] - totalDfsUsed) * (usages[i] - totalDfsUsed);
+            }
+            dev = (float) Math.sqrt(dev / usages.length);
+        }
+
+        final Map<String, Object> innerInfo = new HashMap<String, Object>();
+        innerInfo.put("min", StringUtils.format("%.2f%%", min));
+        innerInfo.put("median", StringUtils.format("%.2f%%", median));
+        innerInfo.put("max", StringUtils.format("%.2f%%", max));
+        innerInfo.put("stdDev", StringUtils.format("%.2f%%", dev));
+        info.put("nodeUsage", innerInfo);
+
+        return JSON.toString(info);
+    }
+
+    Date getStartTime() {
+        return new Date(startTime);
+    }
+
+    @Override  // NameNodeMXBean
+    public String getNNStarted() {
+        return getStartTime().toString();
+    }
+
+    @Override  // NameNodeMXBean
+    public String getCompileInfo() {
+        return VersionInfo.getDate() + " by " + VersionInfo.getUser() +
+                " from " + VersionInfo.getBranch();
+    }
+
+    /**
+     * @param path
+     *     Restrict corrupt files to this portion of namespace.
+     * @param cookieTab
+     *     Support for continuation; the set of files we return
+     *     back is ordered by blockId; startBlockAfter tells where to start from
+     * @return a list in which each entry describes a corrupt file/block
+     * @throws AccessControlException
+     * @throws IOException
+     */
+    Collection<CorruptFileBlockInfo> listCorruptFileBlocks(final String path,
+                                                           String[] cookieTab) throws IOException {
+        checkSuperuserPrivilege();
+
+        final int[] count = {0};
+        final ArrayList<CorruptFileBlockInfo> corruptFiles = new ArrayList<>();
+        if (cookieTab == null) {
+            cookieTab = new String[]{null};
+        }
+        // Do a quick check if there are any corrupt files without taking the lock
+        if (blockManager.getMissingBlocksCount() == 0) {
+            if (cookieTab[0] == null) {
+                cookieTab[0] = String.valueOf(getIntCookie(cookieTab[0]));
+            }
+            LOG.debug("there are no corrupt file blocks.");
+            return corruptFiles;
+        }
+
+        if (!isPopulatingReplQueues()) {
+            throw new IOException("Cannot run listCorruptFileBlocks because " +
+                    "replication queues have not been initialized.");
+        }
+        // print a limited # of corrupt files per call
+
+        final Iterator<Block> blkIterator =
+                blockManager.getCorruptReplicaBlockIterator();
+
+        final int[] skip = {getIntCookie(cookieTab[0])};
+        for (int i = 0; i < skip[0] && blkIterator.hasNext(); i++) {
+            blkIterator.next();
+        }
+
+        HopsTransactionalRequestHandler listCorruptFileBlocksHandler =
+                new HopsTransactionalRequestHandler(
+                        HDFSOperationType.LIST_CORRUPT_FILE_BLOCKS) {
+                    INodeIdentifier iNodeIdentifier;
+
+                    @Override
+                    public void setUp() throws StorageException {
+                        Block block = (Block) getParams()[0];
+                        iNodeIdentifier = INodeUtil.resolveINodeFromBlock(block);
+                    }
+
+                    @Override
+                    public void acquireLock(TransactionLocks locks) throws IOException {
+                        Block block = (Block) getParams()[0];
+                        LockFactory lf = LockFactory.getInstance();
+                        locks.add(lf.getIndividualINodeLock(INodeLockType.READ_COMMITTED,
+                                iNodeIdentifier, true))
+                                .add(lf.getBlockLock(block.getBlockId(), iNodeIdentifier))
+                                .add(lf.getBlockRelated(BLK.RE, BLK.CR, BLK.ER));
+                    }
+
+                    @Override
+                    public Object performTask() throws IOException {
+                        Block blk = (Block) getParams()[0];
+                        INode inode = (INodeFile) blockManager.getBlockCollection(blk);
+                        skip[0]++;
+                        if (inode != null &&
+                                blockManager.countNodes(blk).liveReplicas() == 0) {
+                            String src = FSDirectory.getFullPathName(inode);
+                            if (src.startsWith(path)) {
+                                corruptFiles.add(new CorruptFileBlockInfo(src, blk));
+                                count[0]++;
+                            }
+                        }
+                        return null;
+                    }
+                };
+
+        while (blkIterator.hasNext()) {
+            Block blk = blkIterator.next();
+            listCorruptFileBlocksHandler.setParams(blk);
+            listCorruptFileBlocksHandler.handle(this);
+            if (count[0] >= DEFAULT_MAX_CORRUPT_FILEBLOCKS_RETURNED) {
+                break;
+            }
+        }
+
+        cookieTab[0] = String.valueOf(skip[0]);
+        LOG.info("list corrupt file blocks returned: " + count[0]);
+        return corruptFiles;
+    }
+
+    /**
+     * Convert string cookie to integer.
+     */
+    private static int getIntCookie(String cookie) {
+        int c;
+        if (cookie == null) {
+            c = 0;
+        } else {
+            try {
+                c = Integer.parseInt(cookie);
+            } catch (NumberFormatException e) {
+                c = 0;
+            }
+        }
+        c = Math.max(0, c);
+        return c;
+    }
+
+    @Override  // NameNodeMXBean
+    public String getCorruptFiles() {
+        List<String> list = new ArrayList<String>();
+        Collection<FSNameSystem.CorruptFileBlockInfo> corruptFileBlocks;
+        try {
+            corruptFileBlocks = listCorruptFileBlocks("/", null);
+            int corruptFileCount = corruptFileBlocks.size();
+            if (corruptFileCount != 0) {
+                for (FSNameSystem.CorruptFileBlockInfo c : corruptFileBlocks) {
+                    list.add(c.toString());
+                }
+            }
+        } catch (IOException e) {
+            LOG.warn("Get corrupt file blocks returned error: " + e.getMessage());
+        }
+        return JSON.toString(list);
+    }
+
+    @Override  //NameNodeMXBean
+    public int getDistinctVersionCount() {
+        return blockManager.getDatanodeManager().getDatanodesSoftwareVersions()
+                .size();
+    }
+
+    @Override  //NameNodeMXBean
+    public Map<String, Integer> getDistinctVersions() {
+        return blockManager.getDatanodeManager().getDatanodesSoftwareVersions();
+    }
+
+    @Override  //NameNodeMXBean
+    public String getSoftwareVersion() {
+        return VersionInfo.getVersion();
+    }
+
+    @Override  //NameNodeMXBean
+    public int getNumNameNodes() {
+        return nameNode.getActiveNameNodes().size();
+    }
+
+    @Override //NameNodeMXBean
+    public String getLeaderNameNode(){
+        return nameNode.getActiveNameNodes().getSortedActiveNodes().get(0).getHostname();
+    }
+
     @Override
     public boolean isLeader() {
-        return false;
+        return nameNode.isLeader();
     }
 
     @Override
@@ -1594,11 +2173,16 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         updateEncodingStatus(sourceFile, status, null, parityFile);
     }
 
+    public INode getINode(String path)
+            throws UnresolvedLinkException, StorageException,
+            TransactionContextException {
+        INodesInPath inodesInPath = dir.getINodesInPath4Write(path);
+        return inodesInPath.getLastINode();
+    }
+
     /**
      * Set the status of an erasure-coded file and its parity file.
      *
-     * @param sourceFile
-     *    the file path
      * @param status
      *    the file status
      * @param parityStatus
@@ -1980,6 +2564,15 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
     }
 
     @Override
+    public void checkSafeMode() throws IOException {
+        // safeMode is volatile, and may be set to null at any time
+        SafeModeInfo safeMode = safeMode();
+        if (safeMode != null) {
+            safeMode.checkMode();
+        }
+    }
+
+    @Override
     public boolean isInSafeMode() throws IOException {
         // safeMode is volatile, and may be set to null at any time
         SafeModeInfo safeMode = safeMode();
@@ -1995,6 +2588,11 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         }
         inSafeMode.set(safeMode.isOn());
         return safeMode.isOn();
+    }
+
+    @Override
+    public boolean isInStartupSafeMode() throws IOException {
+        return false;
     }
 
     /**
@@ -2081,6 +2679,32 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         }
         return initializedReplQueues;
     }
+
+    @Override
+    public void incrementSafeBlockCount(int replication, BlockInfoContiguous blk) throws IOException {
+        // safeMode is volatile, and may be set to null at any time
+        SafeModeInfo safeMode = safeMode();
+        if (safeMode == null) {
+            return;
+        }
+        safeMode.incrementSafeBlockCount((short)replication, blk);
+    }
+
+    @Override
+    public void decrementSafeBlockCount(BlockInfoContiguous b)
+            throws IOException {
+        // safeMode is volatile, and may be set to null at any time
+        SafeModeInfo safeMode = this.safeMode();
+        if (safeMode == null) // mostly true
+        {
+            return;
+        }
+        if (b.isComplete()) {
+            safeMode.decrementSafeBlockCount(b,
+                    (short) blockManager.countNodes(b).liveReplicas());
+        }
+    }
+
 
     private boolean shouldPopulateReplicationQueues() {
         return shouldPopulateReplicationQueue;
@@ -2815,6 +3439,41 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         return quotaUpdateManager;
     }
 
+    /**
+     * Update safe blocks in the database
+     * @param safeBlock
+     *      block to be added to safe blocks
+     * @throws IOException
+     */
+    private int addSafeBlock(Long safeBlock) throws IOException {
+        final AtomicInteger added = new AtomicInteger(0);
+        List<Long> safeBlocks = new ArrayList<>();
+        safeBlocks.add(safeBlock);
+        addSafeBlocksTX(safeBlocks, added);
+
+        return added.get();
+    }
+
+    /**
+     * Remove a block that is not considered safe anymore
+     * @param safeBlock
+     *      block to be removed from safe blocks
+     * @throws IOException
+     */
+    private void removeSafeBlock(final Long safeBlock) throws IOException {
+        new LightWeightRequestHandler(HDFSOperationType.REMOVE_SAFE_BLOCKS) {
+            @Override
+            public Object performTask() throws IOException {
+                SafeBlocksDataAccess da = (SafeBlocksDataAccess) HdfsStorageFactory
+                        .getDataAccess(SafeBlocksDataAccess.class);
+                if(da.isSafe(safeBlock)){
+                    da.remove(safeBlock);
+                }
+                return null;
+            }
+        }.handle();
+    }
+
     /** @return the FSDirectory. */
     public FSDirectory getFSDirectory() {
         return dir;
@@ -3045,7 +3704,6 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
      * @param src The given path
      * @param removedINodes Containing the list of inodes to be removed from
      *                      inodesMap
-     * @param acquireINodeMapLock Whether to acquire the lock for inode removal
      */
     void removeLeasesAndINodes(String src, List<INode> removedINodes)
             throws IOException {
@@ -3194,6 +3852,130 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         return getBlockManager().getDatanodeManager().getNumLiveDataNodes();
     }
 
+    @Override // FSNamesystemMBean
+    @Metric({"LiveDataNodes",
+            "Number of datanodes marked as live"})
+    public int getNumLiveDataNodes() {
+        return getBlockManager().getDatanodeManager().getNumLiveDataNodes();
+    }
+
+    @Override // FSNamesystemMBean
+    @Metric({"DeadDataNodes",
+            "Number of datanodes marked dead due to delayed heartbeat"})
+    public int getNumDeadDataNodes() {
+        return getBlockManager().getDatanodeManager().getNumDeadDataNodes();
+    }
+
+    @Override // FSNamesystemMBean
+    public int getNumDecomLiveDataNodes() {
+        final List<DatanodeDescriptor> live = new ArrayList<DatanodeDescriptor>();
+        getBlockManager().getDatanodeManager().fetchDatanodes(live, null, true);
+        int liveDecommissioned = 0;
+        for (DatanodeDescriptor node : live) {
+            liveDecommissioned += node.isDecommissioned() ? 1 : 0;
+        }
+        return liveDecommissioned;
+    }
+
+    @Override // FSNamesystemMBean
+    public int getNumDecomDeadDataNodes() {
+        final List<DatanodeDescriptor> dead = new ArrayList<DatanodeDescriptor>();
+        getBlockManager().getDatanodeManager().fetchDatanodes(null, dead, true);
+        int deadDecommissioned = 0;
+        for (DatanodeDescriptor node : dead) {
+            deadDecommissioned += node.isDecommissioned() ? 1 : 0;
+        }
+        return deadDecommissioned;
+    }
+
+    @Override // FSNamesystemMBean
+    public int getVolumeFailuresTotal() {
+        List<DatanodeDescriptor> live = new ArrayList<DatanodeDescriptor>();
+        getBlockManager().getDatanodeManager().fetchDatanodes(live, null, true);
+        int volumeFailuresTotal = 0;
+        for (DatanodeDescriptor node: live) {
+            volumeFailuresTotal += node.getVolumeFailures();
+        }
+        return volumeFailuresTotal;
+    }
+
+    @Override // FSNamesystemMBean
+    public long getEstimatedCapacityLostTotal() {
+        List<DatanodeDescriptor> live = new ArrayList<DatanodeDescriptor>();
+        getBlockManager().getDatanodeManager().fetchDatanodes(live, null, true);
+        long estimatedCapacityLostTotal = 0;
+        for (DatanodeDescriptor node: live) {
+            VolumeFailureSummary volumeFailureSummary = node.getVolumeFailureSummary();
+            if (volumeFailureSummary != null) {
+                estimatedCapacityLostTotal +=
+                        volumeFailureSummary.getEstimatedCapacityLostTotal();
+            }
+        }
+        return estimatedCapacityLostTotal;
+    }
+
+    @Override // FSNamesystemMBean
+    public int getNumDecommissioningDataNodes() {
+        return getBlockManager().getDatanodeManager().getDecommissioningNodes()
+                .size();
+    }
+
+    @Override // FSNamesystemMBean
+    @Metric({"StaleDataNodes",
+            "Number of datanodes marked stale due to delayed heartbeat"})
+    public int getNumStaleDataNodes() {
+        return getBlockManager().getDatanodeManager().getNumStaleNodes();
+    }
+
+    /**
+     * Storages are marked as "content stale" after NN restart or fails over and
+     * before NN receives the first Heartbeat followed by the first Blockreport.
+     */
+    @Override // FSNamesystemMBean
+    public int getNumStaleStorages() {
+        return getBlockManager().getDatanodeManager().getNumStaleStorages();
+    }
+
+    @Override // FSNamesystemMBean
+    public String getTopUserOpCounts() {
+        if (!topConf.isEnabled) {
+            return null;
+        }
+
+        Date now = new Date();
+        final List<RollingWindowManager.TopWindow> topWindows =
+                topMetrics.getTopWindows();
+        Map<String, Object> topMap = new TreeMap<String, Object>();
+        topMap.put("windows", topWindows);
+        topMap.put("timestamp", DFSUtil.dateToIso8601String(now));
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(topMap);
+        } catch (IOException e) {
+            LOG.warn("Failed to fetch TopUser metrics", e);
+        }
+        return null;
+    }
+
+    /**
+     * Get the total number of objects in the system.
+     */
+    @Override // FSNamesystemMBean
+    public long getMaxObjects() {
+        return maxFsObjects;
+    }
+
+    @Override
+    @Metric
+    public long getPendingDeletionBlocks() throws IOException {
+        return blockManager.getPendingDeletionBlocksCount();
+    }
+
+    @Override
+    public long getBlockDeletionStartTime() {
+        return startTime + blockManager.getStartupDelayBlockDeletionInMs();
+    }
+
     /**
      * SafeModeInfo contains information related to the safe mode.
      * <p/>
@@ -3259,7 +4041,7 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
          */
         private boolean resourcesLow = false;
         /** counter for tracking startup progress of reported blocks */
-        private CountersQueue.Counter awaitingReportedBlocksCounter;
+        private Counter awaitingReportedBlocksCounter;
 
         public ThreadLocal<Boolean> safeModePendingOperation =
                 new ThreadLocal<>();
@@ -3851,6 +4633,23 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         }
 
         /**
+         * Get number of blocks to be considered safe in the current cluster
+         * @return number of safe blocks
+         * @throws IOException
+         */
+        private int getBlockSafe() throws IOException {
+            return (Integer) new LightWeightRequestHandler(
+                    HDFSOperationType.GET_SAFE_BLOCKS_COUNT) {
+                @Override
+                public Object performTask() throws IOException {
+                    SafeBlocksDataAccess da = (SafeBlocksDataAccess) HdfsStorageFactory
+                            .getDataAccess(SafeBlocksDataAccess.class);
+                    return da.countAll();
+                }
+            }.handle();
+        }
+
+        /**
          * Get number of total blocks from the database
          * @return
          * @throws IOException
@@ -4037,6 +4836,16 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         public void stopMonitor() {
             shouldNNRmRun = false;
         }
+    }
+
+    /**
+     * Returns whether or not there were available resources at the last check of
+     * resources.
+     *
+     * @return true if there were sufficient resources available, false otherwise.
+     */
+    private boolean nameNodeHasResourcesAvailable() {
+        return hasResourcesAvailable;
     }
 
     class RetryCacheCleaner implements Runnable {

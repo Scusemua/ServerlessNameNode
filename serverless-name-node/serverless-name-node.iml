@@ -7,8 +7,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/protobuf/grpc-java" isTestSource="false" generated="true" />
-      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/protobuf/java" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/protobuf/grpc-java/com/gmail/benrcarver/serverlessnamenode" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/protobuf/java/com/gmail/benrcarver/serverlessnamenode" isTestSource="false" generated="true" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/com" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/com/gmail" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/java/com/gmail/benrcarver" />
@@ -19,7 +19,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-math3:3.6.1" level="project" />
     <orderEntry type="library" name="service-discovery-client-0.4" level="project" />
-    <orderEntry type="module" module-name="hops-metadata-dal" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-netty-shaded:1.32.1" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-core:1.32.1" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.google.android:annotations:4.1.1.4" level="project" />

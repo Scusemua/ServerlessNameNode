@@ -2,6 +2,7 @@ package org.apache.hadoop.hdfs.security;
 
 //FIXME: needs to be presisted
 
+import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenIdentifier;
 import org.apache.hadoop.hdfs.server.namenode.FSNameSystem;
 import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode;
 import org.apache.commons.logging.Log;
@@ -15,7 +16,6 @@ import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.security.token.delegation.AbstractDelegationTokenSecretManager;
 import org.apache.hadoop.security.token.delegation.DelegationKey;
-import org.apache.hadoop.security.token.delegation.web.DelegationTokenIdentifier;
 import org.apache.yetus.audience.InterfaceAudience;
 
 import java.io.IOException;
