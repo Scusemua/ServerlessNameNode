@@ -15,7 +15,7 @@ public final class EncryptionZonesProtos {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface CreateEncryptionZoneRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneRequestProto)
+      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.CreateEncryptionZoneRequestProto)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -53,11 +53,11 @@ public final class EncryptionZonesProtos {
         getKeyNameBytes();
   }
   /**
-   * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneRequestProto}
+   * Protobuf type {@code org.apache.hadoop.CreateEncryptionZoneRequestProto}
    */
   public static final class CreateEncryptionZoneRequestProto extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneRequestProto)
+      // @@protoc_insertion_point(message_implements:org.apache.hadoop.CreateEncryptionZoneRequestProto)
       CreateEncryptionZoneRequestProtoOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use CreateEncryptionZoneRequestProto.newBuilder() to construct.
@@ -133,15 +133,15 @@ public final class EncryptionZonesProtos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_descriptor;
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_fieldAccessorTable
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.Builder.class);
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.Builder.class);
     }
 
     private int bitField0_;
@@ -290,10 +290,10 @@ public final class EncryptionZonesProtos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto)) {
+      if (!(obj instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto)) {
         return super.equals(obj);
       }
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto other = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto) obj;
+      org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto other = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto) obj;
 
       if (hasSrc() != other.hasSrc()) return false;
       if (hasSrc()) {
@@ -329,69 +329,69 @@ public final class EncryptionZonesProtos {
       return hash;
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(byte[] data)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseDelimitedFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseDelimitedFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -404,7 +404,7 @@ public final class EncryptionZonesProtos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto prototype) {
+    public static Builder newBuilder(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -420,26 +420,26 @@ public final class EncryptionZonesProtos {
       return builder;
     }
     /**
-     * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneRequestProto}
+     * Protobuf type {@code org.apache.hadoop.CreateEncryptionZoneRequestProto}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneRequestProto)
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProtoOrBuilder {
+        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.CreateEncryptionZoneRequestProto)
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_fieldAccessorTable
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.Builder.class);
+                org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.Builder.class);
       }
 
-      // Construct using com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.newBuilder()
+      // Construct using org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -467,17 +467,17 @@ public final class EncryptionZonesProtos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_descriptor;
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto getDefaultInstanceForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.getDefaultInstance();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto getDefaultInstanceForType() {
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto build() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto result = buildPartial();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto build() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -485,8 +485,8 @@ public final class EncryptionZonesProtos {
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto buildPartial() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto result = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto(this);
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto buildPartial() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto result = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -536,16 +536,16 @@ public final class EncryptionZonesProtos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto) {
-          return mergeFrom((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto)other);
+        if (other instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto) {
+          return mergeFrom((org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto other) {
-        if (other == com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto other) {
+        if (other == org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto.getDefaultInstance()) return this;
         if (other.hasSrc()) {
           bitField0_ |= 0x00000001;
           src_ = other.src_;
@@ -574,11 +574,11 @@ public final class EncryptionZonesProtos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parsedMessage = null;
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto) e.getUnfinishedMessage();
+          parsedMessage = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -769,16 +769,16 @@ public final class EncryptionZonesProtos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneRequestProto)
+      // @@protoc_insertion_point(builder_scope:org.apache.hadoop.CreateEncryptionZoneRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneRequestProto)
-    private static final com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:org.apache.hadoop.CreateEncryptionZoneRequestProto)
+    private static final org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto();
+      DEFAULT_INSTANCE = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto();
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto getDefaultInstance() {
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -803,22 +803,22 @@ public final class EncryptionZonesProtos {
     }
 
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto getDefaultInstanceForType() {
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneRequestProto getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public interface CreateEncryptionZoneResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneResponseProto)
+      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.CreateEncryptionZoneResponseProto)
       com.google.protobuf.MessageOrBuilder {
   }
   /**
-   * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneResponseProto}
+   * Protobuf type {@code org.apache.hadoop.CreateEncryptionZoneResponseProto}
    */
   public static final class CreateEncryptionZoneResponseProto extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneResponseProto)
+      // @@protoc_insertion_point(message_implements:org.apache.hadoop.CreateEncryptionZoneResponseProto)
       CreateEncryptionZoneResponseProtoOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use CreateEncryptionZoneResponseProto.newBuilder() to construct.
@@ -879,15 +879,15 @@ public final class EncryptionZonesProtos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneResponseProto_descriptor;
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneResponseProto_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneResponseProto_fieldAccessorTable
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.Builder.class);
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.Builder.class);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -923,10 +923,10 @@ public final class EncryptionZonesProtos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto)) {
+      if (!(obj instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto)) {
         return super.equals(obj);
       }
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto other = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto) obj;
+      org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto other = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto) obj;
 
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
@@ -944,69 +944,69 @@ public final class EncryptionZonesProtos {
       return hash;
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(byte[] data)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseDelimitedFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseDelimitedFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1019,7 +1019,7 @@ public final class EncryptionZonesProtos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto prototype) {
+    public static Builder newBuilder(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -1035,26 +1035,26 @@ public final class EncryptionZonesProtos {
       return builder;
     }
     /**
-     * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneResponseProto}
+     * Protobuf type {@code org.apache.hadoop.CreateEncryptionZoneResponseProto}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneResponseProto)
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProtoOrBuilder {
+        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.CreateEncryptionZoneResponseProto)
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneResponseProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneResponseProto_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneResponseProto_fieldAccessorTable
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.Builder.class);
+                org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.Builder.class);
       }
 
-      // Construct using com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.newBuilder()
+      // Construct using org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1078,17 +1078,17 @@ public final class EncryptionZonesProtos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneResponseProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneResponseProto_descriptor;
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto getDefaultInstanceForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.getDefaultInstance();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto getDefaultInstanceForType() {
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto build() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto result = buildPartial();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto build() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -1096,8 +1096,8 @@ public final class EncryptionZonesProtos {
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto buildPartial() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto result = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto(this);
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto buildPartial() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto result = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto(this);
         onBuilt();
         return result;
       }
@@ -1136,16 +1136,16 @@ public final class EncryptionZonesProtos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto) {
-          return mergeFrom((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto)other);
+        if (other instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto) {
+          return mergeFrom((org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto other) {
-        if (other == com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto other) {
+        if (other == org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto.getDefaultInstance()) return this;
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
         return this;
@@ -1161,11 +1161,11 @@ public final class EncryptionZonesProtos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parsedMessage = null;
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto) e.getUnfinishedMessage();
+          parsedMessage = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1187,16 +1187,16 @@ public final class EncryptionZonesProtos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneResponseProto)
+      // @@protoc_insertion_point(builder_scope:org.apache.hadoop.CreateEncryptionZoneResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:com.gmail.benrcarver.serverlessnamenode.CreateEncryptionZoneResponseProto)
-    private static final com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:org.apache.hadoop.CreateEncryptionZoneResponseProto)
+    private static final org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto();
+      DEFAULT_INSTANCE = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto();
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto getDefaultInstance() {
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1221,14 +1221,14 @@ public final class EncryptionZonesProtos {
     }
 
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto getDefaultInstanceForType() {
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.CreateEncryptionZoneResponseProto getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public interface ListEncryptionZonesRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesRequestProto)
+      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.ListEncryptionZonesRequestProto)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -1243,11 +1243,11 @@ public final class EncryptionZonesProtos {
     long getId();
   }
   /**
-   * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesRequestProto}
+   * Protobuf type {@code org.apache.hadoop.ListEncryptionZonesRequestProto}
    */
   public static final class ListEncryptionZonesRequestProto extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesRequestProto)
+      // @@protoc_insertion_point(message_implements:org.apache.hadoop.ListEncryptionZonesRequestProto)
       ListEncryptionZonesRequestProtoOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use ListEncryptionZonesRequestProto.newBuilder() to construct.
@@ -1314,15 +1314,15 @@ public final class EncryptionZonesProtos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesRequestProto_descriptor;
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesRequestProto_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesRequestProto_fieldAccessorTable
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.Builder.class);
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.Builder.class);
     }
 
     private int bitField0_;
@@ -1389,10 +1389,10 @@ public final class EncryptionZonesProtos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto)) {
+      if (!(obj instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto)) {
         return super.equals(obj);
       }
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto other = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto) obj;
+      org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto other = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto) obj;
 
       if (hasId() != other.hasId()) return false;
       if (hasId()) {
@@ -1420,69 +1420,69 @@ public final class EncryptionZonesProtos {
       return hash;
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(byte[] data)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseDelimitedFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseDelimitedFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1495,7 +1495,7 @@ public final class EncryptionZonesProtos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto prototype) {
+    public static Builder newBuilder(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -1511,26 +1511,26 @@ public final class EncryptionZonesProtos {
       return builder;
     }
     /**
-     * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesRequestProto}
+     * Protobuf type {@code org.apache.hadoop.ListEncryptionZonesRequestProto}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesRequestProto)
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProtoOrBuilder {
+        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.ListEncryptionZonesRequestProto)
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesRequestProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesRequestProto_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesRequestProto_fieldAccessorTable
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.Builder.class);
+                org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.Builder.class);
       }
 
-      // Construct using com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.newBuilder()
+      // Construct using org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -1556,17 +1556,17 @@ public final class EncryptionZonesProtos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesRequestProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesRequestProto_descriptor;
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto getDefaultInstanceForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.getDefaultInstance();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto getDefaultInstanceForType() {
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto build() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto result = buildPartial();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto build() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -1574,8 +1574,8 @@ public final class EncryptionZonesProtos {
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto buildPartial() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto result = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto(this);
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto buildPartial() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto result = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -1621,16 +1621,16 @@ public final class EncryptionZonesProtos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto) {
-          return mergeFrom((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto)other);
+        if (other instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto) {
+          return mergeFrom((org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto other) {
-        if (other == com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto other) {
+        if (other == org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto.getDefaultInstance()) return this;
         if (other.hasId()) {
           setId(other.getId());
         }
@@ -1652,11 +1652,11 @@ public final class EncryptionZonesProtos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parsedMessage = null;
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto) e.getUnfinishedMessage();
+          parsedMessage = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -1718,16 +1718,16 @@ public final class EncryptionZonesProtos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesRequestProto)
+      // @@protoc_insertion_point(builder_scope:org.apache.hadoop.ListEncryptionZonesRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesRequestProto)
-    private static final com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:org.apache.hadoop.ListEncryptionZonesRequestProto)
+    private static final org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto();
+      DEFAULT_INSTANCE = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto();
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto getDefaultInstance() {
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1752,14 +1752,14 @@ public final class EncryptionZonesProtos {
     }
 
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto getDefaultInstanceForType() {
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesRequestProto getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public interface EncryptionZoneProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto)
+      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.EncryptionZoneProto)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -1791,26 +1791,26 @@ public final class EncryptionZonesProtos {
         getPathBytes();
 
     /**
-     * <code>required .com.gmail.benrcarver.serverlessnamenode.CipherSuiteProto suite = 3;</code>
+     * <code>required .org.apache.hadoop.CipherSuiteProto suite = 3;</code>
      * @return Whether the suite field is set.
      */
     boolean hasSuite();
     /**
-     * <code>required .com.gmail.benrcarver.serverlessnamenode.CipherSuiteProto suite = 3;</code>
+     * <code>required .org.apache.hadoop.CipherSuiteProto suite = 3;</code>
      * @return The suite.
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto getSuite();
+    org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto getSuite();
 
     /**
-     * <code>required .com.gmail.benrcarver.serverlessnamenode.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
+     * <code>required .org.apache.hadoop.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
      * @return Whether the cryptoProtocolVersion field is set.
      */
     boolean hasCryptoProtocolVersion();
     /**
-     * <code>required .com.gmail.benrcarver.serverlessnamenode.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
+     * <code>required .org.apache.hadoop.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
      * @return The cryptoProtocolVersion.
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto getCryptoProtocolVersion();
+    org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto getCryptoProtocolVersion();
 
     /**
      * <code>required string keyName = 5;</code>
@@ -1830,11 +1830,11 @@ public final class EncryptionZonesProtos {
         getKeyNameBytes();
   }
   /**
-   * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto}
+   * Protobuf type {@code org.apache.hadoop.EncryptionZoneProto}
    */
   public static final class EncryptionZoneProto extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto)
+      // @@protoc_insertion_point(message_implements:org.apache.hadoop.EncryptionZoneProto)
       EncryptionZoneProtoOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use EncryptionZoneProto.newBuilder() to construct.
@@ -1893,7 +1893,7 @@ public final class EncryptionZonesProtos {
             case 24: {
               int rawValue = input.readEnum();
                 @SuppressWarnings("deprecation")
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto value = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto.valueOf(rawValue);
+              org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto value = org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(3, rawValue);
               } else {
@@ -1905,7 +1905,7 @@ public final class EncryptionZonesProtos {
             case 32: {
               int rawValue = input.readEnum();
                 @SuppressWarnings("deprecation")
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto value = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto.valueOf(rawValue);
+              org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto value = org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto.valueOf(rawValue);
               if (value == null) {
                 unknownFields.mergeVarintField(4, rawValue);
               } else {
@@ -1941,15 +1941,15 @@ public final class EncryptionZonesProtos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_EncryptionZoneProto_descriptor;
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_EncryptionZoneProto_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_EncryptionZoneProto_fieldAccessorTable
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_EncryptionZoneProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder.class);
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder.class);
     }
 
     private int bitField0_;
@@ -2023,39 +2023,39 @@ public final class EncryptionZonesProtos {
     public static final int SUITE_FIELD_NUMBER = 3;
     private int suite_;
     /**
-     * <code>required .com.gmail.benrcarver.serverlessnamenode.CipherSuiteProto suite = 3;</code>
+     * <code>required .org.apache.hadoop.CipherSuiteProto suite = 3;</code>
      * @return Whether the suite field is set.
      */
     @java.lang.Override public boolean hasSuite() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
-     * <code>required .com.gmail.benrcarver.serverlessnamenode.CipherSuiteProto suite = 3;</code>
+     * <code>required .org.apache.hadoop.CipherSuiteProto suite = 3;</code>
      * @return The suite.
      */
-    @java.lang.Override public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto getSuite() {
+    @java.lang.Override public org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto getSuite() {
       @SuppressWarnings("deprecation")
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto result = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto.valueOf(suite_);
-      return result == null ? com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto.UNKNOWN : result;
+      org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto result = org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto.valueOf(suite_);
+      return result == null ? org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto.UNKNOWN : result;
     }
 
     public static final int CRYPTOPROTOCOLVERSION_FIELD_NUMBER = 4;
     private int cryptoProtocolVersion_;
     /**
-     * <code>required .com.gmail.benrcarver.serverlessnamenode.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
+     * <code>required .org.apache.hadoop.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
      * @return Whether the cryptoProtocolVersion field is set.
      */
     @java.lang.Override public boolean hasCryptoProtocolVersion() {
       return ((bitField0_ & 0x00000008) != 0);
     }
     /**
-     * <code>required .com.gmail.benrcarver.serverlessnamenode.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
+     * <code>required .org.apache.hadoop.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
      * @return The cryptoProtocolVersion.
      */
-    @java.lang.Override public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto getCryptoProtocolVersion() {
+    @java.lang.Override public org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto getCryptoProtocolVersion() {
       @SuppressWarnings("deprecation")
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto result = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto.valueOf(cryptoProtocolVersion_);
-      return result == null ? com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto.UNKNOWN_PROTOCOL_VERSION : result;
+      org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto result = org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto.valueOf(cryptoProtocolVersion_);
+      return result == null ? org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto.UNKNOWN_PROTOCOL_VERSION : result;
     }
 
     public static final int KEYNAME_FIELD_NUMBER = 5;
@@ -2192,10 +2192,10 @@ public final class EncryptionZonesProtos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto)) {
+      if (!(obj instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto)) {
         return super.equals(obj);
       }
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto other = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto) obj;
+      org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto other = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto) obj;
 
       if (hasId() != other.hasId()) return false;
       if (hasId()) {
@@ -2257,69 +2257,69 @@ public final class EncryptionZonesProtos {
       return hash;
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(byte[] data)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseDelimitedFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseDelimitedFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -2332,7 +2332,7 @@ public final class EncryptionZonesProtos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto prototype) {
+    public static Builder newBuilder(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -2348,26 +2348,26 @@ public final class EncryptionZonesProtos {
       return builder;
     }
     /**
-     * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto}
+     * Protobuf type {@code org.apache.hadoop.EncryptionZoneProto}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto)
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder {
+        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.EncryptionZoneProto)
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_EncryptionZoneProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_EncryptionZoneProto_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_EncryptionZoneProto_fieldAccessorTable
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_EncryptionZoneProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder.class);
+                org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder.class);
       }
 
-      // Construct using com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.newBuilder()
+      // Construct using org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -2401,17 +2401,17 @@ public final class EncryptionZonesProtos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_EncryptionZoneProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_EncryptionZoneProto_descriptor;
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getDefaultInstanceForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getDefaultInstanceForType() {
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto build() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto result = buildPartial();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto build() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -2419,8 +2419,8 @@ public final class EncryptionZonesProtos {
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto buildPartial() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto result = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto(this);
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto buildPartial() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto result = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -2482,16 +2482,16 @@ public final class EncryptionZonesProtos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto) {
-          return mergeFrom((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto)other);
+        if (other instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto) {
+          return mergeFrom((org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto other) {
-        if (other == com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto other) {
+        if (other == org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance()) return this;
         if (other.hasId()) {
           setId(other.getId());
         }
@@ -2541,11 +2541,11 @@ public final class EncryptionZonesProtos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parsedMessage = null;
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto) e.getUnfinishedMessage();
+          parsedMessage = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -2681,28 +2681,28 @@ public final class EncryptionZonesProtos {
 
       private int suite_ = 1;
       /**
-       * <code>required .com.gmail.benrcarver.serverlessnamenode.CipherSuiteProto suite = 3;</code>
+       * <code>required .org.apache.hadoop.CipherSuiteProto suite = 3;</code>
        * @return Whether the suite field is set.
        */
       @java.lang.Override public boolean hasSuite() {
         return ((bitField0_ & 0x00000004) != 0);
       }
       /**
-       * <code>required .com.gmail.benrcarver.serverlessnamenode.CipherSuiteProto suite = 3;</code>
+       * <code>required .org.apache.hadoop.CipherSuiteProto suite = 3;</code>
        * @return The suite.
        */
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto getSuite() {
+      public org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto getSuite() {
         @SuppressWarnings("deprecation")
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto result = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto.valueOf(suite_);
-        return result == null ? com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto.UNKNOWN : result;
+        org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto result = org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto.valueOf(suite_);
+        return result == null ? org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto.UNKNOWN : result;
       }
       /**
-       * <code>required .com.gmail.benrcarver.serverlessnamenode.CipherSuiteProto suite = 3;</code>
+       * <code>required .org.apache.hadoop.CipherSuiteProto suite = 3;</code>
        * @param value The suite to set.
        * @return This builder for chaining.
        */
-      public Builder setSuite(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CipherSuiteProto value) {
+      public Builder setSuite(org.apache.hadoop.hdfs.protocol.HdfsProtos.CipherSuiteProto value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -2712,7 +2712,7 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>required .com.gmail.benrcarver.serverlessnamenode.CipherSuiteProto suite = 3;</code>
+       * <code>required .org.apache.hadoop.CipherSuiteProto suite = 3;</code>
        * @return This builder for chaining.
        */
       public Builder clearSuite() {
@@ -2724,28 +2724,28 @@ public final class EncryptionZonesProtos {
 
       private int cryptoProtocolVersion_ = 1;
       /**
-       * <code>required .com.gmail.benrcarver.serverlessnamenode.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
+       * <code>required .org.apache.hadoop.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
        * @return Whether the cryptoProtocolVersion field is set.
        */
       @java.lang.Override public boolean hasCryptoProtocolVersion() {
         return ((bitField0_ & 0x00000008) != 0);
       }
       /**
-       * <code>required .com.gmail.benrcarver.serverlessnamenode.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
+       * <code>required .org.apache.hadoop.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
        * @return The cryptoProtocolVersion.
        */
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto getCryptoProtocolVersion() {
+      public org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto getCryptoProtocolVersion() {
         @SuppressWarnings("deprecation")
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto result = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto.valueOf(cryptoProtocolVersion_);
-        return result == null ? com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto.UNKNOWN_PROTOCOL_VERSION : result;
+        org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto result = org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto.valueOf(cryptoProtocolVersion_);
+        return result == null ? org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto.UNKNOWN_PROTOCOL_VERSION : result;
       }
       /**
-       * <code>required .com.gmail.benrcarver.serverlessnamenode.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
+       * <code>required .org.apache.hadoop.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
        * @param value The cryptoProtocolVersion to set.
        * @return This builder for chaining.
        */
-      public Builder setCryptoProtocolVersion(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto value) {
+      public Builder setCryptoProtocolVersion(org.apache.hadoop.hdfs.protocol.HdfsProtos.CryptoProtocolVersionProto value) {
         if (value == null) {
           throw new NullPointerException();
         }
@@ -2755,7 +2755,7 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>required .com.gmail.benrcarver.serverlessnamenode.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
+       * <code>required .org.apache.hadoop.CryptoProtocolVersionProto cryptoProtocolVersion = 4;</code>
        * @return This builder for chaining.
        */
       public Builder clearCryptoProtocolVersion() {
@@ -2861,16 +2861,16 @@ public final class EncryptionZonesProtos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto)
+      // @@protoc_insertion_point(builder_scope:org.apache.hadoop.EncryptionZoneProto)
     }
 
-    // @@protoc_insertion_point(class_scope:com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto)
-    private static final com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:org.apache.hadoop.EncryptionZoneProto)
+    private static final org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto();
+      DEFAULT_INSTANCE = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto();
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getDefaultInstance() {
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -2895,38 +2895,38 @@ public final class EncryptionZonesProtos {
     }
 
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getDefaultInstanceForType() {
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public interface ListEncryptionZonesResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesResponseProto)
+      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.ListEncryptionZonesResponseProto)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+     * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
      */
-    java.util.List<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto>
+    java.util.List<org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto>
         getZonesList();
     /**
-     * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+     * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZones(int index);
+    org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZones(int index);
     /**
-     * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+     * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
      */
     int getZonesCount();
     /**
-     * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+     * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
      */
-    java.util.List<? extends com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>
+    java.util.List<? extends org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>
         getZonesOrBuilderList();
     /**
-     * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+     * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZonesOrBuilder(
+    org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZonesOrBuilder(
         int index);
 
     /**
@@ -2941,11 +2941,11 @@ public final class EncryptionZonesProtos {
     boolean getHasMore();
   }
   /**
-   * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesResponseProto}
+   * Protobuf type {@code org.apache.hadoop.ListEncryptionZonesResponseProto}
    */
   public static final class ListEncryptionZonesResponseProto extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesResponseProto)
+      // @@protoc_insertion_point(message_implements:org.apache.hadoop.ListEncryptionZonesResponseProto)
       ListEncryptionZonesResponseProtoOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use ListEncryptionZonesResponseProto.newBuilder() to construct.
@@ -2989,11 +2989,11 @@ public final class EncryptionZonesProtos {
               break;
             case 10: {
               if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-                zones_ = new java.util.ArrayList<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto>();
+                zones_ = new java.util.ArrayList<org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto>();
                 mutable_bitField0_ |= 0x00000001;
               }
               zones_.add(
-                  input.readMessage(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.PARSER, extensionRegistry));
+                  input.readMessage(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.PARSER, extensionRegistry));
               break;
             }
             case 16: {
@@ -3025,54 +3025,54 @@ public final class EncryptionZonesProtos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesResponseProto_descriptor;
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesResponseProto_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesResponseProto_fieldAccessorTable
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.Builder.class);
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.Builder.class);
     }
 
     private int bitField0_;
     public static final int ZONES_FIELD_NUMBER = 1;
-    private java.util.List<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto> zones_;
+    private java.util.List<org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto> zones_;
     /**
-     * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+     * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
      */
     @java.lang.Override
-    public java.util.List<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto> getZonesList() {
+    public java.util.List<org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto> getZonesList() {
       return zones_;
     }
     /**
-     * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+     * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
      */
     @java.lang.Override
-    public java.util.List<? extends com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>
+    public java.util.List<? extends org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>
         getZonesOrBuilderList() {
       return zones_;
     }
     /**
-     * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+     * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
      */
     @java.lang.Override
     public int getZonesCount() {
       return zones_.size();
     }
     /**
-     * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+     * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
      */
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZones(int index) {
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZones(int index) {
       return zones_.get(index);
     }
     /**
-     * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+     * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
      */
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZonesOrBuilder(
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZonesOrBuilder(
         int index) {
       return zones_.get(index);
     }
@@ -3153,10 +3153,10 @@ public final class EncryptionZonesProtos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto)) {
+      if (!(obj instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto)) {
         return super.equals(obj);
       }
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto other = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto) obj;
+      org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto other = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto) obj;
 
       if (!getZonesList()
           .equals(other.getZonesList())) return false;
@@ -3190,69 +3190,69 @@ public final class EncryptionZonesProtos {
       return hash;
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(byte[] data)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseDelimitedFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseDelimitedFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3265,7 +3265,7 @@ public final class EncryptionZonesProtos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto prototype) {
+    public static Builder newBuilder(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -3281,26 +3281,26 @@ public final class EncryptionZonesProtos {
       return builder;
     }
     /**
-     * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesResponseProto}
+     * Protobuf type {@code org.apache.hadoop.ListEncryptionZonesResponseProto}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesResponseProto)
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProtoOrBuilder {
+        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.ListEncryptionZonesResponseProto)
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesResponseProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesResponseProto_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesResponseProto_fieldAccessorTable
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.Builder.class);
+                org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.Builder.class);
       }
 
-      // Construct using com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.newBuilder()
+      // Construct using org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3333,17 +3333,17 @@ public final class EncryptionZonesProtos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesResponseProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_ListEncryptionZonesResponseProto_descriptor;
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto getDefaultInstanceForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.getDefaultInstance();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto getDefaultInstanceForType() {
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto build() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto result = buildPartial();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto build() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -3351,8 +3351,8 @@ public final class EncryptionZonesProtos {
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto buildPartial() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto result = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto(this);
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto buildPartial() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto result = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (zonesBuilder_ == null) {
@@ -3407,16 +3407,16 @@ public final class EncryptionZonesProtos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto) {
-          return mergeFrom((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto)other);
+        if (other instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto) {
+          return mergeFrom((org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto other) {
-        if (other == com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto other) {
+        if (other == org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto.getDefaultInstance()) return this;
         if (zonesBuilder_ == null) {
           if (!other.zones_.isEmpty()) {
             if (zones_.isEmpty()) {
@@ -3469,11 +3469,11 @@ public final class EncryptionZonesProtos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parsedMessage = null;
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto) e.getUnfinishedMessage();
+          parsedMessage = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -3484,22 +3484,22 @@ public final class EncryptionZonesProtos {
       }
       private int bitField0_;
 
-      private java.util.List<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto> zones_ =
+      private java.util.List<org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto> zones_ =
         java.util.Collections.emptyList();
       private void ensureZonesIsMutable() {
         if (!((bitField0_ & 0x00000001) != 0)) {
-          zones_ = new java.util.ArrayList<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto>(zones_);
+          zones_ = new java.util.ArrayList<org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto>(zones_);
           bitField0_ |= 0x00000001;
          }
       }
 
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder> zonesBuilder_;
+          org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder> zonesBuilder_;
 
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
-      public java.util.List<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto> getZonesList() {
+      public java.util.List<org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto> getZonesList() {
         if (zonesBuilder_ == null) {
           return java.util.Collections.unmodifiableList(zones_);
         } else {
@@ -3507,7 +3507,7 @@ public final class EncryptionZonesProtos {
         }
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
       public int getZonesCount() {
         if (zonesBuilder_ == null) {
@@ -3517,9 +3517,9 @@ public final class EncryptionZonesProtos {
         }
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZones(int index) {
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZones(int index) {
         if (zonesBuilder_ == null) {
           return zones_.get(index);
         } else {
@@ -3527,10 +3527,10 @@ public final class EncryptionZonesProtos {
         }
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
       public Builder setZones(
-          int index, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto value) {
+          int index, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto value) {
         if (zonesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3544,10 +3544,10 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
       public Builder setZones(
-          int index, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder builderForValue) {
+          int index, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder builderForValue) {
         if (zonesBuilder_ == null) {
           ensureZonesIsMutable();
           zones_.set(index, builderForValue.build());
@@ -3558,9 +3558,9 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
-      public Builder addZones(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto value) {
+      public Builder addZones(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto value) {
         if (zonesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3574,10 +3574,10 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
       public Builder addZones(
-          int index, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto value) {
+          int index, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto value) {
         if (zonesBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -3591,10 +3591,10 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
       public Builder addZones(
-          com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder builderForValue) {
+          org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder builderForValue) {
         if (zonesBuilder_ == null) {
           ensureZonesIsMutable();
           zones_.add(builderForValue.build());
@@ -3605,10 +3605,10 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
       public Builder addZones(
-          int index, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder builderForValue) {
+          int index, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder builderForValue) {
         if (zonesBuilder_ == null) {
           ensureZonesIsMutable();
           zones_.add(index, builderForValue.build());
@@ -3619,10 +3619,10 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
       public Builder addAllZones(
-          java.lang.Iterable<? extends com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto> values) {
+          java.lang.Iterable<? extends org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto> values) {
         if (zonesBuilder_ == null) {
           ensureZonesIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -3634,7 +3634,7 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
       public Builder clearZones() {
         if (zonesBuilder_ == null) {
@@ -3647,7 +3647,7 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
       public Builder removeZones(int index) {
         if (zonesBuilder_ == null) {
@@ -3660,16 +3660,16 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder getZonesBuilder(
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder getZonesBuilder(
           int index) {
         return getZonesFieldBuilder().getBuilder(index);
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZonesOrBuilder(
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZonesOrBuilder(
           int index) {
         if (zonesBuilder_ == null) {
           return zones_.get(index);  } else {
@@ -3677,9 +3677,9 @@ public final class EncryptionZonesProtos {
         }
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
-      public java.util.List<? extends com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>
+      public java.util.List<? extends org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>
            getZonesOrBuilderList() {
         if (zonesBuilder_ != null) {
           return zonesBuilder_.getMessageOrBuilderList();
@@ -3688,33 +3688,33 @@ public final class EncryptionZonesProtos {
         }
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder addZonesBuilder() {
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder addZonesBuilder() {
         return getZonesFieldBuilder().addBuilder(
-            com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance());
+            org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance());
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder addZonesBuilder(
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder addZonesBuilder(
           int index) {
         return getZonesFieldBuilder().addBuilder(
-            index, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance());
+            index, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance());
       }
       /**
-       * <code>repeated .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zones = 1;</code>
+       * <code>repeated .org.apache.hadoop.EncryptionZoneProto zones = 1;</code>
        */
-      public java.util.List<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder>
+      public java.util.List<org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder>
            getZonesBuilderList() {
         return getZonesFieldBuilder().getBuilderList();
       }
       private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>
+          org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>
           getZonesFieldBuilder() {
         if (zonesBuilder_ == null) {
           zonesBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>(
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>(
                   zones_,
                   ((bitField0_ & 0x00000001) != 0),
                   getParentForChildren(),
@@ -3775,16 +3775,16 @@ public final class EncryptionZonesProtos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesResponseProto)
+      // @@protoc_insertion_point(builder_scope:org.apache.hadoop.ListEncryptionZonesResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:com.gmail.benrcarver.serverlessnamenode.ListEncryptionZonesResponseProto)
-    private static final com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:org.apache.hadoop.ListEncryptionZonesResponseProto)
+    private static final org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto();
+      DEFAULT_INSTANCE = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto();
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto getDefaultInstance() {
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -3809,14 +3809,14 @@ public final class EncryptionZonesProtos {
     }
 
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto getDefaultInstanceForType() {
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.ListEncryptionZonesResponseProto getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public interface GetEZForPathRequestProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.gmail.benrcarver.serverlessnamenode.GetEZForPathRequestProto)
+      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.GetEZForPathRequestProto)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -3837,11 +3837,11 @@ public final class EncryptionZonesProtos {
         getSrcBytes();
   }
   /**
-   * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.GetEZForPathRequestProto}
+   * Protobuf type {@code org.apache.hadoop.GetEZForPathRequestProto}
    */
   public static final class GetEZForPathRequestProto extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.gmail.benrcarver.serverlessnamenode.GetEZForPathRequestProto)
+      // @@protoc_insertion_point(message_implements:org.apache.hadoop.GetEZForPathRequestProto)
       GetEZForPathRequestProtoOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use GetEZForPathRequestProto.newBuilder() to construct.
@@ -3910,15 +3910,15 @@ public final class EncryptionZonesProtos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathRequestProto_descriptor;
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathRequestProto_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathRequestProto_fieldAccessorTable
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathRequestProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.Builder.class);
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.Builder.class);
     }
 
     private int bitField0_;
@@ -4013,10 +4013,10 @@ public final class EncryptionZonesProtos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto)) {
+      if (!(obj instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto)) {
         return super.equals(obj);
       }
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto other = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto) obj;
+      org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto other = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto) obj;
 
       if (hasSrc() != other.hasSrc()) return false;
       if (hasSrc()) {
@@ -4043,69 +4043,69 @@ public final class EncryptionZonesProtos {
       return hash;
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(byte[] data)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseDelimitedFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseDelimitedFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4118,7 +4118,7 @@ public final class EncryptionZonesProtos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto prototype) {
+    public static Builder newBuilder(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -4134,26 +4134,26 @@ public final class EncryptionZonesProtos {
       return builder;
     }
     /**
-     * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.GetEZForPathRequestProto}
+     * Protobuf type {@code org.apache.hadoop.GetEZForPathRequestProto}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.gmail.benrcarver.serverlessnamenode.GetEZForPathRequestProto)
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProtoOrBuilder {
+        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.GetEZForPathRequestProto)
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathRequestProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathRequestProto_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathRequestProto_fieldAccessorTable
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathRequestProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.Builder.class);
+                org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.Builder.class);
       }
 
-      // Construct using com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.newBuilder()
+      // Construct using org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4179,17 +4179,17 @@ public final class EncryptionZonesProtos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathRequestProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathRequestProto_descriptor;
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto getDefaultInstanceForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.getDefaultInstance();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto getDefaultInstanceForType() {
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto build() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto result = buildPartial();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto build() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -4197,8 +4197,8 @@ public final class EncryptionZonesProtos {
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto buildPartial() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto result = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto(this);
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto buildPartial() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto result = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -4244,16 +4244,16 @@ public final class EncryptionZonesProtos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto) {
-          return mergeFrom((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto)other);
+        if (other instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto) {
+          return mergeFrom((org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto other) {
-        if (other == com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto other) {
+        if (other == org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto.getDefaultInstance()) return this;
         if (other.hasSrc()) {
           bitField0_ |= 0x00000001;
           src_ = other.src_;
@@ -4277,11 +4277,11 @@ public final class EncryptionZonesProtos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parsedMessage = null;
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto) e.getUnfinishedMessage();
+          parsedMessage = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -4388,16 +4388,16 @@ public final class EncryptionZonesProtos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.gmail.benrcarver.serverlessnamenode.GetEZForPathRequestProto)
+      // @@protoc_insertion_point(builder_scope:org.apache.hadoop.GetEZForPathRequestProto)
     }
 
-    // @@protoc_insertion_point(class_scope:com.gmail.benrcarver.serverlessnamenode.GetEZForPathRequestProto)
-    private static final com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:org.apache.hadoop.GetEZForPathRequestProto)
+    private static final org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto();
+      DEFAULT_INSTANCE = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto();
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto getDefaultInstance() {
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -4422,37 +4422,37 @@ public final class EncryptionZonesProtos {
     }
 
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto getDefaultInstanceForType() {
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathRequestProto getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   public interface GetEZForPathResponseProtoOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:com.gmail.benrcarver.serverlessnamenode.GetEZForPathResponseProto)
+      // @@protoc_insertion_point(interface_extends:org.apache.hadoop.GetEZForPathResponseProto)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+     * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
      * @return Whether the zone field is set.
      */
     boolean hasZone();
     /**
-     * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+     * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
      * @return The zone.
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZone();
+    org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZone();
     /**
-     * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+     * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZoneOrBuilder();
+    org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZoneOrBuilder();
   }
   /**
-   * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.GetEZForPathResponseProto}
+   * Protobuf type {@code org.apache.hadoop.GetEZForPathResponseProto}
    */
   public static final class GetEZForPathResponseProto extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:com.gmail.benrcarver.serverlessnamenode.GetEZForPathResponseProto)
+      // @@protoc_insertion_point(message_implements:org.apache.hadoop.GetEZForPathResponseProto)
       GetEZForPathResponseProtoOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use GetEZForPathResponseProto.newBuilder() to construct.
@@ -4494,11 +4494,11 @@ public final class EncryptionZonesProtos {
               done = true;
               break;
             case 10: {
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder subBuilder = null;
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder subBuilder = null;
               if (((bitField0_ & 0x00000001) != 0)) {
                 subBuilder = zone_.toBuilder();
               }
-              zone_ = input.readMessage(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.PARSER, extensionRegistry);
+              zone_ = input.readMessage(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.PARSER, extensionRegistry);
               if (subBuilder != null) {
                 subBuilder.mergeFrom(zone_);
                 zone_ = subBuilder.buildPartial();
@@ -4527,22 +4527,22 @@ public final class EncryptionZonesProtos {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_descriptor;
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_fieldAccessorTable
+      return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.Builder.class);
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.Builder.class);
     }
 
     private int bitField0_;
     public static final int ZONE_FIELD_NUMBER = 1;
-    private com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto zone_;
+    private org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto zone_;
     /**
-     * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+     * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
      * @return Whether the zone field is set.
      */
     @java.lang.Override
@@ -4550,19 +4550,19 @@ public final class EncryptionZonesProtos {
       return ((bitField0_ & 0x00000001) != 0);
     }
     /**
-     * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+     * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
      * @return The zone.
      */
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZone() {
-      return zone_ == null ? com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance() : zone_;
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZone() {
+      return zone_ == null ? org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance() : zone_;
     }
     /**
-     * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+     * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
      */
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZoneOrBuilder() {
-      return zone_ == null ? com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance() : zone_;
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZoneOrBuilder() {
+      return zone_ == null ? org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance() : zone_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -4611,10 +4611,10 @@ public final class EncryptionZonesProtos {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto)) {
+      if (!(obj instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto)) {
         return super.equals(obj);
       }
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto other = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto) obj;
+      org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto other = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto) obj;
 
       if (hasZone() != other.hasZone()) return false;
       if (hasZone()) {
@@ -4641,69 +4641,69 @@ public final class EncryptionZonesProtos {
       return hash;
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(byte[] data)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseDelimitedFrom(java.io.InputStream input)
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseDelimitedFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -4716,7 +4716,7 @@ public final class EncryptionZonesProtos {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto prototype) {
+    public static Builder newBuilder(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -4732,26 +4732,26 @@ public final class EncryptionZonesProtos {
       return builder;
     }
     /**
-     * Protobuf type {@code com.gmail.benrcarver.serverlessnamenode.GetEZForPathResponseProto}
+     * Protobuf type {@code org.apache.hadoop.GetEZForPathResponseProto}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:com.gmail.benrcarver.serverlessnamenode.GetEZForPathResponseProto)
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProtoOrBuilder {
+        // @@protoc_insertion_point(builder_implements:org.apache.hadoop.GetEZForPathResponseProto)
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProtoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_fieldAccessorTable
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.Builder.class);
+                org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.class, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.Builder.class);
       }
 
-      // Construct using com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.newBuilder()
+      // Construct using org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -4782,17 +4782,17 @@ public final class EncryptionZonesProtos {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_descriptor;
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_descriptor;
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto getDefaultInstanceForType() {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.getDefaultInstance();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto getDefaultInstanceForType() {
+        return org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto build() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto result = buildPartial();
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto build() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -4800,8 +4800,8 @@ public final class EncryptionZonesProtos {
       }
 
       @java.lang.Override
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto buildPartial() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto result = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto(this);
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto buildPartial() {
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto result = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto(this);
         int from_bitField0_ = bitField0_;
         int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000001) != 0)) {
@@ -4851,16 +4851,16 @@ public final class EncryptionZonesProtos {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto) {
-          return mergeFrom((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto)other);
+        if (other instanceof org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto) {
+          return mergeFrom((org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto other) {
-        if (other == com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto other) {
+        if (other == org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto.getDefaultInstance()) return this;
         if (other.hasZone()) {
           mergeZone(other.getZone());
         }
@@ -4884,11 +4884,11 @@ public final class EncryptionZonesProtos {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parsedMessage = null;
+        org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto) e.getUnfinishedMessage();
+          parsedMessage = (org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -4899,31 +4899,31 @@ public final class EncryptionZonesProtos {
       }
       private int bitField0_;
 
-      private com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto zone_;
+      private org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto zone_;
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder> zoneBuilder_;
+          org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder> zoneBuilder_;
       /**
-       * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+       * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
        * @return Whether the zone field is set.
        */
       public boolean hasZone() {
         return ((bitField0_ & 0x00000001) != 0);
       }
       /**
-       * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+       * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
        * @return The zone.
        */
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZone() {
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto getZone() {
         if (zoneBuilder_ == null) {
-          return zone_ == null ? com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance() : zone_;
+          return zone_ == null ? org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance() : zone_;
         } else {
           return zoneBuilder_.getMessage();
         }
       }
       /**
-       * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+       * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
        */
-      public Builder setZone(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto value) {
+      public Builder setZone(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto value) {
         if (zoneBuilder_ == null) {
           if (value == null) {
             throw new NullPointerException();
@@ -4937,10 +4937,10 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+       * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
        */
       public Builder setZone(
-          com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder builderForValue) {
+          org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder builderForValue) {
         if (zoneBuilder_ == null) {
           zone_ = builderForValue.build();
           onChanged();
@@ -4951,15 +4951,15 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+       * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
        */
-      public Builder mergeZone(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto value) {
+      public Builder mergeZone(org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto value) {
         if (zoneBuilder_ == null) {
           if (((bitField0_ & 0x00000001) != 0) &&
               zone_ != null &&
-              zone_ != com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance()) {
+              zone_ != org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance()) {
             zone_ =
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.newBuilder(zone_).mergeFrom(value).buildPartial();
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.newBuilder(zone_).mergeFrom(value).buildPartial();
           } else {
             zone_ = value;
           }
@@ -4971,7 +4971,7 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+       * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
        */
       public Builder clearZone() {
         if (zoneBuilder_ == null) {
@@ -4984,33 +4984,33 @@ public final class EncryptionZonesProtos {
         return this;
       }
       /**
-       * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+       * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
        */
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder getZoneBuilder() {
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder getZoneBuilder() {
         bitField0_ |= 0x00000001;
         onChanged();
         return getZoneFieldBuilder().getBuilder();
       }
       /**
-       * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+       * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
        */
-      public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZoneOrBuilder() {
+      public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder getZoneOrBuilder() {
         if (zoneBuilder_ != null) {
           return zoneBuilder_.getMessageOrBuilder();
         } else {
           return zone_ == null ?
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance() : zone_;
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.getDefaultInstance() : zone_;
         }
       }
       /**
-       * <code>optional .com.gmail.benrcarver.serverlessnamenode.EncryptionZoneProto zone = 1;</code>
+       * <code>optional .org.apache.hadoop.EncryptionZoneProto zone = 1;</code>
        */
       private com.google.protobuf.SingleFieldBuilderV3<
-          com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>
+          org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>
           getZoneFieldBuilder() {
         if (zoneBuilder_ == null) {
           zoneBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-              com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>(
+              org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProto.Builder, org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.EncryptionZoneProtoOrBuilder>(
                   getZone(),
                   getParentForChildren(),
                   isClean());
@@ -5031,16 +5031,16 @@ public final class EncryptionZonesProtos {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:com.gmail.benrcarver.serverlessnamenode.GetEZForPathResponseProto)
+      // @@protoc_insertion_point(builder_scope:org.apache.hadoop.GetEZForPathResponseProto)
     }
 
-    // @@protoc_insertion_point(class_scope:com.gmail.benrcarver.serverlessnamenode.GetEZForPathResponseProto)
-    private static final com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:org.apache.hadoop.GetEZForPathResponseProto)
+    private static final org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto();
+      DEFAULT_INSTANCE = new org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto();
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto getDefaultInstance() {
+    public static org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5065,7 +5065,7 @@ public final class EncryptionZonesProtos {
     }
 
     @java.lang.Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto getDefaultInstanceForType() {
+    public org.apache.hadoop.hdfs.protocol.EncryptionZonesProtos.GetEZForPathResponseProto getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -5132,7 +5132,7 @@ public final class EncryptionZonesProtos {
       "ryptionZoneProto\022\017\n\007hasMore\030\002 \002(\010\"\'\n\030Get" +
       "EZForPathRequestProto\022\013\n\003src\030\001 \002(\t\"g\n\031Ge" +
       "tEZForPathResponseProto\022J\n\004zone\030\001 \001(\0132<." +
-      "com.gmail.benrcarver.serverlessnamenode." +
+      "org.apache.hadoop." +
       "EncryptionZoneProtoBL\n0com.gmail.benrcar" +
       "ver.serverlessnamenode.protocolB\025Encrypt" +
       "ionZonesProtos\240\001\001"
@@ -5140,7 +5140,7 @@ public final class EncryptionZonesProtos {
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.getDescriptor(),
+          org.apache.hadoop.hdfs.protocol.HdfsProtos.getDescriptor(),
         });
     internal_static_com_gmail_benrcarver_serverlessnamenode_CreateEncryptionZoneRequestProto_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -5184,7 +5184,7 @@ public final class EncryptionZonesProtos {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_gmail_benrcarver_serverlessnamenode_GetEZForPathResponseProto_descriptor,
         new java.lang.String[] { "Zone", });
-    com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.getDescriptor();
+    org.apache.hadoop.hdfs.protocol.HdfsProtos.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

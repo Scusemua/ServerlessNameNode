@@ -1,17 +1,19 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.HdfsConfiguration;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocols;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BRTrackingService;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.StartupOption;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.StorageInfo;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.MDCleaner;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.MetaRecoveryContext;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNodeRPCServer;
+import io.hops.leaderElection.HdfsLeDescriptorFactory;
+import io.hops.leaderElection.LeaderElection;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.HdfsConfiguration;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants;
+import org.apache.hadoop.hdfs.protocol.NamenodeProtocols;
+import org.apache.hadoop.hdfs.server.blockmanagement.BRTrackingService;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.StartupOption;
+import org.apache.hadoop.hdfs.server.common.StorageInfo;
+import org.apache.hadoop.hdfs.server.namenode.MDCleaner;
+import org.apache.hadoop.hdfs.server.namenode.MetaRecoveryContext;
+import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNodeRPCServer;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.HdfsStorageFactory;
 import io.hops.HdfsVariables;
@@ -29,6 +31,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Trash;
 import org.apache.hadoop.ha.ServiceFailedException;
+import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.metrics2.lib.DefaultMetricsSystem;
 import org.apache.hadoop.metrics2.util.MBeans;
@@ -57,7 +60,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
 import static org.apache.hadoop.util.ExitUtil.terminate;
 
 public class ServerlessNameNode {
@@ -69,8 +72,10 @@ public class ServerlessNameNode {
 
     private Thread emptier;
 
+    static NameNodeMetrics metrics;
+
     public static final int DEFAULT_PORT = 8020;
-    private com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNodeRPCServer rpcServer;
+    private org.apache.hadoop.hdfs.server.namenode.ServerlessNameNodeRPCServer rpcServer;
     private JvmPauseMonitor pauseMonitor;
 
     private static final String NAMENODE_HTRACE_PREFIX = "namenode.htrace.";
@@ -88,7 +93,7 @@ public class ServerlessNameNode {
     /**
      * Metadata cleaner service. Cleans stale metadata left my dead NNs
      */
-    private com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.MDCleaner mdCleaner;
+    private org.apache.hadoop.hdfs.server.namenode.MDCleaner mdCleaner;
 
     /**
      * Activated plug-ins.
@@ -110,6 +115,11 @@ public class ServerlessNameNode {
         }
         return addr;
     }
+
+    /**
+     * httpServer
+     */
+    protected NameNodeHttpServer httpServer;
 
     /**
      * for block report load balancing
@@ -318,9 +328,9 @@ public class ServerlessNameNode {
             LOG.warn("Encountered exception while exiting state ", e);
         } finally {
             stopCommonServices();
-//            if (metrics != null) {
-//                metrics.shutdown();
-//            }
+            if (metrics != null) {
+                metrics.shutdown();
+            }
             if (namesystem != null) {
                 namesystem.shutdown();
             }
@@ -343,6 +353,10 @@ public class ServerlessNameNode {
 
     private static void setStartupOption(Configuration conf, StartupOption opt) {
         conf.set(DFS_NAMENODE_STARTUP_KEY, opt.name());
+    }
+
+    public static NameNodeMetrics getNameNodeMetrics() {
+        return metrics;
     }
 
     private static void printUsage(PrintStream out) {
@@ -764,7 +778,7 @@ public class ServerlessNameNode {
         pauseMonitor.init(conf);
         pauseMonitor.start();
 
-        // metrics.getJvmMetrics().setPauseMonitor(pauseMonitor);
+        metrics.getJvmMetrics().setPauseMonitor(pauseMonitor);
 
         startCommonServices(conf);
 
@@ -783,6 +797,91 @@ public class ServerlessNameNode {
         }
     }
 
+    /**
+     * Start the services common to active and standby states
+     */
+    private void startCommonServices(Configuration conf) throws IOException {
+        startLeaderElectionService();
+
+        startMDCleanerService();
+
+        namesystem.startCommonServices(conf);
+        registerNNSMXBean();
+        rpcServer.start();
+        plugins = conf.getInstances(DFS_NAMENODE_PLUGINS_KEY, ServicePlugin.class);
+        for (ServicePlugin p : plugins) {
+            try {
+                p.start(this);
+            } catch (Throwable t) {
+                LOG.warn("ServicePlugin " + p + " could not be started", t);
+            }
+        }
+        LOG.info(getRole() + " RPC up at: " + rpcServer.getRpcAddress());
+        if (rpcServer.getServiceRpcAddress() != null) {
+            LOG.info(getRole() + " service RPC up at: " +
+                    rpcServer.getServiceRpcAddress());
+        }
+    }
+
+    private void startLeaderElectionService() throws IOException {
+        // Initialize the leader election algorithm (only once rpc server is
+        // created and httpserver is started)
+        long leadercheckInterval =
+                conf.getInt(DFSConfigKeys.DFS_LEADER_CHECK_INTERVAL_IN_MS_KEY,
+                        DFSConfigKeys.DFS_LEADER_CHECK_INTERVAL_IN_MS_DEFAULT);
+        int missedHeartBeatThreshold =
+                conf.getInt(DFSConfigKeys.DFS_LEADER_MISSED_HB_THRESHOLD_KEY,
+                        DFSConfigKeys.DFS_LEADER_MISSED_HB_THRESHOLD_DEFAULT);
+        int leIncrement = conf.getInt(DFSConfigKeys.DFS_LEADER_TP_INCREMENT_KEY,
+                DFSConfigKeys.DFS_LEADER_TP_INCREMENT_DEFAULT);
+
+        String rpcAddresses = "";
+        rpcAddresses = rpcServer.getRpcAddress().getAddress().getHostAddress() + ":" +rpcServer.getRpcAddress().getPort()+",";
+        if(rpcServer.getServiceRpcAddress() != null){
+            rpcAddresses = rpcAddresses + rpcServer.getServiceRpcAddress().getAddress().getHostAddress() + ":" +
+                    rpcServer.getServiceRpcAddress().getPort();
+        }
+
+        String httpAddress;
+        /*
+         * httpServer.getHttpAddress() return the bind address. If we use 0.0.0.0 to listen to all interfaces the leader
+         * election system will return 0.0.0.0 as the http address and the client will not be able to connect to the UI
+         * to mitigate this we retunr the address used by the RPC. This address will work because the http server is
+         * listening on very interfaces
+         * */
+
+        if (DFSUtil.getHttpPolicy(conf).isHttpEnabled()) {
+            if (httpServer.getHttpAddress().getAddress().getHostAddress().equals("0.0.0.0")) {
+                httpAddress = rpcServer.getRpcAddress().getAddress().getHostAddress() + ":" + httpServer.getHttpAddress()
+                        .getPort();
+            } else {
+                httpAddress = httpServer.getHttpAddress().getAddress().getHostAddress() + ":" + httpServer.getHttpAddress()
+                        .getPort();
+            }
+        } else {
+            if (httpServer.getHttpsAddress().getAddress().getHostAddress().equals("0.0.0.0")) {
+                httpAddress = rpcServer.getRpcAddress().getAddress().getHostAddress() + ":" + httpServer.getHttpsAddress()
+                        .getPort();
+            } else {
+                httpAddress = httpServer.getHttpsAddress().getAddress().getHostAddress() + ":" + httpServer.getHttpsAddress()
+                        .getPort();
+            }
+        }
+
+        leaderElection =
+                new LeaderElection(new HdfsLeDescriptorFactory(), leadercheckInterval,
+                        missedHeartBeatThreshold, leIncrement, httpAddress,
+                        rpcAddresses, (byte) conf.getInt(DFSConfigKeys.DFS_LOCATION_DOMAIN_ID,
+                        DFSConfigKeys.DFS_LOCATION_DOMAIN_ID_DEFAULT));
+        leaderElection.start();
+
+        try {
+            leaderElection.waitActive();
+        } catch (InterruptedException e) {
+            LOG.warn("NN was interrupted");
+        }
+    }
+
     public boolean isLeader() {
         if (leaderElection != null) {
             return leaderElection.isLeader();
@@ -792,7 +891,7 @@ public class ServerlessNameNode {
     }
 
     static void initMetrics(Configuration conf, HdfsServerConstants.NamenodeRole role) {
-        // metrics = NameNodeMetrics.create(conf, role);
+        metrics = NameNodeMetrics.create(conf, role);
     }
 
     public static void initializeGenericKeys(Configuration conf) {
@@ -849,6 +948,10 @@ public class ServerlessNameNode {
                     HdfsConstants.HDFS_URI_SCHEME));
         }
         return getAddress(authority);
+    }
+
+    public static InetSocketAddress getAddress(String address) {
+        return NetUtils.createSocketAddr(address, DEFAULT_PORT);
     }
 
     public static URI getUri(InetSocketAddress namenode) {

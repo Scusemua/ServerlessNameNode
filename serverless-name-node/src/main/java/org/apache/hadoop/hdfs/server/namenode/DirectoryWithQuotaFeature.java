@@ -9,7 +9,7 @@ import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.util.EnumCounters;
 
 /**
- * Quota feature for {@link com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory}
+ * Quota feature for {@link org.apache.hadoop.hdfs.server.namenode.INodeDirectory}
  */
 public class DirectoryWithQuotaFeature implements INode.Feature {
 
@@ -179,7 +179,7 @@ public class DirectoryWithQuotaFeature implements INode.Feature {
         return counts;
     }
 
-    ContentSummaryComputationContext computeContentSummary(final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory dir,
+    ContentSummaryComputationContext computeContentSummary(final org.apache.hadoop.hdfs.server.namenode.INodeDirectory dir,
                                                            final ContentSummaryComputationContext summary)
             throws StorageException, TransactionContextException {
         final long original = summary.getCounts().getStoragespace();
@@ -192,7 +192,7 @@ public class DirectoryWithQuotaFeature implements INode.Feature {
         return summary;
     }
 
-    private void checkStoragespace(final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory dir, final long computed)
+    private void checkStoragespace(final org.apache.hadoop.hdfs.server.namenode.INodeDirectory dir, final long computed)
             throws StorageException, TransactionContextException {
         if (-1 != quota.getStorageSpace() && usage.getStorageSpace() != computed) {
             ServerlessNameNode.LOG.error("BUG: Inconsistent storagespace for directory "

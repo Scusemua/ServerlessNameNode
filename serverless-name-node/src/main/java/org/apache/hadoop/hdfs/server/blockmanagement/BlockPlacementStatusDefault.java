@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-public class BlockPlacementStatusDefault implements com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockPlacementStatus {
+public class BlockPlacementStatusDefault implements org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementStatus {
 
   private int requiredRacks = 0;
   private int currentRacks = 0;

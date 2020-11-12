@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
@@ -60,7 +60,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
 import static org.apache.hadoop.fs.CommonConfigurationKeysPublic.DEFAULT_SERVICE_DISCOVERY_ENABLED;
 import static org.apache.hadoop.fs.CommonConfigurationKeysPublic.SERVICE_DISCOVERY_ENABLED_KEY;
 

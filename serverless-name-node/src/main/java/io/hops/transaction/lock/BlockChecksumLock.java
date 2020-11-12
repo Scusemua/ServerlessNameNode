@@ -17,7 +17,7 @@
  */
 package io.hops.transaction.lock;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode;
+import org.apache.hadoop.hdfs.server.namenode.INode;
 import io.hops.metadata.hdfs.dal.BlockChecksumDataAccess;
 import io.hops.metadata.hdfs.entity.BlockChecksum;
 

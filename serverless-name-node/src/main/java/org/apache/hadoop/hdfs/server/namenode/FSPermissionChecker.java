@@ -1,9 +1,9 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.AclFeature;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachePool;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath;
+import org.apache.hadoop.hdfs.server.namenode.AclFeature;
+import org.apache.hadoop.hdfs.server.namenode.CachePool;
+import org.apache.hadoop.hdfs.server.namenode.INodeDirectory;
+import org.apache.hadoop.hdfs.server.namenode.INodesInPath;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.metadata.hdfs.entity.ProjectedINode;
@@ -172,7 +172,7 @@ class FSPermissionChecker {
      * Guarded by {@link FSNameSystem#readLock()}
      * Caller of this method must hold that lock.
      */
-    void checkPermission(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath inodesInPath, boolean doCheckOwner,
+    void checkPermission(org.apache.hadoop.hdfs.server.namenode.INodesInPath inodesInPath, boolean doCheckOwner,
                          FsAction ancestorAccess, FsAction parentAccess, FsAction access,
                          FsAction subAccess, boolean ignoreEmptyDir) throws AccessControlException,
             StorageException, TransactionContextException, IOException {
@@ -274,7 +274,7 @@ class FSPermissionChecker {
             return;
         }
 
-        Stack<com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory> directories = new Stack<>();
+        Stack<org.apache.hadoop.hdfs.server.namenode.INodeDirectory> directories = new Stack<>();
         for (directories.push(inode.asDirectory()); !directories.isEmpty(); ) {
             INodeDirectory d = directories.pop();
             List<INode> cList = d.getChildrenList();
@@ -300,7 +300,7 @@ class FSPermissionChecker {
         }
         FsPermission mode = inode.getFsPermission();
 
-        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.AclFeature aclFeature = inode.getAclFeature();//snapshotId);
+        org.apache.hadoop.hdfs.server.namenode.AclFeature aclFeature = inode.getAclFeature();//snapshotId);
         if (aclFeature != null) {
             List<AclEntry> featureEntries = aclFeature.getEntries();
             // It's possible that the inode has a default ACL but no access ACL.

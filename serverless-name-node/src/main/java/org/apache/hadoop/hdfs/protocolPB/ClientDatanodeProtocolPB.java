@@ -17,8 +17,8 @@
  */
 package org.apache.hadoop.hdfs.protocolPB;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.ipc.ProtocolInfo;
 import org.apache.hadoop.security.KerberosInfo;

@@ -15,7 +15,7 @@
  */
 package io.hops.metadata.adaptor;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import io.hops.exception.StorageException;
 import io.hops.metadata.DalAdaptor;
 import io.hops.metadata.hdfs.dal.ReplicaUnderConstructionDataAccess;
@@ -25,9 +25,9 @@ import java.util.Collection;
 import java.util.List;
 
 public class ReplicaUnderConstructionDALAdaptor extends
-    DalAdaptor<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction, ReplicaUnderConstruction>
+    DalAdaptor<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction, ReplicaUnderConstruction>
     implements
-    ReplicaUnderConstructionDataAccess<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction> {
+    ReplicaUnderConstructionDataAccess<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction> {
 
   private final ReplicaUnderConstructionDataAccess<ReplicaUnderConstruction>
       dataAccces;
@@ -39,32 +39,32 @@ public class ReplicaUnderConstructionDALAdaptor extends
 
   
   @Override
-  public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction> findReplicaUnderConstructionByINodeId(
+  public List<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction> findReplicaUnderConstructionByINodeId(
       long inodeId) throws StorageException {
-    return (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction>) convertDALtoHDFS(
+    return (List<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction>) convertDALtoHDFS(
         dataAccces.findReplicaUnderConstructionByINodeId(inodeId));
   }
   
   
   @Override
-  public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction> findReplicaUnderConstructionByINodeIds(
+  public List<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction> findReplicaUnderConstructionByINodeIds(
       long[] inodeIds) throws StorageException {
-    return (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction>) convertDALtoHDFS(
+    return (List<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction>) convertDALtoHDFS(
         dataAccces.findReplicaUnderConstructionByINodeIds(inodeIds));
   }
   
   @Override
-  public List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction> findReplicaUnderConstructionByBlockId(
+  public List<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction> findReplicaUnderConstructionByBlockId(
       long blockId, long inodeId) throws StorageException {
-    return (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction>) convertDALtoHDFS(
+    return (List<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction>) convertDALtoHDFS(
         dataAccces.findReplicaUnderConstructionByBlockId(blockId, inodeId));
   }
 
   @Override
   public void prepare(
-      Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction> removed,
-      Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction> newed,
-      Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction> modified)
+      Collection<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction> removed,
+      Collection<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction> newed,
+      Collection<org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction> modified)
       throws StorageException {
     dataAccces.prepare(convertHDFStoDAL(removed), convertHDFStoDAL(newed),
         convertHDFStoDAL(modified));
@@ -77,7 +77,7 @@ public class ReplicaUnderConstructionDALAdaptor extends
 
   @Override
   public ReplicaUnderConstruction convertHDFStoDAL(
-      com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction hdfsClass)
+      org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction hdfsClass)
       throws StorageException {
     if (hdfsClass != null) {
       return new ReplicaUnderConstruction(hdfsClass.getState().ordinal(),
@@ -90,10 +90,10 @@ public class ReplicaUnderConstructionDALAdaptor extends
   }
 
   @Override
-  public com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction convertDALtoHDFS(
+  public org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction convertDALtoHDFS(
       ReplicaUnderConstruction dalClass) throws StorageException {
     if (dalClass != null) {
-      return new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.ReplicaUnderConstruction(
+      return new org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction(
           HdfsServerConstants.ReplicaState.values()[dalClass.getState()],
           dalClass.getStorageId(),
           dalClass.getBlockId(),

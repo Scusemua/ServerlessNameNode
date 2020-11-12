@@ -18,11 +18,11 @@
 
 package org.apache.hadoop.hdfs.protocolPB;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeProtocolProtos.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.DatanodeStorage;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.StorageReport;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.VolumeFailureSummary;
+import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos.*;
+import org.apache.hadoop.hdfs.protocol.HdfsProtos.*;
+import org.apache.hadoop.hdfs.server.protocol.DatanodeStorage;
+import org.apache.hadoop.hdfs.server.protocol.StorageReport;
+import org.apache.hadoop.hdfs.server.protocol.VolumeFailureSummary;
 import com.google.protobuf.RpcController;
 import com.google.protobuf.ServiceException;
 import io.hops.leader_election.node.ActiveNode;

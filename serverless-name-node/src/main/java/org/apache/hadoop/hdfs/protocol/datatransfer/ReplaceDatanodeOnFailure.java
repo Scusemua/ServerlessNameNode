@@ -36,7 +36,7 @@ public class ReplaceDatanodeOnFailure {
     DISABLE(Condition.FALSE),
     /** Never add a new datanode. */
     NEVER(Condition.FALSE),
-    /** @see com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure.Condition#DEFAULT */
+    /** @see org.apache.hadoop.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure.Condition#DEFAULT */
     DEFAULT(Condition.DEFAULT),
     /** Always add a new datanode when an existing datanode is removed. */
     ALWAYS(Condition.TRUE);
@@ -55,7 +55,7 @@ public class ReplaceDatanodeOnFailure {
   /** Datanode replacement condition */
   private static interface Condition {
     /** Return true unconditionally. */
-    static final Condition TRUE = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure.Condition() {
+    static final Condition TRUE = new org.apache.hadoop.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure.Condition() {
       @Override
       public boolean satisfy(short replication, DatanodeInfo[] existings,
           int nExistings, boolean isAppend, boolean isHflushed) {
@@ -64,7 +64,7 @@ public class ReplaceDatanodeOnFailure {
     };
 
     /** Return false unconditionally. */
-    static final Condition FALSE = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure.Condition() {
+    static final Condition FALSE = new org.apache.hadoop.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure.Condition() {
       @Override
       public boolean satisfy(short replication, DatanodeInfo[] existings,
           int nExistings, boolean isAppend, boolean isHflushed) {
@@ -80,7 +80,7 @@ public class ReplaceDatanodeOnFailure {
      *   (1) floor(r/2) >= n; or
      *   (2) r > n and the block is hflushed/appended.
      */
-    static final Condition DEFAULT = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure.Condition() {
+    static final Condition DEFAULT = new org.apache.hadoop.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure.Condition() {
       @Override
       public boolean satisfy(final short replication,
           final DatanodeInfo[] existings, final int n, final boolean isAppend,
@@ -157,13 +157,13 @@ public class ReplaceDatanodeOnFailure {
   /**
    * Get the setting from configuration.
    */
-  public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure get(final Configuration conf) {
+  public static org.apache.hadoop.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure get(final Configuration conf) {
     final Policy policy = getPolicy(conf);
     final boolean bestEffort = conf.getBoolean(
         HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure.BEST_EFFORT_KEY,
         HdfsClientConfigKeys.BlockWrite.ReplaceDatanodeOnFailure.BEST_EFFORT_DEFAULT);
     
-    return new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure(policy, bestEffort);
+    return new org.apache.hadoop.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure(policy, bestEffort);
   }
 
   private static Policy getPolicy(final Configuration conf) {

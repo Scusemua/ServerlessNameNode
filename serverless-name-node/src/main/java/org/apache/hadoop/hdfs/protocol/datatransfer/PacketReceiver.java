@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader;
+import org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader;
 import com.google.common.base.Preconditions;
 import com.google.common.primitives.Ints;
 import org.apache.commons.logging.Log;
@@ -72,14 +72,14 @@ public class PacketReceiver implements Closeable {
   /**
    * The packet header of the most recently read packet.
    */
-  private com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader curHeader;
+  private org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader curHeader;
   
   public PacketReceiver(boolean useDirectBuffers) {
     this.useDirectBuffers = useDirectBuffers;
-    reallocPacketBuf(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN);
+    reallocPacketBuf(org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN);
   }
 
-  public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader getHeader() {
+  public org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader getHeader() {
     return curHeader;
   }
 
@@ -131,7 +131,7 @@ public class PacketReceiver implements Closeable {
         .checkState(curHeader == null || !curHeader.isLastPacketInBlock());
 
     curPacketBuf.clear();
-    curPacketBuf.limit(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN);
+    curPacketBuf.limit(org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN);
     doReadFully(ch, in, curPacketBuf);
     curPacketBuf.flip();
     int payloadLen = curPacketBuf.getInt();
@@ -162,21 +162,21 @@ public class PacketReceiver implements Closeable {
 
     // Make sure we have space for the whole packet, and
     // read it.
-    reallocPacketBuf(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN +
+    reallocPacketBuf(org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN +
         dataPlusChecksumLen + headerLen);
     curPacketBuf.clear();
-    curPacketBuf.position(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN);
-    curPacketBuf.limit(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN +
+    curPacketBuf.position(org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN);
+    curPacketBuf.limit(org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN +
         dataPlusChecksumLen + headerLen);
     doReadFully(ch, in, curPacketBuf);
     curPacketBuf.flip();
-    curPacketBuf.position(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN);
+    curPacketBuf.position(org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader.PKT_LENGTHS_LEN);
 
     // Extract the header from the front of the buffer (after the length prefixes)
     byte[] headerBuf = new byte[headerLen];
     curPacketBuf.get(headerBuf);
     if (curHeader == null) {
-      curHeader = new com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader();
+      curHeader = new org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader();
     }
     curHeader.setFieldsFromData(payloadLen, headerBuf);
     

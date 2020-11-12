@@ -15,7 +15,7 @@
  */
 package io.hops.transaction.lock;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguous;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
 import io.hops.common.INodeUtil;
 import io.hops.common.Pair;
 import org.apache.commons.lang3.ArrayUtils;

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-option java_package = "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol";
+option java_package = "org.apache.hadoop.hdfs.protocol";
 
 option java_outer_classname = "ClientNamenodeProtocolProtos";
 
@@ -24,7 +24,7 @@ option java_generic_services = true;
 
 option java_generate_equals_and_hash = true;
 
-package com.gmail.benrcarver.serverlessnamenode;
+package org.apache.hadoop;
 
 import "Security.proto";
 
@@ -38,7 +38,7 @@ import "ActiveNode.proto";
 /**
  * The ClientNamenodeProtocol Service defines the interface between a client 
  * (as runnign inside a MR Task) and the Namenode.
- * See com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol for the javadoc
+ * See org.apache.hadoop.hdfs.protocol.ClientProtocol for the javadoc
  * for each of the methods.
  * The exceptions declared in the above class also apply to this protocol.
  * Exceptions are unwrapped and thrown by the  PB libraries.
@@ -679,7 +679,7 @@ message ActiveNamenodeListRequestProto {
 }
 
 message ActiveNamenodeListResponseProto {
-  repeated com.gmail.benrcarver.serverlessnamenode.ActiveNodeProto namenodes = 1;
+  repeated org.apache.hadoop.ActiveNodeProto namenodes = 1;
 }
 
 message GetEpochMSRequestProto {
@@ -885,9 +885,9 @@ service ClientNamenodeProtocol {
   rpc getLinkTarget (GetLinkTargetRequestProto) returns (GetLinkTargetResponseProto);
   rpc updateBlockForPipeline (UpdateBlockForPipelineRequestProto) returns (UpdateBlockForPipelineResponseProto);
   rpc updatePipeline (UpdatePipelineRequestProto) returns (UpdatePipelineResponseProto);
-  rpc getDelegationToken (com.gmail.benrcarver.serverlessnamenode.GetDelegationTokenRequestProto) returns (com.gmail.benrcarver.serverlessnamenode.GetDelegationTokenResponseProto);
-  rpc renewDelegationToken (com.gmail.benrcarver.serverlessnamenode.RenewDelegationTokenRequestProto) returns (com.gmail.benrcarver.serverlessnamenode.RenewDelegationTokenResponseProto);
-  rpc cancelDelegationToken (com.gmail.benrcarver.serverlessnamenode.CancelDelegationTokenRequestProto) returns (com.gmail.benrcarver.serverlessnamenode.CancelDelegationTokenResponseProto);
+  rpc getDelegationToken (org.apache.hadoop.GetDelegationTokenRequestProto) returns (org.apache.hadoop.GetDelegationTokenResponseProto);
+  rpc renewDelegationToken (org.apache.hadoop.RenewDelegationTokenRequestProto) returns (org.apache.hadoop.RenewDelegationTokenResponseProto);
+  rpc cancelDelegationToken (org.apache.hadoop.CancelDelegationTokenRequestProto) returns (org.apache.hadoop.CancelDelegationTokenResponseProto);
   rpc setBalancerBandwidth (SetBalancerBandwidthRequestProto) returns (SetBalancerBandwidthResponseProto);
   rpc getDataEncryptionKey (GetDataEncryptionKeyRequestProto) returns (GetDataEncryptionKeyResponseProto);
   rpc isFileClosed(IsFileClosedRequestProto) returns(IsFileClosedResponseProto);

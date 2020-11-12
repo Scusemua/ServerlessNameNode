@@ -33,7 +33,7 @@ import java.util.*;
 
 public class BRTrackingService {
 
-  public static final Log LOG = LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BRTrackingService.class);
+  public static final Log LOG = LogFactory.getLog(org.apache.hadoop.hdfs.server.blockmanagement.BRTrackingService.class);
   private final long DB_VAR_UPDATE_THRESHOLD;
   private final long BR_MAX_PROCESSING_TIME;
   private int rrIndex = 0; // for round robin allocation
@@ -165,7 +165,7 @@ public class BRTrackingService {
               + getBrLbMaxConcurrentBRs(nnList)
               + " concurrent block reports can be processed.";
           LOG.info(msg);
-          throw new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BRLoadBalancingOverloadException(msg);
+          throw new org.apache.hadoop.hdfs.server.blockmanagement.BRLoadBalancingOverloadException(msg);
         } finally {
           if (!isActive) {
             connector.commit();

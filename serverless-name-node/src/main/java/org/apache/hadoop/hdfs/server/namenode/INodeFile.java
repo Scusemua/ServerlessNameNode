@@ -1,17 +1,34 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockCollection;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguous;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.GenerationStamp;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
+import io.hops.metadata.HdfsStorageFactory;
+import io.hops.metadata.hdfs.dal.*;
+import io.hops.metadata.hdfs.entity.FileInodeData;
+import io.hops.transaction.EntityManager;
+import static org.apache.hadoop.hdfs.protocol.HdfsConstantsClient.BLOCK_STORAGE_POLICY_ID_UNSPECIFIED;
+
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.permission.PermissionStatus;
+import org.apache.hadoop.fs.StorageType;
+import org.apache.hadoop.hdfs.protocol.Block;
+import org.apache.hadoop.hdfs.protocol.BlockStoragePolicy;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockCollection;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockStoragePolicySuite;
+import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeStorageInfo;
+import org.apache.hadoop.hdfs.server.common.GenerationStamp;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
+import com.google.common.base.Preconditions;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * I-node for closed file.
@@ -98,13 +115,13 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
     }
 
     /**
-     * If the inode contains a {@link com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature}, return it;
+     * If the inode contains a {@link org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature}, return it;
      * otherwise, return null.
      */
-    public final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature getFileUnderConstructionFeature() {
+    public final org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature getFileUnderConstructionFeature() {
         for (Feature f : features) {
-            if (f instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature) {
-                return (com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature) f;
+            if (f instanceof org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature) {
+                return (org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature) f;
             }
         }
         return null;
@@ -154,7 +171,7 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
             throws StorageException, TransactionContextException {
 
         if(isFileStoredInDB()){
-            FSNamesystem.LOG.debug("Stuffed Inode:  getBlocks(). the file is stored in the database. Returning empty list of blocks");
+            FSNameSystem.LOG.debug("Stuffed Inode:  getBlocks(). the file is stored in the database. Returning empty list of blocks");
             return BlockInfoContiguous.EMPTY_ARRAY;
         }
 
@@ -174,15 +191,15 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
         FileInodeData fid;
         DBFileDataAccess fida = null;
 
-        if(len <= FSNamesystem.getDBInMemBucketSize()){
+        if(len <= FSNameSystem.getDBInMemBucketSize()){
             fida = (InMemoryInodeDataAccess) HdfsStorageFactory.getDataAccess(InMemoryInodeDataAccess.class);
             fid = new FileInodeData(getId(), data, data.length, FileInodeData.Type.InmemoryFile);
         } else {
-            if( len <= FSNamesystem.getDBOnDiskSmallBucketSize()){
+            if( len <= FSNameSystem.getDBOnDiskSmallBucketSize()){
                 fida = (SmallOnDiskInodeDataAccess) HdfsStorageFactory.getDataAccess(SmallOnDiskInodeDataAccess.class);
-            }else if( len <= FSNamesystem.getDBOnDiskMediumBucketSize()){
+            }else if( len <= FSNameSystem.getDBOnDiskMediumBucketSize()){
                 fida = (MediumOnDiskInodeDataAccess) HdfsStorageFactory.getDataAccess(MediumOnDiskInodeDataAccess.class);
-            } else if (len <= FSNamesystem.getMaxSmallFileSize()) {
+            } else if (len <= FSNameSystem.getMaxSmallFileSize()) {
                 fida = (LargeOnDiskInodeDataAccess) HdfsStorageFactory.getDataAccess(LargeOnDiskInodeDataAccess.class);
             }else{
                 StorageException up = new StorageException("The data is too large to be stored in the database. Requested data size is : "+len);
@@ -192,7 +209,7 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
         }
 
         fida.add(fid);
-        FSNamesystem.LOG.debug("Stuffed Inode:  the file has been stored in the database ");
+        FSNameSystem.LOG.debug("Stuffed Inode:  the file has been stored in the database ");
     }
 
     public byte[] getFileDataInDB() throws StorageException {
@@ -201,11 +218,11 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
         //depending on the file size read the file from appropriate table
         FileInodeData fid = null;
         DBFileDataAccess fida = null;
-        if(getSize() <= FSNamesystem.getDBInMemBucketSize()){
+        if(getSize() <= FSNameSystem.getDBInMemBucketSize()){
             fida = (InMemoryInodeDataAccess) HdfsStorageFactory.getDataAccess(InMemoryInodeDataAccess.class);
-        }else if (getSize() <= FSNamesystem.getDBOnDiskSmallBucketSize()){
+        }else if (getSize() <= FSNameSystem.getDBOnDiskSmallBucketSize()){
             fida = (SmallOnDiskInodeDataAccess) HdfsStorageFactory.getDataAccess(SmallOnDiskInodeDataAccess.class);
-        } else if (getSize() <= FSNamesystem.getDBOnDiskMediumBucketSize()){
+        } else if (getSize() <= FSNameSystem.getDBOnDiskMediumBucketSize()){
             fida = (MediumOnDiskInodeDataAccess) HdfsStorageFactory.getDataAccess(MediumOnDiskInodeDataAccess.class);
         } else {
             fida = (LargeOnDiskInodeDataAccess) HdfsStorageFactory.getDataAccess(LargeOnDiskInodeDataAccess.class);
@@ -216,12 +233,12 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
         }else{
             fid = (FileInodeData) fida.get(getId());
         }
-        if (FSNamesystem.LOG.isDebugEnabled()) {
+        if (FSNameSystem.LOG.isDebugEnabled()) {
             long dataLength = 0;
             if(fid!=null && fid.getInodeData()!=null){
                 dataLength = fid.getInodeData().length;
             }
-            FSNamesystem.LOG.debug("Stuffed Inode:  Read file data from the database. Data length is :"
+            FSNameSystem.LOG.debug("Stuffed Inode:  Read file data from the database. Data length is :"
                     + dataLength);
         }
         return fid == null ? null : fid.getInodeData();
@@ -232,13 +249,13 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
         FileInodeData fid = null;
         DBFileDataAccess fida = null;
         FileInodeData.Type fileType = null;
-        if(getSize() <= FSNamesystem.getDBInMemBucketSize()){
+        if(getSize() <= FSNameSystem.getDBInMemBucketSize()){
             fida = (InMemoryInodeDataAccess) HdfsStorageFactory.getDataAccess(InMemoryInodeDataAccess.class);
             fileType = FileInodeData.Type.InmemoryFile;
-        }else if (getSize() <= FSNamesystem.getDBOnDiskSmallBucketSize()){
+        }else if (getSize() <= FSNameSystem.getDBOnDiskSmallBucketSize()){
             fida = (SmallOnDiskInodeDataAccess) HdfsStorageFactory.getDataAccess(SmallOnDiskInodeDataAccess.class);
             fileType = FileInodeData.Type.OnDiskFile;
-        } else if (getSize() <= FSNamesystem.getDBOnDiskMediumBucketSize()){
+        } else if (getSize() <= FSNameSystem.getDBOnDiskMediumBucketSize()){
             fida = (MediumOnDiskInodeDataAccess) HdfsStorageFactory.getDataAccess(MediumOnDiskInodeDataAccess.class);
             fileType = FileInodeData.Type.OnDiskFile;
         } else {
@@ -247,7 +264,7 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
         }
 
         fida.delete(new FileInodeData(getId(),null, (int)getSize(), fileType));
-        FSNamesystem.LOG.debug("Stuffed Inode:  File data for Inode Id: "+getId()+" is deleted");
+        FSNameSystem.LOG.debug("Stuffed Inode:  File data for Inode Id: "+getId()+" is deleted");
     }
     /**
      * append array of blocks to this.blocks
@@ -436,7 +453,7 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
     BlockInfoContiguous getPenultimateBlock()
             throws StorageException, TransactionContextException {
         if (isUnderConstruction()) {
-            com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature uc = getFileUnderConstructionFeature();
+            org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature uc = getFileUnderConstructionFeature();
             if (uc != null && uc.getPenultimateBlockId() > -1) {
                 return EntityManager.find(BlockInfoContiguous.Finder.ByBlockIdAndINodeId,
                         uc.getPenultimateBlockId(), getId());
@@ -452,7 +469,7 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
     @Override
     public BlockInfoContiguous getLastBlock() throws IOException, StorageException {
         if (isUnderConstruction()) {
-            com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature uc = getFileUnderConstructionFeature();
+            org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature uc = getFileUnderConstructionFeature();
             if (uc != null && uc.getLastBlockId() > -1) {
                 return EntityManager.find(BlockInfoContiguous.Finder.ByBlockIdAndINodeId,
                         uc.getLastBlockId(), getId());
@@ -483,7 +500,7 @@ public class INodeFile extends INodeWithAdditionalFields implements BlockCollect
 
     public INodeFile toUnderConstruction(String clientName, String clientMachine)
             throws IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature uc = new com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature(clientName, clientMachine, this);
+        org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature uc = new org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature(clientName, clientMachine, this);
         addFeature(uc);
         save();
         return this;

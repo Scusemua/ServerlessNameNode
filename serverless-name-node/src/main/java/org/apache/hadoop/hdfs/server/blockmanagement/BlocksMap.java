@@ -17,7 +17,8 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.DatanodeStorage;
+import org.apache.hadoop.hdfs.protocol.Block;
+import org.apache.hadoop.hdfs.server.protocol.DatanodeStorage;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.metadata.HdfsStorageFactory;

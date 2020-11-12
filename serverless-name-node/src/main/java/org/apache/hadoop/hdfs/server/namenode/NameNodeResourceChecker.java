@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.metadata.HdfsStorageFactory;
 import org.apache.commons.logging.Log;
@@ -40,7 +40,7 @@ public class NameNodeResourceChecker {
     private int minimumRedundantVolumes;
 
     @VisibleForTesting
-    class CheckedVolume implements com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CheckableNameNodeResource {
+    class CheckedVolume implements org.apache.hadoop.hdfs.server.namenode.CheckableNameNodeResource {
         private DF df;
         private boolean required;
         private String volume;
@@ -144,7 +144,7 @@ public class NameNodeResourceChecker {
      *         otherwise.
      */
     public boolean hasAvailablePrimarySpace() throws IOException {
-        boolean hasSpaceOnDisk = com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NameNodeResourcePolicy.areResourcesAvailable(volumes.values(),
+        boolean hasSpaceOnDisk = org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy.areResourcesAvailable(volumes.values(),
                 minimumRedundantVolumes);
         boolean hasSpaceInDB = HdfsStorageFactory.hasResources(databaseResourcesPreThreshold);
 
@@ -158,7 +158,7 @@ public class NameNodeResourceChecker {
      *         otherwise.
      */
     public boolean hasAvailableSpace() throws IOException {
-        boolean hasSpaceOnDisk = com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NameNodeResourcePolicy.areResourcesAvailable(volumes.values(),
+        boolean hasSpaceOnDisk = org.apache.hadoop.hdfs.server.namenode.NameNodeResourcePolicy.areResourcesAvailable(volumes.values(),
                 minimumRedundantVolumes);
         boolean hasSpaceInDB = HdfsStorageFactory.hasResources(databaseResourcesThreshold);
 

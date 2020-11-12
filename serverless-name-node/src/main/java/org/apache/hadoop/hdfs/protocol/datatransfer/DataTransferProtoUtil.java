@@ -17,16 +17,16 @@
  */
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.BaseHeaderProto;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.ChecksumProto;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.ClientOperationHeaderProto;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.DataTransferTraceInfoProto;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.OpWriteBlockProto;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.OpWriteBlockProto.BlockConstructionStage;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.security.token.block.InvalidBlockTokenException;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.BaseHeaderProto;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.ChecksumProto;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.ClientOperationHeaderProto;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.DataTransferTraceInfoProto;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.OpWriteBlockProto;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.OpWriteBlockProto.BlockConstructionStage;
+import org.apache.hadoop.hdfs.protocol.HdfsProtos;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.hdfs.protocol.ExtendedBlock;

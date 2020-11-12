@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.security.DelegationTokenSecretManager;
+import org.apache.hadoop.hdfs.security.DelegationTokenSecretManager;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.fs.FileStatus;

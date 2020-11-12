@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo;
+import org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import io.hops.exception.StorageException;
@@ -74,10 +74,10 @@ class PendingReplicationBlocks {
    */
   void increment(BlockInfoContiguous block, DatanodeDescriptor[] targets)
       throws StorageException, TransactionContextException {
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo found = getPendingBlock(block);
+    org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo found = getPendingBlock(block);
     if (found == null) {
       addPendingBlockInfo(
-          new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo(block.getBlockId(), block.getInodeId(), now(),
+          new org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo(block.getBlockId(), block.getInodeId(), now(),
               targets));
     } else {
       found.incrementReplicas(targets);
@@ -93,7 +93,7 @@ class PendingReplicationBlocks {
    */
   void decrement(BlockInfoContiguous block, DatanodeDescriptor dn)
       throws StorageException, TransactionContextException {
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo found = getPendingBlock(block);
+    org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo found = getPendingBlock(block);
     if (found != null && !isTimedout(found)) {
       if (LOG.isDebugEnabled()) {
         LOG.debug("Removing pending replication for " + block);
@@ -113,7 +113,7 @@ class PendingReplicationBlocks {
    */
   void remove(BlockInfoContiguous block)
       throws StorageException, TransactionContextException {
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo found = getPendingBlock(block);
+    org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo found = getPendingBlock(block);
     if (found != null) {
       removePendingBlockInfo(found);
     }
@@ -151,7 +151,7 @@ class PendingReplicationBlocks {
    */
   int getNumReplicas(BlockInfoContiguous block)
       throws StorageException, TransactionContextException {
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo found = getPendingBlock(block);
+    org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo found = getPendingBlock(block);
     if (found != null && !isTimedout(found)) {
       return found.getNumReplicas();
     }
@@ -164,8 +164,8 @@ class PendingReplicationBlocks {
    * timed out.
    */
   long[] getTimedOutBlocks() throws IOException {
-    List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> timedOutItems =
-        (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo>) new LightWeightRequestHandler(
+    List<org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo> timedOutItems =
+        (List<org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo>) new LightWeightRequestHandler(
             HDFSOperationType.GET_TIMED_OUT_PENDING_BLKS) {
           @Override
           public Object performTask() throws StorageException, IOException {
@@ -173,8 +173,8 @@ class PendingReplicationBlocks {
             PendingBlockDataAccess da =
                 (PendingBlockDataAccess) HdfsStorageFactory
                     .getDataAccess(PendingBlockDataAccess.class);
-            List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> timedoutPendings =
-                (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo>) da.findByTimeLimitLessThan(timeLimit);
+            List<org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo> timedoutPendings =
+                (List<org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo>) da.findByTimeLimitLessThan(timeLimit);
             if (timedoutPendings == null || timedoutPendings.size() <= 0) {
               return null;
             }
@@ -184,18 +184,18 @@ class PendingReplicationBlocks {
     if (timedOutItems == null) {
       return null;
     }
-    Collection<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> filterd =
-        Collections2.filter(timedOutItems, new Predicate<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo>() {
+    Collection<org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo> filterd =
+        Collections2.filter(timedOutItems, new Predicate<org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo>() {
 
           @Override
-          public boolean apply(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo t) {
+          public boolean apply(org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo t) {
             return t != null;
           }
         });
 
     long[] blockIdArr = new long[filterd.size()];
     int i = 0;
-    for (com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo p : filterd) {
+    for (org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo p : filterd) {
       blockIdArr[i] = p.getBlockId();
       i++;
     }
@@ -210,7 +210,7 @@ class PendingReplicationBlocks {
   void stop() {
   }
 
-  private boolean isTimedout(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo pendingBlock) {
+  private boolean isTimedout(org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo pendingBlock) {
     if (getTimeLimit() > pendingBlock.getTimeStamp()) {
       return true;
     }
@@ -221,38 +221,38 @@ class PendingReplicationBlocks {
     return now() - timeout;
   }
 
-  private com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo getPendingBlock(BlockInfoContiguous block)
+  private org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo getPendingBlock(BlockInfoContiguous block)
       throws StorageException, TransactionContextException {
     return EntityManager
-        .find(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo.Finder.ByBlockIdAndINodeId, block.getBlockId(),
+        .find(org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo.Finder.ByBlockIdAndINodeId, block.getBlockId(),
             block.getInodeId());
   }
 
-  private List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo> getAllPendingBlocks()
+  private List<org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo> getAllPendingBlocks()
       throws StorageException, TransactionContextException {
-    return (List<com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo>) EntityManager
-        .findList(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo.Finder.All);
+    return (List<org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo>) EntityManager
+        .findList(org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo.Finder.All);
   }
 
-  private BlockInfoContiguous getBlockInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo pendingBlock)
+  private BlockInfoContiguous getBlockInfo(org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo pendingBlock)
       throws StorageException, TransactionContextException {
     return EntityManager
         .find(BlockInfoContiguous.Finder.ByBlockIdAndINodeId, pendingBlock.getBlockId());
   }
 
-  private void addPendingBlockInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo pbi)
+  private void addPendingBlockInfo(org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo pbi)
       throws StorageException, TransactionContextException {
     EntityManager.add(pbi);
   }
 
-  private void updatePendingBlockInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo pbi)
+  private void updatePendingBlockInfo(org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo pbi)
       throws StorageException, TransactionContextException {
     EntityManager.update(pbi);
   }
 
-  private void removePendingBlockInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo pbi, DatanodeDescriptor dn)
+  private void removePendingBlockInfo(org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo pbi, DatanodeDescriptor dn)
       throws StorageException, TransactionContextException {
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo toRemove = new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.PendingBlockInfo(pbi.getBlockId(), pbi.getInodeId(), pbi.getTimeStamp(), dn.
+    org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo toRemove = new org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo(pbi.getBlockId(), pbi.getInodeId(), pbi.getTimeStamp(), dn.
         getDatanodeUuid());
     EntityManager.remove(toRemove);
   }

@@ -18,7 +18,7 @@
 package org.apache.hadoop.hdfs;
 
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants;
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -1,7 +1,7 @@
 package org.apache.hadoop.hdfs.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NotReplicatedYetException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.SafeModeException;
+import org.apache.hadoop.hdfs.server.namenode.NotReplicatedYetException;
+import org.apache.hadoop.hdfs.server.namenode.SafeModeException;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.ParentNotDirectoryException;
 import org.apache.hadoop.fs.StorageType;

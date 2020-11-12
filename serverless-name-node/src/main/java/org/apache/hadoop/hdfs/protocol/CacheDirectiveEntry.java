@@ -1,7 +1,7 @@
 package org.apache.hadoop.hdfs.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveInfo;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveStats;
+import org.apache.hadoop.hdfs.protocol.CacheDirectiveInfo;
+import org.apache.hadoop.hdfs.protocol.CacheDirectiveStats;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 
@@ -11,11 +11,11 @@ import org.apache.hadoop.classification.InterfaceStability;
 @InterfaceStability.Evolving
 @InterfaceAudience.Public
 public class CacheDirectiveEntry {
-    private final com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveInfo info;
-    private final com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveStats stats;
+    private final org.apache.hadoop.hdfs.protocol.CacheDirectiveInfo info;
+    private final org.apache.hadoop.hdfs.protocol.CacheDirectiveStats stats;
 
-    public CacheDirectiveEntry(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveInfo info,
-                               com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveStats stats) {
+    public CacheDirectiveEntry(org.apache.hadoop.hdfs.protocol.CacheDirectiveInfo info,
+                               org.apache.hadoop.hdfs.protocol.CacheDirectiveStats stats) {
         this.info = info;
         this.stats = stats;
     }

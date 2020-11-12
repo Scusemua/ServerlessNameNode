@@ -15,7 +15,7 @@
  */
 package io.hops.metadata;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.DatanodeStorageInfo;
+import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeStorageInfo;
 import io.hops.exception.StorageException;
 import io.hops.metadata.common.entity.Variable;
 import io.hops.metadata.hdfs.dal.StorageDataAccess;

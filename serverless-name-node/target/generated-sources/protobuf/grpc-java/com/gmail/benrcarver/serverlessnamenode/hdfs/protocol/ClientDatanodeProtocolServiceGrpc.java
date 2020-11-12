@@ -1,4 +1,4 @@
-package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol;
+package org.apache.hadoop.hdfs.protocol;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
@@ -22,32 +22,32 @@ public final class ClientDatanodeProtocolServiceGrpc {
 
   private ClientDatanodeProtocolServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "com.gmail.benrcarver.serverlessnamenode.ClientDatanodeProtocolService";
+  public static final String SERVICE_NAME = "org.apache.hadoop.ClientDatanodeProtocolService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> getGetReplicaVisibleLengthMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> getGetReplicaVisibleLengthMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "getReplicaVisibleLength",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> getGetReplicaVisibleLengthMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> getGetReplicaVisibleLengthMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> getGetReplicaVisibleLengthMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> getGetReplicaVisibleLengthMethod;
     if ((getGetReplicaVisibleLengthMethod = ClientDatanodeProtocolServiceGrpc.getGetReplicaVisibleLengthMethod) == null) {
       synchronized (ClientDatanodeProtocolServiceGrpc.class) {
         if ((getGetReplicaVisibleLengthMethod = ClientDatanodeProtocolServiceGrpc.getGetReplicaVisibleLengthMethod) == null) {
           ClientDatanodeProtocolServiceGrpc.getGetReplicaVisibleLengthMethod = getGetReplicaVisibleLengthMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getReplicaVisibleLength"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new ClientDatanodeProtocolServiceMethodDescriptorSupplier("getReplicaVisibleLength"))
               .build();
         }
@@ -56,29 +56,29 @@ public final class ClientDatanodeProtocolServiceGrpc {
     return getGetReplicaVisibleLengthMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> getDeleteBlockPoolMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> getDeleteBlockPoolMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "deleteBlockPool",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> getDeleteBlockPoolMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> getDeleteBlockPoolMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> getDeleteBlockPoolMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> getDeleteBlockPoolMethod;
     if ((getDeleteBlockPoolMethod = ClientDatanodeProtocolServiceGrpc.getDeleteBlockPoolMethod) == null) {
       synchronized (ClientDatanodeProtocolServiceGrpc.class) {
         if ((getDeleteBlockPoolMethod = ClientDatanodeProtocolServiceGrpc.getDeleteBlockPoolMethod) == null) {
           ClientDatanodeProtocolServiceGrpc.getDeleteBlockPoolMethod = getDeleteBlockPoolMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "deleteBlockPool"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new ClientDatanodeProtocolServiceMethodDescriptorSupplier("deleteBlockPool"))
               .build();
         }
@@ -87,29 +87,29 @@ public final class ClientDatanodeProtocolServiceGrpc {
     return getDeleteBlockPoolMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> getGetBlockLocalPathInfoMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> getGetBlockLocalPathInfoMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "getBlockLocalPathInfo",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> getGetBlockLocalPathInfoMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> getGetBlockLocalPathInfoMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> getGetBlockLocalPathInfoMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> getGetBlockLocalPathInfoMethod;
     if ((getGetBlockLocalPathInfoMethod = ClientDatanodeProtocolServiceGrpc.getGetBlockLocalPathInfoMethod) == null) {
       synchronized (ClientDatanodeProtocolServiceGrpc.class) {
         if ((getGetBlockLocalPathInfoMethod = ClientDatanodeProtocolServiceGrpc.getGetBlockLocalPathInfoMethod) == null) {
           ClientDatanodeProtocolServiceGrpc.getGetBlockLocalPathInfoMethod = getGetBlockLocalPathInfoMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getBlockLocalPathInfo"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new ClientDatanodeProtocolServiceMethodDescriptorSupplier("getBlockLocalPathInfo"))
               .build();
         }
@@ -118,29 +118,29 @@ public final class ClientDatanodeProtocolServiceGrpc {
     return getGetBlockLocalPathInfoMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> getGetHdfsBlockLocationsMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> getGetHdfsBlockLocationsMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "getHdfsBlockLocations",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> getGetHdfsBlockLocationsMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> getGetHdfsBlockLocationsMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> getGetHdfsBlockLocationsMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> getGetHdfsBlockLocationsMethod;
     if ((getGetHdfsBlockLocationsMethod = ClientDatanodeProtocolServiceGrpc.getGetHdfsBlockLocationsMethod) == null) {
       synchronized (ClientDatanodeProtocolServiceGrpc.class) {
         if ((getGetHdfsBlockLocationsMethod = ClientDatanodeProtocolServiceGrpc.getGetHdfsBlockLocationsMethod) == null) {
           ClientDatanodeProtocolServiceGrpc.getGetHdfsBlockLocationsMethod = getGetHdfsBlockLocationsMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getHdfsBlockLocations"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new ClientDatanodeProtocolServiceMethodDescriptorSupplier("getHdfsBlockLocations"))
               .build();
         }
@@ -149,29 +149,29 @@ public final class ClientDatanodeProtocolServiceGrpc {
     return getGetHdfsBlockLocationsMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> getShutdownDatanodeMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> getShutdownDatanodeMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "shutdownDatanode",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> getShutdownDatanodeMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> getShutdownDatanodeMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> getShutdownDatanodeMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> getShutdownDatanodeMethod;
     if ((getShutdownDatanodeMethod = ClientDatanodeProtocolServiceGrpc.getShutdownDatanodeMethod) == null) {
       synchronized (ClientDatanodeProtocolServiceGrpc.class) {
         if ((getShutdownDatanodeMethod = ClientDatanodeProtocolServiceGrpc.getShutdownDatanodeMethod) == null) {
           ClientDatanodeProtocolServiceGrpc.getShutdownDatanodeMethod = getShutdownDatanodeMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "shutdownDatanode"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new ClientDatanodeProtocolServiceMethodDescriptorSupplier("shutdownDatanode"))
               .build();
         }
@@ -180,29 +180,29 @@ public final class ClientDatanodeProtocolServiceGrpc {
     return getShutdownDatanodeMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> getGetDatanodeInfoMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> getGetDatanodeInfoMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "getDatanodeInfo",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> getGetDatanodeInfoMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> getGetDatanodeInfoMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> getGetDatanodeInfoMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> getGetDatanodeInfoMethod;
     if ((getGetDatanodeInfoMethod = ClientDatanodeProtocolServiceGrpc.getGetDatanodeInfoMethod) == null) {
       synchronized (ClientDatanodeProtocolServiceGrpc.class) {
         if ((getGetDatanodeInfoMethod = ClientDatanodeProtocolServiceGrpc.getGetDatanodeInfoMethod) == null) {
           ClientDatanodeProtocolServiceGrpc.getGetDatanodeInfoMethod = getGetDatanodeInfoMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getDatanodeInfo"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new ClientDatanodeProtocolServiceMethodDescriptorSupplier("getDatanodeInfo"))
               .build();
         }
@@ -211,29 +211,29 @@ public final class ClientDatanodeProtocolServiceGrpc {
     return getGetDatanodeInfoMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> getGetReconfigurationStatusMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> getGetReconfigurationStatusMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "getReconfigurationStatus",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> getGetReconfigurationStatusMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> getGetReconfigurationStatusMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> getGetReconfigurationStatusMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> getGetReconfigurationStatusMethod;
     if ((getGetReconfigurationStatusMethod = ClientDatanodeProtocolServiceGrpc.getGetReconfigurationStatusMethod) == null) {
       synchronized (ClientDatanodeProtocolServiceGrpc.class) {
         if ((getGetReconfigurationStatusMethod = ClientDatanodeProtocolServiceGrpc.getGetReconfigurationStatusMethod) == null) {
           ClientDatanodeProtocolServiceGrpc.getGetReconfigurationStatusMethod = getGetReconfigurationStatusMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getReconfigurationStatus"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new ClientDatanodeProtocolServiceMethodDescriptorSupplier("getReconfigurationStatus"))
               .build();
         }
@@ -242,29 +242,29 @@ public final class ClientDatanodeProtocolServiceGrpc {
     return getGetReconfigurationStatusMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> getStartReconfigurationMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> getStartReconfigurationMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "startReconfiguration",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> getStartReconfigurationMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> getStartReconfigurationMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> getStartReconfigurationMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> getStartReconfigurationMethod;
     if ((getStartReconfigurationMethod = ClientDatanodeProtocolServiceGrpc.getStartReconfigurationMethod) == null) {
       synchronized (ClientDatanodeProtocolServiceGrpc.class) {
         if ((getStartReconfigurationMethod = ClientDatanodeProtocolServiceGrpc.getStartReconfigurationMethod) == null) {
           ClientDatanodeProtocolServiceGrpc.getStartReconfigurationMethod = getStartReconfigurationMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "startReconfiguration"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new ClientDatanodeProtocolServiceMethodDescriptorSupplier("startReconfiguration"))
               .build();
         }
@@ -273,29 +273,29 @@ public final class ClientDatanodeProtocolServiceGrpc {
     return getStartReconfigurationMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> getTriggerBlockReportMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> getTriggerBlockReportMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "triggerBlockReport",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> getTriggerBlockReportMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> getTriggerBlockReportMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto,
+      org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> getTriggerBlockReportMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> getTriggerBlockReportMethod;
     if ((getTriggerBlockReportMethod = ClientDatanodeProtocolServiceGrpc.getTriggerBlockReportMethod) == null) {
       synchronized (ClientDatanodeProtocolServiceGrpc.class) {
         if ((getTriggerBlockReportMethod = ClientDatanodeProtocolServiceGrpc.getTriggerBlockReportMethod) == null) {
           ClientDatanodeProtocolServiceGrpc.getTriggerBlockReportMethod = getTriggerBlockReportMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto, org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "triggerBlockReport"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new ClientDatanodeProtocolServiceMethodDescriptorSupplier("triggerBlockReport"))
               .build();
         }
@@ -363,8 +363,8 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * Returns the visible length of the replica
      * </pre>
      */
-    public void getReplicaVisibleLength(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto request,
-                                        io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> responseObserver) {
+    public void getReplicaVisibleLength(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto request,
+                                        io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getGetReplicaVisibleLengthMethod(), responseObserver);
     }
 
@@ -374,8 +374,8 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * Delete the block pool from the datanode.
      * </pre>
      */
-    public void deleteBlockPool(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto request,
-                                io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> responseObserver) {
+    public void deleteBlockPool(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto request,
+                                io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getDeleteBlockPoolMethod(), responseObserver);
     }
 
@@ -386,8 +386,8 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * local file system.
      * </pre>
      */
-    public void getBlockLocalPathInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto request,
-                                      io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> responseObserver) {
+    public void getBlockLocalPathInfo(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto request,
+                                      io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getGetBlockLocalPathInfoMethod(), responseObserver);
     }
 
@@ -398,43 +398,43 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * on the local file system.
      * </pre>
      */
-    public void getHdfsBlockLocations(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto request,
-                                      io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> responseObserver) {
+    public void getHdfsBlockLocations(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto request,
+                                      io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getGetHdfsBlockLocationsMethod(), responseObserver);
     }
 
     /**
      */
-    public void shutdownDatanode(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto request,
-                                 io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> responseObserver) {
+    public void shutdownDatanode(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto request,
+                                 io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getShutdownDatanodeMethod(), responseObserver);
     }
 
     /**
      */
-    public void getDatanodeInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto request,
-                                io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> responseObserver) {
+    public void getDatanodeInfo(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto request,
+                                io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getGetDatanodeInfoMethod(), responseObserver);
     }
 
     /**
      */
-    public void getReconfigurationStatus(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto request,
-                                         io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> responseObserver) {
+    public void getReconfigurationStatus(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto request,
+                                         io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getGetReconfigurationStatusMethod(), responseObserver);
     }
 
     /**
      */
-    public void startReconfiguration(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto request,
-                                     io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> responseObserver) {
+    public void startReconfiguration(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto request,
+                                     io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getStartReconfigurationMethod(), responseObserver);
     }
 
     /**
      */
-    public void triggerBlockReport(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto request,
-                                   io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> responseObserver) {
+    public void triggerBlockReport(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto request,
+                                   io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getTriggerBlockReportMethod(), responseObserver);
     }
 
@@ -444,64 +444,64 @@ public final class ClientDatanodeProtocolServiceGrpc {
             getGetReplicaVisibleLengthMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto>(
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto,
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto>(
                   this, METHODID_GET_REPLICA_VISIBLE_LENGTH)))
           .addMethod(
             getDeleteBlockPoolMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto>(
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto,
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto>(
                   this, METHODID_DELETE_BLOCK_POOL)))
           .addMethod(
             getGetBlockLocalPathInfoMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto>(
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto,
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto>(
                   this, METHODID_GET_BLOCK_LOCAL_PATH_INFO)))
           .addMethod(
             getGetHdfsBlockLocationsMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto>(
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto,
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto>(
                   this, METHODID_GET_HDFS_BLOCK_LOCATIONS)))
           .addMethod(
             getShutdownDatanodeMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto>(
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto,
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto>(
                   this, METHODID_SHUTDOWN_DATANODE)))
           .addMethod(
             getGetDatanodeInfoMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto>(
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto,
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto>(
                   this, METHODID_GET_DATANODE_INFO)))
           .addMethod(
             getGetReconfigurationStatusMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto>(
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto,
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto>(
                   this, METHODID_GET_RECONFIGURATION_STATUS)))
           .addMethod(
             getStartReconfigurationMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto>(
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto,
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto>(
                   this, METHODID_START_RECONFIGURATION)))
           .addMethod(
             getTriggerBlockReportMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto>(
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto,
+                org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto>(
                   this, METHODID_TRIGGER_BLOCK_REPORT)))
           .build();
     }
@@ -532,8 +532,8 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * Returns the visible length of the replica
      * </pre>
      */
-    public void getReplicaVisibleLength(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto request,
-                                        io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> responseObserver) {
+    public void getReplicaVisibleLength(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto request,
+                                        io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetReplicaVisibleLengthMethod(), getCallOptions()), request, responseObserver);
     }
@@ -544,8 +544,8 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * Delete the block pool from the datanode.
      * </pre>
      */
-    public void deleteBlockPool(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto request,
-                                io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> responseObserver) {
+    public void deleteBlockPool(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto request,
+                                io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getDeleteBlockPoolMethod(), getCallOptions()), request, responseObserver);
     }
@@ -557,8 +557,8 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * local file system.
      * </pre>
      */
-    public void getBlockLocalPathInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto request,
-                                      io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> responseObserver) {
+    public void getBlockLocalPathInfo(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto request,
+                                      io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetBlockLocalPathInfoMethod(), getCallOptions()), request, responseObserver);
     }
@@ -570,48 +570,48 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * on the local file system.
      * </pre>
      */
-    public void getHdfsBlockLocations(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto request,
-                                      io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> responseObserver) {
+    public void getHdfsBlockLocations(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto request,
+                                      io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetHdfsBlockLocationsMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void shutdownDatanode(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto request,
-                                 io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> responseObserver) {
+    public void shutdownDatanode(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto request,
+                                 io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getShutdownDatanodeMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void getDatanodeInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto request,
-                                io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> responseObserver) {
+    public void getDatanodeInfo(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto request,
+                                io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetDatanodeInfoMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void getReconfigurationStatus(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto request,
-                                         io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> responseObserver) {
+    public void getReconfigurationStatus(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto request,
+                                         io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetReconfigurationStatusMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void startReconfiguration(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto request,
-                                     io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> responseObserver) {
+    public void startReconfiguration(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto request,
+                                     io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getStartReconfigurationMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public void triggerBlockReport(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto request,
-                                   io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> responseObserver) {
+    public void triggerBlockReport(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto request,
+                                   io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getTriggerBlockReportMethod(), getCallOptions()), request, responseObserver);
     }
@@ -642,7 +642,7 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * Returns the visible length of the replica
      * </pre>
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto getReplicaVisibleLength(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto getReplicaVisibleLength(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getGetReplicaVisibleLengthMethod(), getCallOptions(), request);
     }
@@ -653,7 +653,7 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * Delete the block pool from the datanode.
      * </pre>
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto deleteBlockPool(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto deleteBlockPool(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getDeleteBlockPoolMethod(), getCallOptions(), request);
     }
@@ -665,7 +665,7 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * local file system.
      * </pre>
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto getBlockLocalPathInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto getBlockLocalPathInfo(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getGetBlockLocalPathInfoMethod(), getCallOptions(), request);
     }
@@ -677,42 +677,42 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * on the local file system.
      * </pre>
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto getHdfsBlockLocations(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto getHdfsBlockLocations(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getGetHdfsBlockLocationsMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto shutdownDatanode(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto shutdownDatanode(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getShutdownDatanodeMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto getDatanodeInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto getDatanodeInfo(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getGetDatanodeInfoMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto getReconfigurationStatus(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto getReconfigurationStatus(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getGetReconfigurationStatusMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto startReconfiguration(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto startReconfiguration(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getStartReconfigurationMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto triggerBlockReport(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto triggerBlockReport(org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getTriggerBlockReportMethod(), getCallOptions(), request);
     }
@@ -743,8 +743,8 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * Returns the visible length of the replica
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> getReplicaVisibleLength(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto> getReplicaVisibleLength(
+        org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getGetReplicaVisibleLengthMethod(), getCallOptions()), request);
     }
@@ -755,8 +755,8 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * Delete the block pool from the datanode.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> deleteBlockPool(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto> deleteBlockPool(
+        org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getDeleteBlockPoolMethod(), getCallOptions()), request);
     }
@@ -768,8 +768,8 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * local file system.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> getBlockLocalPathInfo(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto> getBlockLocalPathInfo(
+        org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getGetBlockLocalPathInfoMethod(), getCallOptions()), request);
     }
@@ -781,48 +781,48 @@ public final class ClientDatanodeProtocolServiceGrpc {
      * on the local file system.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> getHdfsBlockLocations(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto> getHdfsBlockLocations(
+        org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getGetHdfsBlockLocationsMethod(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> shutdownDatanode(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto> shutdownDatanode(
+        org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getShutdownDatanodeMethod(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> getDatanodeInfo(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto> getDatanodeInfo(
+        org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getGetDatanodeInfoMethod(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> getReconfigurationStatus(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto> getReconfigurationStatus(
+        org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getGetReconfigurationStatusMethod(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> startReconfiguration(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto> startReconfiguration(
+        org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getStartReconfigurationMethod(), getCallOptions()), request);
     }
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> triggerBlockReport(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto> triggerBlockReport(
+        org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getTriggerBlockReportMethod(), getCallOptions()), request);
     }
@@ -856,40 +856,40 @@ public final class ClientDatanodeProtocolServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_GET_REPLICA_VISIBLE_LENGTH:
-          serviceImpl.getReplicaVisibleLength((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto>) responseObserver);
+          serviceImpl.getReplicaVisibleLength((org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReplicaVisibleLengthResponseProto>) responseObserver);
           break;
         case METHODID_DELETE_BLOCK_POOL:
-          serviceImpl.deleteBlockPool((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto>) responseObserver);
+          serviceImpl.deleteBlockPool((org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.DeleteBlockPoolResponseProto>) responseObserver);
           break;
         case METHODID_GET_BLOCK_LOCAL_PATH_INFO:
-          serviceImpl.getBlockLocalPathInfo((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto>) responseObserver);
+          serviceImpl.getBlockLocalPathInfo((org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetBlockLocalPathInfoResponseProto>) responseObserver);
           break;
         case METHODID_GET_HDFS_BLOCK_LOCATIONS:
-          serviceImpl.getHdfsBlockLocations((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto>) responseObserver);
+          serviceImpl.getHdfsBlockLocations((org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetHdfsBlockLocationsResponseProto>) responseObserver);
           break;
         case METHODID_SHUTDOWN_DATANODE:
-          serviceImpl.shutdownDatanode((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto>) responseObserver);
+          serviceImpl.shutdownDatanode((org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.ShutdownDatanodeResponseProto>) responseObserver);
           break;
         case METHODID_GET_DATANODE_INFO:
-          serviceImpl.getDatanodeInfo((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto>) responseObserver);
+          serviceImpl.getDatanodeInfo((org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetDatanodeInfoResponseProto>) responseObserver);
           break;
         case METHODID_GET_RECONFIGURATION_STATUS:
-          serviceImpl.getReconfigurationStatus((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto>) responseObserver);
+          serviceImpl.getReconfigurationStatus((org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.GetReconfigurationStatusResponseProto>) responseObserver);
           break;
         case METHODID_START_RECONFIGURATION:
-          serviceImpl.startReconfiguration((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto>) responseObserver);
+          serviceImpl.startReconfiguration((org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.StartReconfigurationResponseProto>) responseObserver);
           break;
         case METHODID_TRIGGER_BLOCK_REPORT:
-          serviceImpl.triggerBlockReport((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto>) responseObserver);
+          serviceImpl.triggerBlockReport((org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.TriggerBlockReportResponseProto>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -913,7 +913,7 @@ public final class ClientDatanodeProtocolServiceGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocolProtos.getDescriptor();
+      return org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocolProtos.getDescriptor();
     }
 
     @java.lang.Override

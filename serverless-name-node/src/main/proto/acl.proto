@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-option java_package = "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.proto";
+option java_package = "org.apache.hadoop.hdfs.protocol.proto";
 option java_outer_classname = "AclProtos";
 option java_generate_equals_and_hash = true;
-package com.gmail.benrcarver.serverlessnamenode;
+package org.apache.hadoop;
 
 import "hdfs.proto";
 

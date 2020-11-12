@@ -1,10 +1,10 @@
 package org.apache.hadoop.hdfs.protocol.datatransfer.sasl;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.DataTransferEncryptorMessageProto;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.IOStreamPair;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.InvalidEncryptionKeyException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.net.Peer;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.DataTransferEncryptorMessageProto;
+import org.apache.hadoop.hdfs.protocol.datatransfer.IOStreamPair;
+import org.apache.hadoop.hdfs.protocol.datatransfer.InvalidEncryptionKeyException;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper.vintPrefixed;
+import static org.apache.hadoop.hdfs.protocolPB.PBHelper.vintPrefixed;
 
 /**
  * Utility methods implementing SASL negotiation for DataTransferProtocol.

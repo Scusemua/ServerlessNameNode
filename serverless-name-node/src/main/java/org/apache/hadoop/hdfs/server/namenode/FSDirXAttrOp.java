@@ -1,8 +1,17 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
+import com.google.common.collect.Lists;
+import io.hops.metadata.hdfs.entity.RetryCacheEntry;
+import io.hops.transaction.lock.TransactionLockTypes;
+import io.hops.transaction.lock.TransactionLocks;
+import org.apache.hadoop.HadoopIllegalArgumentException;
+import org.apache.hadoop.fs.XAttr;
+import org.apache.hadoop.fs.permission.FsAction;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.XAttrHelper;
+import org.apache.hadoop.hdfs.protocol.HdfsFileStatus;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.protocol.HdfsProtos;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.transaction.handler.HDFSOperationType;
@@ -10,6 +19,7 @@ import io.hops.transaction.handler.HopsTransactionalRequestHandler;
 import io.hops.transaction.lock.INodeLock;
 import io.hops.transaction.lock.LockFactory;
 import org.apache.hadoop.fs.XAttrSetFlag;
+import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.security.AccessControlException;
 
 import java.io.IOException;
@@ -18,9 +28,8 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.CRYPTO_XATTR_ENCRYPTION_ZONE;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.SECURITY_XATTR_UNREADABLE_BY_SUPERUSER;
 import static io.hops.transaction.lock.LockFactory.getInstance;
+import static org.apache.hadoop.hdfs.server.common.HdfsServerConstants.*;
 
 public class FSDirXAttrOp {
     private static final XAttr UNREADABLE_BY_SUPERUSER_XATTR =

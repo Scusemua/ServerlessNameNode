@@ -1,22 +1,20 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.XAttrHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.StorageInfo;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.AclFeature;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirXAttrOp;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.LightWeightCacheDistributed;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.QuotaUpdateManager;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.delegation.DelegationTokenIdentifier;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.XAttrHelper;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants;
+import org.apache.hadoop.hdfs.server.blockmanagement.*;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.server.common.StorageInfo;
+import org.apache.hadoop.hdfs.server.namenode.AclFeature;
+import org.apache.hadoop.hdfs.server.namenode.FSDirXAttrOp;
+import org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature;
+import org.apache.hadoop.hdfs.server.namenode.INodeDirectory;
+import org.apache.hadoop.hdfs.server.namenode.INodesInPath;
+import org.apache.hadoop.hdfs.server.namenode.Lease;
+import org.apache.hadoop.hdfs.server.namenode.LightWeightCacheDistributed;
+import org.apache.hadoop.hdfs.server.namenode.QuotaUpdateManager;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.rpc.Status;
@@ -81,15 +79,15 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.SECURITY_XATTR_UNREADABLE_BY_SUPERUSER;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory.getRootDir;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
+import static org.apache.hadoop.hdfs.server.common.HdfsServerConstants.SECURITY_XATTR_UNREADABLE_BY_SUPERUSER;
+import static org.apache.hadoop.hdfs.server.namenode.INodeDirectory.getRootDir;
 import static io.hops.transaction.lock.LockFactory.getInstance;
 import static org.apache.hadoop.ipc.Server.getRemoteIp;
 import static org.apache.hadoop.ipc.Server.getRemoteUser;
 import static org.apache.hadoop.util.Time.now;
 
-public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NameSystem {
+public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.NameSystem {
     public static final Log LOG = LogFactory.getLog(FSNameSystem.class);
 
     // Block pool ID used by this namenode
@@ -159,7 +157,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
     // namenodes should have same block pool id
     private final String blockPoolId;
 
-    final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.LeaseManager leaseManager = new com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.LeaseManager(this);
+    final org.apache.hadoop.hdfs.server.namenode.LeaseManager leaseManager = new org.apache.hadoop.hdfs.server.namenode.LeaseManager(this);
 
     volatile private Daemon smmthread = null;  // SafeModeMonitor thread
 
@@ -200,7 +198,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
     private final long accessTimePrecision;
 
     private final Configuration conf;
-    private final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.QuotaUpdateManager quotaUpdateManager;
+    private final org.apache.hadoop.hdfs.server.namenode.QuotaUpdateManager quotaUpdateManager;
 
     private final ExecutorService fsOperationsExecutor;
     private final boolean erasureCodingEnabled;
@@ -315,11 +313,11 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
             blockPoolId = StorageInfo.getStorageInfoFromDB().getBlockPoolId();
             blockManager.setBlockPoolId(blockPoolId);
             hopSpecificInitialization(conf);
-            this.quotaUpdateManager = new com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.QuotaUpdateManager(this, conf);
+            this.quotaUpdateManager = new org.apache.hadoop.hdfs.server.namenode.QuotaUpdateManager(this, conf);
             fsOperationsExecutor = Executors.newFixedThreadPool(
                     conf.getInt(DFS_SUBTREE_EXECUTOR_LIMIT_KEY,
                             DFS_SUBTREE_EXECUTOR_LIMIT_DEFAULT));
-            com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirDeleteOp.BIGGEST_DELETABLE_DIR = conf.getLong(DFS_DIR_DELETE_BATCH_SIZE,
+            org.apache.hadoop.hdfs.server.namenode.FSDirDeleteOp.BIGGEST_DELETABLE_DIR = conf.getLong(DFS_DIR_DELETE_BATCH_SIZE,
                     DFS_DIR_DELETE_BATCH_SIZE_DEFAULT);
 
             LOG.info("fsOwner             = " + fsOwner);
@@ -444,7 +442,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
 
             @Override
             public Object performTask() throws IOException {
-                com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath inodesInPath = dir.getINodesInPath(path, false);
+                org.apache.hadoop.hdfs.server.namenode.INodesInPath inodesInPath = dir.getINodesInPath(path, false);
                 INode inode = inodesInPath.getLastINode();
                 if (inode != null && inode.isSTOLocked()) {
                     inode.setSubtreeLocked(false);
@@ -705,7 +703,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
         return EntityManager.find(INode.Finder.ByINodeIdFTIS, id);
     }
 
-    static INode resolveLastINode(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip) throws FileNotFoundException {
+    static INode resolveLastINode(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip) throws FileNotFoundException {
         INode inode = iip.getLastINode();
         if (inode == null) {
             throw new FileNotFoundException("cannot find " + iip.getPath());
@@ -713,15 +711,15 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
         return inode;
     }
 
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath getExistingPathINodes(byte[][] components)
+    org.apache.hadoop.hdfs.server.namenode.INodesInPath getExistingPathINodes(byte[][] components)
             throws UnresolvedLinkException, StorageException, TransactionContextException {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components, false);
+        return org.apache.hadoop.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components, false);
     }
 
     /**
      * Get {@link INode} associated with the file / directory.
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath getINodesInPath4Write(String src)
+    public org.apache.hadoop.hdfs.server.namenode.INodesInPath getINodesInPath4Write(String src)
             throws UnresolvedLinkException, StorageException, TransactionContextException {
         return getINodesInPath4Write(src, true);
     }
@@ -729,10 +727,10 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
     /**
      * Get {@link INode} associated with the file / directory.
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath getINodesInPath4Write(String src, boolean resolveLink)
+    org.apache.hadoop.hdfs.server.namenode.INodesInPath getINodesInPath4Write(String src, boolean resolveLink)
             throws UnresolvedLinkException, StorageException, TransactionContextException {
         final byte[][] components = INode.getPathComponents(src);
-        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath inodesInPath = com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components,
+        org.apache.hadoop.hdfs.server.namenode.INodesInPath inodesInPath = org.apache.hadoop.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components,
                 resolveLink);
         return inodesInPath;
     }
@@ -789,11 +787,11 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
         return getINodesInPath4Write(src, true).getLastINode();
     }
 
-    /** @return the {@link com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath} containing all inodes in the path. */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath getINodesInPath(String path, boolean resolveLink) throws UnresolvedLinkException, StorageException,
+    /** @return the {@link org.apache.hadoop.hdfs.server.namenode.INodesInPath} containing all inodes in the path. */
+    public org.apache.hadoop.hdfs.server.namenode.INodesInPath getINodesInPath(String path, boolean resolveLink) throws UnresolvedLinkException, StorageException,
             TransactionContextException {
         final byte[][] components = INode.getPathComponents(path);
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components, resolveLink);
+        return org.apache.hadoop.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components, resolveLink);
     }
     /** @return the last inode in the path. */
     INode getINode(String path, boolean resolveLink)
@@ -840,7 +838,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
     }
 
     /**
-     * @see com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol#getEncodingStatus
+     * @see org.apache.hadoop.hdfs.protocol.ClientProtocol#getEncodingStatus
      */
     public EncodingStatus getEncodingStatus(final String filePathArg)
             throws IOException {
@@ -862,7 +860,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
                     @Override
                     public Object performTask() throws IOException {
 
-                        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip = dir.getINodesInPath(filePath, true);
+                        org.apache.hadoop.hdfs.server.namenode.INodesInPath iip = dir.getINodesInPath(filePath, true);
                         try {
                             if (isPermissionEnabled) {
                                 dir.checkPathAccess(pc, iip, FsAction.READ);
@@ -1088,7 +1086,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
      *     RecoveryInProgressException if lease recovery is in progress.<br>
      *     IOException in case of an error.
      */
-    boolean internalReleaseLease(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease lease, String src, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip,
+    boolean internalReleaseLease(org.apache.hadoop.hdfs.server.namenode.Lease lease, String src, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip,
                                  String recoveryLeaseHolder)
             throws IOException {
         LOG.info("Recovering " + lease + ", src=" + src);
@@ -1216,7 +1214,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
         return false;
     }
 
-    private com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease reassignLease(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease lease, String src, String newHolder,
+    private org.apache.hadoop.hdfs.server.namenode.Lease reassignLease(org.apache.hadoop.hdfs.server.namenode.Lease lease, String src, String newHolder,
                                                                                              INodeFile pendingFile)
             throws StorageException, TransactionContextException {
         if (newHolder == null) {
@@ -1225,7 +1223,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
         return reassignLeaseInternal(lease, src, newHolder, pendingFile);
     }
 
-    private com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease reassignLeaseInternal(Lease lease, String src, String newHolder,
+    private org.apache.hadoop.hdfs.server.namenode.Lease reassignLeaseInternal(Lease lease, String src, String newHolder,
                                                                                                      INodeFile pendingFile)
             throws StorageException, TransactionContextException {
         pendingFile.getFileUnderConstructionFeature().setClientName(newHolder);
@@ -1517,7 +1515,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
             @Override
             public Object performTask() throws IOException {
                 FSPermissionChecker pc = getPermissionChecker();
-                com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip = dir.getINodesInPath(path, false);
+                org.apache.hadoop.hdfs.server.namenode.INodesInPath iip = dir.getINodesInPath(path, false);
                 if (isPermissionEnabled && !pc.isSuperUser()) {
                     dir.checkPermission(pc, iip, doCheckOwner, null, parentAccess, null, null,
                             true);
@@ -1709,6 +1707,10 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
         }
     }
 
+    public boolean isRetryCacheEnabled() {
+        return isRetryCacheEnabled;
+    }
+
     /** Get the file info for a specific file.
      * @param fsd FSDirectory
      * @param src The string representation of the path to the file
@@ -1717,7 +1719,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
      *         or null if file not found
      */
     static HdfsFileStatus getFileInfo(
-            FSDirectory fsd, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath src, boolean isRawPath,
+            FSDirectory fsd, org.apache.hadoop.hdfs.server.namenode.INodesInPath src, boolean isRawPath,
             boolean includeStoragePolicy)
             throws IOException {
 
@@ -1733,7 +1735,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
      * Create FileStatus by file INode
      */
     static HdfsFileStatus createFileStatus(
-            FSDirectory fsd, byte[] path, INode node, byte storagePolicy, boolean isRawPath, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip) throws
+            FSDirectory fsd, byte[] path, INode node, byte storagePolicy, boolean isRawPath, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip) throws
             IOException {
         long size = 0;     // length is zero for directories
         short replication = 0;
@@ -1750,9 +1752,9 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
             replication = fileNode.getBlockReplication();
             blocksize = fileNode.getPreferredBlockSize();
             isEncrypted = (feInfo != null) ||
-                    (isRawPath && fsd.isInAnEZ(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath.fromINode(node)));
+                    (isRawPath && fsd.isInAnEZ(org.apache.hadoop.hdfs.server.namenode.INodesInPath.fromINode(node)));
         } else {
-            isEncrypted = fsd.isInAnEZ(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath.fromINode(node));
+            isEncrypted = fsd.isInAnEZ(org.apache.hadoop.hdfs.server.namenode.INodesInPath.fromINode(node));
         }
 
         int childrenNum = node.isDirectory() ?
@@ -1848,7 +1850,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
                 if(isSuperUser) {
                     locks.add(lf.getXAttrLock());
                 }else {
-                    locks.add(lf.getXAttrLock(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirXAttrOp.XATTR_FILE_ENCRYPTION_INFO));
+                    locks.add(lf.getXAttrLock(org.apache.hadoop.hdfs.server.namenode.FSDirXAttrOp.XATTR_FILE_ENCRYPTION_INFO));
                 }
             }
 
@@ -1861,7 +1863,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
                 if (res.updateAccessTime()) {
                     final long now = now();
                     try {
-                        final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip = dir.getINodesInPath(src, true);
+                        final org.apache.hadoop.hdfs.server.namenode.INodesInPath iip = dir.getINodesInPath(src, true);
                         INode inode = iip.getLastINode();
                         boolean updateAccessTime = inode != null &&
                                 now > inode.getAccessTime() + getAccessTimePrecision();
@@ -1924,7 +1926,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
                 if (isSuperUser) {
                     locks.add(lf.getXAttrLock());
                 } else {
-                    locks.add(lf.getXAttrLock(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirXAttrOp.XATTR_FILE_ENCRYPTION_INFO));
+                    locks.add(lf.getXAttrLock(org.apache.hadoop.hdfs.server.namenode.FSDirXAttrOp.XATTR_FILE_ENCRYPTION_INFO));
                 }
             }
 
@@ -1945,7 +1947,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
             throws IOException {
         FSPermissionChecker pc = getPermissionChecker();
 
-        final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip = dir.getINodesInPath(src, true);
+        final org.apache.hadoop.hdfs.server.namenode.INodesInPath iip = dir.getINodesInPath(src, true);
         final INodeFile inode = INodeFile.valueOf(iip.getLastINode(), src);
 
         if (isPermissionEnabled) {
@@ -2067,7 +2069,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
         boolean ret = false;
         try {
             checkNameNodeSafeMode("Cannot delete " + src);
-            ret = com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirDeleteOp.delete(
+            ret = org.apache.hadoop.hdfs.server.namenode.FSDirDeleteOp.delete(
                     this, src, recursive);
         } catch (AccessControlException e) {
             logAuditEvent(false, "delete", src);
@@ -2136,7 +2138,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
             throws IOException {
         HdfsFileStatus stat = null;
         try {
-            stat = com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirStatAndListingOp.getFileInfo(dir, src, resolveLink);
+            stat = org.apache.hadoop.hdfs.server.namenode.FSDirStatAndListingOp.getFileInfo(dir, src, resolveLink);
         } catch (AccessControlException e) {
             logAuditEvent(false, "getfileinfo", src);
             throw e;
@@ -2229,7 +2231,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
 
         FSPermissionChecker pc = getPermissionChecker();
 
-        final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip = dir.getINodesInPath(src, true);
+        final org.apache.hadoop.hdfs.server.namenode.INodesInPath iip = dir.getINodesInPath(src, true);
         final INodeFile inode = INodeFile.valueOf(iip.getLastINode(), src);
 
         if (isPermissionEnabled) {
@@ -2257,7 +2259,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
             boolean includeStoragePolicy)
             throws IOException {
         String srcs = FSDirectory.normalizePath(src);
-        final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip = fsd.getINodesInPath(srcs, resolveLink);
+        final org.apache.hadoop.hdfs.server.namenode.INodesInPath iip = fsd.getINodesInPath(srcs, resolveLink);
         return getFileInfo(fsd, iip, isRawPath, includeStoragePolicy);
     }
 
@@ -2367,7 +2369,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
         Map.Entry<INode.BlocksMapUpdateInfo, HdfsFileStatus> res = null;
         try {
             checkNameNodeSafeMode("Cannot rename " + src);
-            res = com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirRenameOp.renameToInt(dir, src, dst, options);
+            res = org.apache.hadoop.hdfs.server.namenode.FSDirRenameOp.renameToInt(dir, src, dst, options);
         } catch (AccessControlException e) {
             logAuditEvent(false, "rename (options=" + Arrays.toString(options) +
                     ")", src, dst, null);
@@ -2426,7 +2428,7 @@ public class FSNameSystem implements com.gmail.benrcarver.serverlessnamenode.hdf
                                 leafInode.computeQuotaUsage(getBlockManager().getStoragePolicySuite(), usage);
                             } else{
                                 isDir =true;
-                                if(leafInode instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory && dir.isQuotaEnabled()){
+                                if(leafInode instanceof org.apache.hadoop.hdfs.server.namenode.INodeDirectory && dir.isQuotaEnabled()){
                                     DirectoryWithQuotaFeature q = ((INodeDirectory) leafInode).getDirectoryWithQuotaFeature();
                                     if (q != null) {
                                         quota = q.getQuota();

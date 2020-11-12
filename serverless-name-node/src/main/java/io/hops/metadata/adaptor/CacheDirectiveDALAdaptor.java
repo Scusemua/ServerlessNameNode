@@ -18,7 +18,7 @@ package io.hops.metadata.adaptor;
 import io.hops.exception.StorageException;
 import io.hops.metadata.DalAdaptor;
 import io.hops.metadata.hdfs.dal.CacheDirectiveDataAccess;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirective;
+import org.apache.hadoop.hdfs.protocol.CacheDirective;
 
 import java.util.Collection;
 

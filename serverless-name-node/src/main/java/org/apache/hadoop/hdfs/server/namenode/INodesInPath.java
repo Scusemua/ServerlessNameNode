@@ -1,7 +1,7 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
+import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.protocol.UnresolvedPathException;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import io.hops.exception.StorageException;

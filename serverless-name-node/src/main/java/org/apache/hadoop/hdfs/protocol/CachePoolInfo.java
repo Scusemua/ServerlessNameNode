@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveInfo;
+import org.apache.hadoop.hdfs.protocol.CacheDirectiveInfo;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.logging.Log;
@@ -28,7 +28,7 @@ public class CachePoolInfo {
      * Indicates that the pool does not have a maximum relative expiry.
      */
     public static final long RELATIVE_EXPIRY_NEVER =
-            com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveInfo.Expiration.MAX_RELATIVE_EXPIRY_MS;
+            org.apache.hadoop.hdfs.protocol.CacheDirectiveInfo.Expiration.MAX_RELATIVE_EXPIRY_MS;
     /**
      * Default max relative expiry for cache pools.
      */

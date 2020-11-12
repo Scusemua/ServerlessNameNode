@@ -17,17 +17,17 @@
  */
 package org.apache.hadoop.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.QuotaByStorageTypeExceededException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NotReplicatedYetException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ByteArrayManager;
+import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants;
+import org.apache.hadoop.hdfs.protocol.QuotaByStorageTypeExceededException;
+import org.apache.hadoop.hdfs.protocol.UnresolvedPathException;
+import org.apache.hadoop.hdfs.protocol.datatransfer.*;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockStoragePolicySuite;
+import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
+import org.apache.hadoop.hdfs.server.namenode.NotReplicatedYetException;
+import org.apache.hadoop.hdfs.util.ByteArrayManager;
 import com.google.common.cache.*;
 import com.google.common.collect.ImmutableSet;
 import org.apache.commons.logging.Log;
@@ -65,7 +65,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.Status.SUCCESS;
+import static org.apache.hadoop.hdfs.protocol.DataTransferProtos.Status.SUCCESS;
 
 /*********************************************************************
  *

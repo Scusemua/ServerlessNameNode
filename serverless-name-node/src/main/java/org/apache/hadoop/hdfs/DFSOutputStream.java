@@ -1,13 +1,13 @@
 package org.apache.hadoop.hdfs;
 
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.SafeModeException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.QuotaByStorageTypeExceededException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.PacketHeader;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
+import org.apache.hadoop.exceptions.SafeModeException;
+import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
+import org.apache.hadoop.hdfs.protocol.QuotaByStorageTypeExceededException;
+import org.apache.hadoop.hdfs.protocol.UnresolvedPathException;
+import org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockStoragePolicySuite;
+import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.erasure_coding.Codec;
 import io.hops.exception.OutOfDBExtentsException;

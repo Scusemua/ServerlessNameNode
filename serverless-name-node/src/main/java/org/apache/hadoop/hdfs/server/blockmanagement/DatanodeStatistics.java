@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol;
+import org.apache.hadoop.hdfs.protocol.ClientProtocol;
 
 /**
  * Datanode statistics

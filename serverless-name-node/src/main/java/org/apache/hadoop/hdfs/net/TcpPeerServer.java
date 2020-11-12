@@ -1,11 +1,16 @@
 package org.apache.hadoop.hdfs.net;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.net.PeerServer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataEncryptionKeyFactory;
+import org.apache.hadoop.hdfs.net.Peer;
+import org.apache.hadoop.hdfs.net.PeerServer;
+import org.apache.hadoop.hdfs.protocol.DatanodeID;
+import org.apache.hadoop.hdfs.protocol.datatransfer.sasl.DataEncryptionKeyFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient;
+import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
+import org.apache.hadoop.io.IOUtils;
+import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.security.token.Token;
 
 import java.io.IOException;
@@ -22,9 +27,9 @@ public class TcpPeerServer implements PeerServer {
 
     private final ServerSocket serverSocket;
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer peerFromSocket(Socket socket)
+    public static org.apache.hadoop.hdfs.net.Peer peerFromSocket(Socket socket)
             throws IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer peer = null;
+        org.apache.hadoop.hdfs.net.Peer peer = null;
         boolean success = false;
         try {
             // TCP_NODELAY is crucial here because of bad interactions between
@@ -43,9 +48,9 @@ public class TcpPeerServer implements PeerServer {
             socket.setTcpNoDelay(true);
             SocketChannel channel = socket.getChannel();
             if (channel == null) {
-                peer = new com.gmail.benrcarver.serverlessnamenode.hdfs.net.BasicInetPeer(socket);
+                peer = new org.apache.hadoop.hdfs.net.BasicInetPeer(socket);
             } else {
-                peer = new com.gmail.benrcarver.serverlessnamenode.hdfs.net.NioInetPeer(socket);
+                peer = new org.apache.hadoop.hdfs.net.NioInetPeer(socket);
             }
             success = true;
             return peer;
@@ -57,12 +62,12 @@ public class TcpPeerServer implements PeerServer {
         }
     }
 
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer peerFromSocketAndKey(
+    public static org.apache.hadoop.hdfs.net.Peer peerFromSocketAndKey(
             SaslDataTransferClient saslClient, Socket s,
             DataEncryptionKeyFactory keyFactory,
             Token<BlockTokenIdentifier> blockToken, DatanodeID datanodeId)
             throws IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer peer = null;
+        org.apache.hadoop.hdfs.net.Peer peer = null;
         boolean success = false;
         try {
             peer = peerFromSocket(s);
@@ -95,9 +100,9 @@ public class TcpPeerServer implements PeerServer {
      *
      * @param secureResources   Security resources.
      */
-    public TcpPeerServer(SecureResources secureResources) {
+    /*public TcpPeerServer(SecureResources secureResources) {
         this.serverSocket = secureResources.getStreamingSocket();
-    }
+    }*/
 
     /**
      * @return     the IP address which this TcpPeerServer is listening on.
@@ -114,7 +119,7 @@ public class TcpPeerServer implements PeerServer {
     }
 
     @Override
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer accept() throws IOException, SocketTimeoutException {
+    public org.apache.hadoop.hdfs.net.Peer accept() throws IOException, SocketTimeoutException {
         Peer peer = peerFromSocket(serverSocket.accept());
         return peer;
     }

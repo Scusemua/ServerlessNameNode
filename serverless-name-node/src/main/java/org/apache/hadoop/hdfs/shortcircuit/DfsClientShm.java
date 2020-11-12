@@ -17,9 +17,9 @@
  */
 package org.apache.hadoop.hdfs.shortcircuit;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.net.DomainPeer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShmManager;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm;
+import org.apache.hadoop.hdfs.net.DomainPeer;
+import org.apache.hadoop.hdfs.shortcircuit.DfsClientShmManager;
+import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm;
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.net.unix.DomainSocket;
 import org.apache.hadoop.net.unix.DomainSocketWatcher;
@@ -48,7 +48,7 @@ public class DfsClientShm extends ShortCircuitShm
   /**
    * The EndpointShmManager associated with this shared memory segment.
    */
-  private final com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShmManager.EndpointShmManager manager;
+  private final org.apache.hadoop.hdfs.shortcircuit.DfsClientShmManager.EndpointShmManager manager;
 
   /**
    * The UNIX domain socket associated with this DfsClientShm.
@@ -65,7 +65,7 @@ public class DfsClientShm extends ShortCircuitShm
    */
   private boolean disconnected = false;
 
-  DfsClientShm(ShmId shmId, FileInputStream stream, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShmManager.EndpointShmManager manager,
+  DfsClientShm(ShmId shmId, FileInputStream stream, org.apache.hadoop.hdfs.shortcircuit.DfsClientShmManager.EndpointShmManager manager,
                DomainPeer peer) throws IOException {
     super(shmId, stream);
     this.manager = manager;

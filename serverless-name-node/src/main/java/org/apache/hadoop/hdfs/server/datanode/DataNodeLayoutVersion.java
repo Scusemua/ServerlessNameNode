@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.server.datanode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LayoutVersion;
+import org.apache.hadoop.hdfs.protocol.LayoutVersion;
 import org.apache.hadoop.classification.InterfaceAudience;
 
 import java.util.HashMap;

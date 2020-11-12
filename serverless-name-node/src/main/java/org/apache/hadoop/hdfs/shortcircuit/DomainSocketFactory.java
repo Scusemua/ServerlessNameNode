@@ -17,9 +17,9 @@
  */
 package org.apache.hadoop.hdfs.shortcircuit;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSClient;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
+import org.apache.hadoop.hdfs.DFSClient;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
 import com.google.common.base.Preconditions;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -35,7 +35,7 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.TimeUnit;
 
 public class DomainSocketFactory {
-  private static final Log LOG = LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DomainSocketFactory.class);
+  private static final Log LOG = LogFactory.getLog(org.apache.hadoop.hdfs.shortcircuit.DomainSocketFactory.class);
 
 
   public enum PathState {

@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.net;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
+import org.apache.hadoop.hdfs.net.Peer;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.net.unix.DomainSocket;
 

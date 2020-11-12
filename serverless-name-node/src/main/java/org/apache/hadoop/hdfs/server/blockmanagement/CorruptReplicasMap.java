@@ -28,7 +28,7 @@ import io.hops.transaction.handler.LightWeightRequestHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NameNode;
+import org.apache.hadoop.hdfs.server.namenode.NameNode;
 import org.apache.hadoop.ipc.Server;
 
 import java.io.IOException;
@@ -56,11 +56,11 @@ public class CorruptReplicasMap {
     CORRUPTION_REPORTED  // client or datanode reported the corruption
   }
 
-  private final com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.DatanodeManager datanodeMgr;
+  private final org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager datanodeMgr;
   private static final Log LOG =
-      LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.CorruptReplicasMap.class);
+      LogFactory.getLog(org.apache.hadoop.hdfs.server.blockmanagement.CorruptReplicasMap.class);
   
-  public CorruptReplicasMap(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.DatanodeManager datanodeMgr) {
+  public CorruptReplicasMap(org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager datanodeMgr) {
     this.datanodeMgr = datanodeMgr;
   }
   

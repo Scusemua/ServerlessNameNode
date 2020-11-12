@@ -27,7 +27,7 @@ option java_outer_classname = "ActiveNodeProtos";
 option java_generic_services = true;
 option java_generate_equals_and_hash = true;
 
-package com.gmail.benrcarver.serverlessnamenode;
+package org.apache.hadoop;
 
 message ActiveNodeProto {
   optional int64 id = 1;
@@ -42,5 +42,5 @@ message ActiveNodeProto {
 }
 
 message SortedActiveNodeListProto{
-  repeated com.gmail.benrcarver.serverlessnamenode.ActiveNodeProto active_node = 1;
+  repeated org.apache.hadoop.ActiveNodeProto active_node = 1;
 }

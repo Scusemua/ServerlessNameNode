@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.net.NetworkTopology;
@@ -40,7 +40,7 @@ import java.util.*;
 public class BlockPlacementPolicyWithNodeGroup extends BlockPlacementPolicyDefault {
 
   protected BlockPlacementPolicyWithNodeGroup(Configuration conf,  FSClusterStats stats,
-      NetworkTopology clusterMap, com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.DatanodeManager datanodeManager) {
+      NetworkTopology clusterMap, org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager datanodeManager) {
     initialize(conf, stats, clusterMap, host2datanodeMap);
   }
 

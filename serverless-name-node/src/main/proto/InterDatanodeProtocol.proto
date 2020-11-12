@@ -19,7 +19,7 @@
 // This file contains protocol buffers that are used throughout HDFS -- i.e.
 // by the client, server, and data transfer protocols.
 
-option java_package = "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol";
+option java_package = "org.apache.hadoop.hdfs.protocol";
 
 option java_outer_classname = "InterDatanodeProtocolProtos";
 
@@ -27,7 +27,7 @@ option java_generic_services = true;
 
 option java_generate_equals_and_hash = true;
 
-package com.gmail.benrcarver.serverlessnamenode;
+package org.apache.hadoop;
 
 import "hdfs.proto";
 

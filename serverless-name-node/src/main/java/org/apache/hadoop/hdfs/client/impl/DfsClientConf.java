@@ -17,11 +17,11 @@
  */
 package org.apache.hadoop.hdfs.client.impl;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.BlockReaderFactory;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSClient;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ByteArrayManager;
+import org.apache.hadoop.hdfs.BlockReaderFactory;
+import org.apache.hadoop.hdfs.DFSClient;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.util.ByteArrayManager;
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,7 +34,7 @@ import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
 import org.apache.hadoop.ipc.Client;
 import org.apache.hadoop.util.DataChecksum;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
 
 /**
  * DFSClient configuration 

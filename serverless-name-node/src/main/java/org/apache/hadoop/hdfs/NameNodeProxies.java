@@ -1,11 +1,11 @@
 package org.apache.hadoop.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocols;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.SafeModeException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
+import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
+import org.apache.hadoop.hdfs.protocol.ClientProtocol;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants;
+import org.apache.hadoop.hdfs.protocol.NamenodeProtocols;
+import org.apache.hadoop.hdfs.server.namenode.SafeModeException;
+import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import org.apache.commons.logging.Log;

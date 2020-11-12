@@ -1,9 +1,9 @@
 package org.apache.hadoop.hdfs.protocol.datatransfer.sasl;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.net.EncryptedPeer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.IOStreamPair;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.TrustedChannelResolver;
+import org.apache.hadoop.hdfs.net.EncryptedPeer;
+import org.apache.hadoop.hdfs.net.Peer;
+import org.apache.hadoop.hdfs.protocol.datatransfer.IOStreamPair;
+import org.apache.hadoop.hdfs.protocol.datatransfer.TrustedChannelResolver;
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import org.apache.commons.codec.binary.Base64;
@@ -31,8 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.DFS_ENCRYPT_DATA_TRANSFER_CIPHER_SUITES_KEY;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataTransferSaslUtil.*;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_ENCRYPT_DATA_TRANSFER_CIPHER_SUITES_KEY;
+import static org.apache.hadoop.hdfs.protocol.datatransfer.sasl.DataTransferSaslUtil.*;
 
 /**
  * Negotiates SASL for DataTransferProtocol on behalf of a client.  There are

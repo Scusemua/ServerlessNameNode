@@ -18,7 +18,7 @@
 package org.apache.hadoop.hdfs;
 
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.security.token.delegation.DelegationTokenSelector;
+import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenSelector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;

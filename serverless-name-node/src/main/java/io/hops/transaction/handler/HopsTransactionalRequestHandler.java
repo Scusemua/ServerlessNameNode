@@ -1,7 +1,7 @@
 package io.hops.transaction.handler;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.RecoveryInProgressException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSNameSystem;
+import org.apache.hadoop.hdfs.protocol.RecoveryInProgressException;
+import org.apache.hadoop.hdfs.server.namenode.FSNameSystem;
 import io.hops.transaction.TransactionInfo;
 import io.hops.transaction.lock.HdfsTransactionalLockAcquirer;
 import io.hops.transaction.lock.TransactionLockAcquirer;

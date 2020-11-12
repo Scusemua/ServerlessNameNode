@@ -1,9 +1,9 @@
 package org.apache.hadoop.hdfs.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.HdfsConfiguration;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.DataNodeLayoutVersion;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NameNodeLayoutVersion;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.HdfsConfiguration;
+import org.apache.hadoop.hdfs.server.datanode.DataNodeLayoutVersion;
+import org.apache.hadoop.hdfs.server.namenode.NameNodeLayoutVersion;
 import org.apache.hadoop.classification.InterfaceAudience;
 
 import java.util.HashMap;
@@ -24,9 +24,9 @@ public class HdfsConstants {
      * HDFS Protocol Names:
      */
     public static final String CLIENT_NAMENODE_PROTOCOL_NAME =
-            "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol";
+            "org.apache.hadoop.hdfs.protocol.ClientProtocol";
     public static final String CLIENT_DATANODE_PROTOCOL_NAME =
-            "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientDatanodeProtocol";
+            "org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocol";
 
 
     public static final int MIN_BLOCKS_FOR_WRITE = 1;

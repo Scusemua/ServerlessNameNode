@@ -1,8 +1,8 @@
 package org.apache.hadoop.hdfs.server.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.ReplicaState;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.Replica;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;
+import org.apache.hadoop.hdfs.server.datanode.Replica;
 import com.google.common.base.Preconditions;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.CodedInputStream;

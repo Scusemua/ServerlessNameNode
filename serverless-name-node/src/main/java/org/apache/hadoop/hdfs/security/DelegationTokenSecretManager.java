@@ -2,8 +2,8 @@ package org.apache.hadoop.hdfs.security;
 
 //FIXME: needs to be presisted
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSNameSystem;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
+import org.apache.hadoop.hdfs.server.namenode.FSNameSystem;
+import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.io.Text;

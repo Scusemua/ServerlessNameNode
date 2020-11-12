@@ -17,7 +17,7 @@
  */
 package io.hops.common.security;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
 import io.hops.security.AbstractSecurityActions;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.CommonConfigurationKeys;

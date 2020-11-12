@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ClientMmap;
+import org.apache.hadoop.hdfs.shortcircuit.ClientMmap;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.ByteBufferReadable;
 import org.apache.hadoop.fs.ReadOption;

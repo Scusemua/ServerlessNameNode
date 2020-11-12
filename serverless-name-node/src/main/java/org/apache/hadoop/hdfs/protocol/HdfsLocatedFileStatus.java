@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtilClient;
+import org.apache.hadoop.hdfs.DFSUtilClient;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.fs.FileEncryptionInfo;

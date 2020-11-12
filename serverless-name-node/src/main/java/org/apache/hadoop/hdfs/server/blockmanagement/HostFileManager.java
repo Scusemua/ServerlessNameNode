@@ -59,7 +59,7 @@ import java.util.Map;
  * resolutions are only done during the loading time to minimize the latency.
  */
 class HostFileManager {
-  private static final Log LOG = LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.HostFileManager.class);
+  private static final Log LOG = LogFactory.getLog(org.apache.hadoop.hdfs.server.blockmanagement.HostFileManager.class);
   private HostSet includes = new HostSet();
   private HostSet excludes = new HostSet();
 

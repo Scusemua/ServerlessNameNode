@@ -1,11 +1,11 @@
 package io.hops;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguous;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeFile;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeSymlink;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
+import org.apache.hadoop.hdfs.server.namenode.INodeDirectory;
+import org.apache.hadoop.hdfs.server.namenode.INodeFile;
+import org.apache.hadoop.hdfs.server.namenode.INodeSymlink;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.common.IDsMonitor;
 import io.hops.exception.StorageException;

@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguous;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import org.apache.hadoop.classification.InterfaceAudience;

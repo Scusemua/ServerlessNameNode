@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath;
+import org.apache.hadoop.hdfs.server.namenode.INodesInPath;
 import org.apache.hadoop.fs.permission.AclEntry;
 
 import java.util.List;
@@ -9,7 +9,7 @@ public class PathInformation {
 
     private String path;
     private byte[][] pathComponents;
-    private com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath IIP;
+    private org.apache.hadoop.hdfs.server.namenode.INodesInPath IIP;
     private boolean dir;
     private QuotaCounts usage;
     private QuotaCounts quota;
@@ -17,7 +17,7 @@ public class PathInformation {
     private final List<AclEntry>[] pathInodeAcls;
 
     public PathInformation(String path,
-                           byte[][] pathComponents, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath IIP,
+                           byte[][] pathComponents, org.apache.hadoop.hdfs.server.namenode.INodesInPath IIP,
                            boolean dir, QuotaCounts quota, QuotaCounts usage, List<AclEntry>[] pathInodeAcls) {
         this.path = path;
         this.pathComponents = pathComponents;

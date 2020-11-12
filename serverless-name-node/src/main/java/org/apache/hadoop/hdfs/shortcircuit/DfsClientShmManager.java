@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdfs.shortcircuit;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.mutable.MutableBoolean;
@@ -28,7 +28,7 @@ import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.net.unix.DomainSocket;
 import org.apache.hadoop.net.unix.DomainSocketWatcher;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm.ShmId;
+import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.ShmId;
 
 import java.io.*;
 import java.util.HashMap;
@@ -50,7 +50,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 @InterfaceAudience.Private
 public class DfsClientShmManager implements Closeable {
-  private static final Log LOG = LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShmManager.class);
+  private static final Log LOG = LogFactory.getLog(org.apache.hadoop.hdfs.shortcircuit.DfsClientShmManager.class);
 
   /**
    * Manages short-circuit memory segments that pertain to a given DataNode.
@@ -66,16 +66,16 @@ public class DfsClientShmManager implements Closeable {
      *
      * Protected by the manager lock.
      */
-    private final TreeMap<ShmId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm> full =
-        new TreeMap<ShmId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm>();
+    private final TreeMap<ShmId, org.apache.hadoop.hdfs.shortcircuit.DfsClientShm> full =
+        new TreeMap<ShmId, org.apache.hadoop.hdfs.shortcircuit.DfsClientShm>();
 
     /**
      * Shared memory segments which have at least one empty slot.
      *
      * Protected by the manager lock.
      */
-    private final TreeMap<ShmId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm> notFull =
-        new TreeMap<ShmId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm>();
+    private final TreeMap<ShmId, org.apache.hadoop.hdfs.shortcircuit.DfsClientShm> notFull =
+        new TreeMap<ShmId, org.apache.hadoop.hdfs.shortcircuit.DfsClientShm>();
 
     /**
      * True if this datanode doesn't support short-circuit shared memory
@@ -111,8 +111,8 @@ public class DfsClientShmManager implements Closeable {
       if (notFull.isEmpty()) {
         return null;
       }
-      Entry<ShmId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm> entry = notFull.firstEntry();
-      com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm shm = entry.getValue();
+      Entry<ShmId, org.apache.hadoop.hdfs.shortcircuit.DfsClientShm> entry = notFull.firstEntry();
+      org.apache.hadoop.hdfs.shortcircuit.DfsClientShm shm = entry.getValue();
       ShmId shmId = shm.getShmId();
       Slot slot = shm.allocAndRegisterSlot(blockId);
       if (shm.isFull()) {
@@ -120,7 +120,7 @@ public class DfsClientShmManager implements Closeable {
           LOG.trace(this + ": pulled the last slot " + slot.getSlotIdx() +
               " out of " + shm);
         }
-        com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm removedShm = notFull.remove(shmId);
+        org.apache.hadoop.hdfs.shortcircuit.DfsClientShm removedShm = notFull.remove(shmId);
         Preconditions.checkState(removedShm == shm);
         full.put(shmId, shm);
       } else {
@@ -147,7 +147,7 @@ public class DfsClientShmManager implements Closeable {
      *                        We will not throw an IOException unless the socket
      *                        itself (or the network) is the problem.
      */
-    private com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm requestNewShm(String clientName, DomainPeer peer)
+    private org.apache.hadoop.hdfs.shortcircuit.DfsClientShm requestNewShm(String clientName, DomainPeer peer)
         throws IOException {
       final DataOutputStream out =
           new DataOutputStream(
@@ -171,8 +171,8 @@ public class DfsClientShmManager implements Closeable {
               "pass a file descriptor for the shared memory segment.");
         }
         try {
-          com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm shm =
-              new com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm(PBHelper.convert(resp.getId()),
+          org.apache.hadoop.hdfs.shortcircuit.DfsClientShm shm =
+              new org.apache.hadoop.hdfs.shortcircuit.DfsClientShm(PBHelper.convert(resp.getId()),
                   fis[0], this, peer);
           if (LOG.isTraceEnabled()) {
             LOG.trace(this + ": createNewShm: created " + shm);
@@ -243,7 +243,7 @@ public class DfsClientShmManager implements Closeable {
           // Otherwise, load the slot ourselves.
           loading = true;
           lock.unlock();
-          com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm shm;
+          org.apache.hadoop.hdfs.shortcircuit.DfsClientShm shm;
           try {
             shm = requestNewShm(clientName, peer);
             if (shm == null) continue;
@@ -284,7 +284,7 @@ public class DfsClientShmManager implements Closeable {
      * @param slot          The slot to release.
      */
     void freeSlot(Slot slot) {
-      com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm shm = (com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm)slot.getShm();
+      org.apache.hadoop.hdfs.shortcircuit.DfsClientShm shm = (org.apache.hadoop.hdfs.shortcircuit.DfsClientShm)slot.getShm();
       shm.unregisterSlot(slot.getSlotIdx());
       if (shm.isDisconnected()) {
         // Stale shared memory segments should not be tracked here.
@@ -353,14 +353,14 @@ public class DfsClientShmManager implements Closeable {
     @Override
     public String toString() {
       return String.format("EndpointShmManager(%s, parent=%s)",
-          datanode, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShmManager.this);
+          datanode, org.apache.hadoop.hdfs.shortcircuit.DfsClientShmManager.this);
     }
 
     PerDatanodeVisitorInfo getVisitorInfo() {
       return new PerDatanodeVisitorInfo(full, notFull, disabled);
     }
 
-    final void shutdown(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm shm) {
+    final void shutdown(org.apache.hadoop.hdfs.shortcircuit.DfsClientShm shm) {
       try {
         shm.getPeer().getDomainSocket().shutdown();
       } catch (IOException e) {
@@ -425,7 +425,7 @@ public class DfsClientShmManager implements Closeable {
   public void freeSlot(Slot slot) {
     lock.lock();
     try {
-      com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm shm = (com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm)slot.getShm();
+      org.apache.hadoop.hdfs.shortcircuit.DfsClientShm shm = (org.apache.hadoop.hdfs.shortcircuit.DfsClientShm)slot.getShm();
       shm.getEndpointShmManager().freeSlot(slot);
     } finally {
       lock.unlock();
@@ -434,12 +434,12 @@ public class DfsClientShmManager implements Closeable {
 
   @VisibleForTesting
   public static class PerDatanodeVisitorInfo {
-    public final TreeMap<ShmId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm> full;
-    public final TreeMap<ShmId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm> notFull;
+    public final TreeMap<ShmId, org.apache.hadoop.hdfs.shortcircuit.DfsClientShm> full;
+    public final TreeMap<ShmId, org.apache.hadoop.hdfs.shortcircuit.DfsClientShm> notFull;
     public final boolean disabled;
 
-    PerDatanodeVisitorInfo(TreeMap<ShmId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm> full,
-                           TreeMap<ShmId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm> notFull, boolean disabled) {
+    PerDatanodeVisitorInfo(TreeMap<ShmId, org.apache.hadoop.hdfs.shortcircuit.DfsClientShm> full,
+                           TreeMap<ShmId, org.apache.hadoop.hdfs.shortcircuit.DfsClientShm> notFull, boolean disabled) {
       this.full = full;
       this.notFull = notFull;
       this.disabled = disabled;

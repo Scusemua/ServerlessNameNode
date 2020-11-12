@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdfs.client;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DistributedFileSystem;
+import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.conf.Configuration;

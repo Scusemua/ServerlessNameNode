@@ -46,7 +46,7 @@ import java.util.*;
 @InterfaceAudience.Private
 class InvalidateBlocks {
 
-  private static final Log LOG = LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.InvalidateBlocks.class);;
+  private static final Log LOG = LogFactory.getLog(org.apache.hadoop.hdfs.server.blockmanagement.InvalidateBlocks.class);;
 
     private final int blockInvalidateLimit;
 
@@ -348,7 +348,7 @@ class InvalidateBlocks {
         .findList(InvalidatedBlock.Finder.All);
   }
 
-  public Map<DatanodeInfo, List<Integer>> getDatanodes(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.DatanodeManager manager)
+  public Map<DatanodeInfo, List<Integer>> getDatanodes(org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager manager)
       throws IOException {
     Map<DatanodeInfo, List<Integer>> nodes = new HashMap<DatanodeInfo, List<Integer>>();
     for(int sid : getSids()) {

@@ -1,8 +1,9 @@
 package org.apache.hadoop.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockPlacementPolicyDefault;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.client.HdfsClientConfigKeys;
+import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicyDefault;
 import org.apache.hadoop.fs.CommonConfigurationKeys;
+import org.apache.hadoop.hdfs.server.namenode.XAttrStorage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -373,8 +374,8 @@ public class DFSConfigKeys extends CommonConfigurationKeys {
     public static final String  DFS_NAMENODE_MAX_XATTRS_PER_INODE_KEY = "dfs.namenode.fs-limits.max-xattrs-per-inode";
     public static final int     DFS_NAMENODE_MAX_XATTRS_PER_INODE_DEFAULT = 32;
     public static final String  DFS_NAMENODE_MAX_XATTR_SIZE_KEY = "dfs.namenode.fs-limits.max-xattr-size";
-    //public static final int     DFS_NAMENODE_MAX_XATTR_SIZE_DEFAULT = XAttrStorage.getDefaultXAttrSize();
-    //public static final int     DFS_NAMENODE_MAX_XATTR_SIZE_HARD_LIMIT = XAttrStorage.getMaxXAttrSize();
+    public static final int     DFS_NAMENODE_MAX_XATTR_SIZE_DEFAULT = XAttrStorage.getDefaultXAttrSize();
+    public static final int     DFS_NAMENODE_MAX_XATTR_SIZE_HARD_LIMIT = XAttrStorage.getMaxXAttrSize();
 
     //Following keys have no defaults
     public static final String  DFS_DATANODE_DATA_DIR_KEY = "dfs.datanode.data.dir";

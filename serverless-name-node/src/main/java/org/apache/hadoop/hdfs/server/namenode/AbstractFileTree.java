@@ -1,8 +1,8 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.UnresolvedPathException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
+import org.apache.hadoop.hdfs.protocol.UnresolvedPathException;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockStoragePolicySuite;
+import org.apache.hadoop.hdfs.server.namenode.INodeDirectory;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimaps;
@@ -348,7 +348,7 @@ abstract class AbstractFileTree {
                 nodes.getLast().getParentId(),
                 nodes.getLast().getLocalName(),
                 nodes.getLast().getPartitionId());
-        rootId.setDepth((short) (com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory.ROOT_DIR_DEPTH + (nodes.size() - 1)));
+        rootId.setDepth((short) (org.apache.hadoop.hdfs.server.namenode.INodeDirectory.ROOT_DIR_DEPTH + (nodes.size() - 1)));
         return new CountingFileTree(namesystem, rootId, HdfsConstantsClient.BLOCK_STORAGE_POLICY_ID_UNSPECIFIED);
     }
 
@@ -693,7 +693,7 @@ abstract class AbstractFileTree {
                 nodes.getLast().getParentId(),
                 nodes.getLast().getLocalName(),
                 nodes.getLast().getPartitionId());
-        rootId.setDepth((short) (com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory.ROOT_DIR_DEPTH + (nodes.size() - 1)));
+        rootId.setDepth((short) (org.apache.hadoop.hdfs.server.namenode.INodeDirectory.ROOT_DIR_DEPTH + (nodes.size() - 1)));
         return new FileTree(namesystem, rootId);
     }
 
@@ -734,7 +734,7 @@ abstract class AbstractFileTree {
 
     private static ProjectedINode newProjectedInode(INode from, long size) {
         boolean dirWithQuota = false;
-        if (from instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory && ((com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory) from).isWithQuota()) {
+        if (from instanceof org.apache.hadoop.hdfs.server.namenode.INodeDirectory && ((org.apache.hadoop.hdfs.server.namenode.INodeDirectory) from).isWithQuota()) {
             dirWithQuota = true;
         }
         ProjectedINode result = new ProjectedINode(from.getId(),

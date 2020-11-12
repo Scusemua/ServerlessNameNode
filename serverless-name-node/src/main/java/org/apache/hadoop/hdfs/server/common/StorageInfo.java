@@ -1,11 +1,11 @@
 package org.apache.hadoop.hdfs.server.common;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.LayoutVersion;
-import com.gmail.benrcarver.serverlessnamenode.hops.metadata.HdfsVariables;
-import com.gmail.benrcarver.serverlessnamenode.hops.transaction.handler.HDFSOperationType;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants;
+import org.apache.hadoop.hdfs.protocol.LayoutVersion;
+import org.apache.hadoop.hops.metadata.HdfsVariables;
+import org.apache.hadoop.hops.transaction.handler.HDFSOperationType;
 import com.google.common.base.Joiner;
 import io.hops.exception.StorageException;
 import io.hops.metadata.common.entity.Variable;
@@ -24,7 +24,7 @@ import java.util.Properties;
 import java.util.SortedSet;
 import java.util.UUID;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.NodeType;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.NodeType;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.net.DNS;
 import org.apache.hadoop.util.Time;

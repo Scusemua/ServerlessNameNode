@@ -1,7 +1,7 @@
 package org.apache.hadoop.hdfs.server.datanode;
 
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import org.apache.hadoop.classification.InterfaceAudience;
 
 /**

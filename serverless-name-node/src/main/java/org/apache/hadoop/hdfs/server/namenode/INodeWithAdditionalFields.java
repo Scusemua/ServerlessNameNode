@@ -1,11 +1,11 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileProvenance;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrFeature;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
+import org.apache.hadoop.fs.XAttr;
+import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.protocol.QuotaExceededException;
+import org.apache.hadoop.hdfs.server.namenode.FileProvenance;
+import org.apache.hadoop.hdfs.server.namenode.INodeDirectory;
+import org.apache.hadoop.hdfs.server.namenode.XAttrFeature;
 import com.google.common.base.Preconditions;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
@@ -311,7 +311,7 @@ public abstract class INodeWithAdditionalFields extends INode {
 
     @Override
     public void logProvenanceEvent(long namenodeId, FileProvenanceEntry.Operation operation) throws IOException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileProvenance.log(namenodeId, this, operation);
+        org.apache.hadoop.hdfs.server.namenode.FileProvenance.log(namenodeId, this, operation);
     }
 
     @Override
@@ -372,19 +372,19 @@ public abstract class INodeWithAdditionalFields extends INode {
     }
 
     @Override
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrFeature getXAttrFeature() {
-        return getFeature(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrFeature.class);
+    org.apache.hadoop.hdfs.server.namenode.XAttrFeature getXAttrFeature() {
+        return getFeature(org.apache.hadoop.hdfs.server.namenode.XAttrFeature.class);
     }
 
     @Override
     public void removeXAttrFeature() {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrFeature f = getXAttrFeature();
+        org.apache.hadoop.hdfs.server.namenode.XAttrFeature f = getXAttrFeature();
         Preconditions.checkNotNull(f);
         removeFeature(f);
     }
 
     @Override
-    public void addXAttrFeature(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrFeature f) {
+    public void addXAttrFeature(org.apache.hadoop.hdfs.server.namenode.XAttrFeature f) {
         XAttrFeature f1 = getXAttrFeature();
         Preconditions.checkState(f1 == null, "Duplicated XAttrFeature");
 

@@ -17,11 +17,10 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.DatanodeStorage.State;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.BlockStoragePolicy;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.protocol.*;
+import org.apache.hadoop.hdfs.server.protocol.DatanodeStorage.State;
 import com.google.common.annotations.VisibleForTesting;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.conf.Configuration;
@@ -44,11 +43,11 @@ import static org.apache.hadoop.util.Time.monotonicNow;
  * which is on a different node of the rack as the second replica.
  */
 @InterfaceAudience.Private
-public class BlockPlacementPolicyDefault extends com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockPlacementPolicy {
+public class BlockPlacementPolicyDefault extends org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicy {
 
   private static final String enableDebugLogging =
       "For more information, please enable DEBUG log level on "
-          + com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockPlacementPolicy.class.getName();
+          + org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementPolicy.class.getName();
 
   private static final ThreadLocal<StringBuilder> debugLoggingBuilder
       = new ThreadLocal<StringBuilder>() {
@@ -62,7 +61,7 @@ public class BlockPlacementPolicyDefault extends com.gmail.benrcarver.serverless
   private boolean preferLocalNode = true;
   protected NetworkTopology clusterMap;
   protected Host2NodesMap host2datanodeMap;
-  private com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.FSClusterStats stats;
+  private org.apache.hadoop.hdfs.server.blockmanagement.FSClusterStats stats;
   protected long heartbeatInterval;   // interval for DataNode heartbeats
   private long staleInterval;   // interval used to identify stale DataNodes
   
@@ -75,7 +74,7 @@ public class BlockPlacementPolicyDefault extends com.gmail.benrcarver.serverless
   }
 
   @Override
-  public void initialize(Configuration conf,  com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.FSClusterStats stats,
+  public void initialize(Configuration conf,  org.apache.hadoop.hdfs.server.blockmanagement.FSClusterStats stats,
       NetworkTopology clusterMap,
       Host2NodesMap host2datanodeMap) {
     this.considerLoad = conf.getBoolean(
@@ -900,14 +899,14 @@ public class BlockPlacementPolicyDefault extends com.gmail.benrcarver.serverless
   }
 
   @Override
-  public com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockPlacementStatus verifyBlockPlacement(String srcPath,
-                                                                                                                       LocatedBlock lBlk, int numberOfReplicas) {
+  public org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementStatus verifyBlockPlacement(String srcPath,
+                                                                                                 LocatedBlock lBlk, int numberOfReplicas) {
     DatanodeInfo[] locs = lBlk.getLocations();
     if (locs == null)
       locs = DatanodeDescriptor.EMPTY_ARRAY;
     int numRacks = clusterMap.getNumOfRacks();
     if(numRacks <= 1) // only one rack
-      return new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockPlacementStatusDefault(
+      return new org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementStatusDefault(
           Math.min(numRacks, numberOfReplicas), numRacks);
     int minRacks = Math.min(2, numberOfReplicas);
     // 1. Check that all locations are different.
@@ -915,7 +914,7 @@ public class BlockPlacementPolicyDefault extends com.gmail.benrcarver.serverless
     Set<String> racks = new TreeSet<String>();
     for (DatanodeInfo dn : locs)
       racks.add(dn.getNetworkLocation());
-    return new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockPlacementStatusDefault(racks.size(), minRacks);
+    return new org.apache.hadoop.hdfs.server.blockmanagement.BlockPlacementStatusDefault(racks.size(), minRacks);
   }
 
   @Override

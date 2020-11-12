@@ -1,16 +1,16 @@
 package org.apache.hadoop.hdfs.protocolPB;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeProtocolProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.DatanodeIDProto;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.RollingUpgradeStatusProto;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockListAsLongs;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockReport;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.Bucket;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.util.ExactSizeInputStream;
-import com.gmail.benrcarver.serverlessnamenode.protocol.ClientNamenodeProtocolProtos;
-import com.gmail.benrcarver.serverlessnamenode.protocol.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto;
+import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants;
+import org.apache.hadoop.hdfs.protocol.HdfsProtos;
+import org.apache.hadoop.hdfs.protocol.HdfsProtos.DatanodeIDProto;
+import org.apache.hadoop.hdfs.protocol.HdfsProtos.RollingUpgradeStatusProto;
+import org.apache.hadoop.hdfs.server.protocol.BlockListAsLongs;
+import org.apache.hadoop.hdfs.server.protocol.BlockReport;
+import org.apache.hadoop.hdfs.server.protocol.Bucket;
+import org.apache.hadoop.hdfs.util.ExactSizeInputStream;
+import org.apache.hadoop.protocol.ClientNamenodeProtocolProtos;
+import org.apache.hadoop.protocol.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
@@ -262,6 +262,36 @@ public class PBHelper {
                 .setStatus(convertRollingUpgradeStatus(info))
                 .setStartTime(info.getStartTime())
                 .setFinalizeTime(info.getFinalizeTime())
+                .build();
+    }
+
+    public static ByteString getByteString(byte[] bytes) {
+        return ByteString.copyFrom(bytes);
+    }
+
+    public static FileEncryptionInfo convert(
+            HdfsProtos.PerFileEncryptionInfoProto fileProto,
+            CipherSuite suite, CryptoProtocolVersion version, String keyName) {
+        if (fileProto == null || suite == null || version == null ||
+                keyName == null) {
+            return null;
+        }
+        byte[] key = fileProto.getKey().toByteArray();
+        byte[] iv = fileProto.getIv().toByteArray();
+        String ezKeyVersionName = fileProto.getEzKeyVersionName();
+        return new FileEncryptionInfo(suite, version, key, iv, keyName,
+                ezKeyVersionName);
+    }
+
+    public static HdfsProtos.PerFileEncryptionInfoProto convertPerFileEncInfo(
+            FileEncryptionInfo info) {
+        if (info == null) {
+            return null;
+        }
+        return HdfsProtos.PerFileEncryptionInfoProto.newBuilder()
+                .setKey(getByteString(info.getEncryptedDataEncryptionKey()))
+                .setIv(getByteString(info.getIV()))
+                .setEzKeyVersionName(info.getEzKeyVersionName())
                 .build();
     }
 

@@ -1,7 +1,5 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import io.hops.HdfsStorageFactory;
@@ -13,6 +11,7 @@ import io.hops.transaction.EntityManager;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.LightWeightRequestHandler;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.fs.XAttr;
 
 
 import java.io.IOException;

@@ -17,11 +17,11 @@
  */
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
+import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.proto.DataTransferProtos.*;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.*;
 import org.apache.htrace.core.SpanId;
 import org.apache.htrace.core.TraceScope;
 import org.apache.htrace.core.Tracer;

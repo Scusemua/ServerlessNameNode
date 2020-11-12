@@ -15,7 +15,7 @@
  */
 package io.hops.transaction.lock;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode;
+import org.apache.hadoop.hdfs.server.namenode.INode;
 import io.hops.common.INodeUtil;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;

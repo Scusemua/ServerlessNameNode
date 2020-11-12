@@ -17,10 +17,10 @@
  */
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.HdfsConfiguration;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.PipelineAckProto;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.Status;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.util.LongBitFormat;
+import org.apache.hadoop.hdfs.HdfsConfiguration;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.PipelineAckProto;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.Status;
+import org.apache.hadoop.hdfs.util.LongBitFormat;
 import com.google.common.collect.Lists;
 import com.google.protobuf.TextFormat;
 import org.apache.hadoop.classification.InterfaceAudience;
@@ -31,9 +31,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.DFS_DATANODE_OOB_TIMEOUT_DEFAULT;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.DFS_DATANODE_OOB_TIMEOUT_KEY;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper.vintPrefixed;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_DATANODE_OOB_TIMEOUT_DEFAULT;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_DATANODE_OOB_TIMEOUT_KEY;
+import static org.apache.hadoop.hdfs.protocolPB.PBHelper.vintPrefixed;
 
 /**
  * Pipeline Acknowledgment *

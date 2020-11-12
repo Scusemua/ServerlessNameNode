@@ -22,12 +22,12 @@
  * for what changes are allowed for a *stable* .proto interface.
  */
 
-option java_package = "com.gmail.benrcarver.serverlessnamenode.hdfs.security.proto";
+option java_package = "org.apache.hadoop.hdfs.security.proto";
 option java_outer_classname = "SecurityProtos";
 option java_generic_services = true;
 option java_generate_equals_and_hash = true;
 
-package com.gmail.benrcarver.serverlessnamenode;
+package org.apache.hadoop;
 
 /**
  * Security token identifier
@@ -41,13 +41,13 @@ message TokenProto {
 
 message CredentialsKVProto {
   required string alias = 1;
-  optional com.gmail.benrcarver.serverlessnamenode.TokenProto token = 2;
+  optional org.apache.hadoop.TokenProto token = 2;
   optional bytes secret = 3;
 }
 
 message CredentialsProto {
-  repeated com.gmail.benrcarver.serverlessnamenode.CredentialsKVProto tokens = 1;
-  repeated com.gmail.benrcarver.serverlessnamenode.CredentialsKVProto secrets = 2;
+  repeated org.apache.hadoop.CredentialsKVProto tokens = 1;
+  repeated org.apache.hadoop.CredentialsKVProto secrets = 2;
 }
 
 message GetDelegationTokenRequestProto {
@@ -55,11 +55,11 @@ message GetDelegationTokenRequestProto {
 }
 
 message GetDelegationTokenResponseProto {
-  optional com.gmail.benrcarver.serverlessnamenode.TokenProto token = 1;
+  optional org.apache.hadoop.TokenProto token = 1;
 }
 
 message RenewDelegationTokenRequestProto {
-  required com.gmail.benrcarver.serverlessnamenode.TokenProto token = 1;
+  required org.apache.hadoop.TokenProto token = 1;
 }
 
 message RenewDelegationTokenResponseProto {
@@ -67,7 +67,7 @@ message RenewDelegationTokenResponseProto {
 }
 
 message CancelDelegationTokenRequestProto {
-  required com.gmail.benrcarver.serverlessnamenode.TokenProto token = 1;
+  required org.apache.hadoop.TokenProto token = 1;
 }
 
 message CancelDelegationTokenResponseProto { // void response

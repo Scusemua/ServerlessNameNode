@@ -17,8 +17,8 @@
  */
 package org.apache.hadoop.hdfs.shortcircuit;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ClientMmap;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache;
+import org.apache.hadoop.hdfs.shortcircuit.ClientMmap;
+import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import org.apache.commons.logging.Log;
@@ -44,7 +44,7 @@ import java.nio.channels.FileChannel.MapMode;
  */
 @InterfaceAudience.Private
 public class ShortCircuitReplica {
-  public static final Log LOG = LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache.class);
+  public static final Log LOG = LogFactory.getLog(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache.class);
 
   /**
    * Identifies this ShortCircuitReplica object.
@@ -71,7 +71,7 @@ public class ShortCircuitReplica {
   /**
    * The cache we belong to.
    */
-  private final com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache cache;
+  private final org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache cache;
 
   /**
    * Monotonic time at which the replica was created.

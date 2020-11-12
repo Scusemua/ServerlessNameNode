@@ -18,8 +18,8 @@
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirective;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.protocol.CacheDirective;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import com.google.common.base.Preconditions;
 import io.hops.HdfsVariables;
 import io.hops.exception.StorageException;
@@ -35,6 +35,7 @@ import io.hops.transaction.lock.LockFactory;
 import io.hops.transaction.lock.TransactionLockTypes;
 import io.hops.transaction.lock.TransactionLocks;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.hdfs.server.namenode.*;
 import org.apache.hadoop.util.Time;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,7 +59,7 @@ import static org.apache.hadoop.util.ExitUtil.terminate;
 @InterfaceAudience.LimitedPrivate({"HDFS"})
 public class CacheReplicationMonitor extends Thread implements Closeable {
 
-  private static final Logger LOG = LoggerFactory.getLogger(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.CacheReplicationMonitor.class);
+  private static final Logger LOG = LoggerFactory.getLogger(org.apache.hadoop.hdfs.server.blockmanagement.CacheReplicationMonitor.class);
 
   private final FSNameSystem namesystem;
 
@@ -113,7 +114,7 @@ public class CacheReplicationMonitor extends Thread implements Closeable {
   private long scannedBlocks;
 
   public CacheReplicationMonitor(FSNameSystem namesystem,
-      CacheManager cacheManager, long intervalMs, ReentrantLock lock) {
+                                 CacheManager cacheManager, long intervalMs, ReentrantLock lock) {
     this.namesystem = namesystem;
     this.blockManager = namesystem.getBlockManager();
     this.cacheManager = cacheManager;

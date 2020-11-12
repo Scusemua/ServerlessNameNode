@@ -1,25 +1,16 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirXAttrOp;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrFeature;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrStorage;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.google.protobuf.InvalidProtocolBufferException;
-import io.hops.HdfsStorageFactory;
+import io.hops.common.IDsGeneratorFactory;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
-import io.hops.metadata.hdfs.dal.DirectoryWithQuotaFeatureDataAccess;
+import io.hops.resolvingcache.Cache;
+import io.hops.metadata.HdfsStorageFactory;
 import io.hops.metadata.hdfs.dal.INodeDataAccess;
-import io.hops.metadata.hdfs.entity.EncryptionZone;
 import io.hops.metadata.hdfs.entity.INodeIdentifier;
+import io.hops.metadata.hdfs.entity.QuotaUpdate;
 import io.hops.transaction.EntityManager;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
@@ -27,6 +18,12 @@ import io.hops.transaction.handler.LightWeightRequestHandler;
 import io.hops.transaction.lock.LockFactory;
 import io.hops.transaction.lock.TransactionLockTypes;
 import io.hops.transaction.lock.TransactionLocks;
+import static org.apache.hadoop.fs.BatchedRemoteIterator.BatchedListEntries;
+import static org.apache.hadoop.hdfs.server.common.HdfsServerConstants.CRYPTO_XATTR_ENCRYPTION_ZONE;
+import static org.apache.hadoop.hdfs.server.common.HdfsServerConstants.CRYPTO_XATTR_FILE_ENCRYPTION_INFO;
+
+import com.google.protobuf.InvalidProtocolBufferException;
+import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.crypto.CipherSuite;
 import org.apache.hadoop.crypto.CryptoProtocolVersion;
@@ -34,10 +31,24 @@ import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.fs.permission.PermissionStatus;
-import org.apache.hadoop.fs.protocolPB.PBHelper;
-import org.apache.hadoop.io.file.tfile.ByteArray;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.protocol.*;
+import org.apache.hadoop.hdfs.protocol.FSLimitException.MaxDirectoryItemsExceededException;
+import org.apache.hadoop.hdfs.protocol.FSLimitException.PathComponentTooLongException;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockManager;
+import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeStorageInfo;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockStoragePolicySuite;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.BlockUCState;
+import org.apache.hadoop.hdfs.server.namenode.INode.BlocksMapUpdateInfo;
+import org.apache.hadoop.hdfs.util.ByteArray;
+import org.apache.hadoop.hdfs.util.EnumCounters;
 import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.UserGroupInformation;
+import org.apache.hadoop.hdfs.DFSUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,12 +57,21 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
+import org.apache.commons.io.Charsets;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.CRYPTO_XATTR_ENCRYPTION_ZONE;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.CRYPTO_XATTR_FILE_ENCRYPTION_INFO;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_NAMENODE_ACCESSTIME_PRECISION_DEFAULT;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_NAMENODE_ACCESSTIME_PRECISION_KEY;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_QUOTA_BY_STORAGETYPE_ENABLED_DEFAULT;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_QUOTA_BY_STORAGETYPE_ENABLED_KEY;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_STORAGE_POLICY_ENABLED_DEFAULT;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_STORAGE_POLICY_ENABLED_KEY;
+import static org.apache.hadoop.util.Time.now;
+import io.hops.metadata.hdfs.dal.DirectoryWithQuotaFeatureDataAccess;
+import org.apache.hadoop.hdfs.XAttrHelper;
+import org.apache.hadoop.hdfs.protocol.HdfsConstantsClient;
 
 /**
  * Both FSDirectory and FSNameSystem manage the state of the namespace.
@@ -199,7 +219,7 @@ public class FSDirectory implements Closeable {
                 "Cannot set a negative limit on the number of xattrs per inode (%s).",
                 DFSConfigKeys.DFS_NAMENODE_MAX_XATTRS_PER_INODE_KEY);
 
-        if(inodeXAttrs > com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrStorage.getMaxNumberOfUserXAttrPerInode()){
+        if(inodeXAttrs > org.apache.hadoop.hdfs.server.namenode.XAttrStorage.getMaxNumberOfUserXAttrPerInode()){
             inodeXAttrs = XAttrStorage.getMaxNumberOfUserXAttrPerInode();
         }
 
@@ -285,7 +305,7 @@ public class FSDirectory implements Closeable {
      * @throws QuotaExceededException
      * @throws UnresolvedLinkException
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath addFile(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath existing, String localName, PermissionStatus
+    org.apache.hadoop.hdfs.server.namenode.INodesInPath addFile(org.apache.hadoop.hdfs.server.namenode.INodesInPath existing, String localName, PermissionStatus
             permissions, short replication, long preferredBlockSize,
                                                                                       String clientName, String clientMachine)
             throws IOException {
@@ -297,7 +317,7 @@ public class FSDirectory implements Closeable {
         newNode.setLocalNameNoPersistance(localName.getBytes(Charsets.UTF_8));
         newNode.toUnderConstruction(clientName, clientMachine);
 
-        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath newiip;
+        org.apache.hadoop.hdfs.server.namenode.INodesInPath newiip;
         newiip = addINode(existing, newNode);
 
         if (newiip == null) {
@@ -315,7 +335,7 @@ public class FSDirectory implements Closeable {
     /**
      * Add a block to the file. Returns a reference to the added block.
      */
-    BlockInfoContiguous addBlock(String path, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath inodesInPath, Block block,
+    BlockInfoContiguous addBlock(String path, org.apache.hadoop.hdfs.server.namenode.INodesInPath inodesInPath, Block block,
                                  DatanodeStorageInfo targets[])
             throws QuotaExceededException, StorageException,
             TransactionContextException, IOException {
@@ -335,7 +355,7 @@ public class FSDirectory implements Closeable {
         // associate new last block for the file
         BlockInfoContiguousUnderConstruction blockInfo =
                 new BlockInfoContiguousUnderConstruction(block, fileINode.getId(),
-                        BlockUCState.UNDER_CONSTRUCTION, targets);
+                        HdfsServerConstants.BlockUCState.UNDER_CONSTRUCTION, targets);
         getBlockManager().addBlockCollection(blockInfo, fileINode);
         fileINode.addBlock(blockInfo);
         fileINode.getFileUnderConstructionFeature().setLastBlockId(blockInfo.getBlockId());
@@ -353,13 +373,13 @@ public class FSDirectory implements Closeable {
      * Remove a block from the file.
      * @return Whether the block exists in the corresponding file
      */
-    boolean removeBlock(String path, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, INodeFile fileNode,
+    boolean removeBlock(String path, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, INodeFile fileNode,
                         Block block) throws IOException, StorageException {
         Preconditions.checkArgument(fileNode.isUnderConstruction());
         return unprotectedRemoveBlock(path, iip, fileNode, block);
     }
 
-    boolean unprotectedRemoveBlock(String path, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, INodeFile fileNode,
+    boolean unprotectedRemoveBlock(String path, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, INodeFile fileNode,
                                    Block block) throws IOException, StorageException {
         Preconditions.checkArgument(fileNode.isUnderConstruction());
         // modify file-> block and blocksMap
@@ -407,7 +427,7 @@ public class FSDirectory implements Closeable {
     /**
      * @return true if the path is a non-empty directory; otherwise, return false.
      */
-    boolean isNonEmptyDirectory(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath inodesInPath)
+    boolean isNonEmptyDirectory(org.apache.hadoop.hdfs.server.namenode.INodesInPath inodesInPath)
             throws UnresolvedLinkException, StorageException,
             TransactionContextException {
         final INode inode = inodesInPath.getLastINode();
@@ -415,13 +435,13 @@ public class FSDirectory implements Closeable {
             //not found or not a directory
             return false;
         }
-        return ((com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory) inode).getChildrenList().size() != 0;
+        return ((org.apache.hadoop.hdfs.server.namenode.INodeDirectory) inode).getChildrenList().size() != 0;
     }
 
     /**
      * Check whether the filepath could be created
      */
-    boolean isValidToCreate(String src, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip)
+    boolean isValidToCreate(String src, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip)
             throws UnresolvedLinkException, StorageException,
             TransactionContextException {
         String srcs = normalizePath(src);
@@ -452,7 +472,7 @@ public class FSDirectory implements Closeable {
      * @throws FileNotFoundException
      *     if path does not exist.
      */
-    void updateSpaceConsumed(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, long nsDelta, long ssDelta, short replication)
+    void updateSpaceConsumed(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, long nsDelta, long ssDelta, short replication)
             throws QuotaExceededException, FileNotFoundException,
             UnresolvedLinkException, StorageException,
             TransactionContextException {
@@ -465,7 +485,7 @@ public class FSDirectory implements Closeable {
     /**
      * Update usage count without replication factor change
      */
-    void updateCount(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, long nsDelta, long ssDelta, short replication,
+    void updateCount(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, long nsDelta, long ssDelta, short replication,
                      boolean checkQuota) throws QuotaExceededException, StorageException, TransactionContextException {
         final INodeFile fileINode = iip.getLastINode().asFile();
         EnumCounters<StorageType> typeSpaceDeltas =
@@ -480,7 +500,7 @@ public class FSDirectory implements Closeable {
     /**
      * Update usage count with replication factor change due to setReplication
      */
-    void updateCount(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, long nsDelta, long ssDelta, short oldRep,
+    void updateCount(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, long nsDelta, long ssDelta, short oldRep,
                      short newRep, boolean checkQuota) throws QuotaExceededException, StorageException, TransactionContextException {
         final INodeFile fileINode = iip.getLastINode().asFile();
         EnumCounters<StorageType> typeSpaceDeltas =
@@ -495,8 +515,6 @@ public class FSDirectory implements Closeable {
     /**
      * update count of each inode with quota
      *
-     * @param inodes
-     *     an array of inodes on a path
      * @param numOfINodes
      *     the number of inodes to update starting from index 0
      * @param counts the count of space/namespace/type usage to be update
@@ -505,7 +523,7 @@ public class FSDirectory implements Closeable {
      * @throws QuotaExceededException
      *     if the new count violates any quota limit
      */
-    private void updateCount(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, int numOfINodes,
+    private void updateCount(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, int numOfINodes,
                              QuotaCounts counts, boolean checkQuota)
             throws QuotaExceededException, StorageException,
             TransactionContextException {
@@ -530,9 +548,9 @@ public class FSDirectory implements Closeable {
 
     /**
      * update quota of each inode and check to see if quota is exceeded.
-     * See {@link #updateCount(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath, int, QuotaCounts, boolean)}
+     * See {@link #updateCount(org.apache.hadoop.hdfs.server.namenode.INodesInPath, int, QuotaCounts, boolean)}
      */
-    void updateCountNoQuotaCheck(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath inodesInPath,
+    void updateCountNoQuotaCheck(org.apache.hadoop.hdfs.server.namenode.INodesInPath inodesInPath,
                                  int numOfINodes, QuotaCounts counts)
             throws StorageException, TransactionContextException {
         try {
@@ -545,13 +563,8 @@ public class FSDirectory implements Closeable {
     /**
      * updates quota without verification
      * callers responsibility is to make sure quota is not exceeded
-     *
-     * @param inodes
-     * @param numOfINodes
-     * @param nsDelta
-     * @param dsDelta
      */
-    void unprotectedUpdateCount(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath inodesInPath,
+    void unprotectedUpdateCount(org.apache.hadoop.hdfs.server.namenode.INodesInPath inodesInPath,
                                 int numOfINodes, QuotaCounts counts) throws StorageException, TransactionContextException {
         if (!isQuotaEnabled()) {
             return;
@@ -649,7 +662,7 @@ public class FSDirectory implements Closeable {
      * if the adding fails.
      * @throw QuotaExceededException is thrown if it violates quota limit
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath addINode(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath existing, INode child)
+    org.apache.hadoop.hdfs.server.namenode.INodesInPath addINode(org.apache.hadoop.hdfs.server.namenode.INodesInPath existing, INode child)
             throws IOException {
         cacheName(child);
         return addLastINode(existing, child, true);
@@ -667,7 +680,7 @@ public class FSDirectory implements Closeable {
      *          Pass null if a node is not being moved.
      * @throws QuotaExceededException if quota limit is exceeded.
      */
-    static void verifyQuota(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, int pos, QuotaCounts deltas,
+    static void verifyQuota(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, int pos, QuotaCounts deltas,
                             INode commonAncestor) throws QuotaExceededException, StorageException,
             TransactionContextException {
         if (deltas.getNameSpace() <= 0 && deltas.getStorageSpace() <= 0
@@ -702,17 +715,17 @@ public class FSDirectory implements Closeable {
      *
      * @param childName byte[] containing new child name
      * @param parentPath String containing parent path
-     * @throws PathComponentTooLongException child's name is too long.
+     * @throws FSLimitException.PathComponentTooLongException child's name is too long.
      */
     void verifyMaxComponentLength(byte[] childName, String parentPath)
-            throws PathComponentTooLongException {
+            throws FSLimitException.PathComponentTooLongException {
         if (maxComponentLength == 0) {
             return;
         }
 
         final int length = childName.length;
         if (length > maxComponentLength) {
-            final PathComponentTooLongException e = new PathComponentTooLongException(
+            final FSLimitException.PathComponentTooLongException e = new FSLimitException.PathComponentTooLongException(
                     maxComponentLength, length, parentPath,
                     DFSUtil.bytes2String(childName));
             if (namesystem.isImageLoaded()) {
@@ -727,17 +740,17 @@ public class FSDirectory implements Closeable {
     /**
      * Verify children size for fs limit.
      *
-     * @throws MaxDirectoryItemsExceededException too many children.
+     * @throws FSLimitException.MaxDirectoryItemsExceededException too many children.
      */
-    void verifyMaxDirItems(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory parent, String parentPath)
-            throws MaxDirectoryItemsExceededException, StorageException, TransactionContextException {
+    void verifyMaxDirItems(org.apache.hadoop.hdfs.server.namenode.INodeDirectory parent, String parentPath)
+            throws FSLimitException.MaxDirectoryItemsExceededException, StorageException, TransactionContextException {
         if (maxDirItems <= 0) {
             return;
         }
         final int count = parent.getChildrenNum();
         if (count >= maxDirItems) {
-            final MaxDirectoryItemsExceededException e
-                    = new MaxDirectoryItemsExceededException(maxDirItems, count);
+            final FSLimitException.MaxDirectoryItemsExceededException e
+                    = new FSLimitException.MaxDirectoryItemsExceededException(maxDirItems, count);
             if (namesystem.isImageLoaded()) {
                 e.setPathName(parentPath);
                 throw e;
@@ -757,7 +770,7 @@ public class FSDirectory implements Closeable {
      * @throws MaxDirectoryItemsExceededException
      *     items per directory is exceeded
      */
-    protected <T extends INode> void verifyFsLimits(byte[] childName, String parentPath, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory parent)
+    protected <T extends INode> void verifyFsLimits(byte[] childName, String parentPath, org.apache.hadoop.hdfs.server.namenode.INodeDirectory parent)
             throws FSLimitException, StorageException, TransactionContextException {
         boolean includeChildName = false;
         try {
@@ -765,14 +778,14 @@ public class FSDirectory implements Closeable {
                 int length = childName.length;
                 if (length > maxComponentLength) {
                     includeChildName = true;
-                    throw new PathComponentTooLongException(maxComponentLength, length, parentPath,
+                    throw new FSLimitException.PathComponentTooLongException(maxComponentLength, length, parentPath,
                             DFSUtil.bytes2String(childName));
                 }
             }
             if (maxDirItems != 0) {
                 int count = parent.getChildrenNum();
                 if (count >= maxDirItems) {
-                    throw new MaxDirectoryItemsExceededException(maxDirItems, count);
+                    throw new FSLimitException.MaxDirectoryItemsExceededException(maxDirItems, count);
                 }
             }
         } catch (FSLimitException e) {
@@ -791,7 +804,7 @@ public class FSDirectory implements Closeable {
         }
     }
 
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath addLastINode(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath existing,
+    org.apache.hadoop.hdfs.server.namenode.INodesInPath addLastINode(org.apache.hadoop.hdfs.server.namenode.INodesInPath existing,
                                                                                            INode inode, boolean checkQuota) throws QuotaExceededException, StorageException, IOException {
         assert existing.getLastINode() != null &&
                 existing.getLastINode().isDirectory();
@@ -807,7 +820,7 @@ public class FSDirectory implements Closeable {
      * Add a child to the end of the path specified by INodesInPath.
      * @return an INodesInPath instance containing the new INode
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath addLastINode(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath existing,
+    org.apache.hadoop.hdfs.server.namenode.INodesInPath addLastINode(org.apache.hadoop.hdfs.server.namenode.INodesInPath existing,
                                                                                            INode inode, QuotaCounts counts, boolean checkQuota, boolean
                                       logMetadataEvent) throws
             QuotaExceededException, StorageException, IOException {
@@ -826,7 +839,7 @@ public class FSDirectory implements Closeable {
                             + "existing file or directory to another name before upgrading "
                             + "to the new release.");
         }
-        final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory parent = existing.getINode(pos - 1).asDirectory();
+        final org.apache.hadoop.hdfs.server.namenode.INodeDirectory parent = existing.getINode(pos - 1).asDirectory();
         // The filesystem limits are not really quotas, so this check may appear
         // odd.  It's because a rename operation deletes the src, tries to add
         // to the dest, if that fails, re-adds the src from whence it came.
@@ -848,7 +861,7 @@ public class FSDirectory implements Closeable {
             addToInodeMap(inode);
         }
 
-        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip = com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath.append(existing, inode, inode.getLocalNameBytes());
+        org.apache.hadoop.hdfs.server.namenode.INodesInPath iip = org.apache.hadoop.hdfs.server.namenode.INodesInPath.append(existing, inode, inode.getLocalNameBytes());
         if (added) {
             if (!inode.isDirectory()) {
                 List<INode> pathInodes = new ArrayList<>(pos+1);
@@ -870,7 +883,7 @@ public class FSDirectory implements Closeable {
         return iip;
     }
 
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath addLastINodeNoQuotaCheck(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath existing, INode inode, QuotaCounts counts)
+    org.apache.hadoop.hdfs.server.namenode.INodesInPath addLastINodeNoQuotaCheck(org.apache.hadoop.hdfs.server.namenode.INodesInPath existing, INode inode, QuotaCounts counts)
             throws IOException {
         try {
             return addLastINode(existing, inode, counts, false, false);
@@ -880,7 +893,7 @@ public class FSDirectory implements Closeable {
         return null;
     }
 
-    long removeLastINode(final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip) throws IOException {
+    long removeLastINode(final org.apache.hadoop.hdfs.server.namenode.INodesInPath iip) throws IOException {
         QuotaCounts counts = new QuotaCounts.Builder().build();
         if (isQuotaEnabled()) {
             iip.getLastINode().computeQuotaUsage(getBlockStoragePolicySuite(), counts);
@@ -893,17 +906,17 @@ public class FSDirectory implements Closeable {
      * Count of each ancestor with quota is also updated.
      * @return the removed node; null if the removal fails.
      */
-    long removeLastINode(final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, boolean forRename,
+    long removeLastINode(final org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, boolean forRename,
                          final QuotaCounts counts)
             throws IOException {
         final INode last = iip.getLastINode();
-        final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory parent = iip.getINode(-2).asDirectory();
+        final org.apache.hadoop.hdfs.server.namenode.INodeDirectory parent = iip.getINode(-2).asDirectory();
         if(!forRename){
             if(!parent.removeChild(last)){
                 return -1;
             }
         } else {
-            ((com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory)parent).decreaseChildrenNum();
+            ((org.apache.hadoop.hdfs.server.namenode.INodeDirectory)parent).decreaseChildrenNum();
         }
 
         if (isQuotaEnabled()) {
@@ -958,8 +971,8 @@ public class FSDirectory implements Closeable {
         yieldCount += value;
     }
 
-    boolean truncate(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, long newLength,
-                     BlocksMapUpdateInfo collectedBlocks,
+    boolean truncate(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, long newLength,
+                     INode.BlocksMapUpdateInfo collectedBlocks,
                      long mtime, QuotaCounts delta)
             throws IOException {
         return unprotectedTruncate(iip, newLength, collectedBlocks, mtime, delta);
@@ -977,7 +990,7 @@ public class FSDirectory implements Closeable {
      *
      * @return true if on the block boundary or false if recovery is need
      */
-    boolean unprotectedTruncate(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, long newLength,
+    boolean unprotectedTruncate(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, long newLength,
                                 INode.BlocksMapUpdateInfo collectedBlocks,
                                 long mtime, QuotaCounts delta) throws IOException {
         INodeFile file = iip.getLastINode().asFile();
@@ -991,7 +1004,7 @@ public class FSDirectory implements Closeable {
         return (remainingLength - newLength) == 0;
     }
 
-    private void verifyQuotaForTruncate(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, INodeFile file,
+    private void verifyQuotaForTruncate(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, INodeFile file,
                                         long newLength, QuotaCounts delta) throws QuotaExceededException,
             TransactionContextException, StorageException {
         if (!getFSNamesystem().isImageLoaded()) {
@@ -1125,12 +1138,12 @@ public class FSDirectory implements Closeable {
         nameCache.reset();
     }
 
-    boolean isInAnEZ(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip)
+    boolean isInAnEZ(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip)
             throws UnresolvedLinkException, TransactionContextException, StorageException, InvalidProtocolBufferException {
         return ezManager.isInAnEZ(iip);
     }
 
-    String getKeyName(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip) throws TransactionContextException, StorageException,
+    String getKeyName(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip) throws TransactionContextException, StorageException,
             InvalidProtocolBufferException {
         return ezManager.getKeyName(iip);
     }
@@ -1141,11 +1154,11 @@ public class FSDirectory implements Closeable {
         return ezManager.createEncryptionZone(src, suite, version, keyName);
     }
 
-    EncryptionZone getEZForPath(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip) throws IOException {
+    EncryptionZone getEZForPath(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip) throws IOException {
         return ezManager.getEZINodeForPath(iip);
     }
 
-    BatchedListEntries<EncryptionZone> listEncryptionZones(long prevId)
+    BatchedRemoteIterator.BatchedListEntries<EncryptionZone> listEncryptionZones(long prevId)
             throws IOException {
         return ezManager.listEncryptionZones(prevId);
     }
@@ -1164,7 +1177,7 @@ public class FSDirectory implements Closeable {
         final List<XAttr> xAttrs = Lists.newArrayListWithCapacity(1);
         xAttrs.add(fileEncryptionAttr);
 
-        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirXAttrOp.unprotectedSetXAttrs(this, src, xAttrs, EnumSet.of(XAttrSetFlag.CREATE));
+        org.apache.hadoop.hdfs.server.namenode.FSDirXAttrOp.unprotectedSetXAttrs(this, src, xAttrs, EnumSet.of(XAttrSetFlag.CREATE));
     }
 
     /**
@@ -1180,7 +1193,7 @@ public class FSDirectory implements Closeable {
      * @return consolidated file encryption info; null for non-encrypted files
      */
     FileEncryptionInfo getFileEncryptionInfo(INode inode,
-                                             com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip) throws IOException {
+                                             org.apache.hadoop.hdfs.server.namenode.INodesInPath iip) throws IOException {
         if (!inode.isFile()) {
             return null;
         }
@@ -1547,7 +1560,7 @@ public class FSDirectory implements Closeable {
         return EntityManager.find(INode.Finder.ByINodeIdFTIS, id);
     }
 
-    static INode resolveLastINode(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip) throws FileNotFoundException {
+    static INode resolveLastINode(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip) throws FileNotFoundException {
         INode inode = iip.getLastINode();
         if (inode == null) {
             throw new FileNotFoundException("cannot find " + iip.getPath());
@@ -1555,15 +1568,15 @@ public class FSDirectory implements Closeable {
         return inode;
     }
 
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath getExistingPathINodes(byte[][] components)
+    org.apache.hadoop.hdfs.server.namenode.INodesInPath getExistingPathINodes(byte[][] components)
             throws UnresolvedLinkException, StorageException, TransactionContextException {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components, false);
+        return org.apache.hadoop.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components, false);
     }
 
     /**
      * Get {@link INode} associated with the file / directory.
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath getINodesInPath4Write(String src)
+    public org.apache.hadoop.hdfs.server.namenode.INodesInPath getINodesInPath4Write(String src)
             throws UnresolvedLinkException, StorageException, TransactionContextException {
         return getINodesInPath4Write(src, true);
     }
@@ -1576,11 +1589,11 @@ public class FSDirectory implements Closeable {
         return getINodesInPath4Write(src, true).getLastINode();
     }
 
-    /** @return the {@link com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath} containing all inodes in the path. */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath getINodesInPath(String path, boolean resolveLink) throws UnresolvedLinkException, StorageException,
+    /** @return the {@link org.apache.hadoop.hdfs.server.namenode.INodesInPath} containing all inodes in the path. */
+    public org.apache.hadoop.hdfs.server.namenode.INodesInPath getINodesInPath(String path, boolean resolveLink) throws UnresolvedLinkException, StorageException,
             TransactionContextException {
         final byte[][] components = INode.getPathComponents(path);
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components, resolveLink);
+        return org.apache.hadoop.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components, resolveLink);
     }
     /** @return the last inode in the path. */
     INode getINode(String path, boolean resolveLink)
@@ -1598,19 +1611,19 @@ public class FSDirectory implements Closeable {
     /**
      * Get {@link INode} associated with the file / directory.
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath getINodesInPath4Write(String src, boolean resolveLink)
+    org.apache.hadoop.hdfs.server.namenode.INodesInPath getINodesInPath4Write(String src, boolean resolveLink)
             throws UnresolvedLinkException, StorageException, TransactionContextException {
         final byte[][] components = INode.getPathComponents(src);
-        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath inodesInPath = com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components,
+        org.apache.hadoop.hdfs.server.namenode.INodesInPath inodesInPath = org.apache.hadoop.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components,
                 resolveLink);
         return inodesInPath;
     }
 
 
 
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory getRootDir()
+    public org.apache.hadoop.hdfs.server.namenode.INodeDirectory getRootDir()
             throws StorageException, TransactionContextException {
-        return com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory.getRootDir();
+        return org.apache.hadoop.hdfs.server.namenode.INodeDirectory.getRootDir();
     }
 
     public boolean isQuotaEnabled() {
@@ -1618,20 +1631,20 @@ public class FSDirectory implements Closeable {
     }
 
     //add root inode if its not there
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory createRoot(
+    public org.apache.hadoop.hdfs.server.namenode.INodeDirectory createRoot(
             final PermissionStatus ps, final boolean overwrite) throws IOException {
         LightWeightRequestHandler addRootINode =
                 new LightWeightRequestHandler(HDFSOperationType.SET_ROOT) {
                     @Override
                     public Object performTask() throws IOException {
-                        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory newRootINode = null;
+                        org.apache.hadoop.hdfs.server.namenode.INodeDirectory newRootINode = null;
                         INodeDataAccess da = (INodeDataAccess) HdfsStorageFactory
                                 .getDataAccess(INodeDataAccess.class);
-                        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory rootInode = (com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory) da
-                                .findInodeByNameParentIdAndPartitionIdPK(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory.ROOT_NAME,
-                                        HdfsConstantsClient.GRANDFATHER_INODE_ID, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory.getRootDirPartitionKey());
+                        org.apache.hadoop.hdfs.server.namenode.INodeDirectory rootInode = (org.apache.hadoop.hdfs.server.namenode.INodeDirectory) da
+                                .findInodeByNameParentIdAndPartitionIdPK(org.apache.hadoop.hdfs.server.namenode.INodeDirectory.ROOT_NAME,
+                                        HdfsConstantsClient.GRANDFATHER_INODE_ID, org.apache.hadoop.hdfs.server.namenode.INodeDirectory.getRootDirPartitionKey());
                         if (rootInode == null || overwrite == true) {
-                            newRootINode = com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory.createRootDir(ps);
+                            newRootINode = org.apache.hadoop.hdfs.server.namenode.INodeDirectory.createRootDir(ps);
 
                             DirectoryWithQuotaFeature quotaFeature = new DirectoryWithQuotaFeature.Builder(newRootINode.getId()).
                                     nameSpaceQuota(DirectoryWithQuotaFeature.DEFAULT_NAMESPACE_QUOTA).
@@ -1682,29 +1695,29 @@ public class FSDirectory implements Closeable {
         }
     }
 
-    void checkOwner(FSPermissionChecker pc, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip)
+    void checkOwner(FSPermissionChecker pc, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip)
             throws AccessControlException, IOException {
         checkPermission(pc, iip, true, null, null, null, null);
     }
 
-    void checkPathAccess(FSPermissionChecker pc, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip,
+    void checkPathAccess(FSPermissionChecker pc, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip,
                          FsAction access)
             throws AccessControlException, IOException {
         checkPermission(pc, iip, false, null, null, access, null);
     }
     void checkParentAccess(
-            FSPermissionChecker pc, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, FsAction access)
+            FSPermissionChecker pc, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, FsAction access)
             throws AccessControlException, IOException {
         checkPermission(pc, iip, false, null, access, null, null);
     }
 
     void checkAncestorAccess(
-            FSPermissionChecker pc, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, FsAction access)
+            FSPermissionChecker pc, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, FsAction access)
             throws AccessControlException, IOException {
         checkPermission(pc, iip, false, access, null, null, null);
     }
 
-    void checkTraverse(FSPermissionChecker pc, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip)
+    void checkTraverse(FSPermissionChecker pc, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip)
             throws AccessControlException, IOException {
         checkPermission(pc, iip, false, null, null, null, null);
     }
@@ -1715,7 +1728,7 @@ public class FSDirectory implements Closeable {
      * {@link FSPermissionChecker#checkPermission}.
      */
     void checkPermission(
-            FSPermissionChecker pc, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, boolean doCheckOwner,
+            FSPermissionChecker pc, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, boolean doCheckOwner,
             FsAction ancestorAccess, FsAction parentAccess, FsAction access,
             FsAction subAccess)
             throws AccessControlException, UnresolvedLinkException, IOException {
@@ -1729,7 +1742,7 @@ public class FSDirectory implements Closeable {
      * {@link FSPermissionChecker#checkPermission}.
      */
     void checkPermission(
-            FSPermissionChecker pc, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip, boolean doCheckOwner,
+            FSPermissionChecker pc, org.apache.hadoop.hdfs.server.namenode.INodesInPath iip, boolean doCheckOwner,
             FsAction ancestorAccess, FsAction parentAccess, FsAction access,
             FsAction subAccess, boolean ignoreEmptyDir)
             throws AccessControlException, UnresolvedLinkException, TransactionContextException, IOException {
@@ -1739,10 +1752,10 @@ public class FSDirectory implements Closeable {
         }
     }
 
-    HdfsFileStatus getAuditFileInfo(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip)
+    HdfsFileStatus getAuditFileInfo(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip)
             throws IOException {
         return (namesystem.isAuditEnabled() && namesystem.isExternalInvocation())
-                ? com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirStatAndListingOp.getFileInfo(this, iip, false, false) : null;
+                ? org.apache.hadoop.hdfs.server.namenode.FSDirStatAndListingOp.getFileInfo(this, iip, false, false) : null;
     }
 
     /**

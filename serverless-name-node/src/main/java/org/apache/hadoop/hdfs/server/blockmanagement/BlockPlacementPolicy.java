@@ -17,9 +17,12 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.FSClusterStats;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.BlockStoragePolicy;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.protocol.Block;
+import org.apache.hadoop.hdfs.protocol.BlockStoragePolicy;
+import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
+import org.apache.hadoop.hdfs.protocol.LocatedBlock;
+import org.apache.hadoop.hdfs.server.blockmanagement.FSClusterStats;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
@@ -136,7 +139,7 @@ public abstract class BlockPlacementPolicy {
    * @param stats retrieve cluster status from here
    * @param clusterMap cluster topology
    */
-  abstract protected void initialize(Configuration conf,  com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.FSClusterStats stats,
+  abstract protected void initialize(Configuration conf,  org.apache.hadoop.hdfs.server.blockmanagement.FSClusterStats stats,
       NetworkTopology clusterMap,
       Host2NodesMap host2datanodeMap);
 

@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.conf.Configurable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.util.ReflectionUtils;
@@ -25,11 +25,11 @@ public class TrustedChannelResolver implements Configurable {
      * @param conf
      * @return TrustedChannelResolver
      */
-    public static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.TrustedChannelResolver getInstance(Configuration conf) {
-        Class<? extends com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.TrustedChannelResolver> clazz =
+    public static org.apache.hadoop.hdfs.protocol.datatransfer.TrustedChannelResolver getInstance(Configuration conf) {
+        Class<? extends org.apache.hadoop.hdfs.protocol.datatransfer.TrustedChannelResolver> clazz =
                 conf.getClass(
                         DFSConfigKeys.DFS_TRUSTEDCHANNEL_RESOLVER_CLASS,
-                        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.TrustedChannelResolver.class, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.TrustedChannelResolver.class);
+                        org.apache.hadoop.hdfs.protocol.datatransfer.TrustedChannelResolver.class, org.apache.hadoop.hdfs.protocol.datatransfer.TrustedChannelResolver.class);
         return ReflectionUtils.newInstance(clazz, conf);
     }
 

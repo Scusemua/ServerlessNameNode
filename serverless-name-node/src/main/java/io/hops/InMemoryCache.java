@@ -1,7 +1,7 @@
 package io.hops;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INode;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.server.namenode.INode;
 import com.googlecode.concurrentlinkedhashmap.ConcurrentLinkedHashMap;
 
 import io.hops.metadata.hdfs.entity.INodeIdentifier;

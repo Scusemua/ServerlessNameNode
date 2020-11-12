@@ -17,12 +17,12 @@
  */
 package org.apache.hadoop.hdfs.shortcircuit;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.ExtendedBlockId;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.net.DomainPeer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm.Slot;
+import org.apache.hadoop.hdfs.ExtendedBlockId;
+import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
+import org.apache.hadoop.hdfs.net.DomainPeer;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.Slot;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -61,7 +61,7 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 @InterfaceAudience.Private
 public class ShortCircuitCache implements Closeable {
-  public static final Log LOG = LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache.class);
+  public static final Log LOG = LogFactory.getLog(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache.class);
 
   /**
    * Expiry thread which makes sure that the file descriptors get closed
@@ -89,9 +89,9 @@ public class ShortCircuitCache implements Closeable {
      */
     @Override
     public void run() {
-      com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache.this.lock.lock();
+      org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache.this.lock.lock();
       try {
-        if (com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache.this.closed) return;
+        if (org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache.this.closed) return;
         long curMs = Time.monotonicNow();
 
         if (LOG.isDebugEnabled()) {
@@ -102,14 +102,14 @@ public class ShortCircuitCache implements Closeable {
         int numPurged = 0;
         Long evictionTimeNs = Long.valueOf(0);
         while (true) {
-          Entry<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> entry =
+          Entry<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> entry =
               evictable.ceilingEntry(evictionTimeNs);
           if (entry == null) break;
           evictionTimeNs = entry.getKey();
           long evictionTimeMs = 
               TimeUnit.MILLISECONDS.convert(evictionTimeNs, TimeUnit.NANOSECONDS);
           if (evictionTimeMs + maxNonMmappedEvictableLifespanMs >= curMs) break;
-          com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica = entry.getValue();
+          org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica = entry.getValue();
           if (LOG.isTraceEnabled()) {
             LOG.trace("CacheCleaner: purging " + replica + ": " + 
                   StringUtils.getStackTrace(Thread.currentThread()));
@@ -124,7 +124,7 @@ public class ShortCircuitCache implements Closeable {
             "purged " + numPurged + " replicas.");
         }
       } finally {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache.this.lock.unlock();
+        org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache.this.lock.unlock();
       }
     }
 
@@ -178,9 +178,9 @@ public class ShortCircuitCache implements Closeable {
     @Override
     public void run() {
       if (LOG.isTraceEnabled()) {
-        LOG.trace(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache.this + ": about to release " + slot);
+        LOG.trace(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache.this + ": about to release " + slot);
       }
-      final com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm shm = (com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShm)slot.getShm();
+      final org.apache.hadoop.hdfs.shortcircuit.DfsClientShm shm = (org.apache.hadoop.hdfs.shortcircuit.DfsClientShm)slot.getShm();
       final DomainSocket shmSock = shm.getPeer().getDomainSocket();
       DomainSocket sock = null;
       DataOutputStream out = null;
@@ -200,11 +200,11 @@ public class ShortCircuitCache implements Closeable {
           throw new IOException(resp.getStatus().toString() + ": " + error);
         }
         if (LOG.isTraceEnabled()) {
-          LOG.trace(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache.this + ": released " + slot);
+          LOG.trace(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache.this + ": released " + slot);
         }
         success = true;
       } catch (IOException e) {
-        LOG.error(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache.this + ": failed to release " +
+        LOG.error(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache.this + ": failed to release " +
             "short-circuit shared memory slot " + slot + " by sending " +
             "ReleaseShortCircuitAccessRequestProto to " + path +
             ".  Closing shared memory segment.", e);
@@ -227,7 +227,7 @@ public class ShortCircuitCache implements Closeable {
      *
      * @return a non-null ShortCircuitReplicaInfo object.
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo createShortCircuitReplicaInfo();
+    org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo createShortCircuitReplicaInfo();
   }
 
   /**
@@ -256,9 +256,9 @@ public class ShortCircuitCache implements Closeable {
    * ShortCircuitReplicaInfo objects may contain a replica, or an InvalidToken
    * exception.
    */
-  private final HashMap<ExtendedBlockId, Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo>>
+  private final HashMap<ExtendedBlockId, Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo>>
       replicaInfoMap = new HashMap<ExtendedBlockId,
-          Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo>>();
+          Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo>>();
 
   /**
    * The CacheCleaner.  We don't create this and schedule it until it becomes
@@ -271,8 +271,8 @@ public class ShortCircuitCache implements Closeable {
    *
    * Maps (unique) insertion time in nanoseconds to the element.
    */
-  private final TreeMap<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> evictable =
-      new TreeMap<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica>();
+  private final TreeMap<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> evictable =
+      new TreeMap<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica>();
 
   /**
    * Maximum total size of the cache, including both mmapped and
@@ -290,8 +290,8 @@ public class ShortCircuitCache implements Closeable {
    *
    * Maps (unique) insertion time in nanoseconds to the element.
    */
-  private final TreeMap<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> evictableMmapped =
-      new TreeMap<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica>();
+  private final TreeMap<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> evictableMmapped =
+      new TreeMap<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica>();
 
   /**
    * Maximum number of mmaped evictable elements.
@@ -328,10 +328,10 @@ public class ShortCircuitCache implements Closeable {
   /**
    * Manages short-circuit shared memory segments for the client.
    */
-  private final com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShmManager shmManager;
+  private final org.apache.hadoop.hdfs.shortcircuit.DfsClientShmManager shmManager;
 
-  public static com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache fromConf(DfsClientConf.ShortCircuitConf conf) {
-    return new com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitCache(
+  public static org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache fromConf(DfsClientConf.ShortCircuitConf conf) {
+    return new org.apache.hadoop.hdfs.shortcircuit.ShortCircuitCache(
         conf.getShortCircuitStreamsCacheSize(),
         conf.getShortCircuitStreamsCacheExpiryMs(),
         conf.getShortCircuitMmapCacheSize(),
@@ -354,11 +354,11 @@ public class ShortCircuitCache implements Closeable {
     this.maxEvictableMmapedLifespanMs = maxEvictableMmapedLifespanMs;
     this.mmapRetryTimeoutMs = mmapRetryTimeoutMs;
     this.staleThresholdMs = staleThresholdMs;
-    com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShmManager shmManager = null;
+    org.apache.hadoop.hdfs.shortcircuit.DfsClientShmManager shmManager = null;
     if ((shmInterruptCheckMs > 0) &&
         (DomainSocketWatcher.getLoadingFailureReason() == null)) {
       try {
-        shmManager = new com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShmManager(shmInterruptCheckMs);
+        shmManager = new org.apache.hadoop.hdfs.shortcircuit.DfsClientShmManager(shmInterruptCheckMs);
       } catch (IOException e) {
         LOG.error("failed to create ShortCircuitShmManager", e);
       }
@@ -378,7 +378,7 @@ public class ShortCircuitCache implements Closeable {
    *
    * @param replica      The replica we're removing.
    */
-  private void ref(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica) {
+  private void ref(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica) {
     lock.lock();
     try {
       Preconditions.checkArgument(replica.refCount > 0,
@@ -412,7 +412,7 @@ public class ShortCircuitCache implements Closeable {
    *
    * @param replica   The replica being unreferenced.
    */
-  void unref(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica) {
+  void unref(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica) {
     lock.lock();
     try {
       // If the replica is stale or unusable, but we haven't purged it yet,
@@ -492,7 +492,7 @@ public class ShortCircuitCache implements Closeable {
     Long evictionTimeNs = Long.valueOf(0);
 
     while (true) {
-      Entry<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> entry =
+      Entry<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> entry =
           evictableMmapped.ceilingEntry(evictionTimeNs);
       if (entry == null) break;
       evictionTimeNs = entry.getKey();
@@ -504,7 +504,7 @@ public class ShortCircuitCache implements Closeable {
         }
         needMoreSpace = true;
       }
-      com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica = entry.getValue();
+      org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica = entry.getValue();
       if (LOG.isTraceEnabled()) {
         String rationale = needMoreSpace ? "because we need more space" :
             "because it's too old";
@@ -533,7 +533,7 @@ public class ShortCircuitCache implements Closeable {
       if (evictableSize + evictableMmappedSize <= maxTotalSize) {
         return;
       }
-      com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica;
+      org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica;
       if (evictableSize == 0) {
        replica = evictableMmapped.firstEntry().getValue();
       } else {
@@ -552,7 +552,7 @@ public class ShortCircuitCache implements Closeable {
    *
    * @param replica  The replica to munmap.
    */
-  private void munmap(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica) {
+  private void munmap(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica) {
     replica.munmap();
     outstandingMmapCount--;
   }
@@ -563,7 +563,7 @@ public class ShortCircuitCache implements Closeable {
    * @param replica   The replica to remove.
    * @return          The map it was removed from.
    */
-  private String removeEvictable(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica) {
+  private String removeEvictable(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica) {
     if (replica.hasMmap()) {
       removeEvictable(replica, evictableMmapped);
       return "evictableMmapped";
@@ -579,11 +579,11 @@ public class ShortCircuitCache implements Closeable {
    * @param replica   The replica to remove.
    * @param map       The map to remove it from.
    */
-  private void removeEvictable(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica,
-                               TreeMap<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> map) {
+  private void removeEvictable(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica,
+                               TreeMap<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> map) {
     Long evictableTimeNs = replica.getEvictableTimeNs();
     Preconditions.checkNotNull(evictableTimeNs);
-    com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica removed = map.remove(evictableTimeNs);
+    org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica removed = map.remove(evictableTimeNs);
     Preconditions.checkState(removed == replica,
         "failed to make %s unevictable", replica);
     replica.setEvictableTimeNs(null);
@@ -600,7 +600,7 @@ public class ShortCircuitCache implements Closeable {
    * @param map              The map to insert it into.
    */
   private void insertEvictable(Long evictionTimeNs,
-                               com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica, TreeMap<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> map) {
+                               org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica, TreeMap<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> map) {
     while (map.containsKey(evictionTimeNs)) {
       evictionTimeNs++;
     }
@@ -621,14 +621,14 @@ public class ShortCircuitCache implements Closeable {
    *
    * @param replica   The replica being removed.
    */
-  private void purge(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica) {
+  private void purge(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica) {
     boolean removedFromInfoMap = false;
     String evictionMapName = null;
     Preconditions.checkArgument(!replica.purged);
     replica.purged = true;
-    Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo> val = replicaInfoMap.get(replica.key);
+    Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo> val = replicaInfoMap.get(replica.key);
     if (val != null) {
-      com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo info = val.getVal();
+      org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo info = val.getVal();
       if ((info != null) && (info.getReplica() == replica)) {
         replicaInfoMap.remove(replica.key);
         removedFromInfoMap = true;
@@ -665,12 +665,12 @@ public class ShortCircuitCache implements Closeable {
    * @return             Null if no replica could be found or created.
    *                     The replica, otherwise.
    */
-  public com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo fetchOrCreate(ExtendedBlockId key,
+  public org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo fetchOrCreate(ExtendedBlockId key,
                                                                                    ShortCircuitReplicaCreator creator) {
-    Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo> newWaitable = null;
+    Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo> newWaitable = null;
     lock.lock();
     try {
-      com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo info = null;
+      org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo info = null;
       do {
         if (closed) {
           if (LOG.isTraceEnabled()) {
@@ -679,7 +679,7 @@ public class ShortCircuitCache implements Closeable {
           }
           return null;
         }
-        Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo> waitable = replicaInfoMap.get(key);
+        Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo> waitable = replicaInfoMap.get(key);
         if (waitable != null) {
           try {
             info = fetch(key, waitable);
@@ -693,7 +693,7 @@ public class ShortCircuitCache implements Closeable {
       } while (false);
       if (info != null) return info;
       // We need to load the replica ourselves.
-      newWaitable = new Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo>(lock.newCondition());
+      newWaitable = new Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo>(lock.newCondition());
       replicaInfoMap.put(key, newWaitable);
     } finally {
       lock.unlock();
@@ -711,11 +711,11 @@ public class ShortCircuitCache implements Closeable {
    *
    * @throws RetriableException   If the caller needs to retry.
    */
-  private com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo fetch(ExtendedBlockId key,
-                                                                            Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo> waitable) throws RetriableException {
+  private org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo fetch(ExtendedBlockId key,
+                                                                            Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo> waitable) throws RetriableException {
     // Another thread is already in the process of loading this
     // ShortCircuitReplica.  So we simply wait for it to complete.
-    com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo info;
+    org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo info;
     try {
       if (LOG.isTraceEnabled()) {
         LOG.trace(this + ": found waitable for " + key);
@@ -731,7 +731,7 @@ public class ShortCircuitCache implements Closeable {
             "exception.", info.getInvalidTokenException());
       return info;
     }
-    com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica = info.getReplica();
+    org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica = info.getReplica();
     if (replica == null) {
       LOG.warn(this + ": failed to get " + key);
       return info;
@@ -755,11 +755,11 @@ public class ShortCircuitCache implements Closeable {
     return info;
   }
 
-  private com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo create(ExtendedBlockId key,
+  private org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo create(ExtendedBlockId key,
                                                                              ShortCircuitReplicaCreator creator,
-                                                                             Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo> newWaitable) {
+                                                                             Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo> newWaitable) {
     // Handle loading a new replica.
-    com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo info = null;
+    org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo info = null;
     try {
       if (LOG.isTraceEnabled()) {
         LOG.trace(this + ": loading " + key);
@@ -768,7 +768,7 @@ public class ShortCircuitCache implements Closeable {
     } catch (RuntimeException e) {
       LOG.warn(this + ": failed to load " + key, e);
     }
-    if (info == null) info = new com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo();
+    if (info == null) info = new org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo();
     lock.lock();
     try {
       if (info.getReplica() != null) {
@@ -783,7 +783,7 @@ public class ShortCircuitCache implements Closeable {
         // to increment the reference count here.
       } else {
         // On failure, remove the waitable from the replicaInfoMap.
-        Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo> waitableInMap = replicaInfoMap.get(key);
+        Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo> waitableInMap = replicaInfoMap.get(key);
         if (waitableInMap == newWaitable) replicaInfoMap.remove(key);
         if (info.getInvalidTokenException() != null) {
           LOG.info(this + ": could not load " + key + " due to InvalidToken " +
@@ -814,7 +814,7 @@ public class ShortCircuitCache implements Closeable {
     }
   }
 
-  ClientMmap getOrCreateClientMmap(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica replica,
+  ClientMmap getOrCreateClientMmap(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica replica,
                                    boolean anchored) {
     Condition newCond;
     lock.lock();
@@ -887,12 +887,12 @@ public class ShortCircuitCache implements Closeable {
       IOUtils.cleanup(LOG, cacheCleaner);
       // Purge all replicas.
       while (true) {
-        Entry<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> entry = evictable.firstEntry();
+        Entry<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> entry = evictable.firstEntry();
         if (entry == null) break;
         purge(entry.getValue());
       }
       while (true) {
-        Entry<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> entry = evictableMmapped.firstEntry();
+        Entry<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> entry = evictableMmapped.firstEntry();
         if (entry == null) break;
         purge(entry.getValue());
       }
@@ -933,23 +933,23 @@ public class ShortCircuitCache implements Closeable {
   @VisibleForTesting // ONLY for testing
   public interface CacheVisitor {
     void visit(int numOutstandingMmaps,
-        Map<ExtendedBlockId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> replicas,
+        Map<ExtendedBlockId, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> replicas,
         Map<ExtendedBlockId, InvalidToken> failedLoads,
-        Map<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> evictable,
-        Map<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> evictableMmapped);
+        Map<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> evictable,
+        Map<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> evictableMmapped);
   }
 
   @VisibleForTesting // ONLY for testing
   public void accept(CacheVisitor visitor) {
     lock.lock();
     try {
-      Map<ExtendedBlockId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> replicas =
-          new HashMap<ExtendedBlockId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica>();
+      Map<ExtendedBlockId, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> replicas =
+          new HashMap<ExtendedBlockId, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica>();
       Map<ExtendedBlockId, InvalidToken> failedLoads =
           new HashMap<ExtendedBlockId, InvalidToken>();
-      for (Entry<ExtendedBlockId, Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo>> entry :
+      for (Entry<ExtendedBlockId, Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo>> entry :
             replicaInfoMap.entrySet()) {
-        Waitable<com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplicaInfo> waitable = entry.getValue();
+        Waitable<org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplicaInfo> waitable = entry.getValue();
         if (waitable.hasVal()) {
           if (waitable.getVal().getReplica() != null) {
             replicas.put(entry.getKey(), waitable.getVal().getReplica());
@@ -967,7 +967,7 @@ public class ShortCircuitCache implements Closeable {
             append("with outstandingMmapCount=").append(outstandingMmapCount).
             append(", replicas=");
         String prefix = "";
-        for (Entry<ExtendedBlockId, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> entry : replicas.entrySet()) {
+        for (Entry<ExtendedBlockId, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> entry : replicas.entrySet()) {
           builder.append(prefix).append(entry.getValue());
           prefix = ",";
         }
@@ -979,14 +979,14 @@ public class ShortCircuitCache implements Closeable {
         }
         prefix = "";
         builder.append(", evictable=");
-        for (Entry<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> entry : evictable.entrySet()) {
+        for (Entry<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> entry : evictable.entrySet()) {
           builder.append(prefix).append(entry.getKey()).
               append(":").append(entry.getValue());
           prefix = ",";
         }
         prefix = "";
         builder.append(", evictableMmapped=");
-        for (Entry<Long, com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitReplica> entry : evictableMmapped.entrySet()) {
+        for (Entry<Long, org.apache.hadoop.hdfs.shortcircuit.ShortCircuitReplica> entry : evictableMmapped.entrySet()) {
           builder.append(prefix).append(entry.getKey()).
               append(":").append(entry.getValue());
           prefix = ",";
@@ -1056,7 +1056,7 @@ public class ShortCircuitCache implements Closeable {
   }
 
   @VisibleForTesting
-  public com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.DfsClientShmManager getDfsClientShmManager() {
+  public org.apache.hadoop.hdfs.shortcircuit.DfsClientShmManager getDfsClientShmManager() {
     return shmManager;
   }
 }

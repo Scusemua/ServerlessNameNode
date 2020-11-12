@@ -1,16 +1,15 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.AclException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.AclFeature;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FileUnderConstructionFeature;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrFeature;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.util.LongBitFormat;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
+import io.hops.erasure_coding.ErasureCodingManager;
+import org.apache.hadoop.fs.XAttr;
+import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.protocol.*;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockStoragePolicySuite;
+import org.apache.hadoop.hdfs.server.namenode.AclFeature;
+import org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature;
+import org.apache.hadoop.hdfs.server.namenode.INodeDirectory;
+import org.apache.hadoop.hdfs.server.namenode.XAttrFeature;
+import org.apache.hadoop.hdfs.util.LongBitFormat;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.primitives.SignedBytes;
 import io.hops.exception.StorageException;
@@ -167,7 +166,7 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
     }
 
     private int numAces;
-    /** parent is {@link com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory} */
+    /** parent is {@link org.apache.hadoop.hdfs.server.namenode.INodeDirectory} */
     protected INode parent = null;
     protected LightWeightGSet.LinkedElement next = null;
 
@@ -178,7 +177,7 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
     /** Get inode id */
     public abstract long getId();
 
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.AclFeature getAclFeature() throws TransactionContextException, StorageException, AclException {
+    public org.apache.hadoop.hdfs.server.namenode.AclFeature getAclFeature() throws TransactionContextException, StorageException, AclException {
         return INodeAclHelper.getAclFeature(this);
     }
 
@@ -193,7 +192,7 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
     /**
      * @return XAttrFeature
      */
-    abstract com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrFeature getXAttrFeature();
+    abstract org.apache.hadoop.hdfs.server.namenode.XAttrFeature getXAttrFeature();
 
     /**
      * Set <code>XAttrFeature</code>
@@ -262,9 +261,9 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
     }
 
     /**
-     * Cast this inode to an {@link com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory}.
+     * Cast this inode to an {@link org.apache.hadoop.hdfs.server.namenode.INodeDirectory}.
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory asDirectory() throws StorageException, TransactionContextException {
+    public org.apache.hadoop.hdfs.server.namenode.INodeDirectory asDirectory() throws StorageException, TransactionContextException {
         throw new IllegalStateException("Current inode is not a directory: "
                 + this.toDetailString());
     }
@@ -397,21 +396,21 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
     /**
      * Count subtree {@link Quota#NAMESPACE} and {@link Quota#STORAGESPACE} usages.
      *
-     * With the existence of {@link INodeReference}, the same inode and its
-     * subtree may be referred by multiple {@link WithName} nodes and a
-     * {@link DstReference} node. To avoid circles while quota usage computation,
+     * With the existence of INodeReference, the same inode and its
+     * subtree may be referred by multiple WithName nodes and a
+     * DstReference node. To avoid circles while quota usage computation,
      * we have the following rules:
      *
      * <pre>
-     * 1. For a {@link DstReference} node, since the node must be in the current
+     * 1. For a DstReference node, since the node must be in the current
      * tree (or has been deleted as the end point of a series of rename
      * operations), we compute the quota usage of the referred node (and its
      * subtree) in the regular manner, i.e., including every inode in the current
      * tree and in snapshot copies, as well as the size of diff list.
      *
-     * 2. For a {@link WithName} node, since the node must be in a snapshot, we
+     * 2. For a WithName node, since the node must be in a snapshot, we
      * only count the quota usage for those nodes that still existed at the
-     * creation time of the snapshot associated with the {@link WithName} node.
+     * creation time of the snapshot associated with the WithName node.
      * We do not count in the size of the diff list.
      * <pre>
      *
@@ -499,7 +498,7 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
      */
     @VisibleForTesting
     public final String getParentString() throws StorageException, TransactionContextException {
-        final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory parentDir = getParent();
+        final org.apache.hadoop.hdfs.server.namenode.INodeDirectory parentDir = getParent();
         if (parentDir != null) {
             return "parentDir=" + parentDir.getLocalName() + "/";
         } else {
@@ -509,7 +508,7 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
 
     @VisibleForTesting
     public String toDetailString() throws StorageException, TransactionContextException {
-        final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory p = getParent();
+        final org.apache.hadoop.hdfs.server.namenode.INodeDirectory p = getParent();
         return toStringWithObjectType()
                 + ", parent=" + (p == null ? null : p.toStringWithObjectType());
     }
@@ -524,7 +523,7 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
      *
      * @return parent INode
      */
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory getParent()
+    org.apache.hadoop.hdfs.server.namenode.INodeDirectory getParent()
             throws StorageException, TransactionContextException {
 
         if (isRoot()) {
@@ -679,7 +678,7 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
         if (parent == null) {
             return false;
         } else {
-            ((com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory) parent).removeChild(this);
+            ((org.apache.hadoop.hdfs.server.namenode.INodeDirectory) parent).removeChild(this);
             parent = null;
             return true;
         }
@@ -713,13 +712,13 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
         return (int)(id^(id>>>32));
     }
 
-    public void setParent(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory p)
+    public void setParent(org.apache.hadoop.hdfs.server.namenode.INodeDirectory p)
             throws StorageException, TransactionContextException {
         setParentNoPersistance(p);
         save();
     }
 
-    public void setParentNoPersistance(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory p) {
+    public void setParentNoPersistance(org.apache.hadoop.hdfs.server.namenode.INodeDirectory p) {
         this.parent = p;
         this.parentId = p.getId();
     }
@@ -825,10 +824,10 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
             throws IOException {
         EntityManager.remove(node);
         //if This inode is of type INodeDirectoryWithQuota then also delete the INode Attribute table
-        if ((node instanceof com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory) && ((com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory) node).isWithQuota()) {
-            final DirectoryWithQuotaFeature q = ((com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory) node).getDirectoryWithQuotaFeature();
+        if ((node instanceof org.apache.hadoop.hdfs.server.namenode.INodeDirectory) && ((org.apache.hadoop.hdfs.server.namenode.INodeDirectory) node).isWithQuota()) {
+            final DirectoryWithQuotaFeature q = ((org.apache.hadoop.hdfs.server.namenode.INodeDirectory) node).getDirectoryWithQuotaFeature();
             q.remove();
-            ((com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory) node).removeFeature(q);
+            ((org.apache.hadoop.hdfs.server.namenode.INodeDirectory) node).removeFeature(q);
         }
 
         cleanParity(node);
@@ -897,9 +896,9 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
         return getMetaEnabledParent() != null;
     }
 
-    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory getMetaEnabledParent()
+    org.apache.hadoop.hdfs.server.namenode.INodeDirectory getMetaEnabledParent()
             throws TransactionContextException, StorageException {
-        com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory dir = getParent();
+        org.apache.hadoop.hdfs.server.namenode.INodeDirectory dir = getParent();
         while (!isRoot() && !dir.isRoot()) {
             if (dir.isMetaEnabled()) {
                 return dir;
@@ -934,8 +933,8 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
     }
 
     private static long partitionIdHashFunction(long parentId, String name, short depth){
-        if(depth == com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory.ROOT_DIR_DEPTH){
-            return com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory.ROOT_DIR_PARTITION_KEY;
+        if(depth == org.apache.hadoop.hdfs.server.namenode.INodeDirectory.ROOT_DIR_DEPTH){
+            return org.apache.hadoop.hdfs.server.namenode.INodeDirectory.ROOT_DIR_PARTITION_KEY;
         }else{
             return (name+parentId).hashCode();
             //    String partitionid = String.format("%04d%04d",parentId,depth);
@@ -967,7 +966,7 @@ public abstract class INode implements Comparable<byte[]>, LightWeightGSet.Linke
     public abstract boolean hasBlocks();
 
     public short myDepth() throws TransactionContextException, StorageException {
-        if(getId() == com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodeDirectory.ROOT_INODE_ID){
+        if(getId() == org.apache.hadoop.hdfs.server.namenode.INodeDirectory.ROOT_INODE_ID){
             return INodeDirectory.ROOT_DIR_DEPTH;
         }
 

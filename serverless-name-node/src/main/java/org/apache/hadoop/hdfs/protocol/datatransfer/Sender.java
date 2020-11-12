@@ -17,11 +17,11 @@
  */
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.*;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
+import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm;
 import com.google.protobuf.Message;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
@@ -38,7 +38,7 @@ import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.DataTransferProtoUtil.toProto;
+import static org.apache.hadoop.hdfs.protocol.datatransfer.DataTransferProtoUtil.toProto;
 
 /**
  * Sender

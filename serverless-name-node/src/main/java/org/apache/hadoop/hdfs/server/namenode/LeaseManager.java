@@ -1,8 +1,8 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockInfoContiguous;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import io.hops.common.INodeUtil;
@@ -241,7 +241,7 @@ public class LeaseManager {
         Lease lease = getLease(holder);
         if (lease == null) {
             lease = new Lease(holder,
-                    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease.getHolderId(holder)
+                    org.apache.hadoop.hdfs.server.namenode.Lease.getHolderId(holder)
                     , now(), 0);
             lease.savePersistent();
         } else {
@@ -330,7 +330,7 @@ public class LeaseManager {
         LeasePath lPath = null;
         if (newLease == null) {
             newLease = new Lease(newHolder,
-                    com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease.getHolderId(newHolder)
+                    org.apache.hadoop.hdfs.server.namenode.Lease.getHolderId(newHolder)
                     , now(), 0);
             newLease.savePersistent();
             lPath = new LeasePath(src, newLease.getHolderID());

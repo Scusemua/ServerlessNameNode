@@ -19,7 +19,7 @@
 // This file contains protocol buffers that are used throughout HDFS -- i.e.
 // by the client, server, and data transfer protocols.
 
-option java_package = "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol";
+option java_package = "org.apache.hadoop.hdfs.protocol";
 
 option java_outer_classname = "ClientDatanodeProtocolProtos";
 
@@ -27,7 +27,7 @@ option java_generic_services = true;
 
 option java_generate_equals_and_hash = true;
 
-package com.gmail.benrcarver.serverlessnamenode;
+package org.apache.hadoop;
 
 import "Security.proto";
 
@@ -72,7 +72,7 @@ message DeleteBlockPoolResponseProto {
  */
 message GetBlockLocalPathInfoRequestProto {
   required ExtendedBlockProto block = 1;
-  required com.gmail.benrcarver.serverlessnamenode.TokenProto token = 2;
+  required org.apache.hadoop.TokenProto token = 2;
 }
 
 /**
@@ -97,7 +97,7 @@ message GetBlockLocalPathInfoResponseProto {
 message GetHdfsBlockLocationsRequestProto {
   // Removed: HDFS-3969
   // repeated ExtendedBlockProto blocks = 1;
-  repeated com.gmail.benrcarver.serverlessnamenode.TokenProto tokens = 2;
+  repeated org.apache.hadoop.TokenProto tokens = 2;
 
   required string blockPoolId = 3;
   repeated sfixed64 blockIds = 4 [ packed = true ];

@@ -1,12 +1,12 @@
 package io.hops;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.security.token.block.BlockKey;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.RollingUpgradeInfo;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.StorageInfo;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSNameSystem;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.security.token.block.BlockKey;
+import org.apache.hadoop.hdfsclient.hdfs.protocol.RollingUpgradeInfo;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.server.common.StorageInfo;
+import org.apache.hadoop.hdfs.server.namenode.FSNameSystem;
 import com.google.common.math.IntMath;
 import com.google.common.math.LongMath;
 import com.google.protobuf.InvalidProtocolBufferException;

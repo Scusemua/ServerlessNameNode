@@ -17,9 +17,9 @@
  */
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DataTransferProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm.SlotId;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
+import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
+import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.SlotId;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
@@ -39,7 +39,7 @@ import java.io.IOException;
 @InterfaceAudience.Private
 @InterfaceStability.Evolving
 public interface DataTransferProtocol {
-  public static final Log LOG = LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.DataTransferProtocol.class);
+  public static final Log LOG = LogFactory.getLog(org.apache.hadoop.hdfs.protocol.datatransfer.DataTransferProtocol.class);
   
   /**
    * Version for data transfers between clients and datanodes

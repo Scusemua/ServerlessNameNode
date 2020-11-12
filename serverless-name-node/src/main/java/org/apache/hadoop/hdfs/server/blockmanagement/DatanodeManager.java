@@ -17,14 +17,14 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants.DatanodeReportType;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.DatanodeDescriptor.BlockTargetPair;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.DatanodeStatistics;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.FSClusterStats;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnresolvedTopologyException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.CachedBlock;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.NameNode;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Namesystem;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants.DatanodeReportType;
+import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor.BlockTargetPair;
+import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeStatistics;
+import org.apache.hadoop.hdfs.server.blockmanagement.FSClusterStats;
+import org.apache.hadoop.hdfs.server.blockmanagement.UnresolvedTopologyException;
+import org.apache.hadoop.hdfs.server.namenode.CachedBlock;
+import org.apache.hadoop.hdfs.server.namenode.NameNode;
+import org.apache.hadoop.hdfs.server.namenode.Namesystem;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.net.InetAddresses;
@@ -76,7 +76,7 @@ public class DatanodeManager {
   private final BlockManager blockManager;
   private final DecommissionManager decomManager;
   private final HeartbeatManager heartbeatManager;
-  private final com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.FSClusterStats fsClusterStats;
+  private final org.apache.hadoop.hdfs.server.blockmanagement.FSClusterStats fsClusterStats;
 
   /**
    * Maps datanode uuid's to the DatanodeDescriptor
@@ -118,7 +118,7 @@ public class DatanodeManager {
   /**
    * Read include/exclude files
    */
-  private final com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.HostFileManager hostFileManager = new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.HostFileManager();
+  private final org.apache.hadoop.hdfs.server.blockmanagement.HostFileManager hostFileManager = new org.apache.hadoop.hdfs.server.blockmanagement.HostFileManager();
 
   /** The period to wait for datanode heartbeat.*/
   private long heartbeatExpireInterval;
@@ -355,7 +355,7 @@ public class DatanodeManager {
     return decomManager;
   }
 
-  com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.HostFileManager getHostFileManager() {
+  org.apache.hadoop.hdfs.server.blockmanagement.HostFileManager getHostFileManager() {
     return hostFileManager;
   }
 
@@ -365,7 +365,7 @@ public class DatanodeManager {
   }
 
   @VisibleForTesting
-  public com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.FSClusterStats getFSClusterStats() {
+  public org.apache.hadoop.hdfs.server.blockmanagement.FSClusterStats getFSClusterStats() {
     return fsClusterStats;
   }
 
@@ -1154,9 +1154,9 @@ public class DatanodeManager {
         type == DatanodeReportType.DECOMMISSIONING; 
 
     ArrayList<DatanodeDescriptor> nodes;
-    final com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.HostFileManager.HostSet foundNodes = new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.HostFileManager.HostSet();
-    final com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.HostFileManager.HostSet includedNodes = hostFileManager.getIncludes();
-    final com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.HostFileManager.HostSet excludedNodes = hostFileManager.getExcludes();
+    final org.apache.hadoop.hdfs.server.blockmanagement.HostFileManager.HostSet foundNodes = new org.apache.hadoop.hdfs.server.blockmanagement.HostFileManager.HostSet();
+    final org.apache.hadoop.hdfs.server.blockmanagement.HostFileManager.HostSet includedNodes = hostFileManager.getIncludes();
+    final org.apache.hadoop.hdfs.server.blockmanagement.HostFileManager.HostSet excludedNodes = hostFileManager.getExcludes();
     
     synchronized (datanodeMap) {
       nodes = new ArrayList<DatanodeDescriptor>(datanodeMap.size());
@@ -1168,7 +1168,7 @@ public class DatanodeManager {
             (listDecommissioningNodes && isDecommissioning)) {
           nodes.add(dn);
         }
-        foundNodes.add(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.HostFileManager.resolvedAddressFromDatanodeID(dn));
+        foundNodes.add(org.apache.hadoop.hdfs.server.blockmanagement.HostFileManager.resolvedAddressFromDatanodeID(dn));
       }
     }
 
@@ -1549,7 +1549,7 @@ public class DatanodeManager {
     String networkLocation;
     try {
       networkLocation = resolveNetworkLocation(node);
-    } catch (com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnresolvedTopologyException e) {
+    } catch (org.apache.hadoop.hdfs.server.blockmanagement.UnresolvedTopologyException e) {
       LOG.error("Unresolved topology mapping. Using " +
           NetworkTopology.DEFAULT_RACK + " for host " + node.getHostName());
       networkLocation = NetworkTopology.DEFAULT_RACK;
@@ -1557,7 +1557,7 @@ public class DatanodeManager {
     return networkLocation;
   }
 
-  com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.FSClusterStats newFSClusterStats() {
+  org.apache.hadoop.hdfs.server.blockmanagement.FSClusterStats newFSClusterStats() {
     return new FSClusterStats() {
       @Override
       public int getTotalLoad() {
@@ -1593,11 +1593,11 @@ public class DatanodeManager {
    * then this method throws UnresolvedTopologyException.
    * @param node to resolve to network location
    * @return network location path.
-   * @throws com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnresolvedTopologyException if the DNS to switch mapping fails
+   * @throws org.apache.hadoop.hdfs.server.blockmanagement.UnresolvedTopologyException if the DNS to switch mapping fails
    *    to resolve network location.
    */
   private String resolveNetworkLocation (DatanodeID node)
-      throws com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnresolvedTopologyException {
+      throws org.apache.hadoop.hdfs.server.blockmanagement.UnresolvedTopologyException {
     List<String> names = new ArrayList<String>(1);
     if (dnsToSwitchMapping instanceof CachedDNSToSwitchMapping) {
       names.add(node.getIpAddr());
@@ -1609,7 +1609,7 @@ public class DatanodeManager {
     String networkLocation;
     if (rName == null) {
       LOG.error("The resolve call returned null!");
-      throw new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnresolvedTopologyException(
+      throw new org.apache.hadoop.hdfs.server.blockmanagement.UnresolvedTopologyException(
           "Unresolved topology mapping for host " + node.getHostName());
     } else {
       networkLocation = rName.get(0);
@@ -1627,7 +1627,7 @@ public class DatanodeManager {
     List<String> dependencies;
     try {
       dependencies = getNetworkDependencies(node);
-    } catch (com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnresolvedTopologyException e) {
+    } catch (org.apache.hadoop.hdfs.server.blockmanagement.UnresolvedTopologyException e) {
       LOG.error("Unresolved dependency mapping for host " + 
           node.getHostName() +". Continuing with an empty dependency list");
       dependencies = Collections.emptyList();
@@ -1641,10 +1641,10 @@ public class DatanodeManager {
    * UnresolvedTopologyException. 
    * @param node to get dependencies for
    * @return List of dependent host names 
-   * @throws com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnresolvedTopologyException if the DNS to switch mapping fails
+   * @throws org.apache.hadoop.hdfs.server.blockmanagement.UnresolvedTopologyException if the DNS to switch mapping fails
    */
   private List<String> getNetworkDependencies(DatanodeInfo node)
-      throws com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnresolvedTopologyException {
+      throws org.apache.hadoop.hdfs.server.blockmanagement.UnresolvedTopologyException {
     List<String> dependencies = Collections.emptyList();
     if (dnsToSwitchMapping instanceof DNSToSwitchMappingWithDependency) {
       //Get dependencies

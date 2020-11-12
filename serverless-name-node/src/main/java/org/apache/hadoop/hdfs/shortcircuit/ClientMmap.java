@@ -29,7 +29,7 @@ import java.nio.MappedByteBuffer;
  */
 @InterfaceAudience.Private
 public class ClientMmap implements Closeable {
-  static final Log LOG = LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ClientMmap.class);
+  static final Log LOG = LogFactory.getLog(org.apache.hadoop.hdfs.shortcircuit.ClientMmap.class);
   
   /**
    * A reference to the block replica which this mmap relates to.

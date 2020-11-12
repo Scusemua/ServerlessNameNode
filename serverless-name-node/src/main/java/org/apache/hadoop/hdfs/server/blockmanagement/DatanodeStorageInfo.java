@@ -1,8 +1,8 @@
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.DatanodeStorage;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.DatanodeStorage.State;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.StorageReport;
+import org.apache.hadoop.hdfs.server.protocol.DatanodeStorage;
+import org.apache.hadoop.hdfs.server.protocol.DatanodeStorage.State;
+import org.apache.hadoop.hdfs.server.protocol.StorageReport;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.HdfsStorageFactory;
 import io.hops.exception.StorageException;

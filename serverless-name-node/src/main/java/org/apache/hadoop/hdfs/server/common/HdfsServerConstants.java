@@ -1,7 +1,7 @@
 package org.apache.hadoop.hdfs.server.common;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Lease;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.MetaRecoveryContext;
+import org.apache.hadoop.hdfs.server.namenode.Lease;
+import org.apache.hadoop.hdfs.server.namenode.MetaRecoveryContext;
 import com.google.common.base.Preconditions;
 import org.apache.hadoop.classification.InterfaceAudience;
 

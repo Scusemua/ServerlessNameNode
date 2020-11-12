@@ -1,13 +1,13 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.HDFSPolicyProvider;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.DatanodeProtocolProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocols;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BRLoadBalancingOverloadException;
-import com.gmail.benrcarver.serverlessnamenode.protocol.ClientNamenodeProtocolProtos;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.HDFSPolicyProvider;
+import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos;
+import org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos;
+import org.apache.hadoop.hdfs.protocol.NamenodeProtocols;
+import org.apache.hadoop.hdfs.server.blockmanagement.BRLoadBalancingOverloadException;
+import org.apache.hadoop.protocol.ClientNamenodeProtocolProtos;
 import com.google.protobuf.BlockingService;
 import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
@@ -49,9 +49,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants.MAX_PATH_DEPTH;
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsConstants.MAX_PATH_LENGTH;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
+import static org.apache.hadoop.hdfs.protocol.HdfsConstants.MAX_PATH_DEPTH;
+import static org.apache.hadoop.hdfs.protocol.HdfsConstants.MAX_PATH_LENGTH;
 
 public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
     // Dependencies from other parts of NN.
@@ -158,7 +158,7 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
                     conf.getInt(DFS_NAMENODE_SERVICE_HANDLER_COUNT_KEY,
                             DFS_NAMENODE_SERVICE_HANDLER_COUNT_DEFAULT);
             this.serviceRpcServer = new RPC.Builder(conf).setProtocol(
-                    com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.ClientNamenodeProtocolPB.class)
+                    org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolPB.class)
                     .setInstance(clientNNPbService)
                     .setBindAddress(bindHost)
                     .setPort(serviceRpcAddr.getPort()).setNumHandlers(serviceHandlerCount)
@@ -202,7 +202,7 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
         LOG.info("RPC server is binding to " + bindHost + ":" + rpcAddr.getPort());
 
         this.clientRpcServer = new RPC.Builder(conf).setProtocol(
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.ClientNamenodeProtocolPB.class)
+                org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolPB.class)
                 .setInstance(clientNNPbService).setBindAddress(bindHost)
                 .setPort(rpcAddr.getPort()).setNumHandlers(handlerCount)
                 .setVerbose(false)

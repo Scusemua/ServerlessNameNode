@@ -1,9 +1,9 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.BlockStoragePolicySuite;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.AclFeature;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrFeature;
+import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockStoragePolicySuite;
+import org.apache.hadoop.hdfs.server.namenode.AclFeature;
+import org.apache.hadoop.hdfs.server.namenode.XAttrFeature;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.permission.PermissionStatus;
 
@@ -109,7 +109,7 @@ public class INodeSymlink extends INodeWithAdditionalFields {
     }
 
     @Override
-    final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.XAttrFeature getXAttrFeature() {
+    final org.apache.hadoop.hdfs.server.namenode.XAttrFeature getXAttrFeature() {
         throw new UnsupportedOperationException("XAttrs are not supported on symlinks");
     }
 

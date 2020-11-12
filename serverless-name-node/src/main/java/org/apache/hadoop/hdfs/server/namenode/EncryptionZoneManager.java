@@ -1,12 +1,13 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.XAttrHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.FSDirXAttrOp;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
+import org.apache.hadoop.fs.XAttr;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.XAttrHelper;
+import org.apache.hadoop.hdfs.protocol.EncryptionZone;
+import org.apache.hadoop.hdfs.protocol.HdfsProtos;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.server.namenode.FSDirXAttrOp;
+import org.apache.hadoop.hdfs.server.namenode.INodesInPath;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -36,7 +37,7 @@ import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.CRYPTO_XATTR_ENCRYPTION_ZONE;
+import static org.apache.hadoop.hdfs.server.common.HdfsServerConstants.CRYPTO_XATTR_ENCRYPTION_ZONE;
 import static io.hops.transaction.lock.LockFactory.getInstance;
 
 /**
@@ -153,7 +154,7 @@ public class EncryptionZoneManager {
      * <p/>
      * Called while holding the FSDirectory lock.
      */
-    boolean isInAnEZ(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip)
+    boolean isInAnEZ(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip)
             throws UnresolvedLinkException, TransactionContextException, StorageException, InvalidProtocolBufferException {
         return (getEncryptionZoneForPath(iip) != null);
     }
@@ -173,7 +174,7 @@ public class EncryptionZoneManager {
      * <p/>
      * Called while holding the FSDirectory lock.
      */
-    String getKeyName(final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip) throws TransactionContextException, StorageException,
+    String getKeyName(final org.apache.hadoop.hdfs.server.namenode.INodesInPath iip) throws TransactionContextException, StorageException,
             InvalidProtocolBufferException {
         EncryptionZoneInt ezi = getEncryptionZoneForPath(iip);
         if (ezi == null) {
@@ -188,7 +189,7 @@ public class EncryptionZoneManager {
      * <p/>
      * Must be called while holding the manager lock.
      */
-    private EncryptionZoneInt getEncryptionZoneForPath(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip) throws TransactionContextException, StorageException, InvalidProtocolBufferException {
+    private EncryptionZoneInt getEncryptionZoneForPath(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip) throws TransactionContextException, StorageException, InvalidProtocolBufferException {
         Preconditions.checkNotNull(iip);
         List<INode> inodes = iip.getReadOnlyINodes();
         for (int i = inodes.size() - 1; i >= 0; i--) {
@@ -214,7 +215,7 @@ public class EncryptionZoneManager {
      * @param iip The INodesInPath of the path to check
      * @return the EncryptionZone representing the ez for the path.
      */
-    EncryptionZone getEZINodeForPath(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath iip) throws IOException {
+    EncryptionZone getEZINodeForPath(org.apache.hadoop.hdfs.server.namenode.INodesInPath iip) throws IOException {
         final EncryptionZoneInt ezi = getEncryptionZoneForPath(iip);
         if (ezi == null) {
             return null;
@@ -235,7 +236,7 @@ public class EncryptionZoneManager {
      * @param src    source path, used for debugging
      * @throws IOException if the src cannot be renamed to the dst
      */
-    void checkMoveValidity(com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath srcIIP, com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath dstIIP, String src)
+    void checkMoveValidity(org.apache.hadoop.hdfs.server.namenode.INodesInPath srcIIP, org.apache.hadoop.hdfs.server.namenode.INodesInPath dstIIP, String src)
             throws IOException {
         final EncryptionZoneInt srcEZI = getEncryptionZoneForPath(srcIIP);
         final EncryptionZoneInt dstEZI = getEncryptionZoneForPath(dstIIP);
@@ -282,7 +283,7 @@ public class EncryptionZoneManager {
     XAttr createEncryptionZone(String src, CipherSuite suite,
                                CryptoProtocolVersion version, String keyName)
             throws IOException {
-        final com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.INodesInPath srcIIP = dir.getINodesInPath4Write(src, false);
+        final org.apache.hadoop.hdfs.server.namenode.INodesInPath srcIIP = dir.getINodesInPath4Write(src, false);
         if (dir.isNonEmptyDirectory(srcIIP)) {
             throw new IOException(
                     "Attempt to create an encryption zone for a non-empty directory.");

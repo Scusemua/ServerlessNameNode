@@ -19,13 +19,13 @@
 // This file contains protocol buffers that are used to transfer data
 // to and from the datanode, as well as between datanodes.
 
-option java_package = "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol";
+option java_package = "org.apache.hadoop.hdfs.protocol";
 
 option java_outer_classname = "DataTransferProtos";
 
 option java_generate_equals_and_hash = true;
 
-package com.gmail.benrcarver.serverlessnamenode;
+package org.apache.hadoop;
 
 import "Security.proto";
 
@@ -45,7 +45,7 @@ message DataTransferEncryptorMessageProto {
 
 message BaseHeaderProto {
   required ExtendedBlockProto block = 1;
-  optional com.gmail.benrcarver.serverlessnamenode.TokenProto token = 2;
+  optional org.apache.hadoop.TokenProto token = 2;
   optional DataTransferTraceInfoProto traceInfo = 3;
 }
 

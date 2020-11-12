@@ -1,7 +1,7 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.DatanodeDescriptor;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.DatanodeManager;
+import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor;
+import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeManager;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.transaction.EntityManager;

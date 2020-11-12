@@ -1,8 +1,8 @@
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.BlockUCState;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.ReplicaState;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.BlockUCState;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;
+import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.transaction.EntityManager;

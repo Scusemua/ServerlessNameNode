@@ -20,13 +20,13 @@
 // by the client, server, and data transfer protocols.
 
 
-option java_package = "com.gmail.benrcarver.serverlessnamenode.hdfs.protocol";
+option java_package = "org.apache.hadoop.hdfs.protocol";
 
 option java_outer_classname = "HdfsProtos";
 
 option java_generate_equals_and_hash = true;
 
-package com.gmail.benrcarver.serverlessnamenode;
+package org.apache.hadoop;
 
 import "Security.proto";
 
@@ -210,7 +210,7 @@ message LocatedBlockProto {
   // If block has few corrupt replicas, they are filtered and
   // their locations are not part of this object
   required bool corrupt = 4;
-  required com.gmail.benrcarver.serverlessnamenode.TokenProto blockToken = 5;
+  required org.apache.hadoop.TokenProto blockToken = 5;
   repeated bool isCached = 6 [packed=true]; // if a location in locs is cached
   repeated StorageTypeProto storageTypes = 7;
   repeated string storageIDs = 8;

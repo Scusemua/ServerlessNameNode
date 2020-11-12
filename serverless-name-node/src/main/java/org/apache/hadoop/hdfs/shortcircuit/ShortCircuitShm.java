@@ -43,7 +43,7 @@ import java.util.Random;
  * A shared memory segment used to implement short-circuit reads.
  */
 public class ShortCircuitShm {
-  private static final Log LOG = LogFactory.getLog(com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm.class);
+  private static final Log LOG = LogFactory.getLog(org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.class);
 
   protected static final int BYTES_PER_SLOT = 64;
 
@@ -195,14 +195,14 @@ public class ShortCircuitShm {
 
     @Override
     public boolean hasNext() {
-      synchronized (com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm.this) {
+      synchronized (org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.this) {
         return allocatedSlots.nextSetBit(slotIdx + 1) != -1;
       }
     }
 
     @Override
     public Slot next() {
-      synchronized (com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm.this) {
+      synchronized (org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.this) {
         int nextSlotIdx = allocatedSlots.nextSetBit(slotIdx + 1);
         if (nextSlotIdx == -1) {
           throw new NoSuchElementException();
@@ -271,8 +271,8 @@ public class ShortCircuitShm {
      *
      * @return      The enclosing short-circuit memory segment.
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm getShm() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.shortcircuit.ShortCircuitShm.this;
+    public org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm getShm() {
+      return org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm.this;
     }
 
     /**

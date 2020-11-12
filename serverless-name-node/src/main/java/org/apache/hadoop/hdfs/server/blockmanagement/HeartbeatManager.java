@@ -17,8 +17,8 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.DatanodeStatistics;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.Namesystem;
+import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeStatistics;
+import org.apache.hadoop.hdfs.server.namenode.Namesystem;
 import io.hops.metadata.StorageMap;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSConfigKeys;

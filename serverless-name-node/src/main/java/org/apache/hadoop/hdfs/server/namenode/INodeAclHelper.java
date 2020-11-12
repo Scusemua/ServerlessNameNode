@@ -1,7 +1,7 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.AclException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.AclFeature;
+import org.apache.hadoop.hdfs.protocol.AclException;
+import org.apache.hadoop.hdfs.server.namenode.AclFeature;
 import com.google.common.collect.Lists;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
@@ -25,7 +25,7 @@ public class INodeAclHelper {
      * @throws TransactionContextException
      * @throws StorageException
      */
-    static com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.AclFeature getAclFeature(INode inode) throws TransactionContextException, StorageException, AclException {
+    static org.apache.hadoop.hdfs.server.namenode.AclFeature getAclFeature(INode inode) throws TransactionContextException, StorageException, AclException {
         Collection<Ace> result = getAces(inode);
         //Collection<Ace> result = getOwnAces(inode);
         if (result == null){
@@ -33,7 +33,7 @@ public class INodeAclHelper {
         }
         ArrayList<Ace> asList = Lists.newArrayList(result);
         Collections.sort(asList, Ace.Order.ByIndexAscending);
-        return new com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.AclFeature(convert(asList));
+        return new org.apache.hadoop.hdfs.server.namenode.AclFeature(convert(asList));
     }
 
     /**

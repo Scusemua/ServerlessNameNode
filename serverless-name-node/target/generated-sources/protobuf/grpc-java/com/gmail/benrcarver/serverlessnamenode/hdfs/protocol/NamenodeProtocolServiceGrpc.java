@@ -1,4 +1,4 @@
-package com.gmail.benrcarver.serverlessnamenode.hdfs.protocol;
+package org.apache.hadoop.hdfs.protocol;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
@@ -23,32 +23,32 @@ public final class NamenodeProtocolServiceGrpc {
 
   private NamenodeProtocolServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "com.gmail.benrcarver.serverlessnamenode.namenode.NamenodeProtocolService";
+  public static final String SERVICE_NAME = "org.apache.hadoop.namenode.NamenodeProtocolService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> getGetBlocksMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto,
+      org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> getGetBlocksMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "getBlocks",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> getGetBlocksMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> getGetBlocksMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto,
+      org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> getGetBlocksMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto, org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> getGetBlocksMethod;
     if ((getGetBlocksMethod = NamenodeProtocolServiceGrpc.getGetBlocksMethod) == null) {
       synchronized (NamenodeProtocolServiceGrpc.class) {
         if ((getGetBlocksMethod = NamenodeProtocolServiceGrpc.getGetBlocksMethod) == null) {
           NamenodeProtocolServiceGrpc.getGetBlocksMethod = getGetBlocksMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto, org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getBlocks"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new NamenodeProtocolServiceMethodDescriptorSupplier("getBlocks"))
               .build();
         }
@@ -57,29 +57,29 @@ public final class NamenodeProtocolServiceGrpc {
     return getGetBlocksMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> getGetBlockKeysMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto,
+      org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> getGetBlockKeysMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "getBlockKeys",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> getGetBlockKeysMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> getGetBlockKeysMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto,
+      org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> getGetBlockKeysMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto, org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> getGetBlockKeysMethod;
     if ((getGetBlockKeysMethod = NamenodeProtocolServiceGrpc.getGetBlockKeysMethod) == null) {
       synchronized (NamenodeProtocolServiceGrpc.class) {
         if ((getGetBlockKeysMethod = NamenodeProtocolServiceGrpc.getGetBlockKeysMethod) == null) {
           NamenodeProtocolServiceGrpc.getGetBlockKeysMethod = getGetBlockKeysMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto, org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "getBlockKeys"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new NamenodeProtocolServiceMethodDescriptorSupplier("getBlockKeys"))
               .build();
         }
@@ -88,29 +88,29 @@ public final class NamenodeProtocolServiceGrpc {
     return getGetBlockKeysMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto> getVersionRequestMethod;
+  private static volatile io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto,
+      org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto> getVersionRequestMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "versionRequest",
-      requestType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto.class,
-      responseType = com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto.class,
+      requestType = org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto.class,
+      responseType = org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto,
-      com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto> getVersionRequestMethod() {
-    io.grpc.MethodDescriptor<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto> getVersionRequestMethod;
+  public static io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto,
+      org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto> getVersionRequestMethod() {
+    io.grpc.MethodDescriptor<org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto, org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto> getVersionRequestMethod;
     if ((getVersionRequestMethod = NamenodeProtocolServiceGrpc.getVersionRequestMethod) == null) {
       synchronized (NamenodeProtocolServiceGrpc.class) {
         if ((getVersionRequestMethod = NamenodeProtocolServiceGrpc.getVersionRequestMethod) == null) {
           NamenodeProtocolServiceGrpc.getVersionRequestMethod = getVersionRequestMethod =
-              io.grpc.MethodDescriptor.<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto, com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto>newBuilder()
+              io.grpc.MethodDescriptor.<org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto, org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "versionRequest"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto.getDefaultInstance()))
+                  org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto.getDefaultInstance()))
               .setSchemaDescriptor(new NamenodeProtocolServiceMethodDescriptorSupplier("versionRequest"))
               .build();
         }
@@ -180,8 +180,8 @@ public final class NamenodeProtocolServiceGrpc {
      * of blocks adding up to given size.
      * </pre>
      */
-    public void getBlocks(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto request,
-                          io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> responseObserver) {
+    public void getBlocks(org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto request,
+                          io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getGetBlocksMethod(), responseObserver);
     }
 
@@ -191,8 +191,8 @@ public final class NamenodeProtocolServiceGrpc {
      * Get the current block keys
      * </pre>
      */
-    public void getBlockKeys(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto request,
-                             io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> responseObserver) {
+    public void getBlockKeys(org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto request,
+                             io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getGetBlockKeysMethod(), responseObserver);
     }
 
@@ -202,8 +202,8 @@ public final class NamenodeProtocolServiceGrpc {
      * Request info about the version running on this NameNode
      * </pre>
      */
-    public void versionRequest(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto request,
-                               io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto> responseObserver) {
+    public void versionRequest(org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto request,
+                               io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto> responseObserver) {
       asyncUnimplementedUnaryCall(getVersionRequestMethod(), responseObserver);
     }
 
@@ -213,22 +213,22 @@ public final class NamenodeProtocolServiceGrpc {
             getGetBlocksMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto>(
+                org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto,
+                org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto>(
                   this, METHODID_GET_BLOCKS)))
           .addMethod(
             getGetBlockKeysMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto>(
+                org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto,
+                org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto>(
                   this, METHODID_GET_BLOCK_KEYS)))
           .addMethod(
             getVersionRequestMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto>(
+                org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto,
+                org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto>(
                   this, METHODID_VERSION_REQUEST)))
           .build();
     }
@@ -261,8 +261,8 @@ public final class NamenodeProtocolServiceGrpc {
      * of blocks adding up to given size.
      * </pre>
      */
-    public void getBlocks(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto request,
-                          io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> responseObserver) {
+    public void getBlocks(org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto request,
+                          io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetBlocksMethod(), getCallOptions()), request, responseObserver);
     }
@@ -273,8 +273,8 @@ public final class NamenodeProtocolServiceGrpc {
      * Get the current block keys
      * </pre>
      */
-    public void getBlockKeys(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto request,
-                             io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> responseObserver) {
+    public void getBlockKeys(org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto request,
+                             io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetBlockKeysMethod(), getCallOptions()), request, responseObserver);
     }
@@ -285,8 +285,8 @@ public final class NamenodeProtocolServiceGrpc {
      * Request info about the version running on this NameNode
      * </pre>
      */
-    public void versionRequest(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto request,
-                               io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto> responseObserver) {
+    public void versionRequest(org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto request,
+                               io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getVersionRequestMethod(), getCallOptions()), request, responseObserver);
     }
@@ -319,7 +319,7 @@ public final class NamenodeProtocolServiceGrpc {
      * of blocks adding up to given size.
      * </pre>
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto getBlocks(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto getBlocks(org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getGetBlocksMethod(), getCallOptions(), request);
     }
@@ -330,7 +330,7 @@ public final class NamenodeProtocolServiceGrpc {
      * Get the current block keys
      * </pre>
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto getBlockKeys(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto getBlockKeys(org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getGetBlockKeysMethod(), getCallOptions(), request);
     }
@@ -341,7 +341,7 @@ public final class NamenodeProtocolServiceGrpc {
      * Request info about the version running on this NameNode
      * </pre>
      */
-    public com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto versionRequest(com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto request) {
+    public org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto versionRequest(org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto request) {
       return blockingUnaryCall(
           getChannel(), getVersionRequestMethod(), getCallOptions(), request);
     }
@@ -374,8 +374,8 @@ public final class NamenodeProtocolServiceGrpc {
      * of blocks adding up to given size.
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> getBlocks(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto> getBlocks(
+        org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getGetBlocksMethod(), getCallOptions()), request);
     }
@@ -386,8 +386,8 @@ public final class NamenodeProtocolServiceGrpc {
      * Get the current block keys
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> getBlockKeys(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto> getBlockKeys(
+        org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getGetBlockKeysMethod(), getCallOptions()), request);
     }
@@ -398,8 +398,8 @@ public final class NamenodeProtocolServiceGrpc {
      * Request info about the version running on this NameNode
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto> versionRequest(
-        com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto request) {
+    public com.google.common.util.concurrent.ListenableFuture<org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto> versionRequest(
+        org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto request) {
       return futureUnaryCall(
           getChannel().newCall(getVersionRequestMethod(), getCallOptions()), request);
     }
@@ -427,16 +427,16 @@ public final class NamenodeProtocolServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_GET_BLOCKS:
-          serviceImpl.getBlocks((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto>) responseObserver);
+          serviceImpl.getBlocks((org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlocksResponseProto>) responseObserver);
           break;
         case METHODID_GET_BLOCK_KEYS:
-          serviceImpl.getBlockKeys((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto>) responseObserver);
+          serviceImpl.getBlockKeys((org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.GetBlockKeysResponseProto>) responseObserver);
           break;
         case METHODID_VERSION_REQUEST:
-          serviceImpl.versionRequest((com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionRequestProto) request,
-              (io.grpc.stub.StreamObserver<com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.HdfsProtos.VersionResponseProto>) responseObserver);
+          serviceImpl.versionRequest((org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionRequestProto) request,
+              (io.grpc.stub.StreamObserver<org.apache.hadoop.hdfs.protocol.HdfsProtos.VersionResponseProto>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -460,7 +460,7 @@ public final class NamenodeProtocolServiceGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.NamenodeProtocolProtos.getDescriptor();
+      return org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos.getDescriptor();
     }
 
     @java.lang.Override

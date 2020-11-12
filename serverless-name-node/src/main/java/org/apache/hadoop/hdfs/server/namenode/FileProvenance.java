@@ -1,6 +1,5 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.fs.XAttr;
 import io.hops.common.Pair;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
@@ -8,6 +7,7 @@ import io.hops.metadata.hdfs.entity.FileProvXAttrBufferEntry;
 import io.hops.metadata.hdfs.entity.FileProvenanceEntry;
 import io.hops.security.UsersGroups;
 import io.hops.transaction.EntityManager;
+import org.apache.hadoop.fs.XAttr;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.slf4j.LoggerFactory;
 

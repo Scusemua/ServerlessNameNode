@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.net;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.IOStreamPair;
+import org.apache.hadoop.hdfs.protocol.datatransfer.IOStreamPair;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.net.unix.DomainSocket;
 

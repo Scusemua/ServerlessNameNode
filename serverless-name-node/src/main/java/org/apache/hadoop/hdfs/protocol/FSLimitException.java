@@ -1,6 +1,5 @@
 package org.apache.hadoop.hdfs.protocol;
 
-import com.gmail.benrcarver.serverlessnamenode.exceptions.QuotaExceededException;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 
@@ -26,8 +25,7 @@ public abstract class FSLimitException extends QuotaExceededException {
     /**
      * Path component length is too long
      */
-    public static final
-    class PathComponentTooLongException extends FSLimitException {
+    public static final class PathComponentTooLongException extends FSLimitException {
         protected static final long serialVersionUID = 1L;
 
         private String childName;

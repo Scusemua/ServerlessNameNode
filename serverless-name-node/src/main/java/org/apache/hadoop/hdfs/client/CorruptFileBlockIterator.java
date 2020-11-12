@@ -19,7 +19,7 @@
 package org.apache.hadoop.hdfs.client;
 
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSClient;
+import org.apache.hadoop.hdfs.DFSClient;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.RemoteIterator;

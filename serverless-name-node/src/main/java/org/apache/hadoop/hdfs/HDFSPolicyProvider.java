@@ -17,7 +17,7 @@
  */
 package org.apache.hadoop.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.ClientProtocol;
+import org.apache.hadoop.hdfs.protocol.ClientProtocol;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.CommonConfigurationKeys;
 import org.apache.hadoop.ipc.GenericRefreshProtocol;

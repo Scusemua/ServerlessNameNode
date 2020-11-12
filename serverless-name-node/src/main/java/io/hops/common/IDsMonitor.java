@@ -1,6 +1,6 @@
 package io.hops.common;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;

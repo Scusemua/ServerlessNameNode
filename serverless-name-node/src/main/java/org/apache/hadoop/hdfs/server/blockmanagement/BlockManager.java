@@ -1,16 +1,14 @@
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.DFSUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.CorruptReplicasMap;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants.ReplicaState;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockListAsLongs;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockReport;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.BlockReportContext;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.protocol.Bucket;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.protocol.BlockStoragePolicy;
-import com.gmail.benrcarver.serverlessnamenode.hdfsclient.hdfs.security.token.block.DataEncryptionKey;
+import org.apache.hadoop.HadoopIllegalArgumentException;
+import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.DFSUtil;
+import org.apache.hadoop.hdfs.protocol.*;
+import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
+import org.apache.hadoop.hdfs.server.blockmanagement.CorruptReplicasMap;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;
+import org.apache.hadoop.hdfs.server.namenode.*;
+import org.apache.hadoop.hdfs.server.protocol.*;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.HdfsVariables;
 import io.hops.common.INodeUtil;
@@ -144,12 +142,12 @@ public class BlockManager {
     /**
      * Store blocks -> datanodedescriptor(s) map of corrupt replicas
      */
-    final com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.CorruptReplicasMap corruptReplicas;
+    final org.apache.hadoop.hdfs.server.blockmanagement.CorruptReplicasMap corruptReplicas;
 
     /**
      * Blocks to be invalidated.
      */
-    private final com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.InvalidateBlocks invalidateBlocks;
+    private final org.apache.hadoop.hdfs.server.blockmanagement.InvalidateBlocks invalidateBlocks;
 
     /**
      * After a failover, over-replicated blocks may not be handled
@@ -171,8 +169,8 @@ public class BlockManager {
      * Store set of Blocks that need to be replicated 1 or more times.
      * We also store pending replication-orders.
      */
-    public final com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnderReplicatedBlocks neededReplications =
-            new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnderReplicatedBlocks();
+    public final org.apache.hadoop.hdfs.server.blockmanagement.UnderReplicatedBlocks neededReplications =
+            new org.apache.hadoop.hdfs.server.blockmanagement.UnderReplicatedBlocks();
 
     @VisibleForTesting
     final PendingReplicationBlocks pendingReplications;
@@ -277,7 +275,7 @@ public class BlockManager {
         startupDelayBlockDeletionInMs = conf.getLong(
                 DFSConfigKeys.DFS_NAMENODE_STARTUP_DELAY_BLOCK_DELETION_SEC_KEY,
                 DFSConfigKeys.DFS_NAMENODE_STARTUP_DELAY_BLOCK_DELETION_SEC_DEFAULT) * 1000L;
-        invalidateBlocks = new com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.InvalidateBlocks(
+        invalidateBlocks = new org.apache.hadoop.hdfs.server.blockmanagement.InvalidateBlocks(
                 datanodeManager.blockInvalidateLimit, startupDelayBlockDeletionInMs);
         excessReplicateMap = new ExcessReplicasMap(datanodeManager);
 
@@ -520,7 +518,7 @@ public class BlockManager {
         // source node returned is not used
         chooseSourceDatanode(block, containingNodes,
                 containingLiveReplicasNodes, numReplicas,
-                com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnderReplicatedBlocks.LEVEL);
+                org.apache.hadoop.hdfs.server.blockmanagement.UnderReplicatedBlocks.LEVEL);
 
         // containingLiveReplicasNodes can include READ_ONLY_SHARED replicas which are
         // not included in the numReplicas.liveReplicas() count
@@ -1939,7 +1937,7 @@ public class BlockManager {
             if ((nodesCorrupt != null) && nodesCorrupt.contains(node)) {
                 continue;
             }
-            if(priority != com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnderReplicatedBlocks.QUEUE_HIGHEST_PRIORITY
+            if(priority != org.apache.hadoop.hdfs.server.blockmanagement.UnderReplicatedBlocks.QUEUE_HIGHEST_PRIORITY
                     && !node.isDecommissionInProgress()
                     && node.getNumberOfBlocksToBeReplicated() >= maxReplicationStreams)
             {
@@ -4866,7 +4864,7 @@ public class BlockManager {
      */
     public Iterator<Block> getCorruptReplicaBlockIterator() {
         return neededReplications
-                .iterator(com.gmail.benrcarver.serverlessnamenode.hdfs.server.blockmanagement.UnderReplicatedBlocks.QUEUE_WITH_CORRUPT_BLOCKS);
+                .iterator(org.apache.hadoop.hdfs.server.blockmanagement.UnderReplicatedBlocks.QUEUE_WITH_CORRUPT_BLOCKS);
     }
 
     /**

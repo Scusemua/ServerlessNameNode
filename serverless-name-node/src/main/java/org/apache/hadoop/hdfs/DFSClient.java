@@ -1,26 +1,26 @@
 package org.apache.hadoop.hdfs;
 
-import com.gmail.benrcarver.serverlessnamenode.fs.BlockStorageLocation;
-import com.gmail.benrcarver.serverlessnamenode.fs.HdfsBlockLocation;
-import com.gmail.benrcarver.serverlessnamenode.fs.VolumeId;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsDataInputStream;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.client.HdfsDataOutputStream;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.client.impl.DfsClientConf;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.net.Peer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.net.TcpPeerServer;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CacheDirectiveEntry;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.CachePoolInfo;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.QuotaByStorageTypeExceededException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.*;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataEncryptionKeyFactory;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.DataTransferSaslUtil;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.protocolPB.PBHelper;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.security.token.block.InvalidBlockTokenException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.common.HdfsServerConstants;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.datanode.CachingStrategy;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.SafeModeException;
-import com.gmail.benrcarver.serverlessnamenode.hdfs.server.namenode.ServerlessNameNode;
+import org.apache.hadoop.fs.BlockStorageLocation;
+import org.apache.hadoop.fs.HdfsBlockLocation;
+import org.apache.hadoop.fs.VolumeId;
+import org.apache.hadoop.hdfs.client.HdfsDataInputStream;
+import org.apache.hadoop.hdfs.client.HdfsDataOutputStream;
+import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
+import org.apache.hadoop.hdfs.net.Peer;
+import org.apache.hadoop.hdfs.net.TcpPeerServer;
+import org.apache.hadoop.hdfs.protocol.CacheDirectiveEntry;
+import org.apache.hadoop.hdfs.protocol.CachePoolInfo;
+import org.apache.hadoop.hdfs.protocol.QuotaByStorageTypeExceededException;
+import org.apache.hadoop.hdfs.protocol.datatransfer.*;
+import org.apache.hadoop.hdfs.protocol.datatransfer.sasl.DataEncryptionKeyFactory;
+import org.apache.hadoop.hdfs.protocol.datatransfer.sasl.DataTransferSaslUtil;
+import org.apache.hadoop.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
+import org.apache.hadoop.hdfs.server.namenode.SafeModeException;
+import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
@@ -78,7 +78,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.gmail.benrcarver.serverlessnamenode.hdfs.DFSConfigKeys.*;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
 
 /********************************************************
  * DFSClient can connect to a Hadoop Filesystem and
