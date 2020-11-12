@@ -22,6 +22,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
+import org.apache.hadoop.hdfs.server.common.JspHelper;
+import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
 import org.apache.hadoop.hdfs.web.WebHdfsFileSystem;
 import org.apache.hadoop.hdfs.web.resources.Param;
 import org.apache.hadoop.net.NetUtils;
@@ -225,8 +227,8 @@ public class NameNodeHttpServer {
     private static void setupServlets(HttpServer2 httpServer, Configuration conf) {
         httpServer.addInternalServlet("startupProgress",
                 StartupProgressServlet.PATH_SPEC, StartupProgressServlet.class);
-        httpServer.addInternalServlet("fsck", "/fsck", FsckServlet.class,
-                true);
+//        httpServer.addInternalServlet("fsck", "/fsck", FsckServlet.class,
+//                true);
     }
 
     public static ServerlessNameNode getNameNodeFromContext(ServletContext context) {
