@@ -16,6 +16,8 @@ import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;
 import org.apache.hadoop.hdfs.server.namenode.*;
 import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.hdfs.server.protocol.*;
+import org.apache.hadoop.net.Node;
+import org.apache.hadoop.net.NodeBase;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.HdfsVariables;
 import io.hops.common.INodeUtil;
@@ -1790,8 +1792,7 @@ public class BlockManager {
      * Choose target datanodes for creating a new block.
      *
      * @throws IOException
-     *           if the number of targets < minimum replication.
-     * @see BlockPlacementPolicy#chooseTarget(String, int, Node, List, boolean, Set, long, BlockStoragePolicy)
+     *           if the number of targets < minimum replication
      */
     public DatanodeStorageInfo[] chooseTarget4NewBlock(final String src,
                                                        final int numOfReplicas, final Node client,

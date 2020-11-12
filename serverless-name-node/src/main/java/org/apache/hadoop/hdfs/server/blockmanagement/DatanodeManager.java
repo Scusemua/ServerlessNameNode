@@ -48,10 +48,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
-import org.apache.hadoop.hdfs.server.protocol.DatanodeRegistration;
-import org.apache.hadoop.hdfs.server.protocol.DisallowedDatanodeException;
-import org.apache.hadoop.hdfs.server.protocol.StorageReport;
-import org.apache.hadoop.hdfs.server.protocol.VolumeFailureSummary;
+import org.apache.hadoop.hdfs.server.protocol.*;
 import org.apache.hadoop.hdfs.util.CyclicIteration;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.net.*;
@@ -1307,10 +1304,10 @@ public class DatanodeManager {
             if(truncateRecovery) {
               Block recoveryBlock = (copyOnTruncateRecovery) ? b :
                   b.getTruncateBlock();
-              brCommand.add(new RecoveringBlock(primaryBlock, recoveryInfos,
+              brCommand.add(new BlockRecoveryCommand.RecoveringBlock(primaryBlock, recoveryInfos,
                                                 recoveryBlock));
             } else {
-              brCommand.add(new RecoveringBlock(primaryBlock, recoveryInfos,
+              brCommand.add(new BlockRecoveryCommand.RecoveringBlock(primaryBlock, recoveryInfos,
                                                 b.getBlockRecoveryId()));
             }
           }
@@ -1378,8 +1375,7 @@ public class DatanodeManager {
   /**
    * Convert a CachedBlockList into a DatanodeCommand with a list of blocks.
    *
-   * @param list       The {@link CachedBlocksList}.  This function 
-   *                   clears the list.
+   * @param list       The CachedBlocksList. This function clears the list.
    * @param datanode   The datanode.
    * @param action     The action to perform in the command.
    * @param poolId     The block pool id.

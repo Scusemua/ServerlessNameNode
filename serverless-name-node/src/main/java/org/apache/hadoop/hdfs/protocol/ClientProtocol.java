@@ -53,6 +53,39 @@ public interface ClientProtocol {
             UnresolvedLinkException, IOException;
 
     /**
+     * Get the checksum of the block with the given index in the given file.
+     * This is used to be able to compare blocks repaired by the erasure coding
+     * system with the original block.
+     *
+     * @param src
+     *    the path of the file
+     * @param blockIndex
+     *    the index of the block
+     * @return
+     *    the checksum of the requested block
+     * @throws IOException
+     */
+    @Idempotent
+    public long getBlockChecksum(String src, int blockIndex) throws IOException;
+
+    /**
+     * Store a checksum for a specific block of the given file.
+     * This is used to be able to compare blocks repaired by the erasure coding
+     * system with the original block.
+     *
+     * @param src
+     *    the path of the file
+     * @param blockIndex
+     *    the index of the block
+     * @param checksum
+     *    the checksum
+     * @throws IOException
+     */
+    @Idempotent
+    public void addBlockChecksum(String src, int blockIndex, long checksum)
+            throws IOException;
+
+    /**
      * Update a pipeline for a block under construction
      *
      * @param clientName
