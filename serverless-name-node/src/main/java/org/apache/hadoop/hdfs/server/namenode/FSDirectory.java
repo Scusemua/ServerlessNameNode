@@ -35,6 +35,7 @@ import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.protocol.FSLimitException.MaxDirectoryItemsExceededException;
 import org.apache.hadoop.hdfs.protocol.FSLimitException.PathComponentTooLongException;
+import org.apache.hadoop.hdfs.protocol.HdfsProtos;
 import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
 import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
@@ -1583,7 +1584,6 @@ public class FSDirectory implements Closeable {
 
     /**
      * Get {@link INode} associated with the file / directory.
-     * @throws SnapshotAccessControlException if path is in RO snapshot
      */
     public INode getINode4Write(String src) throws UnresolvedLinkException, StorageException, TransactionContextException {
         return getINodesInPath4Write(src, true).getLastINode();
