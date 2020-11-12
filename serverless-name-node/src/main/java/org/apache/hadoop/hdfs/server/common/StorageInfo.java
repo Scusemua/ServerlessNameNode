@@ -1,11 +1,13 @@
 package org.apache.hadoop.hdfs.server.common;
 
+import io.hops.HdfsVariables;
+import io.hops.transaction.handler.HDFSOperationType;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.protocol.HdfsConstants;
 import org.apache.hadoop.hdfs.protocol.LayoutVersion;
-import org.apache.hadoop.hops.metadata.HdfsVariables;
-import org.apache.hadoop.hops.transaction.handler.HDFSOperationType;
+import org.apache.hadoop.hdfs.server.datanode.DataNodeLayoutVersion;
+import org.apache.hadoop.hdfs.server.namenode.NameNodeLayoutVersion;
 import com.google.common.base.Joiner;
 import io.hops.exception.StorageException;
 import io.hops.metadata.common.entity.Variable;
@@ -16,6 +18,7 @@ import io.hops.transaction.lock.TransactionLocks;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.hdfs.server.common.Storage.StorageDirectory;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -291,7 +294,7 @@ public class StorageInfo {
                                 StorageDirectory sd) throws InconsistentFSStateException {
         // Set cluster ID in version that supports federation
         if (LayoutVersion.supports(getServiceLayoutFeatureMap(),
-                Feature.FEDERATION, layoutVersion)) {
+                LayoutVersion.Feature.FEDERATION, layoutVersion)) {
             String cid = getProperty(props, sd, "clusterID");
             if (!(clusterID.equals("") || cid.equals("") || clusterID.equals(cid))) {
                 throw new InconsistentFSStateException(sd.getRoot(),
@@ -328,7 +331,7 @@ public class StorageInfo {
                 : HdfsConstants.NAMENODE_LAYOUT_VERSION;
     }
 
-    public Map<Integer, SortedSet<LayoutFeature>> getServiceLayoutFeatureMap() {
+    public Map<Integer, SortedSet<LayoutVersion.LayoutFeature>> getServiceLayoutFeatureMap() {
         return storageType == NodeType.DATA_NODE? DataNodeLayoutVersion.FEATURES
                 : NameNodeLayoutVersion.FEATURES;
     }

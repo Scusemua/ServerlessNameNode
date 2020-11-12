@@ -17,14 +17,15 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
+import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.protocol.HdfsConstants.DatanodeReportType;
 import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor.BlockTargetPair;
 import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeStatistics;
 import org.apache.hadoop.hdfs.server.blockmanagement.FSClusterStats;
 import org.apache.hadoop.hdfs.server.blockmanagement.UnresolvedTopologyException;
 import org.apache.hadoop.hdfs.server.namenode.CachedBlock;
-import org.apache.hadoop.hdfs.server.namenode.NameNode;
-import org.apache.hadoop.hdfs.server.namenode.Namesystem;
+import org.apache.hadoop.hdfs.server.namenode.NameSystem;
+import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.net.InetAddresses;
@@ -47,7 +48,8 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
-import org.apache.hadoop.hdfs.server.protocol.BlockRecoveryCommand.RecoveringBlock;
+import org.apache.hadoop.hdfs.server.protocol.DatanodeRegistration;
+import org.apache.hadoop.hdfs.server.protocol.DisallowedDatanodeException;
 import org.apache.hadoop.hdfs.server.protocol.StorageReport;
 import org.apache.hadoop.hdfs.server.protocol.VolumeFailureSummary;
 import org.apache.hadoop.hdfs.util.CyclicIteration;
@@ -72,7 +74,7 @@ import static org.apache.hadoop.util.Time.monotonicNow;
 public class DatanodeManager {
   static final Log LOG = LogFactory.getLog(DatanodeManager.class);
 
-  private final Namesystem namesystem;
+  private final NameSystem namesystem;
   private final BlockManager blockManager;
   private final DecommissionManager decomManager;
   private final HeartbeatManager heartbeatManager;
@@ -191,7 +193,7 @@ public class DatanodeManager {
    */
   private final long timeBetweenResendingCachingDirectivesMs;
 
-  DatanodeManager(final BlockManager blockManager, final Namesystem namesystem,
+  DatanodeManager(final BlockManager blockManager, final NameSystem namesystem,
                   final Configuration conf) throws IOException {
     this.namesystem = namesystem;
     this.blockManager = blockManager;
@@ -489,7 +491,7 @@ public class DatanodeManager {
     if (!node.getXferAddr().equals(nodeID.getXferAddr())) {
       final UnregisteredNodeException e =
           new UnregisteredNodeException(nodeID, node);
-      NameNode.stateChangeLog
+      ServerlessNameNode.stateChangeLog
           .error("BLOCK* NameSystem.getDatanode: " + e.getLocalizedMessage());
       throw e;
     }
@@ -519,7 +521,7 @@ public class DatanodeManager {
   private void removeDatanode(DatanodeDescriptor nodeInfo, boolean async) throws IOException {
     heartbeatManager.removeDatanode(nodeInfo);
     if (namesystem.isLeader()) {
-      NameNode.stateChangeLog.info(
+      ServerlessNameNode.stateChangeLog.info(
           "DataNode is dead. Removing all replicas for" +
               " datanode " + nodeInfo +
               " StorageID " + nodeInfo.getDatanodeUuid() +
@@ -547,7 +549,7 @@ public class DatanodeManager {
     if (descriptor != null) {
       removeDatanode(descriptor, async);
     } else {
-      NameNode.stateChangeLog
+      ServerlessNameNode.stateChangeLog
           .warn("BLOCK* removeDatanode: " + node + " does not exist");
     }
   }
@@ -566,7 +568,7 @@ public class DatanodeManager {
         d = null;
       }
       if (d != null && isDatanodeDead(d)) {
-        NameNode.stateChangeLog
+        ServerlessNameNode.stateChangeLog
             .info("BLOCK* removeDeadDatanode: lost heartbeat from " + d);
         removeDatanode = true;
       }
@@ -779,7 +781,7 @@ public class DatanodeManager {
       throw new DisallowedDatanodeException(nodeReg);
     }
 
-    NameNode.stateChangeLog.info(
+    ServerlessNameNode.stateChangeLog.info(
         "BLOCK* registerDatanode: from " + nodeReg + " storage " +
             nodeReg.getDatanodeUuid());
 
@@ -788,7 +790,7 @@ public class DatanodeManager {
         .getDatanodeByXferAddr(nodeReg.getIpAddr(), nodeReg.getXferPort());
 
     if (nodeN != null && nodeN != nodeS) {
-      NameNode.LOG.info("BLOCK* registerDatanode: " + nodeN);
+      ServerlessNameNode.LOG.info("BLOCK* registerDatanode: " + nodeN);
       // nodeN previously served a different data storage,
       // which is not served by anybody anymore.
       removeDatanode(nodeN, false);
@@ -802,8 +804,8 @@ public class DatanodeManager {
         // The same datanode has been just restarted to serve the same data
         // storage. We do not need to remove old data blocks, the delta will
         // be calculated on the next block report from the datanode
-        if (NameNode.stateChangeLog.isDebugEnabled()) {
-          NameNode.stateChangeLog
+        if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+          ServerlessNameNode.stateChangeLog
               .debug("BLOCK* registerDatanode: " + "node restarted.");
         }
       } else {
@@ -816,7 +818,7 @@ public class DatanodeManager {
           value in "VERSION" file under the data directory of the datanode,
           but this is might not work if VERSION file format has changed
        */
-        NameNode.stateChangeLog.info("BLOCK* registerDatanode: " + nodeS
+        ServerlessNameNode.stateChangeLog.info("BLOCK* registerDatanode: " + nodeS
             + " is replaced by " + nodeReg + " with the same storageID "
             + nodeReg.getDatanodeUuid());
       }
@@ -887,7 +889,7 @@ public class DatanodeManager {
 
     if (!this.namesystem.isLeader()) {
       throw new UnsupportedOperationException(
-          "Only Leader NameNode can do refreshNodes");
+          "Only Leader ServerlessNameNode can do refreshNodes");
     }
     refreshHostsReader(conf);
     refreshDatanodes();

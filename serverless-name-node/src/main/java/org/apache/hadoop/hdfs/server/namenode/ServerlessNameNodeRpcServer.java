@@ -6,6 +6,7 @@ import org.apache.hadoop.hdfs.HDFSPolicyProvider;
 import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos;
 import org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos;
 import org.apache.hadoop.hdfs.protocol.NamenodeProtocols;
+import org.apache.hadoop.hdfs.protocolPB.*;
 import org.apache.hadoop.hdfs.server.blockmanagement.BRLoadBalancingOverloadException;
 import org.apache.hadoop.protocol.ClientNamenodeProtocolProtos;
 import com.google.protobuf.BlockingService;
@@ -53,7 +54,7 @@ import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
 import static org.apache.hadoop.hdfs.protocol.HdfsConstants.MAX_PATH_DEPTH;
 import static org.apache.hadoop.hdfs.protocol.HdfsConstants.MAX_PATH_LENGTH;
 
-public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
+public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
     // Dependencies from other parts of NN.
     protected final ServerlessNameNode nn;
     protected FSNameSystem namesystem;
@@ -79,11 +80,11 @@ public class ServerlessNameNodeRPCServer implements NamenodeProtocols {
     private static final Logger stateChangeLog = ServerlessNameNode.stateChangeLog;
     private static final Logger blockStateChangeLog = ServerlessNameNode.blockStateChangeLog;
 
-    public ServerlessNameNodeRPCServer(ServerlessNameNode nameNode) {
+    public ServerlessNameNodeRpcServer(ServerlessNameNode nameNode) {
         this.nn = nameNode;
     }
 
-    public ServerlessNameNodeRPCServer(Configuration conf, ServerlessNameNode nn) throws IOException {
+    public ServerlessNameNodeRpcServer(Configuration conf, ServerlessNameNode nn) throws IOException {
         this.nn = nn;
         this.namesystem = nn.getNamesystem();
         //this.metrics = ServerlessNameNode.getNameNodeMetrics();

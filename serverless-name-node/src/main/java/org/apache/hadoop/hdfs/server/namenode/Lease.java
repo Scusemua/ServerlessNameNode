@@ -6,6 +6,7 @@ import io.hops.metadata.common.CounterType;
 import io.hops.metadata.common.FinderType;
 import io.hops.metadata.hdfs.entity.LeasePath;
 import io.hops.transaction.EntityManager;
+import org.apache.hadoop.hdfs.protocol.Block;
 
 import java.util.Collection;
 

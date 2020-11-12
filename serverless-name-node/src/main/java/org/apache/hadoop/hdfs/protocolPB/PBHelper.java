@@ -257,14 +257,6 @@ public class PBHelper {
                 proto.getStartTime(), proto.getFinalizeTime());
     }
 
-    public static RollingUpgradeInfoProto convert(RollingUpgradeInfo info) {
-        return RollingUpgradeInfoProto.newBuilder()
-                .setStatus(convertRollingUpgradeStatus(info))
-                .setStartTime(info.getStartTime())
-                .setFinalizeTime(info.getFinalizeTime())
-                .build();
-    }
-
     public static ByteString getByteString(byte[] bytes) {
         return ByteString.copyFrom(bytes);
     }

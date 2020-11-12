@@ -20,7 +20,7 @@ package org.apache.hadoop.hdfs.protocolPB;
 
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
-import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.DatanodeProtocolService;
+import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos;
 import org.apache.hadoop.ipc.ProtocolInfo;
 import org.apache.hadoop.security.KerberosInfo;
 
@@ -32,5 +32,5 @@ import org.apache.hadoop.security.KerberosInfo;
     protocolVersion = 1)
 @InterfaceAudience.Private
 public interface DatanodeProtocolPB
-    extends DatanodeProtocolService.BlockingInterface {
+    extends DatanodeProtocolProtos.DatanodeProtocolService.BlockingInterface {
 }

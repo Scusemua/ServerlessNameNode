@@ -32,12 +32,11 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.protocol.RollingUpgradeInfo;
-import org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.security.token.block.BlockKey;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import org.apache.hadoop.hdfs.server.common.StorageInfo;
-import org.apache.hadoop.hdfs.server.namenode.FSNamesystem;
+import org.apache.hadoop.hdfs.server.namenode.FSNameSystem;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
@@ -194,7 +193,7 @@ public class HdfsVariables {
     }.handle();
   }
   
-  public static void setSafeModeInfo(final FSNamesystem.SafeModeInfo safeModeInfo, final long reached) throws
+  public static void setSafeModeInfo(final FSNameSystem.SafeModeInfo safeModeInfo, final long reached) throws
           IOException {
     new LightWeightRequestHandler(HDFSOperationType.SET_SAFE_MODE_INFO) {
       @Override
@@ -378,7 +377,7 @@ public class HdfsVariables {
   public static void setRollingUpgradeInfo(RollingUpgradeInfo rollingUpgradeInfo) throws TransactionContextException,
       StorageException {
     if (rollingUpgradeInfo != null) {
-      ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = PBHelper.convert(rollingUpgradeInfo);
+      org.apache.hadoop.protocol.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = PBHelper.convert(rollingUpgradeInfo);
       byte[] array = proto.toByteArray();
       Variables.updateVariable(new ByteArrayVariable(Variable.Finder.RollingUpgradeInfo, proto.toByteArray()));
     } else {
@@ -393,7 +392,7 @@ public class HdfsVariables {
       return null;
     }
     byte[] array = var.getBytes();
-    ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = ClientNamenodeProtocolProtos.RollingUpgradeInfoProto.
+    org.apache.hadoop.protocol.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = org.apache.hadoop.protocol.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto.
         parseFrom((byte[]) var.getValue());
     return PBHelper.convert(proto);
   }

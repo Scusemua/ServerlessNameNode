@@ -1,94 +1,142 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
-import org.apache.hadoop.hdfs.DFSConfigKeys;
-import org.apache.hadoop.hdfs.DFSUtil;
-import org.apache.hadoop.hdfs.XAttrHelper;
-import org.apache.hadoop.hdfs.protocol.HdfsConstants;
-import org.apache.hadoop.hdfs.server.blockmanagement.*;
-import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
-import org.apache.hadoop.hdfs.server.common.StorageInfo;
-import org.apache.hadoop.hdfs.server.namenode.AclFeature;
-import org.apache.hadoop.hdfs.server.namenode.FSDirXAttrOp;
-import org.apache.hadoop.hdfs.server.namenode.FileUnderConstructionFeature;
-import org.apache.hadoop.hdfs.server.namenode.INodeDirectory;
-import org.apache.hadoop.hdfs.server.namenode.INodesInPath;
-import org.apache.hadoop.hdfs.server.namenode.Lease;
-import org.apache.hadoop.hdfs.server.namenode.LightWeightCacheDistributed;
-import org.apache.hadoop.hdfs.server.namenode.QuotaUpdateManager;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
-import com.google.rpc.Status;
-import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
-import io.hops.HdfsStorageFactory;
-import io.hops.HdfsVariables;
-import io.hops.common.CountersQueue;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+import com.google.protobuf.InvalidProtocolBufferException;
+import io.hops.common.IDsGeneratorFactory;
+import io.hops.common.IDsMonitor;
 import io.hops.common.INodeUtil;
+import io.hops.erasure_coding.Codec;
 import io.hops.erasure_coding.ErasureCodingManager;
-import io.hops.exception.LockUpgradeException;
-import io.hops.exception.StorageException;
-import io.hops.exception.TransactionContextException;
-import io.hops.exception.TransientStorageException;
+import io.hops.exception.*;
 import io.hops.leader_election.node.ActiveNode;
+import io.hops.metadata.HdfsStorageFactory;
+import io.hops.metadata.HdfsVariables;
+import io.hops.metadata.common.entity.Variable;
 import io.hops.metadata.hdfs.dal.*;
 import io.hops.metadata.hdfs.entity.*;
+import io.hops.resolvingcache.Cache;
 import io.hops.transaction.EntityManager;
+import io.hops.transaction.context.RootINodeCache;
 import io.hops.transaction.handler.EncodingStatusOperationType;
 import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
 import io.hops.transaction.handler.LightWeightRequestHandler;
-import io.hops.transaction.lock.INodeLock;
-import io.hops.transaction.lock.LockFactory;
+import io.hops.transaction.lock.*;
 import io.hops.transaction.lock.TransactionLockTypes.INodeLockType;
 import io.hops.transaction.lock.TransactionLockTypes.INodeResolveType;
 import io.hops.transaction.lock.TransactionLockTypes.LockType;
-import io.hops.transaction.lock.TransactionLocks;
 import io.hops.util.ByteArray;
+import io.hops.util.Slicer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.logging.impl.Log4JLogger;
 import org.apache.hadoop.HadoopIllegalArgumentException;
+import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.crypto.CipherSuite;
+import org.apache.hadoop.crypto.CryptoProtocolVersion;
+import org.apache.hadoop.crypto.key.KeyProvider;
+import org.apache.hadoop.crypto.key.KeyProviderCryptoExtension;
+import org.apache.hadoop.fs.BatchedRemoteIterator.BatchedListEntries;
+import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.*;
+import org.apache.hadoop.hdfs.*;
+import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
+import org.apache.hadoop.hdfs.protocol.EncryptionZone;
 import org.apache.hadoop.hdfs.protocol.*;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants.DatanodeReportType;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants.SafeModeAction;
+import org.apache.hadoop.hdfs.protocol.datatransfer.ReplaceDatanodeOnFailure;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
+import org.apache.hadoop.hdfs.security.DelegationTokenSecretManager;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
+import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenIdentifier;
+import org.apache.hadoop.hdfs.server.blockmanagement.*;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.BlockUCState;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.RollingUpgradeStartupOption;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.StartupOption;
+import org.apache.hadoop.hdfs.server.common.Storage;
+import org.apache.hadoop.hdfs.server.common.StorageInfo;
+import org.apache.hadoop.hdfs.server.namenode.INode.BlocksMapUpdateInfo;
+import org.apache.hadoop.hdfs.server.namenode.metrics.FSNameSystemMBean;
+import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
+import org.apache.hadoop.hdfs.server.namenode.startupprogress.*;
+import org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgress.Counter;
+import org.apache.hadoop.hdfs.server.namenode.top.TopAuditLogger;
+import org.apache.hadoop.hdfs.server.namenode.top.TopConf;
+import org.apache.hadoop.hdfs.server.namenode.top.metrics.TopMetrics;
+import org.apache.hadoop.hdfs.server.namenode.top.window.RollingWindowManager;
+import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
+import org.apache.hadoop.hdfs.server.protocol.*;
+import org.apache.hadoop.io.EnumSetWritable;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.ipc.NotALeaderException;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
-import org.apache.hadoop.ipc.RetriableException;
+import org.apache.hadoop.ipc.*;
 import org.apache.hadoop.metrics2.annotation.Metric;
+import org.apache.hadoop.metrics2.annotation.Metrics;
+import org.apache.hadoop.metrics2.lib.DefaultMetricsSystem;
 import org.apache.hadoop.metrics2.util.MBeans;
 import org.apache.hadoop.net.NetworkTopology;
+import org.apache.hadoop.net.Node;
+import org.apache.hadoop.net.NodeBase;
 import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.security.UserGroupInformation.AuthenticationMethod;
+import org.apache.hadoop.security.token.SecretManager.InvalidToken;
 import org.apache.hadoop.security.token.Token;
+import org.apache.hadoop.security.token.TokenIdentifier;
 import org.apache.hadoop.security.token.delegation.DelegationKey;
-import org.apache.hadoop.security.token.delegation.web.DelegationTokenManager;
-import org.apache.hadoop.util.Daemon;
-import org.apache.hadoop.util.DataChecksum;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.apache.hadoop.util.Timer;
+import org.apache.hadoop.util.*;
+import org.apache.log4j.Appender;
+import org.apache.log4j.AsyncAppender;
+import org.apache.log4j.Logger;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.eclipse.jetty.util.ajax.JSON;
 
+import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
+import javax.management.StandardMBean;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
+import java.security.GeneralSecurityException;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
+import static io.hops.transaction.lock.LockFactory.BLK;
+import static io.hops.transaction.lock.LockFactory.getInstance;
+import static org.apache.hadoop.crypto.key.KeyProviderCryptoExtension.EncryptedKeyVersion;
+import static org.apache.hadoop.fs.CommonConfigurationKeysPublic.*;
 import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
 import static org.apache.hadoop.hdfs.server.common.HdfsServerConstants.SECURITY_XATTR_UNREADABLE_BY_SUPERUSER;
 import static org.apache.hadoop.hdfs.server.namenode.INodeDirectory.getRootDir;
-import static io.hops.transaction.lock.LockFactory.getInstance;
-import static org.apache.hadoop.ipc.Server.getRemoteIp;
-import static org.apache.hadoop.ipc.Server.getRemoteUser;
+import static org.apache.hadoop.util.ExitUtil.terminate;
+import static org.apache.hadoop.util.Time.monotonicNow;
 import static org.apache.hadoop.util.Time.now;
 
-public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.NameSystem {
+public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBean {
     public static final Log LOG = LogFactory.getLog(FSNameSystem.class);
+
+    private static final ThreadLocal<StringBuilder> auditBuffer =
+            new ThreadLocal<StringBuilder>() {
+                @Override
+                protected StringBuilder initialValue() {
+                    return new StringBuilder();
+                }
+            };
 
     // Block pool ID used by this namenode
     // HOP made it final and now its value is read from the config file. all
@@ -132,11 +180,11 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
     // Scan interval is not configurable.
     private static final long DELEGATION_TOKEN_REMOVER_SCAN_INTERVAL =
             TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS);
-    private final DelegationTokenManager.DelegationTokenSecretManager dtSecretManager;
+    private final DelegationTokenSecretManager dtSecretManager;
     private final boolean alwaysUseDelegationTokensForTests;
 
-    private static final XPath.Step STEP_AWAITING_REPORTED_BLOCKS =
-            new XPath.Step(StepType.AWAITING_REPORTED_BLOCKS);
+    private static final Step STEP_AWAITING_REPORTED_BLOCKS =
+            new Step(StepType.AWAITING_REPORTED_BLOCKS);
 
     // Tracks whether the default audit logger is the only configured audit
     // logger; this allows isAuditEnabled() to return false in case the
@@ -240,14 +288,16 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
     @VisibleForTesting
     public final EncryptionZoneManager ezManager;
 
+    private KeyProviderCryptoExtension provider = null;
+
     /**
      * Caches frequently used file names used in {@link INode} to reuse
      * byte[] objects and reduce heap usage.
      */
     private final NameCache<ByteArray> nameCache;
 
-    //private final TopConf topConf;
-    //private TopMetrics topMetrics;
+    private final TopConf topConf;
+    private TopMetrics topMetrics;
 
     private final int leaseCreationLockRows;
 
@@ -258,8 +308,7 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
      *     configurationappendFileHopFS
      * @param namenode
      *     the namenode
-     * @param ignoreRetryCache Whether or not should ignore the retry cache setup
-     *                         step. For Secondary NN this should be set to true.
+     *
      * @throws IOException
      *      on bad configuration
      */
@@ -416,6 +465,10 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
         }
     }
 
+    private void hopSpecificInitialization(Configuration conf) throws IOException {
+        io.hops.metadata.HdfsStorageFactory.setConfiguration(conf);
+    }
+
     /**
      * Unlock a subtree in the filesystem tree.
      *
@@ -468,6 +521,71 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
             return false;
         }
         return true;
+    }
+
+    private static int getDBFileInMemBucketSize() throws IOException {
+        if (!HdfsStorageFactory.isInitialized()) {
+            return 0;
+        }
+        LightWeightRequestHandler h =
+                new LightWeightRequestHandler(HDFSOperationType.GET_DB_FILE_TABLE_SIZE) {
+                    @Override
+                    public Object performTask() throws IOException {
+                        InMemoryInodeDataAccess da = (InMemoryInodeDataAccess) HdfsStorageFactory
+                                .getDataAccess(InMemoryInodeDataAccess.class);
+                        return da.getLength();
+                    }
+                };
+        return (int) h.handle();
+    }
+
+    private static int getDBFileSmallBucketSize() throws IOException {
+        if (!HdfsStorageFactory.isInitialized()) {
+            return 0;
+        }
+        LightWeightRequestHandler h =
+                new LightWeightRequestHandler(HDFSOperationType.GET_DB_FILE_TABLE_SIZE) {
+                    @Override
+                    public Object performTask() throws IOException {
+                        SmallOnDiskInodeDataAccess da = (SmallOnDiskInodeDataAccess) HdfsStorageFactory
+                                .getDataAccess(SmallOnDiskInodeDataAccess.class);
+                        return da.getLength();
+                    }
+                };
+        return (int) h.handle();
+    }
+
+
+    private static int getDBFileMediumBucketSize() throws IOException {
+        if (!HdfsStorageFactory.isInitialized()) {
+            return 0;
+        }
+        LightWeightRequestHandler h =
+                new LightWeightRequestHandler(HDFSOperationType.GET_DB_FILE_TABLE_SIZE) {
+                    @Override
+                    public Object performTask() throws IOException {
+                        MediumOnDiskInodeDataAccess da = (MediumOnDiskInodeDataAccess) HdfsStorageFactory
+                                .getDataAccess(MediumOnDiskInodeDataAccess.class);
+                        return da.getLength();
+                    }
+                };
+        return (int) h.handle();
+    }
+
+    private static int getDBFileLargeBucketSize() throws IOException {
+        if (!HdfsStorageFactory.isInitialized()) {
+            return 0;
+        }
+        LightWeightRequestHandler h =
+                new LightWeightRequestHandler(HDFSOperationType.GET_DB_FILE_TABLE_SIZE) {
+                    @Override
+                    public Object performTask() throws IOException {
+                        LargeOnDiskInodeDataAccess da = (LargeOnDiskInodeDataAccess) HdfsStorageFactory
+                                .getDataAccess(LargeOnDiskInodeDataAccess.class);
+                        return da.getLength();
+                    }
+                };
+        return (int) h.handle();
     }
 
     /**
@@ -526,6 +644,40 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
         return (LocatedBlock) updateBlockForPipelineHandler.handle(this);
     }
 
+    private INodeFile checkUCBlock(ExtendedBlock block,
+                                   String clientName) throws IOException {
+        checkNameNodeSafeMode("Cannot get a new generation stamp and an "
+                + "access token for block " + block);
+
+        // check stored block state
+        BlockInfoContiguous storedBlock = getStoredBlock(ExtendedBlock.getLocalBlock(block));
+        if (storedBlock == null ||
+                storedBlock.getBlockUCState() != BlockUCState.UNDER_CONSTRUCTION) {
+            throw new IOException(block +
+                    " does not exist or is not under Construction" + storedBlock);
+        }
+
+        // check file inode
+        INodeFile file = (INodeFile) storedBlock.getBlockCollection();
+        if (file == null || !file.isUnderConstruction()) {
+            throw new IOException("The file " + storedBlock +
+                    " belonged to does not exist or it is not under construction.");
+        }
+
+        // check lease
+        if (clientName == null || !clientName.equals(file.getFileUnderConstructionFeature().getClientName())) {
+            throw new LeaseExpiredException("Lease mismatch: " + block +
+                    " is accessed by a non lease holder " + clientName);
+        }
+
+        return file;
+    }
+
+    @VisibleForTesting
+    BlockInfoContiguous getStoredBlock(Block block) throws StorageException, TransactionContextException{
+        return blockManager.getStoredBlock(block);
+    }
+
     /**
      * Stop services common
      *
@@ -544,6 +696,433 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
         if (dtSecretManager != null) {
             dtSecretManager.stopThreads();
         }
+    }
+
+    private static void enableAsyncAuditLog() {
+        if (!(auditLog instanceof Log4JLogger)) {
+            LOG.warn("Log4j is required to enable async auditlog");
+            return;
+        }
+        Logger logger = ((Log4JLogger)auditLog).getLogger();
+        @SuppressWarnings("unchecked")
+        List<Appender> appenders = Collections.list(logger.getAllAppenders());
+        // failsafe against trying to async it more than once
+        if (!appenders.isEmpty() && !(appenders.get(0) instanceof AsyncAppender)) {
+            AsyncAppender asyncAppender = new AsyncAppender();
+            // change logger to have an async appender containing all the
+            // previously configured appenders
+            for (Appender appender : appenders) {
+                logger.removeAppender(appender);
+                asyncAppender.addAppender(appender);
+            }
+            logger.addAppender(asyncAppender);
+        }
+    }
+
+    private List<AuditLogger> initAuditLoggers(Configuration conf) {
+        // Initialize the custom access loggers if configured.
+        Collection<String> alClasses =
+                conf.getStringCollection(DFS_NAMENODE_AUDIT_LOGGERS_KEY);
+        List<AuditLogger> auditLoggers = Lists.newArrayList();
+        if (alClasses != null && !alClasses.isEmpty()) {
+            for (String className : alClasses) {
+                try {
+                    AuditLogger logger;
+                    if (DFS_NAMENODE_DEFAULT_AUDIT_LOGGER_NAME.equals(className)) {
+                        logger = new DefaultAuditLogger();
+                    } else {
+                        logger = (AuditLogger) Class.forName(className).newInstance();
+                    }
+                    logger.initialize(conf);
+                    auditLoggers.add(logger);
+                } catch (RuntimeException re) {
+                    throw re;
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        // Make sure there is at least one logger installed.
+        if (auditLoggers.isEmpty()) {
+            auditLoggers.add(new DefaultAuditLogger());
+        }
+
+        // Add audit logger to calculate top users
+        if (topConf.isEnabled) {
+            topMetrics = new TopMetrics(conf, topConf.nntopReportingPeriodsMs);
+            auditLoggers.add(new TopAuditLogger(topMetrics));
+        }
+
+        return Collections.unmodifiableList(auditLoggers);
+    }
+
+    public static int getMaxSmallFileSize() {
+        return DB_MAX_SMALL_FILE_SIZE;
+    }
+
+    public static int getDBOnDiskSmallBucketSize() {
+        return DB_ON_DISK_SMALL_BUCKET_SIZE;
+    }
+
+    public static int getDBOnDiskMediumBucketSize() {
+        return DB_ON_DISK_MEDIUM_BUCKET_SIZE;
+    }
+
+    public static int getDBOnDiskLargeBucketSize() {
+        return DB_ON_DISK_LARGE_BUCKET_SIZE;
+    }
+
+    public static int getDBInMemBucketSize() {
+        return DB_IN_MEMORY_BUCKET_SIZE;
+    }
+
+    static void rollBackRollingUpgradeTX()
+            throws RollingUpgradeException, IOException {
+        new HopsTransactionalRequestHandler(HDFSOperationType.ADD_ROLLING_UPGRADE_INFO) {
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = LockFactory.getInstance();
+                locks.add(lf.getVariableLock(Variable.Finder.RollingUpgradeInfo, TransactionLockTypes.LockType.WRITE));
+            }
+
+            @Override
+            public Object performTask() throws StorageException, IOException {
+                HdfsVariables.setRollingUpgradeInfo(null);
+                return null;
+            }
+        }.handle();
+    }
+
+    /**
+     * Instantiates an FSNameSystem loaded from the image and edits
+     * directories specified in the passed Configuration.
+     *
+     * @param conf
+     *     the Configuration which specifies the storage directories
+     *     from which to load
+     * @return an FSNameSystem which contains the loaded namespace
+     * @throws IOException
+     *     if loading fails
+     */
+    static FSNameSystem loadFromDisk(Configuration conf, ServerlessNameNode namenode) throws IOException {
+
+        FSNameSystem namesystem = new FSNameSystem(conf, namenode);
+        StartupOption startOpt = ServerlessNameNode.getStartupOption(conf);
+        if (startOpt == StartupOption.RECOVER) {
+            namesystem.setSafeMode(SafeModeAction.SAFEMODE_ENTER);
+        }
+
+        if (RollingUpgradeStartupOption.ROLLBACK.matches(startOpt)) {
+            rollBackRollingUpgradeTX();
+        }
+
+        long loadStart = monotonicNow();
+        switch(startOpt) {
+            case UPGRADE:
+                StorageInfo sinfo = StorageInfo.getStorageInfoFromDB();
+                StorageInfo.updateStorageInfoToDB(sinfo, now());
+            case REGULAR:
+            default:
+                // just load the image
+        }
+        namesystem.imageLoadComplete();     //HOP: this function was called inside the  namesystem.loadFSImage(...) which is commented out
+
+        long timeTakenToLoadFSImage = monotonicNow() - loadStart;
+        LOG.debug("Finished loading FSImage in " + timeTakenToLoadFSImage + " ms");
+        NameNodeMetrics nnMetrics = ServerlessNameNode.getNameNodeMetrics();
+        if (nnMetrics != null) {
+            nnMetrics.setFsImageLoadTime((int) timeTakenToLoadFSImage);
+        }
+        return namesystem;
+    }
+
+    /**
+     * Notify that loading of this FSDirectory is complete, and
+     * it is imageLoaded for use
+     */
+    void imageLoadComplete() {
+        Preconditions.checkState(!imageLoaded, "FSDirectory already loaded");
+        setImageLoaded();
+    }
+    void setImageLoaded() {
+        if(imageLoaded) return;
+        setImageLoaded(true);
+        dir.markNameCacheInitialized();
+    }
+
+    /**
+     * Register the FSNamesystem MBean using the name
+     * "hadoop:service=NameNode,name=FSNamesystemState"
+     */
+    private void registerMBean() {
+        // We can only implement one MXBean interface, so we keep the old one.
+        try {
+            StandardMBean bean = new StandardMBean(this, FSNameSystemMBean.class);
+            mbeanName = MBeans.register("NameNode", "FSNamesystemState", bean);
+        } catch (NotCompliantMBeanException e) {
+            throw new RuntimeException("Bad MBean setup", e);
+        }
+
+        LOG.info("Registered FSNamesystemState MBean");
+    }
+
+    private void clearActiveBlockReports() throws IOException {
+        new LightWeightRequestHandler(HDFSOperationType.CLEAR_SAFE_BLOCKS) {
+            @Override
+            public Object performTask() throws IOException {
+                ActiveBlockReportsDataAccess da = (ActiveBlockReportsDataAccess) HdfsStorageFactory
+                        .getDataAccess(ActiveBlockReportsDataAccess.class);
+                da.removeAll();
+                return null;
+            }
+        }.handle();
+    }
+
+    /**
+     * The client would like to let go of the given block
+     */
+    boolean abandonBlock(final ExtendedBlock b, final long fileId, final String srcArg,
+                         final String holder) throws IOException {
+        byte[][] pathComponents = FSDirectory.getPathComponentsForReservedPath(srcArg);
+        final String src = dir.resolvePath(getPermissionChecker(), srcArg, pathComponents);
+        HopsTransactionalRequestHandler abandonBlockHandler =
+                new HopsTransactionalRequestHandler(HDFSOperationType.ABANDON_BLOCK,
+                        src) {
+
+                    @Override
+                    public void acquireLock(TransactionLocks locks) throws IOException {
+                        LockFactory lf = getInstance();
+                        if (fileId == HdfsConstantsClient.GRANDFATHER_INODE_ID) {
+                            // Older clients may not have given us an inode ID to work with.
+                            // In this case, we have to try to resolve the path and hope it
+                            // hasn't changed or been deleted since the file was opened for write.
+                            INodeLock il = lf.getINodeLock(INodeLockType.WRITE_ON_TARGET_AND_PARENT, INodeResolveType.PATH, src)
+                                    .setNameNodeID(nameNode.getId())
+                                    .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes());
+                            locks.add(il);
+                        } else {
+                            INodeLock il = lf.getINodeLock(INodeLockType.WRITE_ON_TARGET_AND_PARENT, INodeResolveType.PATH, fileId)
+                                    .setNameNodeID(nameNode.getId())
+                                    .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes());
+                            locks.add(il);
+                        }
+                        locks.add(lf.getLeaseLockAllPaths(LockType.READ, leaseCreationLockRows))
+                                .add(lf.getLeasePathLock(LockType.READ_COMMITTED, src))
+                                .add(lf.getBlockLock())
+                                .add(lf.getBlockRelated(BLK.RE, BLK.CR, BLK.UC, BLK.UR, BLK.ER));
+                        locks.add(lf.getAllUsedHashBucketsLock());
+                    }
+
+
+                    @Override
+                    public Object performTask() throws IOException {
+                        //
+                        // Remove the block from the pending creates list
+                        //
+                        if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+                            ServerlessNameNode.stateChangeLog.debug(
+                                    "BLOCK* NameSystem.abandonBlock: " + b + "of file " + src);
+                        }
+                        checkNameNodeSafeMode("Cannot abandon block " + b + " for file" + src);
+                        String srcInt = src;
+                        final INode inode;
+                        final INodesInPath iip;
+                        if (fileId == HdfsConstantsClient.GRANDFATHER_INODE_ID) {
+                            // Older clients may not have given us an inode ID to work with.
+                            // In this case, we have to try to resolve the path and hope it
+                            // hasn't changed or been deleted since the file was opened for write.
+                            iip = dir.getINodesInPath(srcInt, true);
+                            inode = iip.getLastINode();
+                        } else {
+                            inode = EntityManager.find(INode.Finder.ByINodeIdFTIS, fileId);
+                            iip = INodesInPath.fromINode(inode);
+                            if (inode != null) {
+                                srcInt = iip.getPath();
+                            }
+                        }
+                        final INodeFile file = checkLease(srcInt, holder, inode, fileId, false);
+
+                        boolean removed = dir.removeBlock(srcInt, iip, file, ExtendedBlock.getLocalBlock(b));
+                        if (!removed) {
+                            return true;
+                        }
+                        leaseManager.getLease(holder).updateLastTwoBlocksInLeasePath(srcInt,
+                                file.getLastBlock(), file.getPenultimateBlock());
+
+                        if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+                            ServerlessNameNode.stateChangeLog.debug(
+                                    "BLOCK* NameSystem.abandonBlock: " + b +
+                                            " is removed from pendingCreates");
+                        }
+                        persistBlocks(srcInt, file);
+                        file.recomputeFileSize();
+
+                        return true;
+                    }
+                };
+        return (Boolean) abandonBlockHandler.handle(this);
+    }
+
+    /**
+     * Persist the block list for the inode.
+     * @param path
+     * @param file
+     */
+    private void persistBlocks(String path, INodeFile file) throws IOException {
+        Preconditions.checkArgument(file.isUnderConstruction());
+        if(ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+            ServerlessNameNode.stateChangeLog.debug("persistBlocks: " + path
+                    + " with " + file.getBlocks().length + " blocks is persisted to" +
+                    " the file system");
+        }
+    }
+
+    private INodeFile checkLease(String src, String holder,
+                                 INode inode, long fileId, boolean updateLastTwoBlocksInFile) throws
+            LeaseExpiredException, StorageException,
+            TransactionContextException, FileNotFoundException {
+        final String ident = src + " (inode " + fileId + ")";
+        if (inode == null) {
+            Lease lease = leaseManager.getLease(holder);
+            throw new LeaseExpiredException(
+                    "No lease on " + ident + ": File does not exist. " +
+                            (lease != null ? lease.toString() :
+                                    "Holder " + holder + " does not have any open files."));
+        }
+        if (!inode.isFile()) {
+            Lease lease = leaseManager.getLease(holder);
+            throw new LeaseExpiredException(
+                    "No lease on " + ident + ": INode is not a regular file. "
+                            + (lease != null ? lease.toString()
+                            : "Holder " + holder + " does not have any open files."));
+        }
+        final INodeFile file = inode.asFile();
+        if (!file.isUnderConstruction()) {
+            Lease lease = leaseManager.getLease(holder);
+            throw new LeaseExpiredException(
+                    "No lease on " + ident + ": File is not open for writing. " +
+                            (lease != null ? lease.toString() :
+                                    "Holder " + holder + " does not have any open files."));
+        }
+        String clientName = file.getFileUnderConstructionFeature().getClientName();
+        if (holder != null && !clientName.equals(holder)) {
+            throw new LeaseExpiredException("Lease mismatch on " + ident +
+                    " owned by " + clientName + " but is accessed by " + holder);
+        }
+
+        if(updateLastTwoBlocksInFile) {
+            file.getFileUnderConstructionFeature().updateLastTwoBlocks(leaseManager.getLease(holder), src);
+        }
+        return file;
+    }
+
+    /**
+     * Start services common
+     *      configuration
+     *
+     * @param conf
+     * @throws IOException
+     */
+    void startCommonServices(Configuration conf) throws IOException {
+        this.registerMBean(); // register the MBean for the FSNamesystemState
+        IDsMonitor.getInstance().start();
+        RootINodeCache.start();
+        nnResourceChecker = new NameNodeResourceChecker(conf);
+        checkAvailableResources();
+        if (isLeader()) {
+            // the node is starting and directly leader, this means that no NN was alive before
+            clearSafeBlocks();
+            clearActiveBlockReports();
+            HdfsVariables.setSafeModeInfo(new SafeModeInfo(conf), -1);
+            inSafeMode.set(true);
+            assert safeMode() != null && !isPopulatingReplQueues();
+            StartupProgress prog = ServerlessNameNode.getStartupProgress();
+            prog.beginPhase(Phase.SAFEMODE);
+            prog.setTotal(Phase.SAFEMODE, STEP_AWAITING_REPORTED_BLOCKS,
+                    getCompleteBlocksTotal());
+            setBlockTotal();
+        }
+        shouldPopulateReplicationQueue = true;
+        blockManager.activate(conf);
+        if (dir.isQuotaEnabled()) {
+            quotaUpdateManager.activate();
+        }
+
+        registerMXBean();
+        DefaultMetricsSystem.instance().register(this);
+    }
+
+    /**
+     * Set the total number of blocks in the system.
+     */
+    private void setBlockTotal() throws IOException {
+        // safeMode is volatile, and may be set to null at any time
+        SafeModeInfo safeMode = this.safeMode();
+        if (safeMode == null) {
+            return;
+        }
+        safeMode.setBlockTotal(blockManager.getTotalCompleteBlocks());
+    }
+
+    /**
+     * Register NameNodeMXBean
+     */
+    private void registerMXBean() {
+        mxbeanName = MBeans.register("NameNode", "NameNodeInfo", this);
+    }
+
+    /**
+     * Get the total number of blocks in the system.
+     */
+    @Override // FSNamesystemMBean
+    @Metric
+    public long getBlocksTotal() throws IOException {
+        return blockManager.getTotalBlocks();
+    }
+
+    /**
+     * Get the total number of COMPLETE blocks in the system.
+     * For safe mode only complete blocks are counted.
+     */
+    private long getCompleteBlocksTotal() throws IOException {
+
+        // Calculate number of blocks under construction
+        long numUCBlocks = leaseManager.getNumUnderConstructionBlocks();
+        return getBlocksTotal() - numUCBlocks;
+    }
+
+    /**
+     * Leave safe mode.
+     *
+     * @throws IOException
+     */
+    void leaveSafeMode() throws IOException {
+        if (!isInSafeMode()) {
+            ServerlessNameNode.stateChangeLog.info("STATE* Safe mode is already OFF");
+            return;
+        }
+        SafeModeInfo safeMode = safeMode();
+        if(safeMode!=null){
+            safeMode.leave();
+        }
+    }
+
+    boolean setSafeMode(SafeModeAction action) throws IOException {
+        if (action != SafeModeAction.SAFEMODE_GET) {
+            checkSuperuserPrivilege();
+            switch (action) {
+                case SAFEMODE_LEAVE: // leave safe mode
+                    leaveSafeMode();
+                    break;
+                case SAFEMODE_ENTER: // enter safe mode
+                    enterSafeMode(false);
+                    break;
+                default:
+                    LOG.error("Unexpected safe mode action");
+            }
+        }
+        return isInSafeMode();
     }
 
     /**
@@ -584,6 +1163,11 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
         }
     }
 
+    /** @return the cache manager. */
+    public CacheManager getCacheManager() {
+        return cacheManager;
+    }
+
     /**
      * Close down this file system manager.
      * Causes heartbeat and lease daemons to stop; waits briefly for
@@ -612,7 +1196,7 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
     }
 
     /**
-     * shutdown FSNamesystem
+     * shutdown FSNameSystem
      */
     void shutdown() {
         if (mbeanName != null) {
@@ -779,33 +1363,6 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
         return (INode) getInodeHandler.handle();
     }
 
-    /**
-     * Get {@link INode} associated with the file / directory.
-     * @throws SnapshotAccessControlException if path is in RO snapshot
-     */
-    public INode getINode4Write(String src) throws UnresolvedLinkException, StorageException, TransactionContextException {
-        return getINodesInPath4Write(src, true).getLastINode();
-    }
-
-    /** @return the {@link org.apache.hadoop.hdfs.server.namenode.INodesInPath} containing all inodes in the path. */
-    public org.apache.hadoop.hdfs.server.namenode.INodesInPath getINodesInPath(String path, boolean resolveLink) throws UnresolvedLinkException, StorageException,
-            TransactionContextException {
-        final byte[][] components = INode.getPathComponents(path);
-        return org.apache.hadoop.hdfs.server.namenode.INodesInPath.resolve(getRootDir(), components, resolveLink);
-    }
-    /** @return the last inode in the path. */
-    INode getINode(String path, boolean resolveLink)
-            throws UnresolvedLinkException, StorageException, TransactionContextException {
-        return getINodesInPath(path, resolveLink).getLastINode();
-    }
-
-    /**
-     *  Get {@link INode} associated with the file / directory.
-     */
-    public INode getINode(String src) throws UnresolvedLinkException, StorageException, TransactionContextException {
-        return getINode(src, true);
-    }
-
     void setAsyncLockRemoval(final String path) throws IOException {
         LightWeightRequestHandler handler = new LightWeightRequestHandler(
                 HDFSOperationType.SET_ASYNC_SUBTREE_RECOVERY_FLAG) {
@@ -901,6 +1458,31 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
         }
     }
 
+    private boolean shouldUseDelegationTokens() {
+        return UserGroupInformation.isSecurityEnabled() ||
+                alwaysUseDelegationTokensForTests;
+    }
+
+    private void startSecretManagerIfNecessary() throws IOException {
+        boolean shouldRun = shouldUseDelegationTokens() && !isInSafeMode();
+        boolean running = dtSecretManager.isRunning();
+        if (shouldRun && !running) {
+            startSecretManager();
+        }
+    }
+
+    private void startSecretManager() {
+        if (dtSecretManager != null) {
+            try {
+                dtSecretManager.startThreads();
+            } catch (IOException e) {
+                // Inability to start secret manager
+                // can't be recovered from.
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
     @Override
     public boolean isRunning() {
         return fsRunning;
@@ -936,13 +1518,12 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
 
     @Override
     public void adjustSafeModeBlocks(Set<Long> safeBlocks) throws IOException {
-//        // safeMode is volatile, and may be set to null at any time
-//        SafeModeInfo safeMode = this.safeMode();
-//        if (safeMode == null) {
-//            return;
-//        }
-//        safeMode.adjustSafeBlocks(safeBlocks);
-        throw new NotImplementedException();
+        // safeMode is volatile, and may be set to null at any time
+        SafeModeInfo safeMode = this.safeMode();
+        if (safeMode == null) {
+            return;
+        }
+        safeMode.adjustSafeBlocks(safeBlocks);
     }
 
     private SafeModeInfo safeMode() throws IOException{
@@ -1065,6 +1646,15 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
                 return null;
             }
         }.handle();
+    }
+
+    /**
+     * Initialize replication queues.
+     */
+    private void initializeReplQueues() throws IOException {
+        LOG.info("initializing replication queues");
+        blockManager.processMisReplicatedBlocks();
+        initializedReplQueues = true;
     }
 
     /**
@@ -1273,6 +1863,30 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
         file.logMetadataEvent(INodeMetadataLogEntry.Operation.Add);
     }
 
+    private static InetAddress getRemoteIp() {
+        InetAddress ip = Server.getRemoteIp();
+        if (ip != null) {
+            return ip;
+        }
+        return NamenodeWebHdfsMethods.getRemoteIp();
+    }
+
+    // optimize ugi lookup for RPC operations to avoid a trip through
+    // UGI.getCurrentUser which is synced
+    private static UserGroupInformation getRemoteUser() throws IOException {
+        return ServerlessNameNode.getRemoteUser();
+    }
+
+    /**
+     * Log fsck event in the audit log
+     */
+    void logFsckEvent(String src, InetAddress remoteAddress) throws IOException {
+        if (isAuditEnabled()) {
+            logAuditEvent(true, getRemoteUser(), remoteAddress, "fsck", src, null,
+                    null);
+        }
+    }
+
     boolean isAuditEnabled() {
         return !isDefaultAuditLogger || auditLog.isInfoEnabled();
     }
@@ -1313,6 +1927,56 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
                         cmd, src, dst, status);
             }
         }
+    }
+
+    private void addSafeBlocksTX(final List<Long> safeBlocks, final AtomicInteger added) throws IOException {
+        new LightWeightRequestHandler(HDFSOperationType.ADD_SAFE_BLOCKS) {
+            @Override
+            public Object performTask() throws IOException {
+                boolean inTransaction = connector.isTransactionActive();
+                if (!inTransaction) {
+                    connector.beginTransaction();
+                    connector.writeLock();
+                }
+                SafeBlocksDataAccess da = (SafeBlocksDataAccess) HdfsStorageFactory
+                        .getDataAccess(SafeBlocksDataAccess.class);
+                int before = da.countAll();
+                da.insert(safeBlocks);
+                connector.flush();
+                int after = da.countAll();
+                added.addAndGet(after - before);
+                if (!inTransaction) {
+                    connector.commit();
+                }
+                return null;
+            }
+        }.handle();
+    }
+
+    /**
+     * Update safe blocks in the database
+     * @param safeBlocks
+     *      list of blocks to be added to safe blocks
+     * @throws IOException
+     */
+    private int addSafeBlocks(final List<Long> safeBlocks) throws IOException {
+        final AtomicInteger added = new AtomicInteger(0);
+        try {
+            Slicer.slice(safeBlocks.size(), slicerBatchSize, slicerNbThreads, fsOperationsExecutor,
+                    new Slicer.OperationHandler() {
+                        @Override
+                        public void handle(int startIndex, int endIndex) throws Exception {
+                            final List<Long> ids = safeBlocks.subList(startIndex, endIndex);
+                            addSafeBlocksTX(ids, added);
+                        }
+                    });
+        } catch (Exception e) {
+            if (e instanceof IOException) {
+                throw (IOException) e;
+            }
+            throw new IOException(e);
+        }
+        return added.get();
     }
 
     @Override
@@ -1359,6 +2023,23 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
         } else {
             return !safeMode.isManual() && !safeMode.areResourcesLow();
         }
+    }
+
+    /**
+     * Create delegation token secret manager
+     */
+    private DelegationTokenSecretManager createDelegationTokenSecretManager(
+            Configuration conf) {
+        return new DelegationTokenSecretManager(
+                conf.getLong(DFS_NAMENODE_DELEGATION_KEY_UPDATE_INTERVAL_KEY,
+                        DFS_NAMENODE_DELEGATION_KEY_UPDATE_INTERVAL_DEFAULT),
+                conf.getLong(DFS_NAMENODE_DELEGATION_TOKEN_MAX_LIFETIME_KEY,
+                        DFS_NAMENODE_DELEGATION_TOKEN_MAX_LIFETIME_DEFAULT),
+                conf.getLong(DFS_NAMENODE_DELEGATION_TOKEN_RENEW_INTERVAL_KEY,
+                        DFS_NAMENODE_DELEGATION_TOKEN_RENEW_INTERVAL_DEFAULT),
+                DELEGATION_TOKEN_REMOVER_SCAN_INTERVAL,
+                conf.getBoolean(DFS_NAMENODE_AUDIT_LOG_TOKEN_TRACKING_ID_KEY,
+                        DFS_NAMENODE_AUDIT_LOG_TOKEN_TRACKING_ID_DEFAULT), this);
     }
 
     /**
@@ -1432,14 +2113,6 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
                 permission);
     }
 
-    @Override
-    public void checkSuperuserPrivilege() throws AccessControlException {
-        if (isPermissionEnabled) {
-            FSPermissionChecker pc = getPermissionChecker();
-            pc.checkSuperuserPrivilege();
-        }
-    }
-
     /**
      * Lock a subtree of the filesystem tree.
      * Locking a subtree prevents it from any concurrent write operations.
@@ -1456,6 +2129,72 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
     }
 
     /**
+     * Enter safe mode. If resourcesLow is false, then we assume it is manual
+     *
+     * @throws IOException
+     */
+    void enterSafeMode(boolean resourcesLow) throws IOException {
+        stopSecretManager();
+        shouldPopulateReplicationQueue = true;
+        inSafeMode.set(true);
+        forceReadTheSafeModeFromDB.set(true);
+
+        //if the resource are low put the cluster in SafeMode even if not the leader.
+        if(!resourcesLow && !isLeader()){
+            return;
+        }
+
+        SafeModeInfo safeMode = safeMode();
+        if (safeMode != null) {
+            if (resourcesLow) {
+                safeMode.setResourcesLow();
+            } else {
+                safeMode.setManual();
+            }
+        }
+        if (safeMode == null || !isInSafeMode()) {
+            safeMode = new SafeModeInfo(resourcesLow);
+        }
+        if (resourcesLow) {
+            safeMode.setResourcesLow();
+        } else {
+            safeMode.setManual();
+        }
+        io.hops.metadata.HdfsVariables.setSafeModeInfo(safeMode, 0);
+        ServerlessNameNode.stateChangeLog
+                .info("STATE* Safe mode is ON" + safeMode.getTurnOffTip());
+    }
+
+    /**
+     * Verifies that the given identifier and password are valid and match.
+     *
+     * @param identifier
+     *     Token identifier.
+     * @param password
+     *     Password in the token.
+     */
+    public synchronized void verifyToken(DelegationTokenIdentifier identifier,
+                                         byte[] password) throws InvalidToken, RetriableException {
+        try {
+            getDelegationTokenSecretManager().verifyToken(identifier, password);
+        } catch (InvalidToken it) {
+            if (inTransitionToActive()) {
+                throw new RetriableException(it);
+            }
+            throw it;
+        }
+    }
+
+    /**
+     * Returns the DelegationTokenSecretManager instance in the namesystem.
+     *
+     * @return delegation token secret manager object
+     */
+    DelegationTokenSecretManager getDelegationTokenSecretManager() {
+        return dtSecretManager;
+    }
+
+    /**
      * Lock a subtree of the filesystem tree and ensure that the client has
      * sufficient permissions. Locking a subtree prevents it from any concurrent
      * write operations.
@@ -1464,14 +2203,8 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
      *    the root of the subtree to be locked
      * @param doCheckOwner
      *    whether or not to check the owner
-     * @param ancestorAccess
-     *    the requested ancestor access
      * @param parentAccess
      *    the requested parent access
-     * @param access
-     *    the requested access
-     * @param subAccess
-     *    the requested sub access
      * @return
      *  the inode representing the root of the subtree
      * @throws IOException
@@ -1903,7 +2636,6 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
      * Get block locations within the specified range.
      *
      * @throws IOException
-     * @see ClientProtocol#getBlockLocations(String, long, long)
      */
     public GetBlockLocationsResult getBlockLocations(final String srcArg, final long offset,
                                                      final long length, final boolean needBlockToken, final boolean checkSafeMode)
@@ -3202,6 +3934,71 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
     }
 
     /**
+     * Default AuditLogger implementation; used when no access logger is
+     * defined in the config file. It can also be explicitly listed in the
+     * config file.
+     */
+    private static class DefaultAuditLogger extends HdfsAuditLogger {
+
+        private boolean logTokenTrackingId;
+
+        @Override
+        public void initialize(Configuration conf) {
+            logTokenTrackingId = conf.getBoolean(
+                    DFSConfigKeys.DFS_NAMENODE_AUDIT_LOG_TOKEN_TRACKING_ID_KEY,
+                    DFSConfigKeys.DFS_NAMENODE_AUDIT_LOG_TOKEN_TRACKING_ID_DEFAULT);
+        }
+
+        @Override
+        public void logAuditEvent(boolean succeeded, String userName,
+                                  InetAddress addr, String cmd, String src, String dst,
+                                  FileStatus status, UserGroupInformation ugi,
+                                  DelegationTokenSecretManager dtSecretManager) {
+            if (auditLog.isInfoEnabled()) {
+                final StringBuilder sb = auditBuffer.get();
+                sb.setLength(0);
+                sb.append("allowed=").append(succeeded).append("\t");
+                sb.append("ugi=").append(userName).append("\t");
+                sb.append("ip=").append(addr).append("\t");
+                sb.append("cmd=").append(cmd).append("\t");
+                sb.append("src=").append(src).append("\t");
+                sb.append("dst=").append(dst).append("\t");
+                if (null == status) {
+                    sb.append("perm=null");
+                } else {
+                    sb.append("perm=");
+                    sb.append(status.getOwner()).append(":");
+                    sb.append(status.getGroup()).append(":");
+                    sb.append(status.getPermission());
+                }
+                if (logTokenTrackingId) {
+                    sb.append("\t").append("trackingId=");
+                    String trackingId = null;
+                    if (ugi != null && dtSecretManager != null
+                            && ugi.getAuthenticationMethod() == AuthenticationMethod.TOKEN) {
+                        for (TokenIdentifier tid: ugi.getTokenIdentifiers()) {
+                            if (tid instanceof DelegationTokenIdentifier) {
+                                DelegationTokenIdentifier dtid =
+                                        (DelegationTokenIdentifier)tid;
+                                trackingId = dtSecretManager.getTokenTrackingId(dtid);
+                                break;
+                            }
+                        }
+                    }
+                    sb.append(trackingId);
+                }
+                sb.append("\t").append("proto=");
+                sb.append(NamenodeWebHdfsMethods.isWebHdfsInvocation() ? "webhdfs" : "rpc");
+                logAuditMessage(sb.toString());
+            }
+        }
+
+        public void logAuditMessage(String message) {
+            auditLog.info(message);
+        }
+    }
+
+    /**
      * Periodically calls hasAvailableResources of NameNodeResourceChecker, and
      * if
      * there are found to be insufficient resources available, causes the NN to
@@ -3217,7 +4014,7 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
                 while (fsRunning && shouldNNRmRun) {
                     checkAvailableResources();
                     if (!nameNodeHasResourcesAvailable()) {
-                        String lowResourcesMsg = "NameNode's database low on available " +
+                        String lowResourcesMsg = "ServerlessNameNode's database low on available " +
                                 "resources.";
                         if (!isInSafeMode()) {
                             LOG.warn(lowResourcesMsg + "Entering safe mode.");
@@ -3233,12 +4030,74 @@ public class FSNameSystem implements org.apache.hadoop.hdfs.server.namenode.Name
                     }
                 }
             } catch (Exception e) {
-                FSNamesystem.LOG.error("Exception in NameNodeResourceMonitor: ", e);
+                FSNameSystem.LOG.error("Exception in NameNodeResourceMonitor: ", e);
             }
         }
 
         public void stopMonitor() {
             shouldNNRmRun = false;
+        }
+    }
+
+    class RetryCacheCleaner implements Runnable {
+
+        public final Log cleanerLog = LogFactory.getLog(RetryCacheCleaner.class);
+
+        boolean shouldCacheCleanerRun = true;
+        long entryExpiryMillis;
+        Timer timer = new Timer();
+
+        public RetryCacheCleaner() {
+            entryExpiryMillis = conf.getLong(
+                    DFS_NAMENODE_RETRY_CACHE_EXPIRYTIME_MILLIS_KEY,
+                    DFS_NAMENODE_RETRY_CACHE_EXPIRYTIME_MILLIS_DEFAULT);
+        }
+
+        private int deleteAllForEpoch(final long epoch) throws IOException {
+            return (int)(new LightWeightRequestHandler(
+                    HDFSOperationType.CLEAN_RETRY_CACHE) {
+                @Override
+                public Object performTask() throws IOException {
+
+                    RetryCacheEntryDataAccess da = (RetryCacheEntryDataAccess) io.hops.metadata.HdfsStorageFactory
+                            .getDataAccess(RetryCacheEntryDataAccess.class);
+                    return da.removeOlds(epoch);
+                }
+            }.handle());
+        }
+
+        @Override
+        public void run() {
+            while (fsRunning && shouldCacheCleanerRun) {
+                try {
+                    if (isLeader()) {
+                        long lastDeletedEpochSec = io.hops.metadata.HdfsVariables.getRetryCacheCleanerEpoch();
+                        long toBeDeletedEpochSec = lastDeletedEpochSec + 1L;
+                        if (toBeDeletedEpochSec < ((timer.now() - entryExpiryMillis) / 1000)) {
+                            cleanerLog.debug("Current epoch " + (System.currentTimeMillis() / 1000) +
+                                    " Last deleted epoch is " + lastDeletedEpochSec +
+                                    " To be deleted epoch " + toBeDeletedEpochSec);
+                            int countDeleted = deleteAllForEpoch(toBeDeletedEpochSec);
+                            //save the epoch
+                            io.hops.metadata.HdfsVariables.setRetryCacheCleanerEpoch(toBeDeletedEpochSec);
+                            cleanerLog.debug("Deleted " + countDeleted + " entries for epoch " + toBeDeletedEpochSec);
+                            continue;
+                        }
+                    }
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    if (e instanceof InterruptedException) {
+                        cleanerLog.warn("RetryCacheCleaner Interrupted");
+                        return;
+                    } else {
+                        cleanerLog.warn("Exception in RetryCacheCleaner: ", e);
+                    }
+                }
+            }
+        }
+
+        public void stopMonitor() {
+            shouldCacheCleanerRun = false;
         }
     }
 

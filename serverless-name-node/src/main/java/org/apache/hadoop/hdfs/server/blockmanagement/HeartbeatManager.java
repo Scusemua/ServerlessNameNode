@@ -17,8 +17,9 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
+import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeStatistics;
-import org.apache.hadoop.hdfs.server.namenode.Namesystem;
+import org.apache.hadoop.hdfs.server.namenode.NameSystem;
 import io.hops.metadata.StorageMap;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
@@ -69,10 +70,10 @@ class HeartbeatManager implements DatanodeStatistics {
   private final Set<Integer> strayStorages = new HashSet();
   private long lastStorageCheck = -1;
   
-  final Namesystem namesystem;
+  final NameSystem namesystem;
   final BlockManager blockManager;
 
-  HeartbeatManager(final Namesystem namesystem, final BlockManager blockManager,
+  HeartbeatManager(final NameSystem namesystem, final BlockManager blockManager,
       final Configuration conf, StorageMap storageMap) {
     this.namesystem = namesystem;
     this.blockManager = blockManager;

@@ -17,8 +17,10 @@
  */
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
-import org.apache.hadoop.hdfs.server.namenode.FSNamesystem;
-import org.apache.hadoop.hdfs.server.namenode.Namesystem;
+import org.apache.hadoop.hdfs.protocol.Block;
+import org.apache.hadoop.hdfs.protocol.DatanodeID;
+import org.apache.hadoop.hdfs.server.namenode.FSNameSystem;
+import org.apache.hadoop.hdfs.server.namenode.NameSystem;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
@@ -82,7 +84,7 @@ public class DecommissionManager {
   private static final Logger LOG = LoggerFactory.getLogger(DecommissionManager
       .class);
 
-  private final Namesystem namesystem;
+  private final NameSystem namesystem;
   private final BlockManager blockManager;
   private final HeartbeatManager hbManager;
   private final ScheduledExecutorService executor;
@@ -115,7 +117,7 @@ public class DecommissionManager {
 
   private Monitor monitor = null;
 
-  DecommissionManager(final Namesystem namesystem,
+  DecommissionManager(final NameSystem namesystem,
                       final BlockManager blockManager, final HeartbeatManager hbManager) {
     this.namesystem = namesystem;
     this.blockManager = blockManager;
@@ -358,7 +360,7 @@ public class DecommissionManager {
      * The last datanode in decomNodeBlocks that we've processed
      */
     private DatanodeDescriptor iterkey = new DatanodeDescriptor(null, new
-        DatanodeID("", "", "", 0, 0, 0, 0));
+            DatanodeID("", "", "", 0, 0, 0, 0));
 
     Monitor(int numBlocksPerCheck, int numNodesPerCheck, int 
         maxConcurrentTrackedNodes) {
@@ -518,9 +520,9 @@ public class DecommissionManager {
       final AtomicInteger underReplicatedInOpenFiles = new AtomicInteger(0);
       
       try {
-        Slicer.slice(inodeIds.size(), ((FSNamesystem) namesystem).getBlockManager().getRemovalBatchSize(),
-            ((FSNamesystem) namesystem).getBlockManager().getRemovalNoThreads(),
-            ((FSNamesystem) namesystem).getFSOperationsExecutor(),
+        Slicer.slice(inodeIds.size(), ((FSNameSystem) namesystem).getBlockManager().getRemovalBatchSize(),
+            ((FSNameSystem) namesystem).getBlockManager().getRemovalNoThreads(),
+            ((FSNameSystem) namesystem).getFSOperationsExecutor(),
             new Slicer.OperationHandler() {
           @Override
           public void handle(int startIndex, int endIndex)
@@ -592,9 +594,9 @@ public class DecommissionManager {
       
       final Queue<BlockInfoContiguous> insuf = new ConcurrentLinkedQueue<>();
       
-      Map<Long, Long> blocksOnNode = datanode.getAllStorageReplicas(((FSNamesystem) namesystem).getBlockManager().
-          getNumBuckets(), ((FSNamesystem) namesystem).getBlockManager().getBlockFetcherNBThreads(),
-          ((FSNamesystem) namesystem).getBlockManager().getBlockFetcherBucketsPerThread(), ((FSNamesystem) namesystem).
+      Map<Long, Long> blocksOnNode = datanode.getAllStorageReplicas(((FSNameSystem) namesystem).getBlockManager().
+          getNumBuckets(), ((FSNameSystem) namesystem).getBlockManager().getBlockFetcherNBThreads(),
+          ((FSNameSystem) namesystem).getBlockManager().getBlockFetcherBucketsPerThread(), ((FSNameSystem) namesystem).
           getFSOperationsExecutor());
 
       final Map<Long, List<Long>> inodeIdsToBlockMap = new HashMap<>();
@@ -614,9 +616,9 @@ public class DecommissionManager {
       final AtomicInteger underReplicatedInOpenFiles = new AtomicInteger(0);
       
       try {
-        Slicer.slice(inodeIds.size(), ((FSNamesystem) namesystem).getBlockManager().getRemovalBatchSize(),
-            ((FSNamesystem) namesystem).getBlockManager().getRemovalNoThreads(),
-            ((FSNamesystem) namesystem).getFSOperationsExecutor(),
+        Slicer.slice(inodeIds.size(), ((FSNameSystem) namesystem).getBlockManager().getRemovalBatchSize(),
+            ((FSNameSystem) namesystem).getBlockManager().getRemovalNoThreads(),
+            ((FSNameSystem) namesystem).getFSOperationsExecutor(),
             new Slicer.OperationHandler() {
           @Override
           public void handle(int startIndex, int endIndex)

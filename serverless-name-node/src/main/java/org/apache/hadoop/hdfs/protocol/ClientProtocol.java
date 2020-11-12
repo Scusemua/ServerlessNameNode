@@ -1,5 +1,6 @@
 package org.apache.hadoop.hdfs.protocol;
 
+import io.hops.metadata.hdfs.entity.EncodingStatus;
 import org.apache.hadoop.hdfs.server.namenode.NotReplicatedYetException;
 import org.apache.hadoop.hdfs.server.namenode.SafeModeException;
 import org.apache.hadoop.fs.Options;
@@ -353,5 +354,21 @@ public interface ClientProtocol {
             FileAlreadyExistsException, FileNotFoundException,
             NSQuotaExceededException, ParentNotDirectoryException, SafeModeException,
             UnresolvedLinkException, IOException;
+
+    ///////////////////////////////////////
+    // Erasure coding
+    ///////////////////////////////////////
+
+    /**
+     * Get the erasure coding status of a file
+     *
+     * @param filePath
+     *    the path of the file
+     * @return
+     *    the encoding status of the file
+     * @throws IOException
+     */
+    @Idempotent
+    public EncodingStatus getEncodingStatus(String filePath) throws IOException;
 
 }

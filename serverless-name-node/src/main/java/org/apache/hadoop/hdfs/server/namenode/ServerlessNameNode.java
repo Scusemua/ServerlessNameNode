@@ -2,6 +2,7 @@ package org.apache.hadoop.hdfs.server.namenode;
 
 import io.hops.leaderElection.HdfsLeDescriptorFactory;
 import io.hops.leaderElection.LeaderElection;
+import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
@@ -11,9 +12,6 @@ import org.apache.hadoop.hdfs.server.blockmanagement.BRTrackingService;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.StartupOption;
 import org.apache.hadoop.hdfs.server.common.StorageInfo;
-import org.apache.hadoop.hdfs.server.namenode.MDCleaner;
-import org.apache.hadoop.hdfs.server.namenode.MetaRecoveryContext;
-import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNodeRPCServer;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.HdfsStorageFactory;
 import io.hops.HdfsVariables;
@@ -32,12 +30,15 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Trash;
 import org.apache.hadoop.ha.ServiceFailedException;
 import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
+import org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgress;
+import org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgressMetrics;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.metrics2.lib.DefaultMetricsSystem;
 import org.apache.hadoop.metrics2.util.MBeans;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.security.SecurityUtil;
 import org.apache.hadoop.security.UserGroupInformation;
+import org.apache.hadoop.security.ssl.RevocationListFetcherService;
 import org.apache.hadoop.tracing.TraceUtils;
 import org.apache.hadoop.tracing.TracerConfigurationManager;
 import org.apache.hadoop.util.ExitUtil.ExitException;
@@ -73,9 +74,10 @@ public class ServerlessNameNode {
     private Thread emptier;
 
     static NameNodeMetrics metrics;
+    private static final StartupProgress startupProgress = new StartupProgress();
 
     public static final int DEFAULT_PORT = 8020;
-    private org.apache.hadoop.hdfs.server.namenode.ServerlessNameNodeRPCServer rpcServer;
+    private ServerlessNameNodeRpcServer rpcServer;
     private JvmPauseMonitor pauseMonitor;
 
     private static final String NAMENODE_HTRACE_PREFIX = "namenode.htrace.";
@@ -84,11 +86,18 @@ public class ServerlessNameNode {
 
     protected FSNameSystem namesystem;
     protected final Configuration conf;
-    private AtomicBoolean started = new AtomicBoolean(false);
 
     private ObjectName nameNodeStatusBeanName;
     protected final Tracer tracer;
     protected final TracerConfigurationManager tracerConfigurationManager;
+
+    /**
+     * The service name of the delegation token issued by the namenode. It is
+     * the name service id in HA mode, or the rpc address in non-HA mode.
+     */
+    private String tokenServiceName;
+
+    private long stoTableCleanDelay = 0;
 
     /**
      * Metadata cleaner service. Cleans stale metadata left my dead NNs
@@ -104,6 +113,8 @@ public class ServerlessNameNode {
      * only used for testing purposes
      */
     protected boolean stopRequested = false;
+
+    protected RevocationListFetcherService revocationListFetcherService;
 
     /** Given a configuration get the bind host of the service rpc server
      *  If the bind host is not configured returns null.
@@ -312,6 +323,42 @@ public class ServerlessNameNode {
         stopHttpServer();
     }
 
+    private void stopHttpServer() {
+        try {
+            if (httpServer != null) {
+                httpServer.stop();
+            }
+        } catch (Exception e) {
+            LOG.error("Exception while stopping httpserver", e);
+        }
+    }
+
+    private void exitActiveServices() throws ServiceFailedException {
+        try {
+            stopActiveServicesInternal();
+        } catch (IOException e) {
+            throw new ServiceFailedException("Failed to stop active services", e);
+        }
+    }
+
+    private void stopActiveServicesInternal() throws IOException {
+        try {
+            if (namesystem != null) {
+                namesystem.stopActiveServices();
+            }
+            stopTrashEmptier();
+        } catch (Throwable t) {
+            doImmediateShutdown(t);
+        }
+    }
+
+    private void stopTrashEmptier() {
+        if (this.emptier != null) {
+            emptier.interrupt();
+            emptier = null;
+        }
+    }
+
     /**
      * Stop all NameNode threads and wait for all to finish.
      */
@@ -426,6 +473,25 @@ public class ServerlessNameNode {
                 DefaultMetricsSystem.initialize("NameNode");
                 return new ServerlessNameNode(conf);
             }
+        }
+    }
+
+    /**
+     * Return the service name of the issued delegation token.
+     *
+     * @return The name service id in HA-mode, or the rpc address in non-HA mode
+     */
+    public String getTokenServiceName() { return tokenServiceName; }
+
+    public static void checkAllowFormat(Configuration conf) throws IOException {
+        if (!conf.getBoolean(DFS_NAMENODE_SUPPORT_ALLOW_FORMAT_KEY,
+                DFS_NAMENODE_SUPPORT_ALLOW_FORMAT_DEFAULT)) {
+            throw new IOException(
+                    "The option " + DFS_NAMENODE_SUPPORT_ALLOW_FORMAT_KEY +
+                            " is set to false for this filesystem, so it " +
+                            "cannot be formatted. You will need to set " +
+                            DFS_NAMENODE_SUPPORT_ALLOW_FORMAT_KEY + " parameter " +
+                            "to true in order to format this filesystem");
         }
     }
 
@@ -798,6 +864,82 @@ public class ServerlessNameNode {
     }
 
     /**
+     * @return the NameNode HTTP address
+     */
+    public static InetSocketAddress getHttpAddress(Configuration conf) {
+        return  NetUtils.createSocketAddr(
+                conf.getTrimmed(DFS_NAMENODE_HTTP_ADDRESS_KEY, DFS_NAMENODE_HTTP_ADDRESS_DEFAULT));
+    }
+
+    protected InetSocketAddress getHttpServerAddress(Configuration conf) {
+        return getHttpAddress(conf);
+    }
+
+    protected void loadNamesystem(Configuration conf) throws IOException {
+        this.namesystem = FSNameSystem.loadFromDisk(conf, this);
+    }
+
+    /**
+     * Create the RPC server implementation. Used as an extension point for the
+     * BackupNode.
+     */
+    protected ServerlessNameNodeRpcServer createRpcServer(Configuration conf)
+            throws IOException {
+        return new ServerlessNameNodeRpcServer(conf, this);
+    }
+
+    /**
+     * HTTP server address for binding the endpoint. This method is
+     * for use by the NameNode and its derivatives. It may return
+     * a different address than the one that should be used by clients to
+     * connect to the NameNode. See
+     * {@link DFSConfigKeys#DFS_NAMENODE_HTTP_BIND_HOST_KEY}
+     *
+     * @param conf
+     * @return
+     */
+    protected InetSocketAddress getHttpServerBindAddress(Configuration conf) {
+        InetSocketAddress bindAddress = getHttpServerAddress(conf);
+        // If DFS_NAMENODE_HTTP_BIND_HOST_KEY exists then it overrides the
+        // host name portion of DFS_NAMENODE_HTTP_ADDRESS_KEY.
+        final String bindHost = conf.getTrimmed(DFS_NAMENODE_HTTP_BIND_HOST_KEY);
+        if (bindHost != null && !bindHost.isEmpty()) {
+            bindAddress = new InetSocketAddress(bindHost, bindAddress.getPort());
+        }
+        return bindAddress;
+    }
+
+    private void startHttpServer(final Configuration conf) throws IOException {
+        httpServer = new NameNodeHttpServer(conf, this, getHttpServerBindAddress(conf));
+        httpServer.start();
+        httpServer.setStartupProgress(startupProgress);
+    }
+
+    private void createAndStartCRLFetcherService(Configuration conf) throws Exception {
+        if (conf.getBoolean(CommonConfigurationKeysPublic.IPC_SERVER_SSL_ENABLED,
+                CommonConfigurationKeysPublic.IPC_SERVER_SSL_ENABLED_DEFAULT)) {
+            if (conf.getBoolean(CommonConfigurationKeysPublic.HOPS_CRL_VALIDATION_ENABLED_KEY,
+                    CommonConfigurationKeysPublic.HOPS_CRL_VALIDATION_ENABLED_DEFAULT)) {
+                LOG.info("Creating CertificateRevocationList Fetcher service");
+                revocationListFetcherService = new RevocationListFetcherService();
+                revocationListFetcherService.serviceInit(conf);
+                revocationListFetcherService.serviceStart();
+            } else {
+                LOG.warn("RPC TLS is enabled but CRL validation is disabled");
+            }
+        }
+    }
+
+    /**
+     * Returns object used for reporting namenode startup progress.
+     *
+     * @return StartupProgress for reporting namenode startup progress
+     */
+    public static StartupProgress getStartupProgress() {
+        return startupProgress;
+    }
+
+    /**
      * Start the services common to active and standby states
      */
     private void startCommonServices(Configuration conf) throws IOException {
@@ -821,6 +963,13 @@ public class ServerlessNameNode {
             LOG.info(getRole() + " service RPC up at: " +
                     rpcServer.getServiceRpcAddress());
         }
+    }
+
+    /**
+     * Register NameNodeStatusMXBean
+     */
+    private void registerNNSMXBean() {
+        nameNodeStatusBeanName = MBeans.register("NameNode", "NameNodeStatus", this);
     }
 
     private void startLeaderElectionService() throws IOException {
@@ -892,6 +1041,10 @@ public class ServerlessNameNode {
 
     static void initMetrics(Configuration conf, HdfsServerConstants.NamenodeRole role) {
         metrics = NameNodeMetrics.create(conf, role);
+    }
+
+    private void startMDCleanerService(){
+        mdCleaner.startMDCleanerMonitor(namesystem, leaderElection, stoTableCleanDelay);
     }
 
     public static void initializeGenericKeys(Configuration conf) {
@@ -1064,7 +1217,7 @@ public class ServerlessNameNode {
     }
 
     @VisibleForTesting
-    ServerlessNameNodeRPCServer getNameNodeRpcServer(){
+    ServerlessNameNodeRpcServer getNameNodeRpcServer(){
         return rpcServer;
     }
 

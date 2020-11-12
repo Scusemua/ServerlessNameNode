@@ -1,13 +1,20 @@
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
+import io.hops.metadata.blockmanagement.ExcessReplicasMap;
+import io.hops.metadata.security.token.block.NameNodeBlockTokenSecretManager;
 import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
+import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier.AccessMode;
+import org.apache.hadoop.hdfs.security.token.block.BlockTokenSecretManager;
+import org.apache.hadoop.hdfs.security.token.block.DataEncryptionKey;
+import org.apache.hadoop.hdfs.security.token.block.ExportedBlockKeys;
 import org.apache.hadoop.hdfs.server.blockmanagement.CorruptReplicasMap;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;
 import org.apache.hadoop.hdfs.server.namenode.*;
+import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.hdfs.server.protocol.*;
 import com.google.common.annotations.VisibleForTesting;
 import io.hops.HdfsVariables;
@@ -34,6 +41,7 @@ import io.hops.util.Slicer;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileEncryptionInfo;
+import org.apache.hadoop.hdfs.util.LightWeightLinkedSet;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.util.Daemon;
 import org.apache.hadoop.util.Time;
@@ -46,6 +54,8 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
+
+import static org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos.DatanodeCommandProto.Type.KeyUpdateCommand;
 
 /**
  * Keeps information related to the blocks stored in the Hadoop cluster.
@@ -989,7 +999,7 @@ public class BlockManager {
      * Generate a block token for the located block.
      */
     public void setBlockToken(final LocatedBlock b,
-                              final AccessMode mode) throws IOException {
+                              final BlockTokenIdentifier.AccessMode mode) throws IOException {
         if (isBlockTokenEnabled()) {
             // Use cached UGI if serving RPC calls.
             b.setBlockToken(blockTokenSecretManager.generateToken(

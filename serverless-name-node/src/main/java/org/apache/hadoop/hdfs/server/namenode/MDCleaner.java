@@ -1,5 +1,6 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
+import io.hops.leaderElection.LeaderElection;
 import io.hops.metadata.HdfsStorageFactory;
 import io.hops.metadata.election.entity.LeDescriptor;
 import io.hops.metadata.hdfs.dal.OngoingSubTreeOpsDataAccess;
