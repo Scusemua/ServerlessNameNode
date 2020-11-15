@@ -11,6 +11,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="hops-metadata-dal" scope="PROVIDED" />
     <orderEntry type="module" module-name="hadoop-common" scope="PROVIDED" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.httpcomponents:httpclient:4.5.13" level="project" />
@@ -90,8 +91,8 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.kerby:kerb-server:2.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.kerby:kerb-identity:2.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.kerby:kerby-xdr:2.0.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.12.0-rc1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.0-rc1" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.12.0-rc2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.0-rc2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.woodstox:stax2-api:4.2.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.fasterxml.woodstox:woodstox-core:6.2.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: dnsjava:dnsjava:3.3.1" level="project" />

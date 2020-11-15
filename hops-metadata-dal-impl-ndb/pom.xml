@@ -8,9 +8,100 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
+    <version>3.2.0.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <groupId>com.gmail.benrcarver.ServerlessNameNode.metadata</groupId>
     <artifactId>hops-metadata-dal-impl-ndb</artifactId>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mysql.ndb</groupId>
+            <artifactId>clusterj-hops-fix</artifactId>
+            <version>8.0.21</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.21</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
+            <artifactId>hops-metadata-dal</artifactId>
+            <version>3.2.0.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP-java6</artifactId>
+            <version>2.3.13</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>os.linux</id>
+            <activation>
+                <os>
+                    <family>!Mac</family>
+                </os>
+            </activation>
+            <properties>
+                <lib_ext>so</lib_ext>
+            </properties>
+        </profile>
+        <profile>
+            <id>os.mac</id>
+            <activation>
+                <os>
+                    <family>Mac</family>
+                </os>
+            </activation>
+            <properties>
+                <lib_ext>dylib</lib_ext>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.8</source> <!-- This was 1.7 before, but I (Ben) changed it. -->
+                    <target>1.8</target> <!-- This was 1.7 before, but I (Ben) changed it. -->
+                </configuration>
+            </plugin>
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>ndb-config.properties.template</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
 
 </project>
