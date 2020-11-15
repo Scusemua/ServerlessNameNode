@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.logicalclocks:service-discovery-client:${sd-client.version}">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/logicalclocks/service-discovery-client/${sd-client.version}/service-discovery-client-${sd-client.version}.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/logicalclocks/service-discovery-client/${sd-client.version}/service-discovery-client-${sd-client.version}-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/logicalclocks/service-discovery-client/${sd-client.version}/service-discovery-client-${sd-client.version}-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
