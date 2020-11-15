@@ -1,6 +1,6 @@
 package org.apache.hadoop.hdfs.protocol;
 
-import org.apache.yetus.audience.InterfaceAudience;
+import org.apache.hadoop.classification.InterfaceAudience;
 
 import java.io.IOException;
 
