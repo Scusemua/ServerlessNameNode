@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="hops-leader-election" />
+        <module name="hops-metadata-dal-impl-ndb" />
         <module name="hadoop-auth" />
         <module name="hadoop-minikdc" />
         <module name="hadoop-annotations" />
@@ -29,7 +30,7 @@
       <module name="hadoop-minikdc" target="1.5" />
       <module name="hops-leader-election" target="1.5" />
       <module name="hops-metadata-dal" target="8" />
-      <module name="hops-metadata-dal-impl-ndb" target="1.5" />
+      <module name="hops-metadata-dal-impl-ndb" target="1.8" />
       <module name="serverless-name-node" target="1.8" />
       <module name="serverless-name-node-base" target="1.5" />
       <module name="ServerlessNameNode" target="1.5" />
