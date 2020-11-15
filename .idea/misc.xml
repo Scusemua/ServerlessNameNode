@@ -14,6 +14,7 @@
         <option value="$PROJECT_DIR$/hadoop-maven-plugins/pom.xml" />
         <option value="$PROJECT_DIR$/hadoop-common-project/pom.xml" />
         <option value="$PROJECT_DIR$/hops-leader-election/pom.xml" />
+        <option value="$PROJECT_DIR$/service-discovery-clients/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

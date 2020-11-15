@@ -106,6 +106,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="Maven: com.logicalclocks:service-discovery-client:${sd-client.version}" level="project" />
     <orderEntry type="module" module-name="hadoop-auth" />
     <orderEntry type="library" name="Maven: com.nimbusds:nimbus-jose-jwt:9.1.2" level="project" />
     <orderEntry type="library" name="Maven: com.github.stephenc.jcip:jcip-annotations:1.0-1" level="project" />

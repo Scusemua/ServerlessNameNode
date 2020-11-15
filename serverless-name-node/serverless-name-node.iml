@@ -137,6 +137,7 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.12.0-rc2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.12.0-rc2" level="project" />
     <orderEntry type="library" name="Maven: dnsjava:dnsjava:3.3.1" level="project" />
+    <orderEntry type="library" name="Maven: com.logicalclocks:service-discovery-client:${sd-client.version}" level="project" />
     <orderEntry type="module" module-name="serverless-name-node-base" />
     <orderEntry type="library" name="Maven: org.json:json:20140107" level="project" />
     <orderEntry type="module" module-name="hops-leader-election" />

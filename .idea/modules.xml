@@ -14,6 +14,7 @@
       <module fileurl="file://$PROJECT_DIR$/hops-metadata-dal-impl-ndb/hops-metadata-dal-impl-ndb.iml" filepath="$PROJECT_DIR$/hops-metadata-dal-impl-ndb/hops-metadata-dal-impl-ndb.iml" />
       <module fileurl="file://$PROJECT_DIR$/serverless-name-node/serverless-name-node.iml" filepath="$PROJECT_DIR$/serverless-name-node/serverless-name-node.iml" />
       <module fileurl="file://$PROJECT_DIR$/serverless-name-node-base/serverless-name-node-base.iml" filepath="$PROJECT_DIR$/serverless-name-node-base/serverless-name-node-base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-discovery-clients/service-discovery-client.iml" filepath="$PROJECT_DIR$/service-discovery-clients/service-discovery-client.iml" />
     </modules>
   </component>
 </project>
