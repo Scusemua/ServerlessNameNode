@@ -22,10 +22,9 @@ import java.io.InputStream;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
+import com.logicalclocks.shaded.org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
@@ -85,7 +84,7 @@ public abstract class MultipartUploader {
    * @throws IOException IO failure or the handle list is empty.
    */
   public abstract PathHandle complete(Path filePath,
-      List<Pair<Integer, PartHandle>> handles, UploadHandle multipartUploadId)
+                                      List<Pair<Integer, PartHandle>> handles, UploadHandle multipartUploadId)
       throws IOException;
 
   /**
