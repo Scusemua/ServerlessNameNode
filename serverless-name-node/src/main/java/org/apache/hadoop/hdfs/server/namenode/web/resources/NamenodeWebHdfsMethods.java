@@ -32,20 +32,17 @@ import org.apache.hadoop.fs.permission.AclStatus;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.XAttrHelper;
-import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
-import org.apache.hadoop.hdfs.protocol.DirectoryListing;
-import org.apache.hadoop.hdfs.protocol.HdfsFileStatus;
-import org.apache.hadoop.hdfs.protocol.LocatedBlocks;
+import org.apache.hadoop.hdfs.protocol.*;
+import org.apache.hadoop.hdfs.security.DelegationTokenSecretManager;
 import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenIdentifier;
-import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenSecretManager;
 import org.apache.hadoop.hdfs.server.blockmanagement.BlockManager;
 import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeDescriptor;
 import org.apache.hadoop.hdfs.server.blockmanagement.DatanodeStorageInfo;
 import org.apache.hadoop.hdfs.server.common.JspHelper;
-import org.apache.hadoop.hdfs.server.namenode.NameNode;
-import org.apache.hadoop.hdfs.server.protocol.NamenodeProtocols;
+import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode;
 import org.apache.hadoop.hdfs.web.JsonUtil;
 import org.apache.hadoop.hdfs.web.ParamFilter;
+import org.apache.hadoop.hdfs.web.WebHdfsConstants;
 import org.apache.hadoop.hdfs.web.WebHdfsFileSystem;
 import org.apache.hadoop.hdfs.web.resources.*;
 import org.apache.hadoop.io.Text;
@@ -58,6 +55,7 @@ import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.security.token.TokenIdentifier;
 import org.apache.hadoop.util.StringUtils;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -77,7 +75,7 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Web-hdfs NameNode implementation.
+ * Web-hdfs ServerlessNameNode implementation.
  */
 @Path("")
 @ResourceFilters(ParamFilter.class)
@@ -144,7 +142,7 @@ public class NamenodeWebHdfsMethods {
     REMOTE_ADDRESS.set(null);
   }
     
-  private static NamenodeProtocols getRPCServer(NameNode namenode)
+  private static NamenodeProtocols getRPCServer(ServerlessNameNode namenode)
       throws IOException {
      final NamenodeProtocols np = namenode.getRpcServer();
      if (np == null) {
@@ -154,7 +152,7 @@ public class NamenodeWebHdfsMethods {
   }
   
   @VisibleForTesting
-  static DatanodeInfo chooseDatanode(final NameNode namenode, final String path,
+  static DatanodeInfo chooseDatanode(final ServerlessNameNode namenode, final String path,
       final HttpOpParam.Op op, final long openOffset, final long blocksize,
       final String excludeDatanodes) throws IOException {
     final BlockManager bm = namenode.getNamesystem().getBlockManager();
@@ -231,7 +229,7 @@ public class NamenodeWebHdfsMethods {
   }
   
   private Token<? extends TokenIdentifier> generateDelegationToken(
-      final NameNode namenode, final UserGroupInformation ugi,
+      final ServerlessNameNode namenode, final UserGroupInformation ugi,
       final String renewer) throws IOException {
     final Credentials c = DelegationTokenSecretManager.createCredentials(
         namenode, ugi, renewer != null? renewer: ugi.getShortUserName());
@@ -245,7 +243,7 @@ public class NamenodeWebHdfsMethods {
     return t;
   }
 
-  private URI redirectURI(final NameNode namenode,
+  private URI redirectURI(final ServerlessNameNode namenode,
                           final UserGroupInformation ugi, final DelegationParam delegation,
                           final UserParam username, final DoAsParam doAsUser, final String path,
                           final HttpOpParam.Op op, final long openOffset, final long blocksize, final String excludeDatanodes,
@@ -449,7 +447,7 @@ public class NamenodeWebHdfsMethods {
 
     final Configuration conf =
         (Configuration) context.getAttribute(JspHelper.CURRENT_CONF);
-    final NameNode namenode = (NameNode) context.getAttribute("name.node");
+    final ServerlessNameNode namenode = (ServerlessNameNode) context.getAttribute("name.node");
     final NamenodeProtocols np = getRPCServer(namenode);
 
     switch (op.getValue()) {
@@ -461,15 +459,15 @@ public class NamenodeWebHdfsMethods {
         return Response.temporaryRedirect(uri)
             .type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
-      case MKDIRS: {
-        final boolean b =
-            np.mkdirs(fullpath, permission.getFsPermission(), true);
-        final String js = JsonUtil.toJsonString("boolean", b);
-        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
-      }
+//      case MKDIRS: {
+//        //final boolean b =
+//            //np.mkdirs(fullpath, permission.getFsPermission(), true);
+//        final String js = JsonUtil.toJsonString("boolean", b);
+//        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
+//      }
       case CREATESYMLINK: {
-        np.createSymlink(destination.getValue(), fullpath,
-            PermissionParam.getDefaultFsPermission(), createParent.getValue());
+        //np.createSymlink(destination.getValue(), fullpath,
+            //PermissionParam.getDefaultFsPermission(), createParent.getValue());
         return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
       case RENAME: {
@@ -484,71 +482,71 @@ public class NamenodeWebHdfsMethods {
           return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
         }
       }
-      case SETREPLICATION: {
-        final boolean b =
-            np.setReplication(fullpath, replication.getValue(conf));
-        final String js = JsonUtil.toJsonString("boolean", b);
-        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
-      }
+//      case SETREPLICATION: {
+//        final boolean b =
+//            //np.setReplication(fullpath, replication.getValue(conf));
+//        final String js = JsonUtil.toJsonString("boolean", b);
+//        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
+//      }
       case SETOWNER: {
         if (owner.getValue() == null && group.getValue() == null) {
           throw new IllegalArgumentException("Both owner and group are empty.");
         }
 
-        np.setOwner(fullpath, owner.getValue(), group.getValue());
+        //np.setOwner(fullpath, owner.getValue(), group.getValue());
         return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
       case SETPERMISSION: {
-        np.setPermission(fullpath, permission.getFsPermission());
+        //np.setPermission(fullpath, permission.getFsPermission());
         return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
-      case SETTIMES: {
-        np.setTimes(fullpath, modificationTime.getValue(),
-            accessTime.getValue());
-        return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
-      }
-      case RENEWDELEGATIONTOKEN: {
-        final Token<DelegationTokenIdentifier> token =
-            new Token<>();
-        token.decodeFromUrlString(delegationTokenArgument.getValue());
-        final long expiryTime = np.renewDelegationToken(token);
-        final String js = JsonUtil.toJsonString("long", expiryTime);
-        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
-      }
+//      case SETTIMES: {
+//        //np.setTimes(fullpath, modificationTime.getValue(),
+//            accessTime.getValue());
+//        return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
+//      }
+//      case RENEWDELEGATIONTOKEN: {
+//        final Token<DelegationTokenIdentifier> token =
+//            new Token<>();
+//        token.decodeFromUrlString(delegationTokenArgument.getValue());
+//        //final long expiryTime = np.renewDelegationToken(token);
+//        final String js = JsonUtil.toJsonString("long", expiryTime);
+//        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
+//      }
       case CANCELDELEGATIONTOKEN: {
         final Token<DelegationTokenIdentifier> token =
             new Token<>();
         token.decodeFromUrlString(delegationTokenArgument.getValue());
-        np.cancelDelegationToken(token);
+        //np.cancelDelegationToken(token);
         return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
       case MODIFYACLENTRIES: {
-        np.modifyAclEntries(fullpath, aclPermission.getAclPermission(true));
+        //np.modifyAclEntries(fullpath, aclPermission.getAclPermission(true));
         return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
       case REMOVEACLENTRIES: {
-        np.removeAclEntries(fullpath, aclPermission.getAclPermission(false));
+        //np.removeAclEntries(fullpath, aclPermission.getAclPermission(false));
         return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
       case REMOVEDEFAULTACL: {
-        np.removeDefaultAcl(fullpath);
+        //np.removeDefaultAcl(fullpath);
         return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
       case REMOVEACL: {
-        np.removeAcl(fullpath);
+        //np.removeAcl(fullpath);
         return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
       case SETACL: {
-        np.setAcl(fullpath, aclPermission.getAclPermission(true));
+        //np.setAcl(fullpath, aclPermission.getAclPermission(true));
         return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
-      case SETXATTR: {
-        np.setXAttr(fullpath, XAttrHelper.buildXAttr(xattrName.getXAttrName(),
-            xattrValue.getXAttrValue()), xattrSetFlag.getFlag());
-        return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
-      }
+//      case SETXATTR: {
+//        //np.setXAttr(fullpath, XAttrHelper.buildXAttr(xattrName.getXAttrName(),
+//            xattrValue.getXAttrValue()), xattrSetFlag.getFlag());
+//        return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
+//      }
       case REMOVEXATTR: {
-        np.removeXAttr(fullpath, XAttrHelper.buildXAttr(xattrName.getXAttrName()));
+        //np.removeXAttr(fullpath, XAttrHelper.buildXAttr(xattrName.getXAttrName()));
         return Response.ok().type(MediaType.APPLICATION_OCTET_STREAM).build();
       }
       default:
@@ -658,7 +656,7 @@ public class NamenodeWebHdfsMethods {
       final ExcludeDatanodesParam excludeDatanodes,
       final NewLengthParam newLength
       ) throws IOException, URISyntaxException {
-    final NameNode namenode = (NameNode)context.getAttribute("name.node");
+    final ServerlessNameNode namenode = (ServerlessNameNode)context.getAttribute("name.node");
     final NamenodeProtocols np = getRPCServer(namenode);
 
     switch(op.getValue()) {
@@ -671,17 +669,17 @@ public class NamenodeWebHdfsMethods {
     }
     case CONCAT:
     {
-      np.concat(fullpath, concatSrcs.getAbsolutePaths());
+      //np.concat(fullpath, concatSrcs.getAbsolutePaths());
       return Response.ok().build();
     }
-    case TRUNCATE:
-    {
-      // We treat each rest request as a separate client.
-      final boolean b = np.truncate(fullpath, newLength.getValue(), 
-          "DFSClient_" + DFSUtil.getSecureRandom().nextLong());
-      final String js = JsonUtil.toJsonString("boolean", b);
-      return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
-    }
+//    case TRUNCATE:
+//    {
+//      // We treat each rest request as a separate client.
+//      //final boolean b = np.truncate(fullpath, newLength.getValue(),
+//       //   "DFSClient_" + DFSUtil.getSecureRandom().nextLong());
+//      final String js = JsonUtil.toJsonString("boolean", b);
+//      return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
+//    }
     default:
       throw new UnsupportedOperationException(op + " is not supported");
     }
@@ -825,7 +823,7 @@ public class NamenodeWebHdfsMethods {
       final TokenKindParam tokenKind,
       final TokenServiceParam tokenService
       ) throws IOException, URISyntaxException {
-    final NameNode namenode = (NameNode)context.getAttribute("name.node");
+    final ServerlessNameNode namenode = (ServerlessNameNode)context.getAttribute("name.node");
     final NamenodeProtocols np = getRPCServer(namenode);
 
     switch (op.getValue()) {
@@ -859,11 +857,11 @@ public class NamenodeWebHdfsMethods {
         final StreamingOutput streaming = getListingStream(np, fullpath);
         return Response.ok(streaming).type(MediaType.APPLICATION_JSON).build();
       }
-      case GETCONTENTSUMMARY: {
+      /*case GETCONTENTSUMMARY: {
         final ContentSummary contentsummary = np.getContentSummary(fullpath);
         final String js = JsonUtil.toJsonString(contentsummary);
         return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
-      }
+      }*/
       case GETFILECHECKSUM: {
         final URI uri =
             redirectURI(namenode, ugi, delegation, username, doAsUser, fullpath,
@@ -897,38 +895,38 @@ public class NamenodeWebHdfsMethods {
         return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
       }
       case CHECKACCESS: {
-        np.checkAccess(fullpath, FsAction.getFsAction(fsAction.getValue()));
+        //np.checkAccess(fullpath, FsAction.getFsAction(fsAction.getValue()));
         return Response.ok().build();
       }
-      case GETACLSTATUS: {
-        AclStatus status = np.getAclStatus(fullpath);
-        if (status == null) {
-          throw new FileNotFoundException("File does not exist: " + fullpath);
-        }
+      //case GETACLSTATUS: {
+        //AclStatus status = np.getAclStatus(fullpath);
+        //if (status == null) {
+        //  throw new FileNotFoundException("File does not exist: " + fullpath);
+        //}
     
-        final String js = JsonUtil.toJsonString(status);
-        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
-      }
-      case GETXATTRS: {
-        List<String> names = null;
-        if (xattrNames != null) {
-          names = Lists.newArrayListWithCapacity(xattrNames.size());
-          for (XAttrNameParam xattrName : xattrNames) {
-            if (xattrName.getXAttrName() != null) {
-              names.add(xattrName.getXAttrName());
-            }
-          }
-        }
-        List<XAttr> xAttrs = np.getXAttrs(fullpath, (names != null &&
-            !names.isEmpty()) ? XAttrHelper.buildXAttrs(names) : null);
-        final String js = JsonUtil.toJsonString(xAttrs, xattrEncoding.getEncoding());
-        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
-      }
-      case LISTXATTRS: {
-        final List<XAttr> xAttrs = np.listXAttrs(fullpath);
-        final String js = JsonUtil.toJsonString(xAttrs);
-        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
-      }
+        //final String js = JsonUtil.toJsonString(status);
+        //return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
+      //}
+//      case GETXATTRS: {
+//        List<String> names = null;
+//        if (xattrNames != null) {
+//          names = Lists.newArrayListWithCapacity(xattrNames.size());
+//          for (XAttrNameParam xattrName : xattrNames) {
+//            if (xattrName.getXAttrName() != null) {
+//              names.add(xattrName.getXAttrName());
+//            }
+//          }
+//        }
+//        List<XAttr> xAttrs = np.getXAttrs(fullpath, (names != null &&
+//            !names.isEmpty()) ? XAttrHelper.buildXAttrs(names) : null);
+//        final String js = JsonUtil.toJsonString(xAttrs, xattrEncoding.getEncoding());
+//        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
+//      }
+//      case LISTXATTRS: {
+//        final List<XAttr> xAttrs = np.listXAttrs(fullpath);
+//        final String js = JsonUtil.toJsonString(xAttrs);
+//        return Response.ok(js).type(MediaType.APPLICATION_JSON).build();
+//      }
       default:
         throw new UnsupportedOperationException(op + " is not supported");
     }
@@ -937,11 +935,12 @@ public class NamenodeWebHdfsMethods {
   private static DirectoryListing getDirectoryListing(
           final NamenodeProtocols np, final String p, byte[] startAfter)
       throws IOException {
-    final DirectoryListing listing = np.getListing(p, startAfter, false);
-    if (listing == null) { // the directory does not exist
-      throw new FileNotFoundException("File " + p + " does not exist.");
-    }
-    return listing;
+//    final DirectoryListing listing = np.getListing(p, startAfter, false);
+//    if (listing == null) { // the directory does not exist
+//      throw new FileNotFoundException("File " + p + " does not exist.");
+//    }
+//    return listing;
+    throw new NotImplementedException();
   }
   
   private static StreamingOutput getListingStream(final NamenodeProtocols np,
@@ -1054,7 +1053,7 @@ public class NamenodeWebHdfsMethods {
                           final DelegationParam delegation, final UserParam username,
                           final DoAsParam doAsUser, final String fullpath, final DeleteOpParam op,
                           final RecursiveParam recursive) throws IOException {
-    final NameNode namenode = (NameNode) context.getAttribute("name.node");
+    final ServerlessNameNode namenode = (ServerlessNameNode) context.getAttribute("name.node");
 
     switch (op.getValue()) {
       case DELETE: {

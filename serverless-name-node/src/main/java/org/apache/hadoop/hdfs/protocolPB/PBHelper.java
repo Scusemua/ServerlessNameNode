@@ -1,11 +1,12 @@
 package org.apache.hadoop.hdfs.protocolPB;
 
+import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos;
-import org.apache.hadoop.hdfs.protocol.HdfsConstants;
 import org.apache.hadoop.hdfs.protocol.HdfsProtos;
 import org.apache.hadoop.hdfs.protocol.HdfsProtos.DatanodeIDProto;
 import org.apache.hadoop.hdfs.protocol.HdfsProtos.RollingUpgradeStatusProto;
 import org.apache.hadoop.hdfs.server.protocol.BlockListAsLongs;
+import org.apache.hadoop.hdfs.protocol.DatanodeInfo.AdminStates;
 import org.apache.hadoop.hdfs.server.protocol.BlockReport;
 import org.apache.hadoop.hdfs.server.protocol.Bucket;
 import org.apache.hadoop.hdfs.util.ExactSizeInputStream;
@@ -20,10 +21,6 @@ import org.apache.hadoop.crypto.CipherSuite;
 import org.apache.hadoop.crypto.CryptoProtocolVersion;
 import org.apache.hadoop.fs.FileEncryptionInfo;
 import org.apache.hadoop.fs.StorageType;
-import org.apache.hadoop.hdfs.protocol.DatanodeID;
-import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
-import org.apache.hadoop.hdfs.protocol.RollingUpgradeInfo;
-import org.apache.hadoop.hdfs.protocol.RollingUpgradeStatus;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.security.proto.SecurityProtos;
@@ -36,6 +33,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.apache.hadoop.hdfs.protocol.DatanodeInfo.AdminStates.DECOMMISSION_INPROGRESS;
 
 /**
  * Utilities for converting protobuf classes to and from implementation classes
@@ -299,6 +298,20 @@ public class PBHelper {
         }
     }
 
+    public static HdfsProtos.DatanodeInfoProto.AdminState convert(
+            final DatanodeInfo.AdminStates inAs) {
+        switch (inAs) {
+            case NORMAL:
+                return HdfsProtos.DatanodeInfoProto.AdminState.NORMAL;
+            case DECOMMISSION_INPROGRESS:
+                return HdfsProtos.DatanodeInfoProto.AdminState.DECOMMISSION_INPROGRESS;
+            case DECOMMISSIONED:
+                return HdfsProtos.DatanodeInfoProto.AdminState.DECOMMISSIONED;
+            default:
+                return HdfsProtos.DatanodeInfoProto.AdminState.NORMAL;
+        }
+    }
+
     public static HdfsProtos.DatanodeInfoProto convert(DatanodeInfo info) {
         HdfsProtos.DatanodeInfoProto.Builder builder = HdfsProtos.DatanodeInfoProto.newBuilder();
         if (info.getNetworkLocation() != null) {
@@ -339,6 +352,26 @@ public class PBHelper {
                 .setInfoPort(dn.getInfoPort())
                 .setInfoSecurePort(dn.getInfoSecurePort())
                 .setIpcPort(dn.getIpcPort()).build();
+    }
+
+    public static ExtendedBlock convert(HdfsProtos.ExtendedBlockProto eb) {
+        if (eb == null) {
+            return null;
+        }
+        return new ExtendedBlock(eb.getPoolId(), eb.getBlockId(), eb.getNumBytes(),
+                eb.getGenerationStamp());
+    }
+
+    public static HdfsProtos.ExtendedBlockProto convert(final ExtendedBlock b) {
+        if (b == null) {
+            return null;
+        }
+        return HdfsProtos.ExtendedBlockProto.newBuilder().
+                setPoolId(b.getBlockPoolId()).
+                setBlockId(b.getBlockId()).
+                setNumBytes(b.getNumBytes()).
+                setGenerationStamp(b.getGenerationStamp()).
+                build();
     }
 
     // Arrays of DatanodeId
@@ -429,7 +462,7 @@ public class PBHelper {
     public static DatanodeInfo.AdminStates convert(HdfsProtos.DatanodeInfoProto.AdminState adminState) {
         switch (adminState) {
             case DECOMMISSION_INPROGRESS:
-                return DatanodeInfo.AdminStates.DECOMMISSION_INPROGRESS;
+                return DECOMMISSION_INPROGRESS;
             case DECOMMISSIONED:
                 return DatanodeInfo.AdminStates.DECOMMISSIONED;
             case NORMAL:

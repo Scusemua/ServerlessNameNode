@@ -17,17 +17,21 @@
  */
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos.*;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.*;
 import org.apache.htrace.core.SpanId;
 import org.apache.htrace.core.TraceScope;
 import org.apache.htrace.core.Tracer;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+
+import static org.apache.hadoop.hdfs.protocol.datatransfer.DataTransferProtoUtil.fromProto;
+import static org.apache.hadoop.hdfs.protocolPB.PBHelper.vintPrefixed;
 
 /**
  * Receiver
@@ -73,7 +77,7 @@ public abstract class Receiver implements DataTransferProtocol {
   }
 
   private TraceScope continueTraceSpan(ClientOperationHeaderProto header,
-                                             String description) {
+                                       String description) {
     return continueTraceSpan(header.getBaseHeader(), description);
   }
 

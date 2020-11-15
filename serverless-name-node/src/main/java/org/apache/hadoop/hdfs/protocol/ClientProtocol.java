@@ -1,14 +1,17 @@
 package org.apache.hadoop.hdfs.protocol;
 
 import io.hops.metadata.hdfs.entity.EncodingStatus;
+import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenIdentifier;
 import org.apache.hadoop.hdfs.server.namenode.NotReplicatedYetException;
 import org.apache.hadoop.hdfs.server.namenode.SafeModeException;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.ParentNotDirectoryException;
 import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.fs.UnresolvedLinkException;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.retry.AtMostOnce;
 import org.apache.hadoop.io.retry.Idempotent;
+import org.apache.hadoop.security.token.Token;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -49,6 +52,39 @@ public interface ClientProtocol {
      */
     @Idempotent
     public void abandonBlock(ExtendedBlock b, long fileId, String src, String holder)
+            throws AccessControlException, FileNotFoundException,
+            UnresolvedLinkException, IOException;
+
+    /**
+     * Get a valid Delegation Token.
+     *
+     * @param renewer
+     *     the designated renewer for the token
+     * @return Token<DelegationTokenIdentifier>
+     * @throws IOException
+     */
+    @Idempotent
+    public Token<DelegationTokenIdentifier> getDelegationToken(Text renewer)
+            throws IOException;
+
+    /**
+     * Get the file info for a specific file or directory.
+     *
+     * @param src
+     *     The string representation of the path to the file
+     * @return object containing information regarding the file
+     * or null if file not found
+     * @throws AccessControlException
+     *     permission denied
+     * @throws FileNotFoundException
+     *     file <code>src</code> is not found
+     * @throws UnresolvedLinkException
+     *     if the path contains a symlink.
+     * @throws IOException
+     *     If an I/O error occurred
+     */
+    @Idempotent
+    public HdfsFileStatus getFileInfo(String src)
             throws AccessControlException, FileNotFoundException,
             UnresolvedLinkException, IOException;
 

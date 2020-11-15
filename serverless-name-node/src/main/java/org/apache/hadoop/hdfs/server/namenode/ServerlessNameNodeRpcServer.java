@@ -9,9 +9,11 @@ import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos;
 import org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos;
 import org.apache.hadoop.hdfs.protocol.NamenodeProtocols;
 import org.apache.hadoop.hdfs.protocolPB.*;
+import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenIdentifier;
 import org.apache.hadoop.hdfs.server.blockmanagement.BRLoadBalancingOverloadException;
 import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.protocol.ClientNamenodeProtocolProtos;
 import com.google.protobuf.BlockingService;
@@ -37,6 +39,7 @@ import org.apache.hadoop.security.protocolPB.RefreshAuthorizationPolicyProtocolS
 import org.apache.hadoop.security.protocolPB.RefreshUserMappingsProtocolPB;
 import org.apache.hadoop.security.protocolPB.RefreshUserMappingsProtocolServerSideTranslatorPB;
 import org.apache.hadoop.security.token.SecretManager;
+import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos;
 import org.apache.hadoop.tools.protocolPB.GetUserMappingsProtocolPB;
 import org.apache.hadoop.tools.protocolPB.GetUserMappingsProtocolServerSideTranslatorPB;
@@ -383,6 +386,20 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
             metrics.incrAddBlockOps();
         }*/
         return locatedBlock;
+    }
+
+    @Override // ClientProtocol
+    public Token<DelegationTokenIdentifier> getDelegationToken(Text renewer)
+            throws IOException {
+        checkNNStartup();
+        return namesystem.getDelegationToken(renewer);
+    }
+
+    @Override // ClientProtocol
+    public HdfsFileStatus getFileInfo(String src) throws IOException {
+        checkNNStartup();
+        metrics.incrFileInfoOps();
+        return namesystem.getFileInfo(src, true);
     }
 
     private static String getClientMachine() {
