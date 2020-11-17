@@ -22,7 +22,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
-import com.logicalclocks.shaded.org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

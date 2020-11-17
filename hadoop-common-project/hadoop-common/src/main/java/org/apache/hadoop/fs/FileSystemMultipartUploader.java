@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 import com.google.common.base.Charsets;
 
-import com.logicalclocks.shaded.org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
