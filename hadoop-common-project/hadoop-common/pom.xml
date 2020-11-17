@@ -107,31 +107,31 @@
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
       <scope>compile</scope>
-      <version>9.3.19.v20170502</version>
+      <version>9.4.20.v20190813</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util</artifactId>
       <scope>compile</scope>
-      <version>9.3.19.v20170502</version>
+      <version>9.4.20.v20190813</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-servlet</artifactId>
       <scope>compile</scope>
-      <version>9.3.19.v20170502</version>
+      <version>9.4.20.v20190813</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-webapp</artifactId>
       <scope>compile</scope>
-      <version>9.3.19.v20170502</version>
+      <version>9.4.20.v20190813</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util-ajax</artifactId>
       <scope>compile</scope>
-      <version>9.3.19.v20170502</version>
+      <version>9.4.20.v20190813</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet.jsp</groupId>
@@ -280,25 +280,25 @@
     <dependency>
       <groupId>org.apache.curator</groupId>
       <artifactId>curator-test</artifactId>
-      <version>2.13.0</version>
+      <version>4.2.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.curator</groupId>
       <artifactId>curator-framework</artifactId>
-      <version>5.1.0</version>
+      <version>4.2.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.curator</groupId>
       <artifactId>curator-client</artifactId>
-      <version>2.13.0</version>
+      <version>4.2.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.curator</groupId>
       <artifactId>curator-recipes</artifactId>
-      <version>2.13.0</version>
+      <version>4.2.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
@@ -322,7 +322,7 @@
     <dependency>
       <groupId>org.apache.zookeeper</groupId>
       <artifactId>zookeeper</artifactId>
-      <version>3.4.9</version>
+      <version>3.5.6</version>
       <exclusions>
         <exclusion>
           <groupId>org.jboss.netty</groupId>
@@ -348,7 +348,7 @@
       <artifactId>zookeeper</artifactId>
       <type>test-jar</type>
       <scope>test</scope>
-      <version>3.4.9</version>
+      <version>3.5.6</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
