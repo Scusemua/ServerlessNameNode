@@ -24,9 +24,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Preconditions;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.compress.utils.IOUtils;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.conf.Configuration;
@@ -123,7 +124,9 @@ public class FileSystemMultipartUploader extends MultipartUploader {
       return getPathHandle(filePath);
     }
 
-    handles.sort(Comparator.comparing(Pair::getKey));
+    Comparator<Pair> comparator = Comparator.comparing(Pair::getKey);
+
+    handles.sort(comparator);
     List<Path> partHandles = handles
         .stream()
         .map(pair -> {
