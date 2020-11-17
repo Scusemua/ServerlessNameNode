@@ -107,31 +107,31 @@
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-server</artifactId>
       <scope>compile</scope>
-      <version>9.4.20.v20190813</version>
+      <version>9.3.19.v20170502</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util</artifactId>
       <scope>compile</scope>
-      <version>9.4.20.v20190813</version>
+      <version>9.3.19.v20170502</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-servlet</artifactId>
       <scope>compile</scope>
-      <version>9.4.20.v20190813</version>
+      <version>9.3.19.v20170502</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-webapp</artifactId>
       <scope>compile</scope>
-      <version>9.4.20.v20190813</version>
+      <version>9.3.19.v20170502</version>
     </dependency>
     <dependency>
       <groupId>org.eclipse.jetty</groupId>
       <artifactId>jetty-util-ajax</artifactId>
       <scope>compile</scope>
-      <version>9.4.20.v20190813</version>
+      <version>9.3.19.v20170502</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet.jsp</groupId>
