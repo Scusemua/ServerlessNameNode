@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Preconditions;
 
 import org.apache.commons.compress.utils.IOUtils;
 import org.apache.commons.lang3.tuple.Pair;
@@ -124,9 +123,9 @@ public class FileSystemMultipartUploader extends MultipartUploader {
       return getPathHandle(filePath);
     }
 
-    Comparator<Pair> comparator = Comparator.comparing(Pair::getKey);
-
-    handles.sort(comparator);
+    // This compiles, the commented-out line does not compile.
+    handles.sort(java.util.Map.Entry.comparingByKey());
+    //handles.sort(Comparator.comparing(Pair::getKey));
     List<Path> partHandles = handles
         .stream()
         .map(pair -> {
