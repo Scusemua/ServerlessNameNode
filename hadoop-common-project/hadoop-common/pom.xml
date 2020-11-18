@@ -20,7 +20,7 @@
   <parent>
     <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
     <artifactId>hadoop-common-project</artifactId>
-    
+    <version>1.0-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
