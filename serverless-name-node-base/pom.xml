@@ -22,7 +22,7 @@
         <!-- Set the Release year during release -->
         <release-year>2019</release-year>
 
-        <hadoop.version>1.0-SNAPSHOT</hadoop.version>
+        <hadoop.version>3.2.0.0-SNAPSHOT</hadoop.version>
 
         <failIfNoTests>false</failIfNoTests>
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
