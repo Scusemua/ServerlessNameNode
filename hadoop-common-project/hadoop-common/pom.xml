@@ -346,7 +346,7 @@
     <dependency>
       <groupId>com.gmail.benrcarver.ServerlessNameNode.metadata</groupId>
       <artifactId>hops-metadata-dal</artifactId>
-      
+      <version>3.2.0.2-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
     <dependency>
@@ -354,11 +354,11 @@
       <artifactId>kerb-simplekdc</artifactId>
       
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>org.apache.kerby</groupId>
       <artifactId>kerb-core</artifactId>
       
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
@@ -391,25 +391,25 @@
     <dependency>
       <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
       <artifactId>hadoop-annotations</artifactId>
-      
+      <version>3.2.0.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
       <artifactId>hadoop-auth</artifactId>
-      
+      <version>3.2.0.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.logicalclocks</groupId>
       <artifactId>service-discovery-client</artifactId>
-      
+      <version>0.4</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
       <artifactId>hadoop-minikdc</artifactId>
-      
+      <version>3.2.0.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
