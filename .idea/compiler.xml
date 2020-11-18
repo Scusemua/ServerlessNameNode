@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="hops-leader-election" />
+        <module name="hadoop-build-tools" />
         <module name="hops-metadata-dal-impl-ndb" />
         <module name="hadoop-auth" />
         <module name="hadoop-minikdc" />
@@ -20,16 +21,17 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="hadoop-annotations" target="1.5" />
+      <module name="hadoop-annotations" target="1.8" />
       <module name="hadoop-auth" target="1.8" />
+      <module name="hadoop-build-tools" target="1.5" />
       <module name="hadoop-common" target="1.8" />
       <module name="hadoop-common-project" target="1.5" />
       <module name="hadoop-hdfs" target="1.5" />
-      <module name="hadoop-hdfs-client" target="1.5" />
+      <module name="hadoop-hdfs-client" target="1.8" />
       <module name="hadoop-hdfs-project" target="1.8" />
       <module name="hadoop-maven-plugins" target="1.8" />
-      <module name="hadoop-minikdc" target="1.5" />
-      <module name="hops-leader-election" target="1.5" />
+      <module name="hadoop-minikdc" target="1.8" />
+      <module name="hops-leader-election" target="1.8" />
       <module name="hops-metadata-dal" target="8" />
       <module name="hops-metadata-dal-impl-ndb" target="1.8" />
       <module name="serverless-name-node" target="1.8" />
