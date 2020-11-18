@@ -22,6 +22,8 @@
         <!-- Set the Release year during release -->
         <release-year>2019</release-year>
 
+        <hadoop.version>3.2.0.0-SNAPSHOT</hadoop.version>
+
         <failIfNoTests>false</failIfNoTests>
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
         <jetty.version>9.3.24.v20180605</jetty.version>
