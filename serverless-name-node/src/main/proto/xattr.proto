@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 
+syntax = "proto2";
 option java_package = "org.apache.hadoop.hdfs.protocol";
 option java_outer_classname = "XAttrProtos";
 option java_generate_equals_and_hash = true;
 package org.apache.hadoop;
 
-syntax = "proto2";
 
 message XAttrProto {
   enum XAttrNamespaceProto {

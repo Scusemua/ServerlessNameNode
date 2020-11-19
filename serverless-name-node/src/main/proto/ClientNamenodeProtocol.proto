@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 
+syntax = "proto2";
 option java_package = "org.apache.hadoop.hdfs.protocol";
 
 option java_outer_classname = "ClientNamenodeProtocolProtos";
@@ -34,7 +35,6 @@ import "acl.proto";
 import "xattr.proto";
 import "encryption.proto";
 
-syntax = "proto2";
 
 import "ActiveNode.proto";
 /**

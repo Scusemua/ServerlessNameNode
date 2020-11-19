@@ -16,6 +16,7 @@
  * limitations under the License.
  */
 
+syntax = "proto2";
 option java_package = "org.apache.hadoop.hdfs.protocol.proto";
 option java_outer_classname = "AclProtos";
 option java_generate_equals_and_hash = true;
@@ -23,7 +24,6 @@ package org.apache.hadoop;
 
 import "hdfs.proto";
 
-syntax = "proto2";
 
 message AclEntryProto {
   enum AclEntryScopeProto {

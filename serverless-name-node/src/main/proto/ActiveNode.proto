@@ -22,6 +22,7 @@
  * for what changes are allowed for a *stable* .proto interface.
  */
 
+syntax = "proto2";
 option java_package = "io.hops.leader_election.proto";
 option java_outer_classname = "ActiveNodeProtos";
 option java_generic_services = true;
@@ -29,7 +30,6 @@ option java_generate_equals_and_hash = true;
 
 package org.apache.hadoop;
 
-syntax = "proto2";
 
 message ActiveNodeProto {
   optional int64 id = 1;
