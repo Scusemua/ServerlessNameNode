@@ -23,6 +23,7 @@ import com.google.common.primitives.Shorts;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
 import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.PacketHeaderProto;
 import org.apache.hadoop.hdfs.util.ByteBufferOutputStream;
 
@@ -51,7 +52,7 @@ import java.nio.ByteBuffer;
 @InterfaceStability.Evolving
 public class PacketHeader {
   private static final int MAX_PROTO_SIZE =
-      PacketHeaderProto.newBuilder().setOffsetInBlock(0).setSeqno(0)
+      DataTransferProtos.PacketHeaderProto.newBuilder().setOffsetInBlock(0).setSeqno(0)
           .setLastPacketInBlock(false).setDataLen(0).setSyncBlock(false).build()
           .getSerializedSize();
   public static final int PKT_LENGTHS_LEN = Ints.BYTES + Shorts.BYTES;
