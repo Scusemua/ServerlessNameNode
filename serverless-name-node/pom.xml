@@ -80,7 +80,7 @@
             <version>6.0.3</version>
         </dependency>
         <dependency>
-            <groupId>io.hops.metadata</groupId>
+            <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
             <artifactId>hops-metadata-dal</artifactId>
             <version>3.2.0.0-SNAPSHOT</version>
             <scope>compile</scope>
