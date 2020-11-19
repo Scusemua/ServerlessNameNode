@@ -30,6 +30,8 @@ package org.apache.hadoop;
 
 import "Security.proto";
 
+syntax = "proto2";
+
 /**
  * Extended block idenfies a block
  */

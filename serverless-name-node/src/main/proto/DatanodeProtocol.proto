@@ -31,6 +31,8 @@ package org.apache.hadoop.datanode;
 
 import "hdfs.proto";
 
+syntax = "proto2";
+
 import "ActiveNode.proto";
 /**
  * Information to identify a datanode to a namenode

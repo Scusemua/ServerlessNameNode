@@ -31,6 +31,8 @@ import "Security.proto";
 
 import "hdfs.proto";
 
+syntax = "proto2";
+
 message DataTransferEncryptorMessageProto {
   enum DataTransferEncryptorStatus {
     SUCCESS = 0;

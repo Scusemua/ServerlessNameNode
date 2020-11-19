@@ -23,6 +23,8 @@ package org.apache.hadoop;
 
 import "hdfs.proto";
 
+syntax = "proto2";
+
 message AclEntryProto {
   enum AclEntryScopeProto {
     ACCESS  = 0x0;

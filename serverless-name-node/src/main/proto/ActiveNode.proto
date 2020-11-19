@@ -29,6 +29,8 @@ option java_generate_equals_and_hash = true;
 
 package org.apache.hadoop;
 
+syntax = "proto2";
+
 message ActiveNodeProto {
   optional int64 id = 1;
   optional string rpcHostname = 2;

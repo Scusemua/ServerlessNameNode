@@ -27,6 +27,8 @@ option java_outer_classname = "SecurityProtos";
 option java_generic_services = true;
 option java_generate_equals_and_hash = true;
 
+syntax = "proto2";
+
 package org.apache.hadoop;
 
 /**

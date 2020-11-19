@@ -31,6 +31,8 @@ package org.apache.hadoop;
 
 import "hdfs.proto";
 
+syntax = "proto2";
+
 /**
  * Block with location information and new generation stamp
  * to be used for recovery.

@@ -31,6 +31,8 @@ package org.apache.hadoop.namenode;
 
 import "hdfs.proto";
 
+syntax = "proto2";
+
 /**
  * Get list of blocks for a given datanode with the total length 
  * of adding up to given size

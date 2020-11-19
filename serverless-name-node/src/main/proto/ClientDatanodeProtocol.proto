@@ -33,6 +33,8 @@ import "Security.proto";
 
 import "hdfs.proto";
 
+syntax = "proto2";
+
 /**
  * block - block for which visible length is requested
  */

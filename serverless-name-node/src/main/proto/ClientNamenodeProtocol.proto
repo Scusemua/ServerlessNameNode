@@ -34,6 +34,8 @@ import "acl.proto";
 import "xattr.proto";
 import "encryption.proto";
 
+syntax = "proto2";
+
 import "ActiveNode.proto";
 /**
  * The ClientNamenodeProtocol Service defines the interface between a client 
