@@ -588,7 +588,7 @@ public class SecurityUtil {
     private List<String> searchDomains = new ArrayList<>();
     {
       ResolverConfig resolverConfig = ResolverConfig.getCurrentConfig();
-      List<Name> names = resolverConfig.searchPath();
+      Name[] names = resolverConfig.searchPath();
       if (names != null) {
         for (Name name : names) {
           searchDomains.add(name.toString());
