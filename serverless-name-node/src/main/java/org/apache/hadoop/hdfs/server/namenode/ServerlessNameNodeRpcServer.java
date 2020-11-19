@@ -1,66 +1,93 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.protobuf.BlockingService;
+import io.hops.leader_election.node.ActiveNode;
+import io.hops.leader_election.node.SortedActiveNodeList;
+import io.hops.metadata.hdfs.entity.EncodingPolicy;
 import io.hops.metadata.hdfs.entity.EncodingStatus;
+import io.hops.metadata.hdfs.entity.MetaStatus;
 import io.hops.metadata.hdfs.entity.RetryCacheEntry;
+import io.hops.security.UsersGroups;
+import org.apache.hadoop.HadoopIllegalArgumentException;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.crypto.CryptoProtocolVersion;
+import org.apache.hadoop.fs.BatchedRemoteIterator.BatchedEntries;
+import org.apache.hadoop.fs.*;
+import org.apache.hadoop.fs.permission.*;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HDFSPolicyProvider;
+import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants.DatanodeReportType;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants.RollingUpgradeAction;
+import org.apache.hadoop.hdfs.protocol.HdfsConstants.SafeModeAction;
 import org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos;
-import org.apache.hadoop.hdfs.protocol.NamenodeProtocols;
+import org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.ClientNamenodeProtocol;
+import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.DatanodeProtocolService;
+import org.apache.hadoop.hdfs.protocol.proto.NamenodeProtocolProtos.NamenodeProtocolService;
 import org.apache.hadoop.hdfs.protocolPB.*;
+import org.apache.hadoop.hdfs.security.token.block.DataEncryptionKey;
+import org.apache.hadoop.hdfs.security.token.block.ExportedBlockKeys;
 import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenIdentifier;
 import org.apache.hadoop.hdfs.server.blockmanagement.BRLoadBalancingOverloadException;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockManager;
+import org.apache.hadoop.hdfs.server.common.IncorrectVersionException;
+import org.apache.hadoop.hdfs.server.common.StorageInfo;
 import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
+import org.apache.hadoop.hdfs.server.protocol.*;
+import org.apache.hadoop.io.EnumSetWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.ipc.Server;
-import org.apache.hadoop.protocol.ClientNamenodeProtocolProtos;
-import com.google.protobuf.BlockingService;
-import org.apache.hadoop.HadoopIllegalArgumentException;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.*;
-import org.apache.hadoop.hdfs.protocol.*;
-import org.apache.hadoop.ipc.ProtobufRpcEngine;
-import org.apache.hadoop.ipc.RPC;
-import org.apache.hadoop.ipc.WritableRpcEngine;
+import org.apache.hadoop.ipc.*;
 import org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos;
+import org.apache.hadoop.ipc.proto.GenericRefreshProtocolProtos.GenericRefreshProtocolService;
 import org.apache.hadoop.ipc.proto.RefreshCallQueueProtocolProtos;
+import org.apache.hadoop.ipc.proto.RefreshCallQueueProtocolProtos.RefreshCallQueueProtocolService;
 import org.apache.hadoop.ipc.protocolPB.GenericRefreshProtocolPB;
 import org.apache.hadoop.ipc.protocolPB.GenericRefreshProtocolServerSideTranslatorPB;
 import org.apache.hadoop.ipc.protocolPB.RefreshCallQueueProtocolPB;
 import org.apache.hadoop.ipc.protocolPB.RefreshCallQueueProtocolServerSideTranslatorPB;
 import org.apache.hadoop.net.Node;
+import org.apache.hadoop.security.AccessControlException;
+import org.apache.hadoop.security.Groups;
+import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.security.authorize.AuthorizationException;
+import org.apache.hadoop.security.authorize.ProxyUsers;
 import org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos;
+import org.apache.hadoop.security.proto.RefreshAuthorizationPolicyProtocolProtos.RefreshAuthorizationPolicyProtocolService;
 import org.apache.hadoop.security.proto.RefreshUserMappingsProtocolProtos;
+import org.apache.hadoop.security.proto.RefreshUserMappingsProtocolProtos.RefreshUserMappingsProtocolService;
 import org.apache.hadoop.security.protocolPB.RefreshAuthorizationPolicyProtocolPB;
 import org.apache.hadoop.security.protocolPB.RefreshAuthorizationPolicyProtocolServerSideTranslatorPB;
 import org.apache.hadoop.security.protocolPB.RefreshUserMappingsProtocolPB;
 import org.apache.hadoop.security.protocolPB.RefreshUserMappingsProtocolServerSideTranslatorPB;
 import org.apache.hadoop.security.token.SecretManager;
+import org.apache.hadoop.security.token.SecretManager.InvalidToken;
 import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos;
+import org.apache.hadoop.tools.proto.GetUserMappingsProtocolProtos.GetUserMappingsProtocolService;
 import org.apache.hadoop.tools.protocolPB.GetUserMappingsProtocolPB;
 import org.apache.hadoop.tools.protocolPB.GetUserMappingsProtocolServerSideTranslatorPB;
+import org.apache.hadoop.tracing.SpanReceiverInfo;
 import org.apache.hadoop.tracing.TraceAdminPB;
+import org.apache.hadoop.tracing.TraceAdminPB.TraceAdminService;
 import org.apache.hadoop.tracing.TraceAdminProtocolPB;
 import org.apache.hadoop.tracing.TraceAdminProtocolServerSideTranslatorPB;
+import org.apache.hadoop.util.VersionInfo;
+import org.apache.hadoop.util.VersionUtil;
 import org.slf4j.Logger;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.nio.file.FileAlreadyExistsException;
-import java.security.AccessControlException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
 import static org.apache.hadoop.hdfs.protocol.HdfsConstants.MAX_PATH_DEPTH;
 import static org.apache.hadoop.hdfs.protocol.HdfsConstants.MAX_PATH_LENGTH;
+import static org.apache.hadoop.util.Time.now;
 
 public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
     // Dependencies from other parts of NN.
@@ -102,7 +129,7 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         ClientNamenodeProtocolServerSideTranslatorPB
                 clientProtocolServerTranslator =
                 new ClientNamenodeProtocolServerSideTranslatorPB(this);
-        BlockingService clientNNPbService = ClientNamenodeProtocolProtos.ClientNamenodeProtocol.
+        BlockingService clientNNPbService = org.apache.hadoop.protocol.ClientNamenodeProtocolProtos.ClientNamenodeProtocol.
                 newReflectiveBlockingService(clientProtocolServerTranslator);
 
         DatanodeProtocolServerSideTranslatorPB dnProtoPbTranslator =
