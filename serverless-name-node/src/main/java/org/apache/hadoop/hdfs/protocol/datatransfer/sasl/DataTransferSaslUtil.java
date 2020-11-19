@@ -17,6 +17,7 @@ import org.apache.hadoop.crypto.CipherOption;
 import org.apache.hadoop.crypto.CryptoCodec;
 import org.apache.hadoop.crypto.CryptoInputStream;
 import org.apache.hadoop.crypto.CryptoOutputStream;
+import org.apache.hadoop.security.SaslPropertiesResolver;
 import org.apache.hadoop.security.SaslRpcServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static org.apache.hadoop.fs.CommonConfigurationKeysPublic.HADOOP_RPC_PROTECTION;
+import static org.apache.hadoop.fs.CommonConfigurationKeysPublic.HADOOP_SECURITY_SASL_PROPS_RESOLVER_CLASS;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_DATA_TRANSFER_PROTECTION_KEY;
+import static org.apache.hadoop.hdfs.DFSConfigKeys.DFS_DATA_TRANSFER_SASL_PROPS_RESOLVER_CLASS_KEY;
 import static org.apache.hadoop.hdfs.protocolPB.PBHelper.vintPrefixed;
 
 /**
@@ -66,6 +71,43 @@ public final class DataTransferSaslUtil {
         return InetAddresses.forString(slashIdx != -1 ?
                 remoteAddr.substring(slashIdx + 1, remoteAddr.length()) :
                 remoteAddr);
+    }
+
+    /**
+     * Creates a SaslPropertiesResolver from the given configuration.  This method
+     * works by cloning the configuration, translating configuration properties
+     * specific to DataTransferProtocol to what SaslPropertiesResolver expects,
+     * and then delegating to SaslPropertiesResolver for initialization.  This
+     * method returns null if SASL protection has not been configured for
+     * DataTransferProtocol.
+     *
+     * @param conf configuration to read
+     * @return SaslPropertiesResolver for DataTransferProtocol, or null if not
+     *   configured
+     */
+    public static SaslPropertiesResolver getSaslPropertiesResolver(
+            Configuration conf) {
+        String qops = conf.get(DFS_DATA_TRANSFER_PROTECTION_KEY);
+        if (qops == null || qops.isEmpty()) {
+            LOG.debug("DataTransferProtocol not using SaslPropertiesResolver, no " +
+                    "QOP found in configuration for {}", DFS_DATA_TRANSFER_PROTECTION_KEY);
+            return null;
+        }
+        Configuration saslPropsResolverConf = new Configuration(conf);
+        saslPropsResolverConf.set(HADOOP_RPC_PROTECTION, qops);
+        Class<? extends SaslPropertiesResolver> resolverClass = conf.getClass(
+                HADOOP_SECURITY_SASL_PROPS_RESOLVER_CLASS,
+                SaslPropertiesResolver.class, SaslPropertiesResolver.class);
+        resolverClass = conf.getClass(DFS_DATA_TRANSFER_SASL_PROPS_RESOLVER_CLASS_KEY,
+                resolverClass, SaslPropertiesResolver.class);
+        saslPropsResolverConf.setClass(HADOOP_SECURITY_SASL_PROPS_RESOLVER_CLASS,
+                resolverClass, SaslPropertiesResolver.class);
+        SaslPropertiesResolver resolver = SaslPropertiesResolver.getInstance(
+                saslPropsResolverConf);
+        LOG.debug("DataTransferProtocol using SaslPropertiesResolver, configured " +
+                        "QOP {} = {}, configured class {} = {}", DFS_DATA_TRANSFER_PROTECTION_KEY, qops,
+                DFS_DATA_TRANSFER_SASL_PROPS_RESOLVER_CLASS_KEY, resolverClass);
+        return resolver;
     }
 
     /**

@@ -308,6 +308,29 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         }
     }
 
+    @Override
+    public SortedActiveNodeList getActiveNamenodesForClient() throws IOException {
+        return nn.getActiveNameNodes();
+    }
+
+    @Override // ClientProtocol
+    public long getPreferredBlockSize(String filename) throws IOException {
+        checkNNStartup();
+        return namesystem.getPreferredBlockSize(filename);
+    }
+
+    @Override // ClientProtocol
+    public FsServerDefaults getServerDefaults() throws IOException {
+        checkNNStartup();
+        return namesystem.getServerDefaults();
+    }
+
+    @Override // ClientProtocol
+    public void renewLease(String clientName) throws IOException {
+        checkNNStartup();
+        namesystem.renewLease(clientName);
+    }
+
     /**
      * Start client and service RPC servers.
      */
@@ -420,6 +443,20 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
             throws IOException {
         checkNNStartup();
         return namesystem.getDelegationToken(renewer);
+    }
+
+    @Override // ClientProtocol
+    public long renewDelegationToken(Token<DelegationTokenIdentifier> token)
+            throws InvalidToken, IOException {
+        checkNNStartup();
+        return namesystem.renewDelegationToken(token);
+    }
+
+    @Override // ClientProtocol
+    public void cancelDelegationToken(Token<DelegationTokenIdentifier> token)
+            throws IOException {
+        checkNNStartup();
+        namesystem.cancelDelegationToken(token);
     }
 
     @Override // ClientProtocol

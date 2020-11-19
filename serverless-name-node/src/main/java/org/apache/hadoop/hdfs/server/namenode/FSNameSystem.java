@@ -2016,6 +2016,71 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
     }
 
     /**
+     * @param token
+     * @return New expiryTime of the token
+     * @throws InvalidToken
+     * @throws IOException
+     */
+    long renewDelegationToken(final Token<DelegationTokenIdentifier> token)
+            throws IOException {
+        //FIXME This does not seem to be persisted
+        HopsTransactionalRequestHandler renewDelegationTokenHandler =
+                new HopsTransactionalRequestHandler(
+                        HDFSOperationType.RENEW_DELEGATION_TOKEN) {
+                    @Override
+                    public void acquireLock(TransactionLocks locks) throws IOException {
+
+                    }
+
+                    @Override
+                    public Object performTask() throws IOException {
+                        long expiryTime;
+                        checkNameNodeSafeMode("Cannot renew delegation token");
+                        if (!isAllowedDelegationTokenOp()) {
+                            throw new IOException(
+                                    "Delegation Token can be renewed only with kerberos or web authentication");
+                        }
+                        String renewer = getRemoteUser().getShortUserName();
+                        expiryTime = dtSecretManager.renewToken(token, renewer);
+                        DelegationTokenIdentifier id = new DelegationTokenIdentifier();
+                        ByteArrayInputStream buf =
+                                new ByteArrayInputStream(token.getIdentifier());
+                        DataInputStream in = new DataInputStream(buf);
+                        id.readFields(in);
+                        return expiryTime;
+                    }
+                };
+        return (Long) renewDelegationTokenHandler.handle(this);
+    }
+
+    /**
+     * @param token
+     * @throws IOException
+     */
+    void cancelDelegationToken(final Token<DelegationTokenIdentifier> token)
+            throws IOException {
+        //FIXME This does not seem to be persisted
+        HopsTransactionalRequestHandler cancelDelegationTokenHandler =
+                new HopsTransactionalRequestHandler(
+                        HDFSOperationType.CANCEL_DELEGATION_TOKEN) {
+                    @Override
+                    public void acquireLock(TransactionLocks locks) throws IOException {
+
+                    }
+
+                    @Override
+                    public Object performTask() throws IOException {
+                        checkNameNodeSafeMode("Cannot cancel delegation token");
+                        String canceller = getRemoteUser().getUserName();
+                        DelegationTokenIdentifier id =
+                                dtSecretManager.cancelToken(token, canceller);
+                        return null;
+                    }
+                };
+        cancelDelegationTokenHandler.handle(this);
+    }
+
+    /**
      * @return Whether the namenode is transitioning to active state and is in the
      *         middle of the {@link #startActiveServices()}
      */
@@ -2204,6 +2269,10 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    FsServerDefaults getServerDefaults() {
+        return serverDefaults;
     }
 
     @Override
@@ -2572,6 +2641,75 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
     public String getCompileInfo() {
         return VersionInfo.getDate() + " by " + VersionInfo.getUser() +
                 " from " + VersionInfo.getBranch();
+    }
+
+    /**
+     * @return All the existing block storage policies
+     */
+    BlockStoragePolicy[] getStoragePolicies() throws IOException {
+        return FSDirAttrOp.getStoragePolicies(blockManager);
+    }
+
+    long getPreferredBlockSize(String src) throws IOException {
+        return FSDirAttrOp.getPreferredBlockSize(dir, src);
+    }
+
+    /**
+     * If the file is within an encryption zone, select the appropriate
+     * CryptoProtocolVersion from the list provided by the client. Since the
+     * client may be newer, we need to handle unknown versions.
+     *
+     * @param zone EncryptionZone of the file
+     * @param supportedVersions List of supported protocol versions
+     * @return chosen protocol version
+     * @throws IOException
+     */
+    private CryptoProtocolVersion chooseProtocolVersion(EncryptionZone zone,
+                                                        CryptoProtocolVersion[] supportedVersions)
+            throws UnknownCryptoProtocolVersionException, UnresolvedLinkException {
+        Preconditions.checkNotNull(zone);
+        Preconditions.checkNotNull(supportedVersions);
+        // Right now, we only support a single protocol version,
+        // so simply look for it in the list of provided options
+        final CryptoProtocolVersion required = zone.getVersion();
+
+        for (CryptoProtocolVersion c : supportedVersions) {
+            if (c.equals(CryptoProtocolVersion.UNKNOWN)) {
+                if (LOG.isDebugEnabled()) {
+                    LOG.debug("Ignoring unknown CryptoProtocolVersion provided by " +
+                            "client: " + c.getUnknownValue());
+                }
+                continue;
+            }
+            if (c.equals(required)) {
+                return c;
+            }
+        }
+        throw new UnknownCryptoProtocolVersionException(
+                "No crypto protocol versions provided by the client are supported."
+                        + " Client provided: " + Arrays.toString(supportedVersions)
+                        + " NameNode supports: " + Arrays.toString(CryptoProtocolVersion
+                        .values()));
+    }
+
+    /**
+     * Renew the lease(s) held by the given client
+     */
+    void renewLease(final String holder) throws IOException {
+        new HopsTransactionalRequestHandler(HDFSOperationType.RENEW_LEASE) {
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = LockFactory.getInstance();
+                locks.add(lf.getLeaseLockAllPaths(LockType.WRITE, holder, leaseCreationLockRows));
+            }
+
+            @Override
+            public Object performTask() throws IOException {
+                checkNameNodeSafeMode("Cannot renew lease for " + holder);
+                leaseManager.renewLease(holder);
+                return null;
+            }
+        }.handle(this);
     }
 
     /**
