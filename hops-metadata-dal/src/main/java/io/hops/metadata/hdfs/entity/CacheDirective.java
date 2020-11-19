@@ -15,7 +15,6 @@
  */
 package io.hops.metadata.hdfs.entity;
 
-
 public class CacheDirective {
   private Long id;
   private String path;

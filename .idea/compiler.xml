@@ -23,7 +23,7 @@
     <bytecodeTargetLevel>
       <module name="hadoop-annotations" target="1.8" />
       <module name="hadoop-auth" target="1.8" />
-      <module name="hadoop-build-tools" target="1.5" />
+      <module name="hadoop-build-tools" target="1.8" />
       <module name="hadoop-common" target="1.8" />
       <module name="hadoop-common-project" target="1.5" />
       <module name="hadoop-hdfs" target="1.5" />
