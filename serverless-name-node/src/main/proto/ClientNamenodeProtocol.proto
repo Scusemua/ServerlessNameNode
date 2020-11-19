@@ -15,9 +15,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-syntax = "proto2";
-option java_package = "org.apache.hadoop.hdfs.protocol";
+source = "proto2";
+option java_package = "org.apache.hadoop.hdfs.protocol.proto";
 
 option java_outer_classname = "ClientNamenodeProtocolProtos";
 
@@ -25,7 +24,7 @@ option java_generic_services = true;
 
 option java_generate_equals_and_hash = true;
 
-package org.apache.hadoop;
+package hadoop.hdfs;
 
 import "Security.proto";
 
@@ -35,12 +34,11 @@ import "acl.proto";
 import "xattr.proto";
 import "encryption.proto";
 
-
 import "ActiveNode.proto";
 /**
  * The ClientNamenodeProtocol Service defines the interface between a client 
- * (as runnign inside a MR Task) and the Namenode.
- * See org.apache.hadoop.hdfs.protocol.ClientProtocol for the javadoc
+ * (as running inside a MR Task) and the Namenode.
+ * See org.apache.hadoop.hdfs.protocol.ClientProtocol for the javadoc 
  * for each of the methods.
  * The exceptions declared in the above class also apply to this protocol.
  * Exceptions are unwrapped and thrown by the  PB libraries.
@@ -681,7 +679,7 @@ message ActiveNamenodeListRequestProto {
 }
 
 message ActiveNamenodeListResponseProto {
-  repeated org.apache.hadoop.ActiveNodeProto namenodes = 1;
+  repeated hadoop.common.ActiveNodeProto namenodes = 1;
 }
 
 message GetEpochMSRequestProto {
@@ -887,9 +885,9 @@ service ClientNamenodeProtocol {
   rpc getLinkTarget (GetLinkTargetRequestProto) returns (GetLinkTargetResponseProto);
   rpc updateBlockForPipeline (UpdateBlockForPipelineRequestProto) returns (UpdateBlockForPipelineResponseProto);
   rpc updatePipeline (UpdatePipelineRequestProto) returns (UpdatePipelineResponseProto);
-  rpc getDelegationToken (org.apache.hadoop.GetDelegationTokenRequestProto) returns (org.apache.hadoop.GetDelegationTokenResponseProto);
-  rpc renewDelegationToken (org.apache.hadoop.RenewDelegationTokenRequestProto) returns (org.apache.hadoop.RenewDelegationTokenResponseProto);
-  rpc cancelDelegationToken (org.apache.hadoop.CancelDelegationTokenRequestProto) returns (org.apache.hadoop.CancelDelegationTokenResponseProto);
+  rpc getDelegationToken (hadoop.common.GetDelegationTokenRequestProto) returns (hadoop.common.GetDelegationTokenResponseProto);
+  rpc renewDelegationToken (hadoop.common.RenewDelegationTokenRequestProto) returns (hadoop.common.RenewDelegationTokenResponseProto);
+  rpc cancelDelegationToken (hadoop.common.CancelDelegationTokenRequestProto) returns (hadoop.common.CancelDelegationTokenResponseProto);
   rpc setBalancerBandwidth (SetBalancerBandwidthRequestProto) returns (SetBalancerBandwidthResponseProto);
   rpc getDataEncryptionKey (GetDataEncryptionKeyRequestProto) returns (GetDataEncryptionKeyResponseProto);
   rpc isFileClosed(IsFileClosedRequestProto) returns(IsFileClosedResponseProto);

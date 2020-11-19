@@ -24,16 +24,14 @@
 
 // This file contains protocol buffers that are used throughout HDFS -- i.e.
 // by the client, server, and data transfer protocols.
+source = "proto2";
 
-syntax = "proto2";
-
-option java_package = "org.apache.hadoop.hdfs.protocol";
+option java_package = "org.apache.hadoop.hdfs.protocol.proto";
 option java_outer_classname = "EncryptionZonesProtos";
 option java_generate_equals_and_hash = true;
-package org.apache.hadoop;
+package hadoop.hdfs;
 
 import "hdfs.proto";
-
 
 message CreateEncryptionZoneRequestProto {
   required string src = 1;

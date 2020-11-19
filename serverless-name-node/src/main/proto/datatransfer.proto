@@ -18,20 +18,18 @@
 
 // This file contains protocol buffers that are used to transfer data
 // to and from the datanode, as well as between datanodes.
-
-syntax = "proto2";
-option java_package = "org.apache.hadoop.hdfs.protocol";
+source = "proto2";
+option java_package = "org.apache.hadoop.hdfs.protocol.proto";
 
 option java_outer_classname = "DataTransferProtos";
 
 option java_generate_equals_and_hash = true;
 
-package org.apache.hadoop;
+package hadoop.hdfs;
 
 import "Security.proto";
 
 import "hdfs.proto";
-
 
 message DataTransferEncryptorMessageProto {
   enum DataTransferEncryptorStatus {
@@ -47,7 +45,7 @@ message DataTransferEncryptorMessageProto {
 
 message BaseHeaderProto {
   required ExtendedBlockProto block = 1;
-  optional org.apache.hadoop.TokenProto token = 2;
+  optional hadoop.common.TokenProto token = 2;
   optional DataTransferTraceInfoProto traceInfo = 3;
 }
 

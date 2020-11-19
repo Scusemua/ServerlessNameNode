@@ -18,10 +18,8 @@
 
 // This file contains protocol buffers that are used throughout HDFS -- i.e.
 // by the client, server, and data transfer protocols.
-
-syntax = "proto2";
-
-option java_package = "org.apache.hadoop.hdfs.protocol";
+source = "proto2";
+option java_package = "org.apache.hadoop.hdfs.protocol.proto";
 
 option java_outer_classname = "ClientDatanodeProtocolProtos";
 
@@ -29,7 +27,7 @@ option java_generic_services = true;
 
 option java_generate_equals_and_hash = true;
 
-package org.apache.hadoop;
+package hadoop.hdfs;
 
 import "Security.proto";
 
@@ -74,7 +72,7 @@ message DeleteBlockPoolResponseProto {
  */
 message GetBlockLocalPathInfoRequestProto {
   required ExtendedBlockProto block = 1;
-  required org.apache.hadoop.TokenProto token = 2;
+  required hadoop.common.TokenProto token = 2;
 }
 
 /**
@@ -99,7 +97,7 @@ message GetBlockLocalPathInfoResponseProto {
 message GetHdfsBlockLocationsRequestProto {
   // Removed: HDFS-3969
   // repeated ExtendedBlockProto blocks = 1;
-  repeated org.apache.hadoop.TokenProto tokens = 2;
+  repeated hadoop.common.TokenProto tokens = 2;
 
   required string blockPoolId = 3;
   repeated sfixed64 blockIds = 4 [ packed = true ];

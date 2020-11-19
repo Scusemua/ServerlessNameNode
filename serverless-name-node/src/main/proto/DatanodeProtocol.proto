@@ -18,10 +18,8 @@
 
 // This file contains protocol buffers that are used throughout HDFS -- i.e.
 // by the client, server, and data transfer protocols.
-
-syntax = "proto2";
-
-option java_package = "org.apache.hadoop.hdfs.protocol";
+source = "proto2";
+option java_package = "org.apache.hadoop.hdfs.protocol.proto";
 
 option java_outer_classname = "DatanodeProtocolProtos";
 
@@ -29,7 +27,7 @@ option java_generic_services = true;
 
 option java_generate_equals_and_hash = true;
 
-package org.apache.hadoop.datanode;
+package hadoop.hdfs.datanode;
 
 import "hdfs.proto";
 
@@ -406,7 +404,7 @@ message ActiveNamenodeListRequestProto {
  * void response
  */
 message ActiveNamenodeListResponseProto {
-  repeated org.apache.hadoop.ActiveNodeProto namenodes = 1;
+  repeated hadoop.common.ActiveNodeProto namenodes = 1;
 }
 
 
@@ -510,7 +508,7 @@ service DatanodeProtocolService {
   /**
    * Ask the leader which namenode the datanode should report to.
    */
-  rpc getNextNamenodeToSendBlockReport (NameNodeAddressRequestForBlockReportingProto) returns (org.apache.hadoop.ActiveNodeProto);
+  rpc getNextNamenodeToSendBlockReport (NameNodeAddressRequestForBlockReportingProto) returns (hadoop.common.ActiveNodeProto);
 
   /**
    * Request leader NN to mark the block report completed.

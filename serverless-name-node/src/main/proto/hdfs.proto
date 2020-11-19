@@ -18,16 +18,15 @@
 
 // This file contains protocol buffers that are used throughout HDFS -- i.e.
 // by the client, server, and data transfer protocols.
+source = "proto2";
 
-syntax = "proto2";
-
-option java_package = "org.apache.hadoop.hdfs.protocol";
+option java_package = "org.apache.hadoop.hdfs.protocol.proto";
 
 option java_outer_classname = "HdfsProtos";
 
 option java_generate_equals_and_hash = true;
 
-package org.apache.hadoop;
+package hadoop.hdfs;
 
 import "Security.proto";
 
@@ -211,7 +210,7 @@ message LocatedBlockProto {
   // If block has few corrupt replicas, they are filtered and
   // their locations are not part of this object
   required bool corrupt = 4;
-  required org.apache.hadoop.TokenProto blockToken = 5;
+  required hadoop.common.TokenProto blockToken = 5;
   repeated bool isCached = 6 [packed=true]; // if a location in locs is cached
   repeated StorageTypeProto storageTypes = 7;
   repeated string storageIDs = 8;
