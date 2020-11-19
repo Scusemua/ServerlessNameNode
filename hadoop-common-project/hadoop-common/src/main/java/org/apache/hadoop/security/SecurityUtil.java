@@ -56,7 +56,6 @@ import org.slf4j.LoggerFactory;
 import org.xbill.DNS.Name;
 import org.xbill.DNS.ResolverConfig;
 
-
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.net.InetAddresses;
 
@@ -589,7 +588,7 @@ public class SecurityUtil {
     private List<String> searchDomains = new ArrayList<>();
     {
       ResolverConfig resolverConfig = ResolverConfig.getCurrentConfig();
-      Name[] names = resolverConfig.searchPath().toArray(new Name[0]);
+      List<Name> names = resolverConfig.searchPath();
       if (names != null) {
         for (Name name : names) {
           searchDomains.add(name.toString());
