@@ -16,6 +16,8 @@
 package io.hops.erasure_coding;
 
 import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.protocol.LocatedBlock;
+import org.apache.hadoop.hdfs.protocol.LocatedBlocks;
 import org.apache.hadoop.hdfs.server.namenode.FSNameSystem;
 import org.apache.hadoop.hdfs.server.namenode.INode;
 import io.hops.exception.StorageException;

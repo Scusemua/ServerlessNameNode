@@ -65,7 +65,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static io.hops.transaction.lock.TransactionLockTypes.*;
-import static org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos.DatanodeCommandProto.Type.KeyUpdateCommand;
 import static org.apache.hadoop.hdfs.server.blockmanagement.DatanodeStorageInfo.*;
 import static org.apache.hadoop.hdfs.server.protocol.DatanodeStorage.*;
 import static org.apache.hadoop.util.ExitUtil.terminate;
