@@ -17,6 +17,12 @@
  */
 package org.apache.hadoop.hdfs.shortcircuit;
 
+import org.apache.hadoop.hdfs.ExtendedBlockId;
+import org.apache.hadoop.hdfs.net.DomainPeer;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
+import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
+import org.apache.hadoop.hdfs.protocol.datatransfer.DataTransferProtocol;
+import org.apache.hadoop.hdfs.protocol.datatransfer.Sender;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
@@ -24,6 +30,7 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.hdfs.server.datanode.ShortCircuitRegistry;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.net.unix.DomainSocket;
 import org.apache.hadoop.net.unix.DomainSocketWatcher;
@@ -107,14 +114,14 @@ public class DfsClientShmManager implements Closeable {
      * @return            null if none of our shared memory segments contain a
      *                      free slot; the slot object otherwise.
      */
-    private Slot allocSlotFromExistingShm(ExtendedBlockId blockId) {
+    private ShortCircuitShm.Slot allocSlotFromExistingShm(ExtendedBlockId blockId) {
       if (notFull.isEmpty()) {
         return null;
       }
       Entry<ShmId, org.apache.hadoop.hdfs.shortcircuit.DfsClientShm> entry = notFull.firstEntry();
       org.apache.hadoop.hdfs.shortcircuit.DfsClientShm shm = entry.getValue();
       ShmId shmId = shm.getShmId();
-      Slot slot = shm.allocAndRegisterSlot(blockId);
+      ShortCircuitShm.Slot slot = shm.allocAndRegisterSlot(blockId);
       if (shm.isFull()) {
         if (LOG.isTraceEnabled()) {
           LOG.trace(this + ": pulled the last slot " + slot.getSlotIdx() +
@@ -153,8 +160,8 @@ public class DfsClientShmManager implements Closeable {
           new DataOutputStream(
               new BufferedOutputStream(peer.getOutputStream()));
       new Sender(out).requestShortCircuitShm(clientName);
-      ShortCircuitShmResponseProto resp = 
-          ShortCircuitShmResponseProto.parseFrom(
+      DataTransferProtos.ShortCircuitShmResponseProto resp =
+          DataTransferProtos.ShortCircuitShmResponseProto.parseFrom(
               PBHelper.vintPrefixed(peer.getInputStream()));
       String error = resp.hasError() ? resp.getError() : "(unknown)";
       switch (resp.getStatus()) {
@@ -212,8 +219,8 @@ public class DfsClientShmManager implements Closeable {
      *                        shm.  The shared memory segment itself on success.
      * @throws IOException  If there was an error communicating over the socket.
      */
-    Slot allocSlot(DomainPeer peer, MutableBoolean usedPeer,
-                   String clientName, ExtendedBlockId blockId) throws IOException {
+    ShortCircuitShm.Slot allocSlot(DomainPeer peer, MutableBoolean usedPeer,
+                                   String clientName, ExtendedBlockId blockId) throws IOException {
       while (true) {
         if (closed) {
           if (LOG.isTraceEnabled()) {
@@ -228,7 +235,7 @@ public class DfsClientShmManager implements Closeable {
           return null;
         }
         // Try to use an existing slot.
-        Slot slot = allocSlotFromExistingShm(blockId);
+        ShortCircuitShm.Slot slot = allocSlotFromExistingShm(blockId);
         if (slot != null) {
           return slot;
         }
@@ -283,7 +290,7 @@ public class DfsClientShmManager implements Closeable {
      *
      * @param slot          The slot to release.
      */
-    void freeSlot(Slot slot) {
+    void freeSlot(ShortCircuitShm.Slot slot) {
       org.apache.hadoop.hdfs.shortcircuit.DfsClientShm shm = (org.apache.hadoop.hdfs.shortcircuit.DfsClientShm)slot.getShm();
       shm.unregisterSlot(slot.getSlotIdx());
       if (shm.isDisconnected()) {
@@ -402,9 +409,9 @@ public class DfsClientShmManager implements Closeable {
     this.domainSocketWatcher = new DomainSocketWatcher(interruptCheckPeriodMs, "DfsClientShmManager");
   }
   
-  public Slot allocSlot(DatanodeInfo datanode, DomainPeer peer,
-      MutableBoolean usedPeer, ExtendedBlockId blockId,
-      String clientName) throws IOException {
+  public ShortCircuitShm.Slot allocSlot(DatanodeInfo datanode, DomainPeer peer,
+                                        MutableBoolean usedPeer, ExtendedBlockId blockId,
+                                        String clientName) throws IOException {
     lock.lock();
     try {
       if (closed) {
@@ -422,7 +429,7 @@ public class DfsClientShmManager implements Closeable {
     }
   }
   
-  public void freeSlot(Slot slot) {
+  public void freeSlot(ShortCircuitShm.Slot slot) {
     lock.lock();
     try {
       org.apache.hadoop.hdfs.shortcircuit.DfsClientShm shm = (org.apache.hadoop.hdfs.shortcircuit.DfsClientShm)slot.getShm();

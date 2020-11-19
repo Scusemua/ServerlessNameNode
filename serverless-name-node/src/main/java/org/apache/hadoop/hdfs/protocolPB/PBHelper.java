@@ -1,6 +1,7 @@
 package org.apache.hadoop.hdfs.protocolPB;
 
 import org.apache.hadoop.hdfs.protocol.*;
+import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
 import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos;
 import org.apache.hadoop.hdfs.protocol.HdfsProtos;
 import org.apache.hadoop.hdfs.protocol.HdfsProtos.DatanodeIDProto;
@@ -9,6 +10,7 @@ import org.apache.hadoop.hdfs.server.protocol.BlockListAsLongs;
 import org.apache.hadoop.hdfs.protocol.DatanodeInfo.AdminStates;
 import org.apache.hadoop.hdfs.server.protocol.BlockReport;
 import org.apache.hadoop.hdfs.server.protocol.Bucket;
+import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm;
 import org.apache.hadoop.hdfs.util.ExactSizeInputStream;
 import org.apache.hadoop.protocol.ClientNamenodeProtocolProtos;
 import org.apache.hadoop.protocol.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto;
@@ -115,15 +117,28 @@ public class PBHelper {
         return null;
     }
 
-    public static HdfsProtos.CipherSuiteProto convert(CipherSuite suite) {
-        switch (suite) {
-            case UNKNOWN:
-                return HdfsProtos.CipherSuiteProto.UNKNOWN;
-            case AES_CTR_NOPADDING:
-                return HdfsProtos.CipherSuiteProto.AES_CTR_NOPADDING;
-            default:
-                return null;
-        }
+    public static DataTransferProtos.ShortCircuitShmSlotProto convert(ShortCircuitShm.SlotId slotId) {
+        return DataTransferProtos.ShortCircuitShmSlotProto.newBuilder().
+                setShmId(convert(slotId.getShmId())).
+                setSlotIdx(slotId.getSlotIdx()).
+                build();
+    }
+
+    public static DataTransferProtos.ShortCircuitShmIdProto convert(ShortCircuitShm.ShmId shmId) {
+        return DataTransferProtos.ShortCircuitShmIdProto.newBuilder().
+                setHi(shmId.getHi()).
+                setLo(shmId.getLo()).
+                build();
+
+    }
+
+    public static ShortCircuitShm.SlotId convert(DataTransferProtos.ShortCircuitShmSlotProto slotId) {
+        return new ShortCircuitShm.SlotId(PBHelper.convert(slotId.getShmId()),
+                slotId.getSlotIdx());
+    }
+
+    public static ShortCircuitShm.ShmId convert(DataTransferProtos.ShortCircuitShmIdProto shmId) {
+        return new ShortCircuitShm.ShmId(shmId.getHi(), shmId.getLo());
     }
 
     public static CipherSuite convert(HdfsProtos.CipherSuiteProto proto) {
@@ -175,6 +190,17 @@ public class PBHelper {
                 .setCryptoProtocolVersion(convert(version))
                 .setKeyName(keyName)
                 .build();
+    }
+
+    public static HdfsProtos.CipherSuiteProto convert(CipherSuite suite) {
+        switch (suite) {
+            case UNKNOWN:
+                return HdfsProtos.CipherSuiteProto.UNKNOWN;
+            case AES_CTR_NOPADDING:
+                return HdfsProtos.CipherSuiteProto.AES_CTR_NOPADDING;
+            default:
+                return null;
+        }
     }
 
     public static FileEncryptionInfo convert(
