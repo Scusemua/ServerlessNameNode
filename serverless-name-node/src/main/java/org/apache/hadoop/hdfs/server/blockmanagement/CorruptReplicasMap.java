@@ -29,6 +29,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.hdfs.server.namenode.NameNode;
+import org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode;
 import org.apache.hadoop.ipc.Server;
 
 import java.io.IOException;
@@ -68,7 +69,6 @@ public class CorruptReplicasMap {
    * Mark the block belonging to datanode as corrupt.
    *
    * @param blk Block to be added to CorruptReplicasMap
-   * @param dn DatanodeDescriptor which holds the corrupt replica
    * @param reason a textual reason (for logging purposes)
    * @param reasonCode the enum representation of the reason
    */
@@ -89,12 +89,12 @@ public class CorruptReplicasMap {
     }
     
     if (!nodes.keySet().contains(storage.getDatanodeDescriptor())) {
-      NameNode.blockStateChangeLog.info(
+      ServerlessNameNode.blockStateChangeLog.info(
           "BLOCK NameSystem.addToCorruptReplicasMap: {} added as corrupt on "
               + "{} by {} {}", blk.getBlockName(), storage, Server.getRemoteIp(),
           reasonText);
     } else {
-      NameNode.blockStateChangeLog.info(
+      ServerlessNameNode.blockStateChangeLog.info(
           "BLOCK NameSystem.addToCorruptReplicasMap: duplicate requested for" +
               " {} to add as corrupt on {} by {} {}", blk.getBlockName(), storage,
               Server.getRemoteIp(), reasonText);
