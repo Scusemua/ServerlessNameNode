@@ -1,5 +1,10 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
+import io.hops.common.INodeUtil;
+import io.hops.metadata.HdfsStorageFactory;
+import io.hops.transaction.lock.SubtreeLockHelper;
+import org.apache.hadoop.hdfs.protocol.BlockStoragePolicy;
+import org.apache.hadoop.hdfs.protocol.HdfsConstantsClient;
 import org.apache.hadoop.hdfs.protocol.UnresolvedPathException;
 import org.apache.hadoop.hdfs.server.blockmanagement.BlockStoragePolicySuite;
 import com.google.common.annotations.VisibleForTesting;

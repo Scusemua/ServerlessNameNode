@@ -630,6 +630,10 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         return (LocatedBlock) updateBlockForPipelineHandler.handle(this);
     }
 
+    boolean isPermissionEnabled() {
+        return isPermissionEnabled;
+    }
+
     private INodeFile checkUCBlock(ExtendedBlock block,
                                    String clientName) throws IOException {
         checkNameNodeSafeMode("Cannot get a new generation stamp and an "

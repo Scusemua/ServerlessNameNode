@@ -23,6 +23,7 @@ import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
 import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
+import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm;
 import org.apache.htrace.core.SpanId;
 import org.apache.htrace.core.TraceScope;
 import org.apache.htrace.core.Tracer;
@@ -207,7 +208,7 @@ public abstract class Receiver implements DataTransferProtocol {
   private void opRequestShortCircuitFds(DataInputStream in) throws IOException {
     final OpRequestShortCircuitAccessProto proto =
       OpRequestShortCircuitAccessProto.parseFrom(vintPrefixed(in));
-    SlotId slotId = (proto.hasSlotId()) ? 
+    ShortCircuitShm.SlotId slotId = (proto.hasSlotId()) ?
         PBHelper.convert(proto.getSlotId()) : null;
     TraceScope traceScope = continueTraceSpan(proto.getHeader(),
         proto.getClass().getSimpleName());
