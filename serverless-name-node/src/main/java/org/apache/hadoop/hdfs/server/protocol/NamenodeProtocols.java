@@ -1,5 +1,6 @@
-package org.apache.hadoop.hdfs.protocol;
+package org.apache.hadoop.hdfs.server.protocol;
 
+import org.apache.hadoop.hdfs.protocol.ClientProtocol;
 import org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol;
 import org.apache.hadoop.hdfs.server.protocol.NamenodeProtocol;
 import org.apache.hadoop.ipc.GenericRefreshProtocol;

@@ -15,22 +15,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.hadoop.hdfs.protocolPB;
 
-import org.apache.hadoop.hdfs.DFSConfigKeys;
-import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.hdfs.security.token.block.BlockTokenSelector;
-import org.apache.hadoop.ipc.ProtocolInfo;
-import org.apache.hadoop.security.KerberosInfo;
-import org.apache.hadoop.security.token.TokenInfo;
+package org.apache.hadoop.hdfs.server.namenode.ha;
 
-@KerberosInfo(
-    serverPrincipal = DFSConfigKeys.DFS_DATANODE_KERBEROS_PRINCIPAL_KEY)
-@TokenInfo(BlockTokenSelector.class)
-@ProtocolInfo(
-    protocolName = "org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocol",
-    protocolVersion = 1)
-@InterfaceAudience.Private
-public interface ClientDatanodeProtocolPB
-    extends org.apache.hadoop.hdfs.protocol.proto.ClientDatanodeProtocolProtos.ClientDatanodeProtocolService.BlockingInterface {
+import org.apache.hadoop.io.retry.FailoverProxyProvider;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public abstract class AbstractNNFailoverProxyProvider<T> implements
+   FailoverProxyProvider <T> {
+
+  protected AtomicBoolean fallbackToSimpleAuth;
+
+  /**
+   * Set for tracking if a secure client falls back to simple auth.  This method
+   * is synchronized only to stifle a Findbugs warning.
+   *
+   * @param fallbackToSimpleAuth - set to true or false during this method to
+   *   indicate if a secure client falls back to simple auth
+   */
+  public synchronized void setFallbackToSimpleAuth(
+      AtomicBoolean fallbackToSimpleAuth) {
+    this.fallbackToSimpleAuth = fallbackToSimpleAuth;
+  }
 }

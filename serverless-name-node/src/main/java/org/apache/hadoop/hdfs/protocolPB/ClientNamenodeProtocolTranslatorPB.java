@@ -1505,7 +1505,7 @@ public class ClientNamenodeProtocolTranslatorPB
     builder.setSrc(src);
     final GetEZForPathRequestProto req = builder.build();
     try {
-      final EncryptionZonesProtos.GetEZForPathResponseProto response =
+      final org.apache.hadoop.hdfs.protocol.proto.EncryptionZonesProtos.GetEZForPathResponseProto response =
           rpcProxy.getEZForPath(null, req);
       if (response.hasZone()) {
         return PBHelper.convert(response.getZone());
@@ -1525,7 +1525,7 @@ public class ClientNamenodeProtocolTranslatorPB
           .setId(id)
           .build();
     try {
-      EncryptionZonesProtos.ListEncryptionZonesResponseProto response =
+      org.apache.hadoop.hdfs.protocol.proto.EncryptionZonesProtos.ListEncryptionZonesResponseProto response =
           rpcProxy.listEncryptionZones(null, req);
       List<EncryptionZone> elements =
           Lists.newArrayListWithCapacity(response.getZonesCount());

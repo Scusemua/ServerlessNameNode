@@ -15,22 +15,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.hadoop.hdfs.protocolPB;
 
-import org.apache.hadoop.hdfs.DFSConfigKeys;
+package org.apache.hadoop.hdfs.server.protocol;
+
 import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.hdfs.security.token.block.BlockTokenSelector;
-import org.apache.hadoop.ipc.ProtocolInfo;
-import org.apache.hadoop.security.KerberosInfo;
-import org.apache.hadoop.security.token.TokenInfo;
+import org.apache.hadoop.classification.InterfaceStability;
+import org.apache.hadoop.hdfs.protocol.Block;
+import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;
 
-@KerberosInfo(
-    serverPrincipal = DFSConfigKeys.DFS_DATANODE_KERBEROS_PRINCIPAL_KEY)
-@TokenInfo(BlockTokenSelector.class)
-@ProtocolInfo(
-    protocolName = "org.apache.hadoop.hdfs.protocol.ClientDatanodeProtocol",
-    protocolVersion = 1)
+/**
+ * Replica recovery information.
+ */
 @InterfaceAudience.Private
-public interface ClientDatanodeProtocolPB
-    extends org.apache.hadoop.hdfs.protocol.proto.ClientDatanodeProtocolProtos.ClientDatanodeProtocolService.BlockingInterface {
+@InterfaceStability.Evolving
+public class ReplicaRecoveryInfo extends Block {
+    private ReplicaState originalState;
+
+    public ReplicaRecoveryInfo(long blockId, long diskLen, long gs,
+                               ReplicaState rState) {
+        setNoPersistance(blockId, diskLen, gs);
+        originalState = rState;
+    }
+
+    public ReplicaState getOriginalReplicaState() {
+        return originalState;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
 }
