@@ -24,7 +24,7 @@ import org.apache.hadoop.hdfs.protocol.DataTransferProtos.ClientOperationHeaderP
 import org.apache.hadoop.hdfs.protocol.DataTransferProtos.DataTransferTraceInfoProto;
 import org.apache.hadoop.hdfs.protocol.DataTransferProtos.OpWriteBlockProto;
 import org.apache.hadoop.hdfs.protocol.DataTransferProtos.OpWriteBlockProto.BlockConstructionStage;
-import org.apache.hadoop.hdfs.protocol.HdfsProtos;
+import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;
 import org.apache.hadoop.classification.InterfaceAudience;

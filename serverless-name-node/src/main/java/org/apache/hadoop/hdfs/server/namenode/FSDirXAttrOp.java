@@ -11,7 +11,7 @@ import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.XAttrHelper;
 import org.apache.hadoop.hdfs.protocol.HdfsFileStatus;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
-import org.apache.hadoop.hdfs.protocol.HdfsProtos;
+import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.transaction.handler.HDFSOperationType;

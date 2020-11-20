@@ -35,7 +35,6 @@ import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.protocol.FSLimitException.MaxDirectoryItemsExceededException;
 import org.apache.hadoop.hdfs.protocol.FSLimitException.PathComponentTooLongException;
-import org.apache.hadoop.hdfs.protocol.HdfsProtos;
 import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
 import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
@@ -1170,7 +1169,7 @@ public class FSDirectory implements Closeable {
     void setFileEncryptionInfo(String src, FileEncryptionInfo info)
             throws IOException {
         // Make the PB for the xattr
-        final HdfsProtos.PerFileEncryptionInfoProto proto =
+        final org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.PerFileEncryptionInfoProto proto =
                 PBHelper.convertPerFileEncInfo(info);
         final byte[] protoBytes = proto.toByteArray();
         final XAttr fileEncryptionAttr =
@@ -1228,8 +1227,8 @@ public class FSDirectory implements Closeable {
         }
 
         try {
-            HdfsProtos.PerFileEncryptionInfoProto fileProto =
-                    HdfsProtos.PerFileEncryptionInfoProto.parseFrom(
+            org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.PerFileEncryptionInfoProto fileProto =
+                    org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.PerFileEncryptionInfoProto.parseFrom(
                             fileXAttr.getValue());
             return PBHelper.convert(fileProto, suite, version, keyName);
         } catch (InvalidProtocolBufferException e) {
@@ -1495,8 +1494,8 @@ public class FSDirectory implements Closeable {
                         final String xaName = XAttrHelper.getPrefixName(xattr);
                         if (CRYPTO_XATTR_ENCRYPTION_ZONE.equals(xaName)) {
                             try {
-                                final HdfsProtos.ZoneEncryptionInfoProto ezProto =
-                                        HdfsProtos.ZoneEncryptionInfoProto.parseFrom(
+                                final org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.ZoneEncryptionInfoProto ezProto =
+                                        org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.ZoneEncryptionInfoProto.parseFrom(
                                                 xattr.getValue());
                                 ezManager.unprotectedAddEncryptionZone(inode.getId(),
                                         PBHelper.convert(ezProto.getSuite()),
