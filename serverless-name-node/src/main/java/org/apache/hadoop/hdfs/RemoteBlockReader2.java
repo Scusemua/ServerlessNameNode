@@ -18,10 +18,10 @@
 package org.apache.hadoop.hdfs;
 
 import org.apache.hadoop.hdfs.net.Peer;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.BlockOpResponseProto;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.ClientReadStatusProto;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.Status;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BlockOpResponseProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.ClientReadStatusProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status;
 import org.apache.hadoop.hdfs.protocol.datatransfer.DataTransferProtoUtil;
 import org.apache.hadoop.hdfs.protocol.datatransfer.PacketHeader;
 import org.apache.hadoop.hdfs.protocol.datatransfer.PacketReceiver;

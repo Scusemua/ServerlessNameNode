@@ -17,13 +17,12 @@
  */
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.BaseHeaderProto;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.ChecksumProto;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.ClientOperationHeaderProto;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.DataTransferTraceInfoProto;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.OpWriteBlockProto;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.OpWriteBlockProto.BlockConstructionStage;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BaseHeaderProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.ChecksumProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.ClientOperationHeaderProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.DataTransferTraceInfoProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.OpWriteBlockProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.OpWriteBlockProto.BlockConstructionStage;
 import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;
@@ -50,7 +49,7 @@ public abstract class DataTransferProtoUtil {
     return BlockConstructionStage.valueOf(stage.name());
   }
 
-  static DataTransferProtos.OpWriteBlockProto.BlockConstructionStage toProto(
+  static org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.OpWriteBlockProto.BlockConstructionStage toProto(
       BlockConstructionStage stage) {
     return OpWriteBlockProto.BlockConstructionStage.valueOf(stage.name());
   }
@@ -104,10 +103,10 @@ public abstract class DataTransferProtoUtil {
   }
 
   public static void checkBlockOpStatus(
-          DataTransferProtos.BlockOpResponseProto response,
+          org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BlockOpResponseProto response,
           String logInfo) throws IOException {
-    if (response.getStatus() != DataTransferProtos.Status.SUCCESS) {
-      if (response.getStatus() == DataTransferProtos.Status.ERROR_ACCESS_TOKEN) {
+    if (response.getStatus() != org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status.SUCCESS) {
+      if (response.getStatus() == org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status.ERROR_ACCESS_TOKEN) {
         throw new InvalidBlockTokenException(
           "Got access token error"
           + ", status message " + response.getMessage()

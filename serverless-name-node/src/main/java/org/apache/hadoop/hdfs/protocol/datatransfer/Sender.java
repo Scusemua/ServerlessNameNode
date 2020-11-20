@@ -17,8 +17,8 @@
  */
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.*;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.*;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
 import org.apache.hadoop.hdfs.shortcircuit.ShortCircuitShm;
