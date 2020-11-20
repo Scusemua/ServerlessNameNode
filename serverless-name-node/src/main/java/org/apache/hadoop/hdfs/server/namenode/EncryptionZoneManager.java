@@ -11,7 +11,6 @@ import org.apache.hadoop.fs.XAttr;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.XAttrHelper;
 import org.apache.hadoop.hdfs.protocol.EncryptionZone;
-import org.apache.hadoop.hdfs.protocol.HdfsProtos;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.server.namenode.FSDirXAttrOp;
 import org.apache.hadoop.hdfs.server.namenode.INodesInPath;
@@ -132,7 +131,7 @@ public class EncryptionZoneManager {
     void unprotectedAddEncryptionZone(Long inodeId,
                                       CipherSuite suite, CryptoProtocolVersion version, String keyName)
             throws TransactionContextException, StorageException {
-        final HdfsProtos.ZoneEncryptionInfoProto proto = PBHelper.convert(suite, version, keyName);
+        final org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.ZoneEncryptionInfoProto proto = PBHelper.convert(suite, version, keyName);
         EntityManager.add(new io.hops.metadata.hdfs.entity.EncryptionZone(inodeId, proto.toByteArray()));
     }
 
@@ -198,7 +197,7 @@ public class EncryptionZoneManager {
                 io.hops.metadata.hdfs.entity.EncryptionZone ez = EntityManager.find(
                         io.hops.metadata.hdfs.entity.EncryptionZone.Finder.ByPrimaryKeyInContext, inode.getId());
                 if (ez != null && ez.getZoneInfo() != null) {
-                    final HdfsProtos.ZoneEncryptionInfoProto proto = HdfsProtos.ZoneEncryptionInfoProto.
+                    final org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.ZoneEncryptionInfoProto proto = org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.ZoneEncryptionInfoProto.
                             parseFrom(ez.getZoneInfo());
                     return new EncryptionZoneInt(inode.getId(), PBHelper.convert(proto.getSuite()), PBHelper.convert(
                             proto.getCryptoProtocolVersion()), proto.getKeyName());
@@ -300,7 +299,7 @@ public class EncryptionZoneManager {
                     "encryption zone. (" + getFullPathName(ezi) + ")");
         }
 
-        final HdfsProtos.ZoneEncryptionInfoProto proto =
+        final org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.ZoneEncryptionInfoProto proto =
                 PBHelper.convert(suite, version, keyName);
         final XAttr ezXAttr = XAttrHelper
                 .buildXAttr(CRYPTO_XATTR_ENCRYPTION_ZONE, proto.toByteArray());
@@ -368,7 +367,7 @@ public class EncryptionZoneManager {
                     if (lastINode == null || lastINode.getId() != ez.getInodeId()) {
                         return false;
                     }
-                    final HdfsProtos.ZoneEncryptionInfoProto proto = HdfsProtos.ZoneEncryptionInfoProto.
+                    final org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.ZoneEncryptionInfoProto proto = org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.ZoneEncryptionInfoProto.
                             parseFrom(ez.getZoneInfo());
                     // Add the EZ to the result list
                     zones.add(new EncryptionZone(ez.getInodeId(), pathName, PBHelper.convert(proto.getSuite()), PBHelper.convert(
