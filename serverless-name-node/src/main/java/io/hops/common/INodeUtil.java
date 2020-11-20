@@ -1,5 +1,6 @@
 package io.hops.common;
 
+import io.hops.metadata.HdfsStorageFactory;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.protocol.AclException;
 import org.apache.hadoop.hdfs.protocol.UnresolvedPathException;

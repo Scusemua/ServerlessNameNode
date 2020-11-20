@@ -1,5 +1,6 @@
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
+import io.hops.metadata.HdfsStorageFactory;
 import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
 import org.apache.hadoop.hdfs.server.protocol.DatanodeStorage;
 import org.apache.hadoop.hdfs.server.protocol.DatanodeStorage.State;

@@ -1,5 +1,6 @@
 package io.hops.transaction.lock;
 
+import io.hops.resolvingcache.Cache;
 import org.apache.hadoop.hdfs.protocol.UnresolvedPathException;
 import org.apache.hadoop.hdfs.server.namenode.*;
 import com.google.common.base.Joiner;

@@ -1,5 +1,9 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
+import io.hops.transaction.lock.TransactionLockTypes;
+import io.hops.transaction.lock.TransactionLockTypes.LockType;
+import io.hops.transaction.lock.TransactionLockTypes.INodeLockType;
+import io.hops.transaction.lock.TransactionLockTypes.INodeResolveType;
 import org.apache.hadoop.hdfs.server.namenode.INode.BlocksMapUpdateInfo;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
@@ -8,6 +12,7 @@ import io.hops.transaction.handler.HDFSOperationType;
 import io.hops.transaction.handler.HopsTransactionalRequestHandler;
 import io.hops.transaction.lock.INodeLock;
 import io.hops.transaction.lock.LockFactory;
+import io.hops.transaction.lock.LockFactory.BLK;
 import io.hops.transaction.lock.TransactionLocks;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +20,7 @@ import org.apache.hadoop.fs.PathIsNotEmptyDirectoryException;
 import org.apache.hadoop.fs.permission.AclEntry;
 import org.apache.hadoop.fs.permission.FsAction;
 import org.apache.hadoop.ipc.RetriableException;
+import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.util.ChunkedArrayList;
 
 import java.io.IOException;
@@ -24,6 +30,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+
+import static org.apache.hadoop.util.Time.now;
 
 class FSDirDeleteOp {
     public static final Log LOG = LogFactory.getLog(FSDirDeleteOp.class);
@@ -233,17 +241,17 @@ class FSDirDeleteOp {
                     public void acquireLock(TransactionLocks locks)
                             throws IOException {
                         LockFactory lf = LockFactory.getInstance();
-                        INodeLock il = lf.getINodeLock(INodeLockType.WRITE_ON_TARGET_AND_PARENT,
-                                INodeResolveType.PATH_AND_ALL_CHILDREN_RECURSIVELY, src)
+                        INodeLock il = lf.getINodeLock(TransactionLockTypes.INodeLockType.WRITE_ON_TARGET_AND_PARENT,
+                                TransactionLockTypes.INodeResolveType.PATH_AND_ALL_CHILDREN_RECURSIVELY, src)
                                 .setNameNodeID(fsn.getNamenodeId())
                                 .setActiveNameNodes(fsn.getNameNode().getActiveNameNodes().getActiveNodes())
                                 .skipReadingQuotaAttr(!fsd.isQuotaEnabled())
                                 .setIgnoredSTOInodes(subTreeRootId);
-                        locks.add(il).add(lf.getLeaseLockAllPaths(LockType.WRITE,
+                        locks.add(il).add(lf.getLeaseLockAllPaths(TransactionLockTypes.LockType.WRITE,
                                 fsn.getLeaseCreationLockRows()))
-                                .add(lf.getLeasePathLock(LockType.READ_COMMITTED))
+                                .add(lf.getLeasePathLock(TransactionLockTypes.LockType.READ_COMMITTED))
                                 .add(lf.getBlockLock()).add(
-                                lf.getBlockRelated(BLK.RE, BLK.CR, BLK.UC, BLK.UR, BLK.PE, BLK.IV, BLK.ER));
+                                lf.getBlockRelated(LockFactory.BLK.RE, BLK.CR, BLK.UC, BLK.UR, BLK.PE, BLK.IV, BLK.ER));
 
                         locks.add(lf.getAllUsedHashBucketsLock());
 
@@ -252,7 +260,7 @@ class FSDirDeleteOp {
                         }
 
                         if (fsn.isErasureCodingEnabled()) {
-                            locks.add(lf.getEncodingStatusLock(true, LockType.WRITE, src));
+                            locks.add(lf.getEncodingStatusLock(true, TransactionLockTypes.LockType.WRITE, src));
                         }
                         locks.add(lf.getEZLock());
                     }
@@ -350,8 +358,6 @@ class FSDirDeleteOp {
      * @param fsn namespace
      * @param src path name to be deleted
      * @param iip the INodesInPath instance containing all the INodes for the path
-     * @param logRetryCache whether to record RPC ids in editlog for retry cache
-     *          rebuilding
      * @return blocks collected from the deleted path
      * @throws IOException
      */
