@@ -19,11 +19,9 @@ import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HDFSPolicyProvider;
 import org.apache.hadoop.hdfs.protocol.*;
-import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos;
 import org.apache.hadoop.hdfs.protocol.HdfsConstants.DatanodeReportType;
 import org.apache.hadoop.hdfs.protocol.HdfsConstants.RollingUpgradeAction;
 import org.apache.hadoop.hdfs.protocol.HdfsConstants.SafeModeAction;
-import org.apache.hadoop.hdfs.protocol.NamenodeProtocolProtos;
 import org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.ClientNamenodeProtocol;
 import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.DatanodeProtocolService;
 import org.apache.hadoop.hdfs.protocol.proto.NamenodeProtocolProtos.NamenodeProtocolService;
@@ -129,17 +127,17 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         ClientNamenodeProtocolServerSideTranslatorPB
                 clientProtocolServerTranslator =
                 new ClientNamenodeProtocolServerSideTranslatorPB(this);
-        BlockingService clientNNPbService = org.apache.hadoop.protocol.ClientNamenodeProtocolProtos.ClientNamenodeProtocol.
+        BlockingService clientNNPbService = org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.ClientNamenodeProtocol.
                 newReflectiveBlockingService(clientProtocolServerTranslator);
 
         DatanodeProtocolServerSideTranslatorPB dnProtoPbTranslator =
                 new DatanodeProtocolServerSideTranslatorPB(this);
-        BlockingService dnProtoPbService = DatanodeProtocolProtos.DatanodeProtocolService
+        BlockingService dnProtoPbService = org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.DatanodeProtocolService
                 .newReflectiveBlockingService(dnProtoPbTranslator);
 
         NamenodeProtocolServerSideTranslatorPB namenodeProtocolXlator =
                 new NamenodeProtocolServerSideTranslatorPB(this);
-        BlockingService NNPbService = NamenodeProtocolProtos.NamenodeProtocolService
+        BlockingService NNPbService = org.apache.hadoop.hdfs.protocol.proto.NamenodeProtocolProtos.NamenodeProtocolService
                 .newReflectiveBlockingService(namenodeProtocolXlator);
 
         RefreshAuthorizationPolicyProtocolServerSideTranslatorPB
@@ -313,6 +311,11 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         return nn.getActiveNameNodes();
     }
 
+    @Override
+    public void changeConf(List<String> props, List<String> newVals) throws IOException {
+
+    }
+
     @Override // ClientProtocol
     public long getPreferredBlockSize(String filename) throws IOException {
         checkNNStartup();
@@ -325,10 +328,80 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         return namesystem.getServerDefaults();
     }
 
+    @Override
+    public HdfsFileStatus create(String src, FsPermission masked, String clientName, EnumSetWritable<CreateFlag> flag, boolean createParent, short replication, long blockSize, CryptoProtocolVersion[] supportedVersions, EncodingPolicy policy) throws AccessControlException, AlreadyBeingCreatedException, DSQuotaExceededException, FileAlreadyExistsException, FileNotFoundException, NSQuotaExceededException, ParentNotDirectoryException, SafeModeException, UnresolvedLinkException, IOException {
+        return null;
+    }
+
+    @Override
+    public HdfsFileStatus create(String src, FsPermission masked, String clientName, EnumSetWritable<CreateFlag> flag, boolean createParent, short replication, long blockSize, CryptoProtocolVersion[] supportedVersions) throws AccessControlException, AlreadyBeingCreatedException, DSQuotaExceededException, FileAlreadyExistsException, FileNotFoundException, NSQuotaExceededException, ParentNotDirectoryException, SafeModeException, UnresolvedLinkException, IOException {
+        return null;
+    }
+
+    @Override
+    public LastBlockWithStatus append(String src, String clientName, EnumSetWritable<CreateFlag> flag) throws AccessControlException, DSQuotaExceededException, FileNotFoundException, SafeModeException, UnresolvedLinkException, IOException {
+        return null;
+    }
+
+    @Override
+    public boolean setReplication(String src, short replication) throws AccessControlException, DSQuotaExceededException, FileNotFoundException, SafeModeException, UnresolvedLinkException, IOException {
+        return false;
+    }
+
+    @Override
+    public BlockStoragePolicy getStoragePolicy(byte storagePolicyID) throws IOException {
+        return null;
+    }
+
+    @Override
+    public BlockStoragePolicy[] getStoragePolicies() throws IOException {
+        return new BlockStoragePolicy[0];
+    }
+
+    @Override
+    public void setStoragePolicy(String src, String policyName) throws UnresolvedLinkException, FileNotFoundException, QuotaExceededException, IOException {
+
+    }
+
+    @Override
+    public void setMetaStatus(String src, MetaStatus metaStatus) throws AccessControlException, FileNotFoundException, SafeModeException, UnresolvedLinkException, IOException {
+
+    }
+
+    @Override
+    public void setPermission(String src, FsPermission permission) throws AccessControlException, FileNotFoundException, SafeModeException, UnresolvedLinkException, IOException {
+
+    }
+
+    @Override
+    public void setOwner(String src, String username, String groupname) throws AccessControlException, FileNotFoundException, SafeModeException, UnresolvedLinkException, IOException {
+
+    }
+
     @Override // ClientProtocol
     public void renewLease(String clientName) throws IOException {
         checkNNStartup();
         namesystem.renewLease(clientName);
+    }
+
+    @Override
+    public boolean recoverLease(String src, String clientName) throws IOException {
+        return false;
+    }
+
+    @Override
+    public long[] getStats() throws IOException {
+        return new long[0];
+    }
+
+    @Override
+    public DatanodeInfo[] getDatanodeReport(DatanodeReportType type) throws IOException {
+        return new DatanodeInfo[0];
+    }
+
+    @Override
+    public DatanodeStorageReport[] getDatanodeStorageReport(DatanodeReportType type) throws IOException {
+        return new DatanodeStorageReport[0];
     }
 
     /**
@@ -459,11 +532,36 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         namesystem.cancelDelegationToken(token);
     }
 
+    @Override
+    public DataEncryptionKey getDataEncryptionKey() throws IOException {
+        return null;
+    }
+
+    @Override
+    public void ping() throws IOException {
+
+    }
+
     @Override // ClientProtocol
     public HdfsFileStatus getFileInfo(String src) throws IOException {
         checkNNStartup();
         metrics.incrFileInfoOps();
         return namesystem.getFileInfo(src, true);
+    }
+
+    @Override
+    public boolean isFileClosed(String src) throws AccessControlException, FileNotFoundException, UnresolvedLinkException, IOException {
+        return false;
+    }
+
+    @Override
+    public HdfsFileStatus getFileLinkInfo(String src) throws AccessControlException, UnresolvedLinkException, IOException {
+        return null;
+    }
+
+    @Override
+    public ContentSummary getContentSummary(String path) throws AccessControlException, FileNotFoundException, UnresolvedLinkException, IOException {
+        return null;
     }
 
     private static String getClientMachine() {
@@ -484,6 +582,11 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         metrics.incrGetBlockLocations();
         return namesystem
                 .getBlockLocations(getClientMachine(), src, offset, length);
+    }
+
+    @Override
+    public LocatedBlocks getMissingBlockLocations(String filePath) throws AccessControlException, FileNotFoundException, UnresolvedLinkException, IOException {
+        return null;
     }
 
     @Override // ClientProtocol
@@ -525,6 +628,91 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
                 existingStorageIDs, excludeSet, numAdditionalNodes, clientName);
     }
 
+    @Override
+    public boolean complete(String src, String clientName, ExtendedBlock last, long fileId, byte[] data) throws AccessControlException, FileNotFoundException, SafeModeException, UnresolvedLinkException, IOException {
+        return false;
+    }
+
+    @Override
+    public DatanodeRegistration registerDatanode(DatanodeRegistration registration) throws IOException {
+        return null;
+    }
+
+    @Override
+    public HeartbeatResponse sendHeartbeat(DatanodeRegistration registration, StorageReport[] reports, long dnCacheCapacity, long dnCacheUsed, int xmitsInProgress, int xceiverCount, int failedVolumes, VolumeFailureSummary volumeFailureSummary) throws IOException {
+        return null;
+    }
+
+    @Override
+    public DatanodeCommand reportHashes(DatanodeRegistration registration, String poolId, StorageBlockReport[] reports) throws IOException {
+        return null;
+    }
+
+    @Override
+    public DatanodeCommand blockReport(DatanodeRegistration registration, String poolId, StorageBlockReport[] reports, BlockReportContext context) throws IOException {
+        return null;
+    }
+
+    @Override
+    public DatanodeCommand cacheReport(DatanodeRegistration registration, String poolId, List<Long> blockIds, long cacheCapacity, long cacheUsed) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void blockReceivedAndDeleted(DatanodeRegistration registration, String poolId, StorageReceivedDeletedBlocks[] rcvdAndDeletedBlocks) throws IOException {
+
+    }
+
+    @Override
+    public void errorReport(DatanodeRegistration registration, int errorCode, String msg) throws IOException {
+
+    }
+
+    @Override
+    public BlocksWithLocations getBlocks(DatanodeInfo datanode, long size) throws IOException {
+        return null;
+    }
+
+    @Override
+    public ExportedBlockKeys getBlockKeys() throws IOException {
+        return null;
+    }
+
+    @Override
+    public NamespaceInfo versionRequest() throws IOException {
+        return null;
+    }
+
+    @Override
+    public void reportBadBlocks(LocatedBlock[] blocks) throws IOException {
+
+    }
+
+    @Override
+    public void commitBlockSynchronization(ExtendedBlock block, long newgenerationstamp, long newlength, boolean closeFile, boolean deleteblock, DatanodeID[] newtargets, String[] newtargetstorages) throws IOException {
+
+    }
+
+    @Override
+    public SortedActiveNodeList getActiveNamenodes() throws IOException {
+        return null;
+    }
+
+    @Override
+    public ActiveNode getNextNamenodeToSendBlockReport(long noOfBlks, DatanodeRegistration nodeReg) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void blockReportCompleted(DatanodeRegistration nodeReg, DatanodeStorage[] storages, boolean success) throws IOException {
+
+    }
+
+    @Override
+    public byte[] getSmallFileData(int id) throws IOException {
+        return new byte[0];
+    }
+
     @Override // ClientProtocol
     public boolean delete(String src, boolean recursive) throws IOException {
         checkNNStartup();
@@ -542,11 +730,31 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         return ret;
     }
 
+    @Override
+    public boolean mkdirs(String src, FsPermission masked, boolean createParent) throws AccessControlException, FileAlreadyExistsException, FileNotFoundException, NSQuotaExceededException, ParentNotDirectoryException, SafeModeException, UnresolvedLinkException, IOException {
+        return false;
+    }
+
+    @Override
+    public DirectoryListing getListing(String src, byte[] startAfter, boolean needLocation) throws AccessControlException, FileNotFoundException, UnresolvedLinkException, IOException {
+        return null;
+    }
+
     @Override // ClientProtocol
     public boolean setSafeMode(HdfsConstants.SafeModeAction action, boolean isChecked)
             throws IOException {
         checkNNStartup();
         return namesystem.setSafeMode(action);
+    }
+
+    @Override
+    public void refreshNodes() throws IOException {
+
+    }
+
+    @Override
+    public RollingUpgradeInfo rollingUpgrade(RollingUpgradeAction action) throws IOException {
+        return null;
     }
 
     @Override // ClientProtocol
@@ -555,6 +763,26 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
             throws IOException {
         checkNNStartup();
         namesystem.setQuota(path, namespaceQuota, storagespaceQuota, type);
+    }
+
+    @Override
+    public void fsync(String src, long inodeId, String client, long lastBlockLength) throws AccessControlException, FileNotFoundException, UnresolvedLinkException, IOException {
+
+    }
+
+    @Override
+    public void setTimes(String src, long mtime, long atime) throws AccessControlException, FileNotFoundException, UnresolvedLinkException, IOException {
+
+    }
+
+    @Override
+    public void createSymlink(String target, String link, FsPermission dirPerm, boolean createParent) throws AccessControlException, FileAlreadyExistsException, FileNotFoundException, ParentNotDirectoryException, SafeModeException, UnresolvedLinkException, IOException {
+
+    }
+
+    @Override
+    public String getLinkTarget(String path) throws AccessControlException, FileNotFoundException, IOException {
+        return null;
     }
 
     @Override // ClientProtocol
@@ -571,6 +799,11 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
             files[i++] = fb.path;
         }
         return new CorruptFileBlocks(files, cookieTab[0]);
+    }
+
+    @Override
+    public void setBalancerBandwidth(long bandwidth) throws IOException {
+
     }
 
     @Override // ClientProtocol
@@ -611,6 +844,11 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
     }
 
     @Override
+    public void concat(String trg, String[] srcs) throws IOException, UnresolvedLinkException {
+
+    }
+
+    @Override
     public void rename2(String src, String dst, Options.Rename... options) throws AccessControlException,
             DSQuotaExceededException, FileAlreadyExistsException, FileNotFoundException, NSQuotaExceededException,
             ParentNotDirectoryException, SafeModeException, UnresolvedLinkException, IOException {
@@ -643,6 +881,11 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         //metrics.incrFilesRenamed();
     }
 
+    @Override
+    public boolean truncate(String src, long newLength, String clientName) throws AccessControlException, FileNotFoundException, SafeModeException, UnresolvedLinkException, IOException {
+        return false;
+    }
+
     @Override // ClientProtocol
     public EncodingStatus getEncodingStatus(String filePath) throws IOException {
         checkNNStartup();
@@ -653,6 +896,191 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         }
 
         return status;
+    }
+
+    @Override
+    public void encodeFile(String filePath, EncodingPolicy policy) throws IOException {
+
+    }
+
+    @Override
+    public void revokeEncoding(String filePath, short replication) throws IOException {
+
+    }
+
+    @Override
+    public LocatedBlock getRepairedBlockLocations(String sourcePath, String parityPath, LocatedBlock block, boolean isParity) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void checkAccess(String path, FsAction mode) throws IOException {
+
+    }
+
+    @Override
+    public LastUpdatedContentSummary getLastUpdatedContentSummary(String path) throws AccessControlException, FileNotFoundException, UnresolvedLinkException, IOException {
+        return null;
+    }
+
+    @Override
+    public void modifyAclEntries(String src, List<AclEntry> aclSpec) throws IOException {
+
+    }
+
+    @Override
+    public void removeAclEntries(String src, List<AclEntry> aclSpec) throws IOException {
+
+    }
+
+    @Override
+    public void removeDefaultAcl(String src) throws IOException {
+
+    }
+
+    @Override
+    public void removeAcl(String src) throws IOException {
+
+    }
+
+    @Override
+    public void setAcl(String src, List<AclEntry> aclSpec) throws IOException {
+
+    }
+
+    @Override
+    public AclStatus getAclStatus(String src) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void createEncryptionZone(String src, String keyName) throws IOException {
+
+    }
+
+    @Override
+    public EncryptionZone getEZForPath(String src) throws IOException {
+        return null;
+    }
+
+    @Override
+    public BatchedEntries<EncryptionZone> listEncryptionZones(long prevId) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void setXAttr(String src, XAttr xAttr, EnumSet<XAttrSetFlag> flag) throws IOException {
+
+    }
+
+    @Override
+    public List<XAttr> getXAttrs(String src, List<XAttr> xAttrs) throws IOException {
+        return null;
+    }
+
+    @Override
+    public List<XAttr> listXAttrs(String src) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void removeXAttr(String src, XAttr xAttr) throws IOException {
+
+    }
+
+    @Override
+    public long addCacheDirective(CacheDirectiveInfo directive, EnumSet<CacheFlag> flags) throws IOException {
+        return 0;
+    }
+
+    @Override
+    public void modifyCacheDirective(CacheDirectiveInfo directive, EnumSet<CacheFlag> flags) throws IOException {
+
+    }
+
+    @Override
+    public void removeCacheDirective(long id) throws IOException {
+
+    }
+
+    @Override
+    public BatchedEntries<CacheDirectiveEntry> listCacheDirectives(long prevId, CacheDirectiveInfo filter) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void addCachePool(CachePoolInfo info) throws IOException {
+
+    }
+
+    @Override
+    public void modifyCachePool(CachePoolInfo req) throws IOException {
+
+    }
+
+    @Override
+    public void removeCachePool(String pool) throws IOException {
+
+    }
+
+    @Override
+    public BatchedEntries<CachePoolEntry> listCachePools(String prevPool) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void addUser(String userName) throws IOException {
+
+    }
+
+    @Override
+    public void addGroup(String groupName) throws IOException {
+
+    }
+
+    @Override
+    public void addUserToGroup(String userName, String groupName) throws IOException {
+
+    }
+
+    @Override
+    public void removeUser(String userName) throws IOException {
+
+    }
+
+    @Override
+    public void removeGroup(String groupName) throws IOException {
+
+    }
+
+    @Override
+    public void removeUserFromGroup(String userName, String groupName) throws IOException {
+
+    }
+
+    @Override
+    public void invCachesUserRemoved(String userName) throws IOException {
+
+    }
+
+    @Override
+    public void invCachesGroupRemoved(String groupName) throws IOException {
+
+    }
+
+    @Override
+    public void invCachesUserRemovedFromGroup(String userName, String groupName) throws IOException {
+
+    }
+
+    @Override
+    public void invCachesUserAddedToGroup(String userName, String groupName) throws IOException {
+
+    }
+
+    @Override
+    public long getEpochMS() throws IOException {
+        return 0;
     }
 
     @Override // RefreshAuthorizationPolicyProtocol
@@ -669,5 +1097,45 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
             this.serviceRpcServer
                     .refreshServiceAcl(new Configuration(), new HDFSPolicyProvider());
         }
+    }
+
+    @Override
+    public SpanReceiverInfo[] listSpanReceivers() throws IOException {
+        return new SpanReceiverInfo[0];
+    }
+
+    @Override
+    public long addSpanReceiver(SpanReceiverInfo desc) throws IOException {
+        return 0;
+    }
+
+    @Override
+    public void removeSpanReceiver(long spanReceiverId) throws IOException {
+
+    }
+
+    @Override
+    public Collection<RefreshResponse> refresh(String identifier, String[] args) throws IOException {
+        return null;
+    }
+
+    @Override
+    public void refreshCallQueue() throws IOException {
+
+    }
+
+    @Override
+    public void refreshUserToGroupsMappings() throws IOException {
+
+    }
+
+    @Override
+    public void refreshSuperUserGroupsConfiguration() throws IOException {
+
+    }
+
+    @Override
+    public String[] getGroupsForUser(String user) throws IOException {
+        return new String[0];
     }
 }

@@ -15,21 +15,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.apache.hadoop.hdfs.protocolPB;
+package org.apache.hadoop.hdfs.server.protocol;
 
 import org.apache.hadoop.classification.InterfaceAudience;
-import org.apache.hadoop.hdfs.DFSConfigKeys;
-import org.apache.hadoop.ipc.ProtocolInfo;
-import org.apache.hadoop.security.KerberosInfo;
+import org.apache.hadoop.classification.InterfaceStability;
 
-@KerberosInfo(
-    serverPrincipal = DFSConfigKeys.DFS_NAMENODE_KERBEROS_PRINCIPAL_KEY,
-    clientPrincipal = DFSConfigKeys.DFS_DATANODE_KERBEROS_PRINCIPAL_KEY)
-@ProtocolInfo(
-    protocolName = "org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol",
-    protocolVersion = 1)
+/**
+ * A BlockCommand is an instruction to a datanode to register with the
+ * namenode.
+ */
 @InterfaceAudience.Private
-public interface DatanodeProtocolPB
-    extends org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.DatanodeProtocolService.BlockingInterface {
+@InterfaceStability.Evolving
+public class FinalizeCommand extends DatanodeCommand {
+  String blockPoolId;
+
+  private FinalizeCommand() {
+    super(DatanodeProtocol.DNA_FINALIZE);
+  }
+  
+  public FinalizeCommand(String bpid) {
+    super(DatanodeProtocol.DNA_FINALIZE);
+    blockPoolId = bpid;
+  }
+  
+  public String getBlockPoolId() {
+    return blockPoolId;
+  }
 }

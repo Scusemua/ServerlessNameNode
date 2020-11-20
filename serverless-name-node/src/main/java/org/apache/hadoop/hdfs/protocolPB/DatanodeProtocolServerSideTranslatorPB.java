@@ -18,11 +18,9 @@
 
 package org.apache.hadoop.hdfs.protocolPB;
 
-import org.apache.hadoop.hdfs.protocol.DatanodeProtocolProtos.*;
-import org.apache.hadoop.hdfs.protocol.HdfsProtos.*;
-import org.apache.hadoop.hdfs.server.protocol.DatanodeStorage;
-import org.apache.hadoop.hdfs.server.protocol.StorageReport;
-import org.apache.hadoop.hdfs.server.protocol.VolumeFailureSummary;
+import org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.*;
+import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.*;
+import org.apache.hadoop.hdfs.server.protocol.*;
 import com.google.protobuf.RpcController;
 import com.google.protobuf.ServiceException;
 import io.hops.leader_election.node.ActiveNode;
@@ -40,7 +38,7 @@ public class DatanodeProtocolServerSideTranslatorPB
     implements DatanodeProtocolPB {
 
   private final DatanodeProtocol impl;
-  private static final ErrorReportResponseProto
+  private static final org.apache.hadoop.hdfs.protocol.proto.DatanodeProtocolProtos.ErrorReportResponseProto
       VOID_ERROR_REPORT_RESPONSE_PROTO =
       ErrorReportResponseProto.newBuilder().build();
   private static final BlockReceivedAndDeletedResponseProto
@@ -239,7 +237,7 @@ public class DatanodeProtocolServerSideTranslatorPB
 
   @Override
   public VersionResponseProto versionRequest(RpcController controller,
-      VersionRequestProto request) throws ServiceException {
+      org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.VersionRequestProto request) throws ServiceException {
     NamespaceInfo info;
     try {
       info = impl.versionRequest();
