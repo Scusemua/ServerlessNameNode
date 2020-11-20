@@ -18,8 +18,7 @@
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
 import org.apache.hadoop.hdfs.HdfsConfiguration;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.PipelineAckProto;
-import org.apache.hadoop.hdfs.protocol.DataTransferProtos.Status;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.*;
 import org.apache.hadoop.hdfs.util.LongBitFormat;
 import com.google.common.collect.Lists;
 import com.google.protobuf.TextFormat;
@@ -41,7 +40,7 @@ import static org.apache.hadoop.hdfs.protocolPB.PBHelper.vintPrefixed;
 @InterfaceAudience.Private
 @InterfaceStability.Evolving
 public class PipelineAck {
-  PipelineAckProto proto;
+  org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.PipelineAckProto proto;
   public final static long UNKOWN_SEQNO = -2;
   final static int OOB_START = Status.OOB_RESTART_VALUE; // the first OOB type
   final static int OOB_END = Status.OOB_RESERVED3_VALUE; // the last OOB type

@@ -20,6 +20,7 @@ package org.apache.hadoop.hdfs.server.blockmanagement;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.hadoop.hdfs.protocol.Block;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.ReplicaState;
 
 import java.util.List;

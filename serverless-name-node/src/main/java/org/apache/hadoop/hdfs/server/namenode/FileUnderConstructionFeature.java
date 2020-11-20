@@ -1,9 +1,11 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
+import io.hops.metadata.hdfs.entity.LeasePath;
 import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
 
 import java.io.IOException;
 

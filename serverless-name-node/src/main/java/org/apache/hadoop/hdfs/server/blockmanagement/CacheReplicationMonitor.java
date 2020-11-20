@@ -18,6 +18,7 @@
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
 
+import org.apache.hadoop.hdfs.protocol.Block;
 import org.apache.hadoop.hdfs.protocol.CacheDirective;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import com.google.common.base.Preconditions;
@@ -437,7 +438,7 @@ public class CacheReplicationMonitor extends Thread implements Closeable {
         // blocks in state COMPLETE.
         // Note that if two directives are caching the same block(s), they will
         // both get them added to their bytesCached.
-        List<DatanodeDescriptor> cachedOn = ocblock.getDatanodes(Type.CACHED);
+        List<DatanodeDescriptor> cachedOn = ocblock.getDatanodes(CachedBlock.Type.CACHED);
         long cachedByBlock = Math.min(cachedOn.size(),
             directive.getReplication()) * blockInfo.getNumBytes();
         cachedTotal += cachedByBlock;
