@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
+import io.hops.metadata.HdfsStorageFactory;
 import io.hops.metadata.hdfs.dal.XAttrDataAccess;
 import io.hops.metadata.hdfs.entity.StoredXAttr;
 import io.hops.transaction.EntityManager;

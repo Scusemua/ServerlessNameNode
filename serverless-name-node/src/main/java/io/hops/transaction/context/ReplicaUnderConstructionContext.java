@@ -23,7 +23,6 @@ import io.hops.metadata.common.FinderType;
 import io.hops.metadata.hdfs.dal.ReplicaUnderConstructionDataAccess;
 import io.hops.transaction.lock.TransactionLocks;
 import org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction;
-import org.apache.hadoop.hdfs.server.namenode.FSNamesystem;
 
 import java.util.Arrays;
 import java.util.Collection;

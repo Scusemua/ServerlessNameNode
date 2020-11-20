@@ -1,5 +1,6 @@
 package org.apache.hadoop.hdfs.server.common;
 
+import io.hops.metadata.HdfsVariables;
 import io.hops.transaction.handler.HDFSOperationType;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;

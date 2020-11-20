@@ -22,10 +22,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
-import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
-import org.apache.hadoop.hdfs.protocol.ExtendedBlock;
-import org.apache.hadoop.hdfs.protocol.LocatedBlock;
-import org.apache.hadoop.hdfs.protocol.LocatedBlocks;
+import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.protocol.datatransfer.InvalidEncryptionKeyException;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
 import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;
@@ -338,7 +335,7 @@ implements ByteBufferReadable, CanSetDropBehind, CanSetReadahead,
       catch(IOException ioe) {
         if (ioe instanceof RemoteException &&
           (((RemoteException) ioe).unwrapRemoteException() instanceof
-            ReplicaNotFoundException)) {
+                  ReplicaNotFoundException)) {
           // special case : replica might not be on the DN, treat as 0 length
           replicaNotFoundCount--;
         }
