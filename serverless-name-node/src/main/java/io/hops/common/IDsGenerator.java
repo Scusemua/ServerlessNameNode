@@ -1,6 +1,5 @@
 package io.hops.common;
 
-import io.hops.CountersQueue;
 import io.hops.exception.StorageException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

@@ -13,8 +13,6 @@ import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.StartupOption;
 import org.apache.hadoop.hdfs.server.common.StorageInfo;
 import com.google.common.annotations.VisibleForTesting;
-import io.hops.HdfsStorageFactory;
-import io.hops.HdfsVariables;
 import io.hops.exception.StorageException;
 import io.hops.leader_election.node.ActiveNode;
 import io.hops.leader_election.node.SortedActiveNodeList;

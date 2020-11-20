@@ -5,7 +5,6 @@ import org.apache.hadoop.hdfs.server.namenode.*;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import io.hops.Cache;
 import io.hops.common.INodeResolver;
 import io.hops.common.INodeUtil;
 import io.hops.exception.StorageException;

@@ -1,8 +1,6 @@
 package io.hops.common;
 
 import com.google.common.collect.Lists;
-import io.hops.CountersQueue;
-import io.hops.HdfsVariables;
 import io.hops.exception.StorageException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

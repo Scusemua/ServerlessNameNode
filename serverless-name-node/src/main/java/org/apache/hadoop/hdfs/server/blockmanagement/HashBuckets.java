@@ -4,7 +4,6 @@ import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import org.apache.hadoop.hdfs.server.protocol.BlockReport;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.hash.Hashing;
-import io.hops.HdfsStorageFactory;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.metadata.hdfs.dal.HashBucketDataAccess;

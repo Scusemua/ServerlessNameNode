@@ -23,7 +23,6 @@ import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.hdfs.server.protocol.*;
 import org.apache.hadoop.net.Node;
 import com.google.common.annotations.VisibleForTesting;
-import io.hops.HdfsVariables;
 import io.hops.common.INodeUtil;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;

@@ -1,5 +1,7 @@
 package io.hops.metadata;
 
+import io.hops.resolvingcache.Cache;
+import io.hops.transaction.context.*;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
 import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguousUnderConstruction;
@@ -22,10 +24,6 @@ import io.hops.metadata.hdfs.dal.*;
 import io.hops.metadata.hdfs.entity.*;
 import io.hops.security.UsersGroups;
 import io.hops.transaction.EntityManager;
-import io.hops.transaction.context.ContextInitializer;
-import io.hops.transaction.context.EntityContext;
-import io.hops.transaction.context.TransactionsStats;
-import io.hops.transaction.context.VariableContext;
 import io.hops.transaction.lock.LockFactory;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.CommonConfigurationKeys;

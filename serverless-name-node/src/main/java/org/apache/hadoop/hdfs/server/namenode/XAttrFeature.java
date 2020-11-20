@@ -2,7 +2,6 @@ package org.apache.hadoop.hdfs.server.namenode;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import io.hops.HdfsStorageFactory;
 import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.metadata.hdfs.dal.XAttrDataAccess;

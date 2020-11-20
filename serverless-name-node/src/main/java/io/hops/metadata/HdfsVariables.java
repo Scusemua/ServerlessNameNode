@@ -377,7 +377,7 @@ public class HdfsVariables {
   public static void setRollingUpgradeInfo(RollingUpgradeInfo rollingUpgradeInfo) throws TransactionContextException,
       StorageException {
     if (rollingUpgradeInfo != null) {
-      org.apache.hadoop.protocol.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = PBHelper.convert(rollingUpgradeInfo);
+      org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = PBHelper.convert(rollingUpgradeInfo);
       byte[] array = proto.toByteArray();
       Variables.updateVariable(new ByteArrayVariable(Variable.Finder.RollingUpgradeInfo, proto.toByteArray()));
     } else {
@@ -392,7 +392,7 @@ public class HdfsVariables {
       return null;
     }
     byte[] array = var.getBytes();
-    org.apache.hadoop.protocol.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = org.apache.hadoop.protocol.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto.
+    org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto.
         parseFrom((byte[]) var.getValue());
     return PBHelper.convert(proto);
   }
