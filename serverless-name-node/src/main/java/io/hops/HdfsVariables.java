@@ -1,9 +1,12 @@
 package io.hops;
 
+import io.hops.leaderElection.VarsRegister;
+import io.hops.metadata.Variables;
+import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
+import org.apache.hadoop.hdfs.protocol.RollingUpgradeInfo;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.security.token.block.BlockKey;
-import org.apache.hadoop.hdfsclient.hdfs.protocol.RollingUpgradeInfo;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import org.apache.hadoop.hdfs.server.common.StorageInfo;
 import org.apache.hadoop.hdfs.server.namenode.FSNameSystem;
@@ -358,7 +361,7 @@ public class HdfsVariables {
     public static void setRollingUpgradeInfo(RollingUpgradeInfo rollingUpgradeInfo) throws TransactionContextException,
             StorageException {
         if (rollingUpgradeInfo != null) {
-            ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = PBHelper.convert(rollingUpgradeInfo);
+            org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = PBHelper.convert(rollingUpgradeInfo);
             byte[] array = proto.toByteArray();
             Variables.updateVariable(new ByteArrayVariable(Variable.Finder.RollingUpgradeInfo, proto.toByteArray()));
         } else {
@@ -373,7 +376,7 @@ public class HdfsVariables {
             return null;
         }
         byte[] array = var.getBytes();
-        ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = ClientNamenodeProtocolProtos.RollingUpgradeInfoProto.
+        org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto proto = org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos.RollingUpgradeInfoProto.
                 parseFrom((byte[]) var.getValue());
         return PBHelper.convert(proto);
     }
