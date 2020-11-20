@@ -15,14 +15,21 @@
  */
 package io.hops.transaction.lock;
 
-import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
-import org.apache.hadoop.hdfs.server.namenode.INodeFile;
 import io.hops.metadata.common.FinderType;
-import io.hops.metadata.hdfs.entity.*;
+import io.hops.metadata.hdfs.entity.CachedBlock;
+import io.hops.metadata.hdfs.entity.CorruptReplica;
+import io.hops.metadata.hdfs.entity.ExcessReplica;
+import io.hops.metadata.hdfs.entity.Replica;
+import io.hops.metadata.hdfs.entity.InvalidatedBlock;
+import io.hops.metadata.hdfs.entity.UnderReplicatedBlock;
+import org.apache.hadoop.hdfs.server.blockmanagement.PendingBlockInfo;
+import org.apache.hadoop.hdfs.server.blockmanagement.ReplicaUnderConstruction;
+import org.apache.hadoop.hdfs.server.namenode.INodeFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import org.apache.hadoop.hdfs.server.blockmanagement.BlockInfoContiguous;
 
 final class BlockRelatedLock extends LockWithType {
 
