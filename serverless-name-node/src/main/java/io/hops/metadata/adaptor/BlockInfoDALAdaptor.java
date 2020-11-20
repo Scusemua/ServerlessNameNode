@@ -15,6 +15,7 @@
  */
 package io.hops.metadata.adaptor;
 
+import org.apache.hadoop.hdfs.protocol.Block;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import io.hops.exception.StorageException;
 import io.hops.metadata.DalAdaptor;

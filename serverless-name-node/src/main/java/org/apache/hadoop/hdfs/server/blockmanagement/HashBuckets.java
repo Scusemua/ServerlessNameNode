@@ -1,5 +1,6 @@
 package org.apache.hadoop.hdfs.server.blockmanagement;
 
+import io.hops.metadata.HdfsStorageFactory;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import org.apache.hadoop.hdfs.server.protocol.BlockReport;
 import com.google.common.annotations.VisibleForTesting;
