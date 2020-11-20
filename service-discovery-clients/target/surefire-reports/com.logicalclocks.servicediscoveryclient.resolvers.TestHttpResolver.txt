@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.logicalclocks.servicediscoveryclient.resolvers.TestHttpResolver
--------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 3, Time elapsed: 0.108 s - in com.logicalclocks.servicediscoveryclient.resolvers.TestHttpResolver
