@@ -2,6 +2,7 @@ package org.apache.hadoop.hdfs.server.blockmanagement;
 
 import com.google.common.base.Preconditions;
 import com.google.common.primitives.Longs;
+import io.hops.metadata.HdfsVariables;
 import io.hops.metadata.blockmanagement.ExcessReplicasMap;
 import io.hops.metadata.security.token.block.NameNodeBlockTokenSecretManager;
 import org.apache.hadoop.HadoopIllegalArgumentException;

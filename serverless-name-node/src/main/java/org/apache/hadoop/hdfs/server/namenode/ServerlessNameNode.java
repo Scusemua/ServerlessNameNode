@@ -2,6 +2,8 @@ package org.apache.hadoop.hdfs.server.namenode;
 
 import io.hops.leaderElection.HdfsLeDescriptorFactory;
 import io.hops.leaderElection.LeaderElection;
+import io.hops.metadata.HdfsStorageFactory;
+import io.hops.metadata.HdfsVariables;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;

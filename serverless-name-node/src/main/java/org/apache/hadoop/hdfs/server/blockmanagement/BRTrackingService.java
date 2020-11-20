@@ -18,6 +18,7 @@ package org.apache.hadoop.hdfs.server.blockmanagement;
 import io.hops.leader_election.node.ActiveNode;
 import io.hops.leader_election.node.SortedActiveNodeList;
 import io.hops.metadata.HdfsStorageFactory;
+import io.hops.metadata.HdfsVariables;
 import io.hops.metadata.hdfs.dal.ActiveBlockReportsDataAccess;
 import io.hops.metadata.hdfs.entity.ActiveBlockReport;
 import io.hops.transaction.handler.HDFSOperationType;
