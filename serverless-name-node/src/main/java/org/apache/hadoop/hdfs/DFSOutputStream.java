@@ -1,7 +1,6 @@
 package org.apache.hadoop.hdfs;
 
-
-import org.apache.hadoop.exceptions.SafeModeException;
+import com.google.common.base.Preconditions;
 import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
 import org.apache.hadoop.hdfs.protocol.QuotaByStorageTypeExceededException;
 import org.apache.hadoop.hdfs.protocol.UnresolvedPathException;
@@ -13,6 +12,8 @@ import io.hops.erasure_coding.Codec;
 import io.hops.exception.OutOfDBExtentsException;
 import io.hops.metadata.hdfs.entity.EncodingPolicy;
 import org.apache.commons.logging.Log;
+import org.apache.hadoop.hdfs.client.HdfsDataOutputStream;
+import org.apache.hadoop.hdfs.client.HdfsDataOutputStream.SyncFlag;
 import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.crypto.CryptoProtocolVersion;
@@ -21,10 +22,16 @@ import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
 import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
+import org.apache.hadoop.hdfs.server.namenode.RetryStartFileException;
+import org.apache.hadoop.hdfs.server.namenode.SafeModeException;
+import org.apache.hadoop.hdfs.util.ByteArrayManager;
 import org.apache.hadoop.io.EnumSetWritable;
+import org.apache.hadoop.ipc.RemoteException;
+import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.util.DataChecksum;
 import org.apache.hadoop.util.Progressable;
+import org.apache.hadoop.util.StringUtils;
 import org.apache.hadoop.util.Time;
 import org.apache.htrace.core.TraceScope;
 
@@ -67,7 +74,7 @@ public class DFSOutputStream extends FSOutputSummer
             CryptoProtocolVersion.supported();
 
     protected final DFSClient dfsClient;
-    protected final HdfsClientConfigKeys.Write.ByteArrayManager byteArrayManager;
+    protected final ByteArrayManager byteArrayManager;
     // closed is accessed by different threads under different locks.
     protected volatile boolean closed = false;
 
