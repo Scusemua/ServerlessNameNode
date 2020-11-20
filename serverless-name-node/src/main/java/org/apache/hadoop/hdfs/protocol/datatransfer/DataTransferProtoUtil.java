@@ -17,25 +17,28 @@
  */
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BaseHeaderProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.ChecksumProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.ClientOperationHeaderProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.DataTransferTraceInfoProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.OpWriteBlockProto;
-import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.OpWriteBlockProto.BlockConstructionStage;
-import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos;
-import org.apache.hadoop.hdfs.protocolPB.PBHelper;
-import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;
+import java.io.IOException;
+
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
+import org.apache.hadoop.hdfs.net.Peer;
+import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.protocol.ExtendedBlock;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BaseHeaderProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BlockOpResponseProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.ChecksumProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.ClientOperationHeaderProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.OpWriteBlockProto;
+import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.DataTransferTraceInfoProto;
+import org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.ChecksumTypeProto;
+import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
+import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;
 import org.apache.hadoop.security.token.Token;
 import org.apache.hadoop.util.DataChecksum;
 import org.apache.htrace.core.SpanId;
 import org.apache.htrace.core.Tracer;
-
-import java.io.IOException;
 
 /**
  * Static utilities for dealing with the protocol buffers used by the
@@ -45,21 +48,21 @@ import java.io.IOException;
 @InterfaceStability.Evolving
 public abstract class DataTransferProtoUtil {
   static BlockConstructionStage fromProto(
-      BlockConstructionStage stage) {
+          OpWriteBlockProto.BlockConstructionStage stage) {
     return BlockConstructionStage.valueOf(stage.name());
   }
 
-  static org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.OpWriteBlockProto.BlockConstructionStage toProto(
-      BlockConstructionStage stage) {
+  static OpWriteBlockProto.BlockConstructionStage toProto(
+          BlockConstructionStage stage) {
     return OpWriteBlockProto.BlockConstructionStage.valueOf(stage.name());
   }
 
   public static ChecksumProto toProto(DataChecksum checksum) {
-    HdfsProtos.ChecksumTypeProto type = PBHelper.convert(checksum.getChecksumType());
+    ChecksumTypeProto type = PBHelper.convert(checksum.getChecksumType());
     // ChecksumType#valueOf never returns null
     return ChecksumProto.newBuilder()
-        .setBytesPerChecksum(checksum.getBytesPerChecksum()).setType(type)
-        .build();
+            .setBytesPerChecksum(checksum.getBytesPerChecksum()).setType(type)
+            .build();
   }
 
   public static DataChecksum fromProto(ChecksumProto proto) {
@@ -75,48 +78,48 @@ public abstract class DataTransferProtoUtil {
   static ClientOperationHeaderProto buildClientHeader(ExtendedBlock blk,
                                                       String client, Token<BlockTokenIdentifier> blockToken) {
     ClientOperationHeaderProto header = ClientOperationHeaderProto.newBuilder()
-        .setBaseHeader(buildBaseHeader(blk, blockToken)).setClientName(client)
-        .build();
+            .setBaseHeader(buildBaseHeader(blk, blockToken)).setClientName(client)
+            .build();
     return header;
   }
 
   static BaseHeaderProto buildBaseHeader(ExtendedBlock blk,
-      Token<BlockTokenIdentifier> blockToken) {
+                                         Token<BlockTokenIdentifier> blockToken) {
     BaseHeaderProto.Builder builder =  BaseHeaderProto.newBuilder()
-      .setBlock(PBHelper.convert(blk))
-      .setToken(PBHelper.convert(blockToken));
+            .setBlock(PBHelper.convert(blk))
+            .setToken(PBHelper.convert(blockToken));
     SpanId spanId = Tracer.getCurrentSpanId();
     if (spanId.isValid()) {
       builder.setTraceInfo(DataTransferTraceInfoProto.newBuilder()
-          .setTraceId(spanId.getHigh())
-          .setParentId(spanId.getLow()));
+              .setTraceId(spanId.getHigh())
+              .setParentId(spanId.getLow()));
     }
     return builder.build();
   }
 
   public static SpanId fromProto(DataTransferTraceInfoProto proto) {
     if ((proto != null) && proto.hasTraceId() &&
-          proto.hasParentId()) {
+            proto.hasParentId()) {
       return new SpanId(proto.getTraceId(), proto.getParentId());
     }
     return null;
   }
 
   public static void checkBlockOpStatus(
-          org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BlockOpResponseProto response,
+          BlockOpResponseProto response,
           String logInfo) throws IOException {
-    if (response.getStatus() != org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status.SUCCESS) {
-      if (response.getStatus() == org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status.ERROR_ACCESS_TOKEN) {
+    if (response.getStatus() != Status.SUCCESS) {
+      if (response.getStatus() == Status.ERROR_ACCESS_TOKEN) {
         throw new InvalidBlockTokenException(
-          "Got access token error"
-          + ", status message " + response.getMessage()
-          + ", " + logInfo
+                "Got access token error"
+                        + ", status message " + response.getMessage()
+                        + ", " + logInfo
         );
       } else {
         throw new IOException(
-          "Got error"
-          + ", status message " + response.getMessage()
-          + ", " + logInfo
+                "Got error"
+                        + ", status message " + response.getMessage()
+                        + ", " + logInfo
         );
       }
     }
