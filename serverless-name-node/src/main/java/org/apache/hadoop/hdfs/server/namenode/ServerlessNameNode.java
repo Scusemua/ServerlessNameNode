@@ -8,6 +8,7 @@ import io.hops.metadata.HdfsVariables;
 import io.hops.metadata.hdfs.dal.LeaseCreationLocksDataAccess;
 import io.hops.transaction.handler.LightWeightRequestHandler;
 import io.hops.transaction.handler.RequestHandler;
+import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
@@ -65,7 +66,48 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
 import static org.apache.hadoop.util.ExitUtil.terminate;
 
-public class ServerlessNameNode {
+/**
+ * ********************************************************
+ * NameNode serves as both directory namespace manager and "inode table" for
+ * the
+ * Hadoop DFS. There is a single NameNode running in any DFS deployment. (Well,
+ * except when there is a second backup/failover NameNode, or when using
+ * federated NameNodes.)
+ * <p/>
+ * The NameNode controls two critical tables: 1) filename->blocksequence
+ * (namespace) 2) block->machinelist ("inodes")
+ * <p/>
+ * The first table is stored on disk and is very precious. The second table is
+ * rebuilt every time the NameNode comes up.
+ * <p/>
+ * 'NameNode' refers to both this class as well as the 'NameNode server'. The
+ * 'FSNamesystem' class actually performs most of the filesystem management.
+ * The
+ * majority of the 'NameNode' class itself is concerned with exposing the IPC
+ * interface and the HTTP server to the outside world, plus some configuration
+ * management.
+ * <p/>
+ * NameNode implements the
+ * {@link org.apache.hadoop.hdfs.protocol.ClientProtocol} interface, which
+ * allows clients to ask for DFS services.
+ * {@link org.apache.hadoop.hdfs.protocol.ClientProtocol} is not designed for
+ * direct use by authors of DFS client code. End-users should instead use the
+ * {@link org.apache.hadoop.fs.FileSystem} class.
+ * <p/>
+ * NameNode also implements the
+ * {@link org.apache.hadoop.hdfs.server.protocol.DatanodeProtocol} interface,
+ * used by DataNodes that actually store DFS data blocks. These methods are
+ * invoked repeatedly and automatically by all the DataNodes in a DFS
+ * deployment.
+ * <p/>
+ * NameNode also implements the
+ * {@link org.apache.hadoop.hdfs.server.protocol.NamenodeProtocol} interface,
+ * used by secondary namenodes or rebalancing processes to get partial NameNode
+ * state, for example partial blocksMap etc.
+ * ********************************************************
+ */
+@InterfaceAudience.Private
+public class ServerlessNameNode implements NameNodeStatusMXBean {
 
     private AtomicBoolean started = new AtomicBoolean(false);
     public static final Logger LOG = LoggerFactory.getLogger(ServerlessNameNode.class.getName());
@@ -971,6 +1013,33 @@ public class ServerlessNameNode {
      */
     private void registerNNSMXBean() {
         nameNodeStatusBeanName = MBeans.register("NameNode", "NameNodeStatus", this);
+    }
+
+    @Override // NameNodeStatusMXBean
+    public String getNNRole() {
+        String roleStr = "";
+        HdfsServerConstants.NamenodeRole role = getRole();
+        if (null != role) {
+            roleStr = role.toString();
+        }
+        return roleStr;
+    }
+
+    @Override // NameNodeStatusMXBean
+    public String getHostAndPort() {
+        return getNameNodeAddressHostPortString();
+    }
+
+    @Override // NameNodeStatusMXBean
+    public boolean isSecurityEnabled() {
+        return UserGroupInformation.isSecurityEnabled();
+    }
+
+    /**
+     * @return NameNode RPC address in "host:port" string form
+     */
+    public String getNameNodeAddressHostPortString() {
+        return NetUtils.getHostPortString(rpcServer.getRpcAddress());
     }
 
     private void startLeaderElectionService() throws IOException {
