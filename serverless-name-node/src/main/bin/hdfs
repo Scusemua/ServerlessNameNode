@@ -168,7 +168,7 @@ function hdfscmd_case
     ;;
     namenode)
       HADOOP_SUBCMD_SUPPORTDAEMONIZATION="true"
-      HADOOP_CLASSNAME='org.apache.hadoop.hdfs.server.namenode.NameNode'
+      HADOOP_CLASSNAME='org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode'
       hadoop_add_param HADOOP_OPTS hdfs.audit.logger "-Dhdfs.audit.logger=${HDFS_AUDIT_LOGGER}"
     ;;
     nfs3)
