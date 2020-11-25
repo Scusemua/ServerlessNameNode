@@ -1,5 +1,8 @@
 package org.apache.hadoop.hdfs;
 
+import io.hops.metadata.hdfs.entity.EncodingPolicy;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hdfs.client.HdfsDataOutputStream;
 import org.apache.hadoop.hdfs.protocol.*;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
@@ -15,6 +18,7 @@ import org.apache.hadoop.util.Progressable;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.URI;
 import java.util.EnumSet;
 import java.util.List;
@@ -42,6 +46,73 @@ public class DistributedFileSystem extends FileSystem {
     }
 
     public DistributedFileSystem() {
+    }
+
+    private class AlternativeDistributedFileSystem extends DistributedFileSystem {
+
+    }
+
+    @Override
+    public void initialize(URI uri, Configuration conf) throws IOException {
+        super.initialize(uri, conf);
+        getAlternativeSchemeStatistics(getAlternativeScheme(), AlternativeDistributedFileSystem.class, statistics);
+        setConf(conf);
+
+        String host = uri.getHost();
+        if (host == null) {
+            throw new IOException("Incomplete HDFS URI, no host: "+ uri);
+        }
+        homeDirPrefix = conf.get(
+                DFSConfigKeys.DFS_USER_HOME_DIR_PREFIX_KEY,
+                DFSConfigKeys.DFS_USER_HOME_DIR_PREFIX_DEFAULT);
+
+        this.dfs = new DFSClient(uri, conf, statistics);
+        this.uri = URI.create(uri.getScheme()+"://"+uri.getAuthority());
+        this.workingDir = getHomeDirectory();
+    }
+
+    @Override
+    public long getDefaultBlockSize() {
+        return dfs.getConf().getDefaultBlockSize();
+    }
+
+    @Override
+    public short getDefaultReplication() {
+        return dfs.getConf().getDefaultReplication();
+    }
+
+    @Override
+    public Path getHomeDirectory() {
+        return makeQualified(new Path(homeDirPrefix + "/"
+                + dfs.ugi.getShortUserName()));
+    }
+
+    @Override
+    public BlockLocation[] getFileBlockLocations(FileStatus file, long start,
+                                                 long len) throws IOException {
+        if (file == null) {
+            return null;
+        }
+        return getFileBlockLocations(file.getPath(), start, len);
+    }
+
+    @Override
+    public BlockLocation[] getFileBlockLocations(Path p,
+                                                 final long start, final long len) throws IOException {
+        statistics.incrementReadOps(1);
+        final Path absF = fixRelativePart(p);
+        return new FileSystemLinkResolver<BlockLocation[]>() {
+            @Override
+            public BlockLocation[] doCall(final Path p)
+                    throws IOException, UnresolvedLinkException {
+                return dfs.getBlockLocations(getPathName(p), start, len);
+            }
+            @Override
+            public BlockLocation[] next(final FileSystem fs, final Path p)
+                    throws IOException {
+                return fs.getFileBlockLocations(p, start, len);
+            }
+        }.resolve(this, absF);
     }
 
     /**
@@ -289,18 +360,216 @@ public class DistributedFileSystem extends FileSystem {
     }
 
     @Override
-    public FSDataInputStream open(Path f, int bufferSize) throws IOException {
-        return null;
+    public FSDataInputStream open(Path f, final int bufferSize)
+            throws IOException {
+        statistics.incrementReadOps(1);
+        Path absF = fixRelativePart(f);
+        return new FileSystemLinkResolver<FSDataInputStream>() {
+            @Override
+            public FSDataInputStream doCall(final Path p)
+                    throws IOException, UnresolvedLinkException {
+                final DFSInputStream dfsis =
+                        dfs.open(getPathName(p), bufferSize, verifyChecksum);
+                return dfs.createWrappedInputStream(dfsis);
+            }
+            @Override
+            public FSDataInputStream next(final FileSystem fs, final Path p)
+                    throws IOException {
+                return fs.open(p, bufferSize);
+            }
+        }.resolve(this, absF);
+    }
+
+    /**
+     * Create a file that will be erasure-coded asynchronously after creation.
+     * Using this method ensures that the file is being written in a way that
+     * ensures optimal block placement for the given encoding policy.
+     *
+     * @param f
+     *    the path
+     * @param policy
+     *    the erasure coding policy to be applied
+     * @return
+     *    the stream to be written to
+     * @throws IOException
+     */
+    public HdfsDataOutputStream create(Path f, EncodingPolicy policy)
+            throws IOException {
+        return this.create(f, getDefaultReplication(f),  true, policy);
     }
 
     @Override
-    public FSDataOutputStream create(Path f, FsPermission permission, boolean overwrite, int bufferSize, short replication, long blockSize, Progressable progress) throws IOException {
-        return null;
+    public FSDataOutputStream create(Path f, FsPermission permission,
+                                     boolean overwrite, int bufferSize, short replication, long blockSize,
+                                     Progressable progress) throws IOException {
+        return this.create(f, permission,
+                overwrite ? EnumSet.of(CreateFlag.CREATE, CreateFlag.OVERWRITE)
+                        : EnumSet.of(CreateFlag.CREATE), bufferSize, replication,
+                blockSize, progress, null);
+    }
+
+    /**
+     * Same as
+     * {@link #create(Path, FsPermission, boolean, int, short, long,
+     * Progressable)} with the addition of favoredNodes that is a hint to
+     * where the namenode should place the file blocks.
+     * The favored nodes hint is not persisted in HDFS. Hence it may be honored
+     * at the creation time only. And with favored nodes, blocks will be pinned
+     * on the datanodes to prevent balancing move the block. HDFS could move the
+     * blocks during replication, to move the blocks from favored nodes. A value
+     * of null means no favored nodes for this create
+     */
+    public HdfsDataOutputStream create(final Path f,
+                                       final FsPermission permission, final boolean overwrite,
+                                       final int bufferSize, final short replication, final long blockSize,
+                                       final Progressable progress, final InetSocketAddress[] favoredNodes,
+                                       final EncodingPolicy policy)
+            throws IOException {
+        statistics.incrementWriteOps(1);
+        Path absF = fixRelativePart(f);
+        return new FileSystemLinkResolver<HdfsDataOutputStream>() {
+            @Override
+            public HdfsDataOutputStream doCall(final Path p)
+                    throws IOException, UnresolvedLinkException {
+                final DFSOutputStream out = dfs.create(getPathName(f), permission,
+                        overwrite ? EnumSet.of(CreateFlag.CREATE, CreateFlag.OVERWRITE)
+                                : EnumSet.of(CreateFlag.CREATE),
+                        true, replication, blockSize, progress, bufferSize, null,
+                        favoredNodes, policy);
+                return dfs.createWrappedOutputStream(out, statistics);
+            }
+            @Override
+            public HdfsDataOutputStream next(final FileSystem fs, final Path p)
+                    throws IOException {
+                if (fs instanceof DistributedFileSystem) {
+                    DistributedFileSystem myDfs = (DistributedFileSystem)fs;
+                    return myDfs.create(p, permission, overwrite, bufferSize, replication,
+                            blockSize, progress, favoredNodes, policy);
+                }
+                throw new UnsupportedOperationException("Cannot create with" +
+                        " favoredNodes through a symlink to a non-DistributedFileSystem: "
+                        + f + " -> " + p);
+            }
+        }.resolve(this, absF);
     }
 
     @Override
-    public FSDataOutputStream append(Path f, int bufferSize, Progressable progress) throws IOException {
-        return null;
+    public FSDataOutputStream create(final Path f, final FsPermission permission,
+                                     final EnumSet<CreateFlag> cflags, final int bufferSize,
+                                     final short replication, final long blockSize, final Progressable progress,
+                                     final Options.ChecksumOpt checksumOpt) throws IOException {
+        statistics.incrementWriteOps(1);
+        Path absF = fixRelativePart(f);
+        return new FileSystemLinkResolver<FSDataOutputStream>() {
+            @Override
+            public FSDataOutputStream doCall(final Path p)
+                    throws IOException, UnresolvedLinkException {
+                final DFSOutputStream dfsos = dfs.create(getPathName(p), permission,
+                        cflags, replication, blockSize, progress, bufferSize,
+                        checksumOpt, null);
+                return dfs.createWrappedOutputStream(dfsos, statistics);
+            }
+            @Override
+            public FSDataOutputStream next(final FileSystem fs, final Path p)
+                    throws IOException {
+                return fs.create(p, permission, cflags, bufferSize,
+                        replication, blockSize, progress, checksumOpt);
+            }
+        }.resolve(this, absF);
+    }
+
+    /**
+     * Create a file that will be erasure-coded asynchronously after creation.
+     * Using this method ensures that the file is being written in a way that
+     * ensures optimal block placement for the given encoding policy.
+     *
+     * @param f
+     *    the path
+     * @param replication
+     *    replication
+     * @param overwrite
+     *    overwrite
+     * @param policy
+     *    the erasure coding policy to be applied
+     * @return
+     *    the stream to be written to
+     * @throws IOException
+     */
+    public HdfsDataOutputStream create(Path f, short replication, boolean overwrite, EncodingPolicy
+            policy)
+            throws IOException {
+        return this.create(f, FsPermission.getFileDefault(), overwrite,
+                getConf().getInt("io.file.buffer.size", 4096), replication,
+                getDefaultBlockSize(f), null, null, policy);
+    }
+
+    @Override
+    public FSDataOutputStream append(Path f, final int bufferSize,
+                                     final Progressable progress) throws IOException {
+        return append(f, EnumSet.of(CreateFlag.APPEND), bufferSize, progress);
+    }
+
+    /**
+     * Append to an existing file (optional operation).
+     *
+     * @param f the existing file to be appended.
+     * @param flag Flags for the Append operation. CreateFlag.APPEND is mandatory
+     *          to be present.
+     * @param bufferSize the size of the buffer to be used.
+     * @param progress for reporting progress if it is not null.
+     * @return Returns instance of {@link FSDataOutputStream}
+     * @throws IOException
+     */
+    public FSDataOutputStream append(Path f, final EnumSet<CreateFlag> flag,
+                                     final int bufferSize, final Progressable progress) throws IOException {
+        statistics.incrementWriteOps(1);
+        Path absF = fixRelativePart(f);
+        return new FileSystemLinkResolver<FSDataOutputStream>() {
+            @Override
+            public FSDataOutputStream doCall(final Path p)
+                    throws IOException {
+                return dfs.append(getPathName(p), bufferSize, flag, progress,
+                        statistics);
+            }
+
+            @Override
+            public FSDataOutputStream next(final FileSystem fs, final Path p)
+                    throws IOException {
+                return fs.append(p, bufferSize);
+            }
+        }.resolve(this, absF);
+    }
+
+    /**
+     * Append to an existing file (optional operation).
+     *
+     * @param f the existing file to be appended.
+     * @param flag Flags for the Append operation. CreateFlag.APPEND is mandatory
+     *          to be present.
+     * @param bufferSize the size of the buffer to be used.
+     * @param progress for reporting progress if it is not null.
+     * @param favoredNodes Favored nodes for new blocks
+     * @return Returns instance of {@link FSDataOutputStream}
+     * @throws IOException
+     */
+    public FSDataOutputStream append(Path f, final EnumSet<CreateFlag> flag,
+                                     final int bufferSize, final Progressable progress,
+                                     final InetSocketAddress[] favoredNodes) throws IOException {
+        statistics.incrementWriteOps(1);
+        Path absF = fixRelativePart(f);
+        return new FileSystemLinkResolver<FSDataOutputStream>() {
+            @Override
+            public FSDataOutputStream doCall(final Path p)
+                    throws IOException {
+                return dfs.append(getPathName(p), bufferSize, flag, progress,
+                        statistics, favoredNodes);
+            }
+            @Override
+            public FSDataOutputStream next(final FileSystem fs, final Path p)
+                    throws IOException {
+                return fs.append(p, bufferSize);
+            }
+        }.resolve(this, absF);
     }
 
     @SuppressWarnings("deprecation")

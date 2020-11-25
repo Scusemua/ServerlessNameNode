@@ -65,6 +65,7 @@ import java.util.*;
 import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
 import static org.apache.hadoop.hdfs.protocol.HdfsConstants.MAX_PATH_DEPTH;
 import static org.apache.hadoop.hdfs.protocol.HdfsConstants.MAX_PATH_LENGTH;
+import static org.apache.hadoop.hdfs.server.namenode.ServerlessNameNode.getRemoteUser;
 
 public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
     // Dependencies from other parts of NN.
@@ -307,14 +308,51 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
         return namesystem.getServerDefaults();
     }
 
-    @Override
-    public HdfsFileStatus create(String src, FsPermission masked, String clientName, EnumSetWritable<CreateFlag> flag, boolean createParent, short replication, long blockSize, CryptoProtocolVersion[] supportedVersions, EncodingPolicy policy) throws AccessControlException, AlreadyBeingCreatedException, DSQuotaExceededException, FileAlreadyExistsException, FileNotFoundException, NSQuotaExceededException, ParentNotDirectoryException, SafeModeException, UnresolvedLinkException, IOException {
-        return null;
+    @Override // ClientProtocol
+    public HdfsFileStatus create(String src, FsPermission masked,
+                                 String clientName, EnumSetWritable<CreateFlag> flag, boolean createParent,
+                                 short replication, long blockSize, CryptoProtocolVersion[] supportedVersions, EncodingPolicy policy)
+            throws IOException {
+        checkNNStartup();
+        HdfsFileStatus stat =
+                create(src, masked, clientName, flag, createParent, replication,
+                        blockSize, supportedVersions);
+        if (policy != null) {
+            if (!namesystem.isErasureCodingEnabled()) {
+                throw new IOException("Requesting encoding although erasure coding" +
+                        " was disabled");
+            }
+            LOG.info("Create file " + src + " with policy " + policy.toString());
+            namesystem.addEncodingStatus(src, policy,
+                    EncodingStatus.Status.ENCODING_REQUESTED, false);
+        }
+        return stat;
     }
 
-    @Override
-    public HdfsFileStatus create(String src, FsPermission masked, String clientName, EnumSetWritable<CreateFlag> flag, boolean createParent, short replication, long blockSize, CryptoProtocolVersion[] supportedVersions) throws AccessControlException, AlreadyBeingCreatedException, DSQuotaExceededException, FileAlreadyExistsException, FileNotFoundException, NSQuotaExceededException, ParentNotDirectoryException, SafeModeException, UnresolvedLinkException, IOException {
-        return null;
+    @Override // ClientProtocol
+    public HdfsFileStatus create(String src, FsPermission masked,
+                                 String clientName, EnumSetWritable<CreateFlag> flag, boolean createParent,
+                                 short replication, long blockSize,
+                                 CryptoProtocolVersion[] supportedVersions) throws IOException {
+        checkNNStartup();
+        String clientMachine = getClientMachine();
+        if (stateChangeLog.isDebugEnabled()) {
+            stateChangeLog.debug(
+                    "*DIR* NameNode.create: file " + src + " for " + clientName + " at " +
+                            clientMachine);
+        }
+        if (!checkPathLength(src)) {
+            throw new IOException(
+                    "create: Pathname too long.  Limit " + MAX_PATH_LENGTH +
+                            " characters, " + MAX_PATH_DEPTH + " levels.");
+        }
+        HdfsFileStatus stat = namesystem.startFile(src, new PermissionStatus(
+                        getRemoteUser().getShortUserName(), null,
+                        masked), clientName, clientMachine, flag.get(), createParent,
+                replication, blockSize, supportedVersions);
+        metrics.incrFilesCreated();
+        metrics.incrCreateFileOps();
+        return stat;
     }
 
     @Override

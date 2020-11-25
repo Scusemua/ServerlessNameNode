@@ -1,9 +1,13 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
+import io.hops.exception.StorageException;
 import io.hops.leaderElection.HdfsLeDescriptorFactory;
 import io.hops.leaderElection.LeaderElection;
 import io.hops.metadata.HdfsStorageFactory;
 import io.hops.metadata.HdfsVariables;
+import io.hops.metadata.hdfs.dal.LeaseCreationLocksDataAccess;
+import io.hops.transaction.handler.LightWeightRequestHandler;
+import io.hops.transaction.handler.RequestHandler;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
@@ -15,15 +19,11 @@ import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants.StartupOption;
 import org.apache.hadoop.hdfs.server.common.StorageInfo;
 import com.google.common.annotations.VisibleForTesting;
-import io.hops.exception.StorageException;
 import io.hops.leader_election.node.ActiveNode;
 import io.hops.leader_election.node.SortedActiveNodeList;
-import io.hops.metadata.hdfs.dal.LeaseCreationLocksDataAccess;
 import io.hops.security.HopsUGException;
 import io.hops.security.UsersGroups;
 import io.hops.transaction.handler.HDFSOperationType;
-import io.hops.transaction.handler.LightWeightRequestHandler;
-import io.hops.transaction.handler.RequestHandler;
 import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -47,6 +47,7 @@ import org.apache.hadoop.util.ServicePlugin;
 import org.apache.hadoop.util.StringUtils;
 import org.apache.hadoop.util.Time;
 import org.apache.htrace.core.Tracer;
+import org.eclipse.jetty.http.HttpParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

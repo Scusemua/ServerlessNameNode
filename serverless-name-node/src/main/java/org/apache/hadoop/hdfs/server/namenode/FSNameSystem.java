@@ -2118,6 +2118,28 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
     }
 
     /**
+     * Invoke KeyProvider APIs to generate an encrypted data encryption key for an
+     * encryption zone. Should not be called with any locks held.
+     *
+     * @param ezKeyName key name of an encryption zone
+     * @return New EDEK, or null if ezKeyName is null
+     * @throws IOException
+     */
+    private EncryptedKeyVersion generateEncryptedDataEncryptionKey(String ezKeyName) throws IOException {
+        if (ezKeyName == null) {
+            return null;
+        }
+        EncryptedKeyVersion edek = null;
+        try {
+            edek = provider.generateEncryptedKey(ezKeyName);
+        } catch (GeneralSecurityException e) {
+            throw new IOException(e);
+        }
+        Preconditions.checkNotNull(edek);
+        return edek;
+    }
+
+    /**
      * Get {@link INode} associated with the file / directory.
      */
     org.apache.hadoop.hdfs.server.namenode.INodesInPath getINodesInPath4Write(String src, boolean resolveLink)
@@ -2184,6 +2206,487 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
             setAsyncLockRemoval(path);
             throw e;
         }
+    }
+
+    /**
+     * Create a new file entry in the namespace.
+     * <p/>
+     * For description of parameters and exceptions thrown see
+     * ClientProtocol.create(String, FsPermission, String, EnumSetWritable, boolean, short, long)} , except it returns valid file status upon
+     * success
+     *
+     * For retryCache handling details see -
+     * getFileStatus(boolean, CacheEntryWithPayload)
+     *
+     */
+    HdfsFileStatus startFile(final String srcArg, final PermissionStatus permissions,
+                             final String holder, final String clientMachine,
+                             final EnumSet<CreateFlag> flag, final boolean createParent,
+                             final short replication, final long blockSize,
+                             final CryptoProtocolVersion[] supportedVersions) throws IOException {
+
+        HdfsFileStatus stat = null;
+        byte[][] pathComponents = FSDirectory.getPathComponentsForReservedPath(srcArg);
+
+        /**
+         * If the file is in an encryption zone, we optimistically create an
+         * EDEK for the file by calling out to the configured KeyProvider.
+         * Since this typically involves doing an RPC, we do the RPC out of a transaction.
+         *
+         * Since the path can flip-flop between being in an encryption zone and not
+         * in the meantime, we need to recheck the preconditions when we retake the
+         * lock to do the create. If the preconditions are not met, we throw a
+         * special RetryStartFileException to ask the DFSClient to try the create
+         * again later.
+         */
+        final CryptoProtocolVersion[] protocolVersion = new CryptoProtocolVersion[1];
+        final CipherSuite[] suite = {null};
+        final String[] ezKeyName = {null};
+        final EncryptedKeyVersion[] edek = {null};
+        final FSPermissionChecker pc = getPermissionChecker();
+        final String src = dir.resolvePath(pc, srcArg, pathComponents);
+        if (provider != null) {
+            new HopsTransactionalRequestHandler(
+                    HDFSOperationType.START_FILE, src) {
+                @Override
+                public void acquireLock(TransactionLocks locks) throws IOException {
+                    LockFactory lf = getInstance();
+                    INodeLock il = lf.getINodeLock(INodeLockType.WRITE_ON_TARGET_AND_PARENT, INodeResolveType.PATH, src)
+                            .setNameNodeID(nameNode.getId())
+                            .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes())
+                            .skipReadingQuotaAttr(!dir.isQuotaEnabled());
+                    locks.add(il);
+                    locks.add(lf.getEZLock());
+                }
+
+                @Override
+                public Object performTask() throws IOException {
+                    INodesInPath iip = dir.getINodesInPath4Write(src);
+                    // Nothing to do if the path is not within an EZ
+                    final EncryptionZone zone = dir.getEZForPath(iip);
+                    if (zone != null) {
+                        protocolVersion[0] = chooseProtocolVersion(zone, supportedVersions);
+                        suite[0] = zone.getSuite();
+                        ezKeyName[0] = zone.getKeyName();
+
+                        Preconditions.checkNotNull(protocolVersion);
+                        Preconditions.checkNotNull(suite);
+                        Preconditions.checkArgument(!suite.equals(CipherSuite.UNKNOWN),
+                                "Chose an UNKNOWN CipherSuite!");
+                        Preconditions.checkNotNull(ezKeyName);
+                    }
+                    return null;
+                }
+            }.handle(this);
+
+            Preconditions.checkState(
+                    (suite == null && ezKeyName == null) || (suite != null && ezKeyName != null),
+                    "Both suite and ezKeyName should both be null or not null");
+
+            // Generate EDEK if necessary while not holding the lock
+            edek[0] = generateEncryptedDataEncryptionKey(ezKeyName[0]);
+            EncryptionFaultInjector.getInstance().startFileAfterGenerateKey();
+        }
+
+        // Proceed with the create, using the computed cipher suite and
+        // generated EDEK
+        stat = (HdfsFileStatus) new HopsTransactionalRequestHandler(
+                HDFSOperationType.START_FILE, src) {
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = getInstance();
+                INodeLock il = lf.getINodeLock(INodeLockType.WRITE_ON_TARGET_AND_PARENT, INodeResolveType.PATH, src)
+                        .setNameNodeID(nameNode.getId())
+                        .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes())
+                        .skipReadingQuotaAttr(!dir.isQuotaEnabled());
+                locks.add(il).add(lf.getBlockLock());
+                LeaseLock leaseLock = (LeaseLock)lf.getLeaseLockSinglePath(LockType.WRITE, holder,
+                        src, leaseCreationLockRows);
+                locks.add(leaseLock).add(lf.getLeasePathLock(LockType.READ_COMMITTED)).add(
+                        lf.getBlockRelated(BLK.RE, BLK.CR, BLK.ER, BLK.UC, BLK.UR,
+                                BLK.PE, BLK.IV));
+
+                locks.add(lf.getAllUsedHashBucketsLock());
+
+                if (isRetryCacheEnabled) {
+                    locks.add(lf.getRetryCacheEntryLock(Server.getClientId(),
+                            Server.getCallId(), Server.getRpcEpoch()));
+                }
+
+                if (flag.contains(CreateFlag.OVERWRITE) && dir.isQuotaEnabled()) {
+                    locks.add(lf.getQuotaUpdateLock(src));
+                }
+                if (flag.contains(CreateFlag.OVERWRITE) && erasureCodingEnabled) {
+                    locks.add(lf.getEncodingStatusLock(LockType.WRITE, src));
+                }
+                locks.add(lf.getAcesLock());
+                locks.add(lf.getEZLock());
+                List<XAttr> xAttrsToLock = new ArrayList<>();
+                xAttrsToLock.add(FSDirXAttrOp.XATTR_FILE_ENCRYPTION_INFO);
+                xAttrsToLock.add(FSDirXAttrOp.XATTR_ENCRYPTION_ZONE);
+                locks.add(lf.getXAttrLock(xAttrsToLock));
+            }
+
+            @Override
+            public Object performTask() throws IOException {
+                boolean success = false;
+                RetryCacheEntry cacheEntry = LightWeightCacheDistributed.get();
+                if (cacheEntry != null && cacheEntry.isSuccess()) {
+                    HdfsFileStatus test = PBHelper.convert(org.apache.hadoop.hdfs.protocol.proto.HdfsProtos.HdfsFileStatusProto.parseFrom(cacheEntry.getPayload()));
+                    return test;
+                }
+                if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+                    StringBuilder builder = new StringBuilder();
+                    builder.append("DIR* NameSystem.startFile: src=" + src
+                            + ", holder=" + holder
+                            + ", clientMachine=" + clientMachine
+                            + ", createParent=" + createParent
+                            + ", replication=" + replication
+                            + ", createFlag=" + flag.toString()
+                            + ", blockSize=" + blockSize);
+                    builder.append(", supportedVersions=");
+                    if (supportedVersions != null) {
+                        builder.append(Arrays.toString(supportedVersions));
+                    } else {
+                        builder.append("null");
+                    }
+                    ServerlessNameNode.stateChangeLog.debug(builder.toString());
+                }
+                HdfsFileStatus status = null;
+                try {
+                    checkNameNodeSafeMode("Cannot create file" + src);
+                    status = startFileInt(srcArg, src, permissions, holder, clientMachine, flag,
+                            createParent, replication, blockSize, suite[0], protocolVersion[0], edek[0]);
+                    if(status != null){
+                        success = true;
+                    }
+                    return status;
+                } catch (AccessControlException e) {
+                    logAuditEvent(false, "create", src);
+                    throw e;
+                } finally {
+                    byte[] statusArray = status == null ? null : PBHelper.convert(status).toByteArray();
+                    LightWeightCacheDistributed.put(statusArray, success);
+                }
+            }
+        }.handle(this);
+        logAuditEvent(true, "create", srcArg, null, stat);
+        return stat;
+    }
+
+    private HdfsFileStatus startFileInt(String srcArg, String src, PermissionStatus permissions,
+                                        String holder, String clientMachine, EnumSet<CreateFlag> flag,
+                                        boolean createParent, short replication, long blockSize, CipherSuite suite,
+                                        CryptoProtocolVersion version, EncryptedKeyVersion edek)
+            throws IOException, RetryStartFileException {
+        FSPermissionChecker pc = getPermissionChecker();
+        if (!DFSUtil.isValidName(src)) {
+            throw new InvalidPathException(src);
+        }
+        blockManager.verifyReplication(src, replication, clientMachine);
+
+        if (blockSize < minBlockSize) {
+            throw new IOException("Specified block size is less than configured" + " minimum value ("
+                    + DFSConfigKeys.DFS_NAMENODE_MIN_BLOCK_SIZE_KEY
+                    + "): " + blockSize + " < " + minBlockSize);
+        }
+
+        boolean create = flag.contains(CreateFlag.CREATE);
+        boolean overwrite = flag.contains(CreateFlag.OVERWRITE);
+
+        final INodesInPath iip = dir.getINodesInPath4Write(src);
+        startFileInternal(pc, iip, permissions, holder, clientMachine, create, overwrite,
+                createParent, replication, blockSize, suite, version, edek);
+        final HdfsFileStatus stat = FSDirStatAndListingOp.
+                getFileInfo(dir, src, false, FSDirectory.isReservedRawName(srcArg), true);
+
+        //Set HdfsFileStatus if the file shoudl be stored in DB
+        final INode inode = dir.getINodesInPath4Write(src).getLastINode();
+        final INodeFile myFile = INodeFile.valueOf(inode, src, true);
+        final BlockStoragePolicy storagePolicy =
+                getBlockManager().getStoragePolicySuite().getPolicy(myFile.getStoragePolicyID());
+
+        logAuditEvent(true, "create", src, null,
+                (isAuditEnabled() && isExternalInvocation()) ? stat : null);
+        return stat;
+    }
+
+    private enum RecoverLeaseOp {
+        CREATE_FILE,
+        APPEND_FILE,
+        TRUNCATE_FILE,
+        RECOVER_LEASE;
+
+        private String getExceptionMessage(String src, String holder,
+                                           String clientMachine, String reason) {
+            return "Failed to " + this + " " + src + " for " + holder +
+                    " on " + clientMachine + " because " + reason;
+        }
+    }
+
+    /**
+     * Create a new file or overwrite an existing file<br>
+     *
+     * Once the file is create the client then allocates a new block with the next
+     * call using {@link ClientProtocol#addBlock(String, String, ExtendedBlock, DatanodeInfo[], long, String[])} ()}.
+     * <p>
+     * For description of parameters and exceptions thrown see
+     * {@link ClientProtocol#create}
+     */
+    private void startFileInternal(FSPermissionChecker pc, INodesInPath iip,
+                                   PermissionStatus permissions, String holder, String clientMachine,
+                                   boolean create, boolean overwrite, boolean createParent, short replication,
+                                   long blockSize, CipherSuite suite, CryptoProtocolVersion version,
+                                   EncryptedKeyVersion edek) throws RetryStartFileException, IOException {
+
+        // Verify that the destination does not exist as a directory already.
+        final INode inode = iip.getLastINode();
+        final String src = iip.getPath();
+        if (inode != null && inode.isDirectory()) {
+            throw new FileAlreadyExistsException(src +
+                    " already exists as a directory");
+        }
+
+        FileEncryptionInfo feInfo = null;
+
+        final EncryptionZone zone = dir.getEZForPath(iip);
+        if (zone != null) {
+            // The path is now within an EZ, but we're missing encryption parameters
+            if (suite == null || edek == null) {
+                throw new RetryStartFileException();
+            }
+            // Path is within an EZ and we have provided encryption parameters.
+            // Make sure that the generated EDEK matches the settings of the EZ.
+            final String ezKeyName = zone.getKeyName();
+            if (!ezKeyName.equals(edek.getEncryptionKeyName())) {
+                throw new RetryStartFileException();
+            }
+            feInfo = new FileEncryptionInfo(suite, version,
+                    edek.getEncryptedKeyVersion().getMaterial(),
+                    edek.getEncryptedKeyIv(),
+                    ezKeyName, edek.getEncryptionKeyVersionName());
+        }
+
+        final INodeFile myFile = INodeFile.valueOf(inode, src, true);
+        if (isPermissionEnabled) {
+            if (overwrite && myFile != null) {
+                dir.checkPathAccess(pc, iip, FsAction.WRITE);
+            }
+            /*
+             * To overwrite existing file, need to check 'w' permission
+             * of parent (equals to ancestor in this case)
+             */
+            dir.checkAncestorAccess(pc, iip, FsAction.WRITE);
+        }
+        if (!createParent) {
+            dir.verifyParentDir(iip, src);
+        }
+
+        try {
+
+            if (myFile == null) {
+                if (!create) {
+                    throw new FileNotFoundException("Can't overwrite non-existent " +
+                            src + " for client " + clientMachine);
+                }
+            } else {
+                if (overwrite) {
+                    try {
+                        FSDirDeleteOp.deleteInternal(this, src, iip); // File exists - delete if overwrite
+                        iip = INodesInPath.replace(iip, iip.length() - 1, null);
+                    } catch (AccessControlException e) {
+                        logAuditEvent(false, "delete", src);
+                        throw e;
+                    }
+                } else {
+                    // If lease soft limit time is expired, recover the lease
+                    recoverLeaseInternal(RecoverLeaseOp.CREATE_FILE,
+                            iip, src, holder, clientMachine, false);
+                    throw new FileAlreadyExistsException(src + " for client " +
+                            clientMachine + " already exists");
+                }
+            }
+
+            checkFsObjectLimit();
+
+            INodeFile newNode = null;
+            // Always do an implicit mkdirs for parent directory tree.
+            Map.Entry<INodesInPath, String> parent = FSDirMkdirOp
+                    .createAncestorDirectories(dir, iip, permissions);
+            if (parent != null) {
+                iip = dir.addFile(parent.getKey(), parent.getValue(), permissions,
+                        replication, blockSize, holder, clientMachine);
+                newNode = iip != null ? iip.getLastINode().asFile() : null;
+            }
+
+            if (newNode == null) {
+                throw new IOException("Unable to add " + src +  " to namespace");
+            }
+            leaseManager.addLease(newNode.getFileUnderConstructionFeature()
+                    .getClientName(), src);
+
+            // Set encryption attributes if necessary
+            if (feInfo != null) {
+                dir.setFileEncryptionInfo(src, feInfo);
+                newNode = dir.getInode(newNode.getId()).asFile();
+            }
+
+            if (ServerlessNameNode.stateChangeLog.isDebugEnabled()) {
+                ServerlessNameNode.stateChangeLog.debug("DIR* NameSystem.startFile: added " +
+                        src + " inode " + newNode.getId() + " " + holder);
+            }
+        } catch (IOException ie) {
+            ServerlessNameNode.stateChangeLog.warn("DIR* NameSystem.startFile: " + src + " " +
+                    ie.getMessage());
+            throw ie;
+        }
+    }
+
+    void recoverLeaseInternal(RecoverLeaseOp op, INodesInPath iip,
+                              String src, String holder, String clientMachine, boolean force)
+            throws IOException {
+        INodeFile file = iip.getLastINode().asFile();
+        if (file != null && file.isUnderConstruction()) {
+            //
+            // If the file is under construction , then it must be in our
+            // leases. Find the appropriate lease record.
+            //
+            Lease lease = leaseManager.getLease(holder);
+
+            if (!force && lease != null) {
+                Lease leaseFile = leaseManager.getLeaseByPath(src);
+                if (leaseFile != null && leaseFile.equals(lease)) {
+                    // We found the lease for this file but the original
+                    // holder is trying to obtain it again.
+                    throw new AlreadyBeingCreatedException(
+                            op.getExceptionMessage(src, holder, clientMachine,
+                                    holder + " is already the current lease holder."));
+                }
+            }
+            //
+            // Find the original holder.
+            //
+            FileUnderConstructionFeature uc = file.getFileUnderConstructionFeature();
+            String clientName = uc.getClientName();
+            lease = leaseManager.getLease(clientName);
+            if (lease == null) {
+                throw new AlreadyBeingCreatedException(
+                        op.getExceptionMessage(src, holder, clientMachine,
+                                "the file is under construction but no leases found."));
+            }
+            if (force) {
+                // close now: no need to wait for soft lease expiration and
+                // close only the file src
+                LOG.info("recoverLease: " + lease + ", src=" + src +
+                        " from client " + clientName);
+                internalReleaseLease(lease, src, iip, holder);
+            } else {
+                assert lease.getHolder().equals(clientName) :
+                        "Current lease holder " + lease.getHolder() +
+                                " does not match file creator " + clientName;
+                //
+                // If the original holder has not renewed in the last SOFTLIMIT
+                // period, then start lease recovery.
+                //
+                if (leaseManager.expiredSoftLimit(lease)) {
+                    LOG.info("startFile: recover " + lease + ", src=" + src + " client " +
+                            clientName);
+                    boolean isClosed = internalReleaseLease(lease, src, iip, null);
+                    if (!isClosed) {
+                        throw new RecoveryInProgressException.NonAbortingRecoveryInProgressException(
+                                op.getExceptionMessage(src, holder, clientMachine,
+                                        "lease recovery is in progress. Try again later."));
+                    }
+                } else {
+                    final BlockInfoContiguous lastBlock = file.getLastBlock();
+                    if (lastBlock != null
+                            && (lastBlock.getBlockUCState() == BlockUCState.UNDER_RECOVERY)) {
+                        throw new RecoveryInProgressException(
+                                op.getExceptionMessage(src, holder, clientMachine,
+                                        "another recovery is in progress by "
+                                                + clientName + " on " + uc.getClientMachine()));
+                    } else {
+                        throw new AlreadyBeingCreatedException(
+                                op.getExceptionMessage(src, holder, clientMachine,
+                                        "this file lease is currently owned by "
+                                                + clientName + " on " + uc.getClientMachine()));
+                    }
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Add and encoding status for a file without checking the retry cache.
+     *
+     *    the file path
+     * @param policy
+     *    the policy to be used
+     * @throws IOException
+     */
+    public void addEncodingStatus(final String sourcePathArg,
+                                  final EncodingPolicy policy, final EncodingStatus.Status status, final boolean checkRetryCache)
+            throws IOException {
+        byte[][] pathComponents = FSDirectory.getPathComponentsForReservedPath(sourcePathArg);
+        final FSPermissionChecker pc = getPermissionChecker();
+        final String sourcePath = dir.resolvePath(pc, sourcePathArg, pathComponents);
+        new HopsTransactionalRequestHandler(HDFSOperationType.ADD_ENCODING_STATUS) {
+
+            @Override
+            public void acquireLock(TransactionLocks locks) throws IOException {
+                LockFactory lf = LockFactory.getInstance();
+                INodeLock il = lf.getINodeLock(INodeLockType.WRITE, INodeResolveType.PATH, sourcePath)
+                        .setNameNodeID(nameNode.getId())
+                        .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes());
+                locks.add(il);
+                locks.add(lf.getEncodingStatusLock(LockType.WRITE, sourcePath));
+                if(isRetryCacheEnabled) {
+                    locks.add(lf.getRetryCacheEntryLock(Server.getClientId(),
+                            Server.getCallId(), Server.getRpcEpoch()));
+                }
+            }
+
+            @Override
+            public Object performTask() throws IOException {
+                RetryCacheEntry cacheEntry = null;
+                if (checkRetryCache) {
+                    cacheEntry = LightWeightCacheDistributed.get();
+                    if (cacheEntry != null && cacheEntry.isSuccess()) {
+                        return null; // Return previous response
+                    }
+                }
+                boolean success = false;
+                try {
+                    INodesInPath iip = dir.getINodesInPath(sourcePath, true);
+                    try {
+                        if (isPermissionEnabled) {
+                            dir.checkPathAccess(pc, iip, FsAction.WRITE);
+                        }
+                    } catch (AccessControlException e) {
+                        logAuditEvent(false, "encodeFile", sourcePath);
+                        throw e;
+                    }
+                    INode target = iip.getLastINode();
+                    EncodingStatus existing = EntityManager.find(
+                            EncodingStatus.Finder.ByInodeId, target.getId());
+                    if (existing != null) {
+                        throw new IOException("Attempting to request encoding for an" + "encoded file");
+                    }
+                    INode inode = dir.getINode(sourcePath);
+                    EncodingStatus encodingStatus = new EncodingStatus(inode.getId(), inode.isInTree(), status,
+                            policy, System.currentTimeMillis());
+                    EntityManager.add(encodingStatus);
+                    success = true;
+                    return null;
+
+                } finally {
+                    if (checkRetryCache) {
+                        LightWeightCacheDistributed.put(null, success);
+                    }
+                }
+            }
+        }.handle();
     }
 
     /**
