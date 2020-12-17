@@ -625,6 +625,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
         StartupOption startOpt = StartupOption.REGULAR;
         for (int i = 0; i < argsLen; i++) {
             String cmd = args[i];
+            System.out.println("Processing arguments. Current cmd = \"" + cmd + "\"");
             if (StartupOption.NO_OF_CONCURRENT_BLOCK_REPORTS.getName().equalsIgnoreCase(cmd)) {
                 startOpt = StartupOption.NO_OF_CONCURRENT_BLOCK_REPORTS;
                 String msg = "Specify a maximum number of concurrent blocks that the NameNodes can process.";
