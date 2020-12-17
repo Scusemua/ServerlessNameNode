@@ -12,7 +12,7 @@ import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
-import org.apache.hadoop.hdfs.HdfsConfiguration;
+import org.apache.hadoop.hdfs.HdfsConfiguration;H
 import org.apache.hadoop.hdfs.protocol.HdfsConstants;
 import org.apache.hadoop.hdfs.server.protocol.NamenodeProtocols;
 import org.apache.hadoop.hdfs.server.blockmanagement.BRTrackingService;
@@ -462,11 +462,12 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
         }
         StartupOption startOpt = parseArguments(argv);
 
-        System.out.println("StartOpt = " + startOpt.toString());
-
         if (startOpt == null) {
             printUsage(System.err);
             return null;
+        }
+        else {
+            System.out.println("StartOpt = " + startOpt.toString());
         }
         setStartupOption(conf, startOpt);
 
