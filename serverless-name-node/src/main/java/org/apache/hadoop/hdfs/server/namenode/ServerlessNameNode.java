@@ -269,6 +269,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
         try {
             StringUtils.startupShutdownMessage(ServerlessNameNode.class, args, LOG);
             ServerlessNameNode namenode = createNameNode(args, null);
+            System.out.println("NameNode == null: " + (namenode == null));
             if (namenode != null) {
                 namenode.join();
             }
@@ -460,6 +461,9 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
             conf = new HdfsConfiguration();
         }
         StartupOption startOpt = parseArguments(argv);
+
+        System.out.println("StartOpt = " + startOpt.toString());
+
         if (startOpt == null) {
             printUsage(System.err);
             return null;
