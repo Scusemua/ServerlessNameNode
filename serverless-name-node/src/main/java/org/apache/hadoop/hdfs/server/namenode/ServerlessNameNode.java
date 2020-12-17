@@ -459,6 +459,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
         LOG.info("createNameNode " + Arrays.asList(argv));
         if (conf == null) {
             conf = new HdfsConfiguration();
+            conf.setQuietMode(false);
         }
         StartupOption startOpt = parseArguments(argv);
 
@@ -846,7 +847,6 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
         int retryCount = conf.getInt(DFSConfigKeys.DFS_NAMENODE_TX_RETRY_COUNT_KEY,
                 DFSConfigKeys.DFS_NAMENODE_TX_RETRY_COUNT_DEFAULT);
         RequestHandler.setRetryBaseWaitTime(baseWaitTime);
-        RequestHandler.setRetryCount(retryCount);
 
         final long updateThreshold = conf.getLong(DFSConfigKeys.DFS_BR_LB_DB_VAR_UPDATE_THRESHOLD,
                 DFSConfigKeys.DFS_BR_LB_DB_VAR_UPDATE_THRESHOLD_DEFAULT);
