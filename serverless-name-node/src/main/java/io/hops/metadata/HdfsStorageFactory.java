@@ -77,7 +77,8 @@ public class HdfsStorageFactory {
                         .getBoolean(DFSConfigKeys.DFS_TRANSACTION_STATS_DETAILED_ENABLED,
                                 DFSConfigKeys.DFS_TRANSACTION_STATS_DETAILED_ENABLED_DEFAULT));
         if (!isDALInitialized) {
-            HdfsVariables.registerDefaultValues(conf);
+            System.out.println("Initializing DAL now...");
+ 	    HdfsVariables.registerDefaultValues(conf);
             addToClassPath(conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE,
                     DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE_DEFAULT));
             dStorageFactory = DalDriver.load(
@@ -118,7 +119,8 @@ public class HdfsStorageFactory {
     private static void addToClassPath(String s)
             throws StorageInitializtionException {
         try {
-            File f = new File(s);
+            System.out.println("Attempting to add the following to classpath: \"" + s + "\"");
+	    File f = new File(s);
             URL u = f.toURI().toURL();
             URLClassLoader urlClassLoader =
                     (URLClassLoader) ClassLoader.getSystemClassLoader();
