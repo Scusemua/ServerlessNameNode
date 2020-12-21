@@ -77,6 +77,7 @@ public class HdfsStorageFactory {
                         .getBoolean(DFSConfigKeys.DFS_TRANSACTION_STATS_DETAILED_ENABLED,
                                 DFSConfigKeys.DFS_TRANSACTION_STATS_DETAILED_ENABLED_DEFAULT));
         if (!isDALInitialized) {
+            System.out.println("Initializing DAL now...");
             HdfsVariables.registerDefaultValues(conf);
             addToClassPath(conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE,
                     DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE_DEFAULT));
@@ -108,7 +109,7 @@ public class HdfsStorageFactory {
         InputStream inStream =
                 StorageConnector.class.getClassLoader().getResourceAsStream(configFile);
         clusterConf.load(inStream);
-        if(inStream == null){
+        if (inStream == null){
             throw new FileNotFoundException("Unable to load database configuration file");
         }
         return clusterConf;
@@ -118,6 +119,7 @@ public class HdfsStorageFactory {
     private static void addToClassPath(String s)
             throws StorageInitializtionException {
         try {
+            System.out.println("Attempting to add the following to classpath: \"" + s + "\"");
             File f = new File(s);
             URL u = f.toURI().toURL();
             URLClassLoader urlClassLoader =
