@@ -886,7 +886,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
         loadNamesystem(conf);
 
         // rpcServer = createRpcServer(conf);
-        tokenServiceName = NetUtils.getHostPortString(rpcServer.getRpcAddress());
+        // tokenServiceName = NetUtils.getHostPortString(rpcServer.getRpcAddress());
         httpServer.setNameNodeAddress(getNameNodeAddress());
 
         pauseMonitor = new JvmPauseMonitor();
