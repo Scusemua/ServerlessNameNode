@@ -1108,12 +1108,16 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
         }
     }
 
+    /**
+     * Serverless namenodes run as if they are the lead namenode.
+     */
     public boolean isLeader() {
-        if (leaderElection != null) {
+        /*if (leaderElection != null) {
             return leaderElection.isLeader();
         } else {
             return false;
-        }
+        }*/
+        return true; // Serverless namenodes run as if they are the lead namenode. Always return true.
     }
 
     static void initMetrics(Configuration conf, HdfsServerConstants.NamenodeRole role) {

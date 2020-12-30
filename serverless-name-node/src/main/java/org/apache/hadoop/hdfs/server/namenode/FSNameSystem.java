@@ -1671,7 +1671,11 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         }
 
         registerMXBean();
-        DefaultMetricsSystem.instance().register(this);
+        // There seems to be an issue with this... there is a NullPointerException at
+        // at org.apache.hadoop.metrics2.impl.MetricsSystemImpl.register(MetricsSystemImpl.java:226).
+        // It seems like the MetricsInfo object created on line 225 is null... not sure why. The constructor of
+        // MetricsSourceBuilder calls initRegistry, which looks like it should create a value for info on line 118.
+        //DefaultMetricsSystem.instance().register(this);
     }
 
     /**
