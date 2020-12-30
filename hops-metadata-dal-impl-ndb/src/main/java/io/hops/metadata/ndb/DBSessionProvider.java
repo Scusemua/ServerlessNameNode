@@ -18,6 +18,7 @@
  */
 package io.hops.metadata.ndb;
 
+import com.mysql.clusterj.SessionFactory;
 import com.mysql.clusterj.ClusterJException;
 import com.mysql.clusterj.ClusterJHelper;
 import com.mysql.clusterj.Constants;
@@ -73,16 +74,25 @@ public class DBSessionProvider implements Runnable {
         "Database name: " + conf.get(Constants.PROPERTY_CLUSTER_DATABASE));
     LOG.info("Max Transactions: " +
         conf.get(Constants.PROPERTY_CLUSTER_MAX_TRANSACTIONS));
+    LOG.info("Creating HopsSessionFactory instance now...");
     try {
-      sessionFactory =
-          new HopsSessionFactory(ClusterJHelper.getSessionFactory(conf));
+      LOG.info("First, calling ClusterJHelper.getSessionFactory(conf)...");
+      SessionFactory clusterJSessionFactory = ClusterJHelper.getSessionFactory(conf);
+      LOG.info("Got CLusterJ SessionFactory. Now to create HopsSessionFactory.");
+      sessionFactory = new HopsSessionFactory(clusterJSessionFactory);
+      //sessionFactory =
+      //    new HopsSessionFactory(ClusterJHelper.getSessionFactory(conf));
     } catch (ClusterJException ex) {
       throw HopsExceptionHelper.wrap(ex);
     }
 
+    LOG.info("Created instance of HopsSessionFactory. Adding " + initialPoolSize + " sessions to sessionPool now...");
+
     for (int i = 0; i < initialPoolSize; i++) {
       sessionPool.add(initSession());
     }
+
+    LOG.info("Added " + initialPoolSize + " sessions to the sessionPool.");
 
     thread = new Thread(this, "Session Pool Refresh Daemon");
     thread.setDaemon(true);
