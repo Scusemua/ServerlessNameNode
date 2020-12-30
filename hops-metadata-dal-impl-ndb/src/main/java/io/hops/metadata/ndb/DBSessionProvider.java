@@ -34,6 +34,7 @@ import org.apache.commons.logging.LogFactory;
 import java.util.NoSuchElementException;
 import java.util.Properties;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -75,13 +76,12 @@ public class DBSessionProvider implements Runnable {
     LOG.info("Max Transactions: " +
         conf.get(Constants.PROPERTY_CLUSTER_MAX_TRANSACTIONS));
     LOG.info("Creating HopsSessionFactory instance now...");
+
     try {
       LOG.info("First, calling ClusterJHelper.getSessionFactory(conf)...");
       SessionFactory clusterJSessionFactory = ClusterJHelper.getSessionFactory(conf);
       LOG.info("Got CLusterJ SessionFactory. Now to create HopsSessionFactory.");
       sessionFactory = new HopsSessionFactory(clusterJSessionFactory);
-      //sessionFactory =
-      //    new HopsSessionFactory(ClusterJHelper.getSessionFactory(conf));
     } catch (ClusterJException ex) {
       throw HopsExceptionHelper.wrap(ex);
     }
