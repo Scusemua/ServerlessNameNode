@@ -882,12 +882,12 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
         ServerlessNameNode.initMetrics(conf, this.getRole());
         StartupProgressMetrics.register(startupProgress);
 
-        startHttpServer(conf);
+        // startHttpServer(conf);
         loadNamesystem(conf);
 
         // rpcServer = createRpcServer(conf);
         // tokenServiceName = NetUtils.getHostPortString(rpcServer.getRpcAddress());
-        httpServer.setNameNodeAddress(getNameNodeAddress());
+        // httpServer.setNameNodeAddress(getNameNodeAddress());
 
         pauseMonitor = new JvmPauseMonitor();
         pauseMonitor.init(conf);
@@ -998,7 +998,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
 
         namesystem.startCommonServices(conf);
         registerNNSMXBean();
-        rpcServer.start();
+        //rpcServer.start();
         plugins = conf.getInstances(DFS_NAMENODE_PLUGINS_KEY, ServicePlugin.class);
         for (ServicePlugin p : plugins) {
             try {
@@ -1007,11 +1007,12 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
                 LOG.warn("ServicePlugin " + p + " could not be started", t);
             }
         }
-        LOG.info(getRole() + " RPC up at: " + rpcServer.getRpcAddress());
-        if (rpcServer.getServiceRpcAddress() != null) {
-            LOG.info(getRole() + " service RPC up at: " +
-                    rpcServer.getServiceRpcAddress());
-        }
+        LOG.info("We are NOT starting the RPC server for the NameNode...");
+        //LOG.info(getRole() + " RPC up at: " + rpcServer.getRpcAddress());
+        //if (rpcServer.getServiceRpcAddress() != null) {
+        //    LOG.info(getRole() + " service RPC up at: " +
+        //            rpcServer.getServiceRpcAddress());
+        //}
     }
 
     /**
