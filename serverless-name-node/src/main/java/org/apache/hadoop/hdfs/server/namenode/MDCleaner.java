@@ -46,7 +46,8 @@ public class MDCleaner {
         public void run() {
             while (run) {
                 try {
-                    if (leaderElection.isRunning()) {
+                    // In ServerlessNameNode, leaderElection will be null 100% of the time.
+                    if (leaderElection != null && leaderElection.isRunning()) {
                         failedNodes.addAll(leaderElection.getDeadNodes());
                     }
 

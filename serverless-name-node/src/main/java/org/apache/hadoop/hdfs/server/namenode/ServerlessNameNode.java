@@ -992,9 +992,9 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
      * Start the services common to active and standby states
      */
     private void startCommonServices(Configuration conf) throws IOException {
-        startLeaderElectionService();
+        // startLeaderElectionService();
 
-        startMDCleanerService();
+        // startMDCleanerService();
 
         namesystem.startCommonServices(conf);
         registerNNSMXBean();
