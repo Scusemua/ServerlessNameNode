@@ -19,6 +19,12 @@
     <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
 
     <dependencies>
+        <!-- Nuclio Java SDK -->
+        <dependency>
+            <groupId>io.nuclio</groupId>
+            <artifactId>nuclio-java-sdk</artifactId>
+            <version>1.1.0</version>
+        </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>

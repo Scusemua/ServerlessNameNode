@@ -48,6 +48,10 @@ import org.apache.hadoop.util.ServicePlugin;
 import org.apache.hadoop.util.StringUtils;
 import org.apache.hadoop.util.Time;
 import org.apache.htrace.core.Tracer;
+import io.nuclio.Context;
+import io.nuclio.Event;
+import io.nuclio.EventHandler;
+import io.nuclio.Response;
 import org.eclipse.jetty.http.HttpParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,7 +111,7 @@ import static org.apache.hadoop.util.ExitUtil.terminate;
  * ********************************************************
  */
 @InterfaceAudience.Private
-public class ServerlessNameNode implements NameNodeStatusMXBean {
+public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
     private AtomicBoolean started = new AtomicBoolean(false);
     public static final Logger LOG = LoggerFactory.getLogger(ServerlessNameNode.class.getName());
@@ -261,6 +265,33 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
         }
     }
 
+    @Override
+    public Response handleEvent(Context context, Event event) {
+        return new Response().setBody("Hello, world!");
+    }
+
+    /**
+     * Used as the entry-point into the Serverless NameNode when executing a serverless function.
+     *
+     * @param commandLineArgs Command-line arguments formatted as if the NameNode was being executed from the commandline.
+     * @throws Exception
+     */
+    public void startServerlessNameNode(String[] commandLineArgs) throws Exception {
+        if (DFSUtil.parseHelpArgument(commandLineArgs, ServerlessNameNode.USAGE, System.out, true)) {
+            System.exit(0);
+        }
+
+        try {
+            StringUtils.startupShutdownMessage(ServerlessNameNode.class, commandLineArgs, LOG);
+            ServerlessNameNode namenode = createNameNode(commandLineArgs, null);
+
+            // Now we perform the desired/specified operation.
+        } catch (Throwable e) {
+            LOG.error("Failed to start namenode.", e);
+            terminate(1, e);
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         if (DFSUtil.parseHelpArgument(args, ServerlessNameNode.USAGE, System.out, true)) {
             System.exit(0);
@@ -270,9 +301,12 @@ public class ServerlessNameNode implements NameNodeStatusMXBean {
             StringUtils.startupShutdownMessage(ServerlessNameNode.class, args, LOG);
             ServerlessNameNode namenode = createNameNode(args, null);
             System.out.println("NameNode == null: " + (namenode == null));
-            if (namenode != null) {
+            // The NameNode's join method simply joins on the RPC server, which runs "forever". But we don't have an
+            // RPC server, and we should generally just have been assigned one operation to perform here. So we'll
+            // just perform our operation and then return.
+            /*if (namenode != null) {
                 namenode.join();
-            }
+            }*/
         } catch (Throwable e) {
             LOG.error("Failed to start namenode.", e);
             terminate(1, e);
