@@ -22,7 +22,7 @@
         <!-- Nuclio Java SDK -->
         <dependency>
             <groupId>io.nuclio</groupId>
-            <artifactId>nuclio-java-sdk</artifactId>
+            <artifactId>nuclio-sdk-java</artifactId>
             <version>1.1.0</version>
         </dependency>
         <dependency>
