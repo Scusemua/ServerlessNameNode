@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>serverless-name-node-base</artifactId>
+        <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../serverless-name-node-base/pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <artifactId>hadoop-common-project</artifactId>
+
+    <modules>
+        <module>hadoop-common</module>
+        <module>hadoop-auth</module>
+        <module>hadoop-annotations</module>
+        <module>hadoop-minikdc</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.rat</groupId>
+                <artifactId>apache-rat-plugin</artifactId>
+                <configuration>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
