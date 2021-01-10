@@ -8,6 +8,7 @@ import io.hops.metadata.HdfsVariables;
 import io.hops.metadata.hdfs.dal.LeaseCreationLocksDataAccess;
 import io.hops.transaction.handler.LightWeightRequestHandler;
 import io.hops.transaction.handler.RequestHandler;
+import com.google.gson.JsonObject;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
@@ -268,6 +269,15 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
     @Override
     public Response handleEvent(Context context, Event event) {
         return new Response().setBody("Hello, world!");
+    }
+
+    public static JsonObject main(JsonObject args) {
+        String name = "stranger";
+        if (args.has("name"))
+            name = args.getAsJsonPrimitive("name").getAsString();
+        JsonObject response = new JsonObject();
+        response.addProperty("greeting", "Hello " + name + "!");
+        return response;
     }
 
     /**
