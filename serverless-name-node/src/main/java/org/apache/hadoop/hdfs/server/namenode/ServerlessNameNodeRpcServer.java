@@ -25,7 +25,7 @@ import org.apache.hadoop.hdfs.security.token.block.ExportedBlockKeys;
 import org.apache.hadoop.hdfs.security.token.delegation.DelegationTokenIdentifier;
 import org.apache.hadoop.hdfs.server.blockmanagement.BRLoadBalancingOverloadException;
 import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
-import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
+//import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
 import org.apache.hadoop.hdfs.server.protocol.*;
 import org.apache.hadoop.io.EnumSetWritable;
 import org.apache.hadoop.io.Text;
@@ -582,10 +582,10 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
     }
 
     private static String getClientMachine() {
-        String clientMachine = NamenodeWebHdfsMethods.getRemoteAddress();
+        /*String clientMachine = NamenodeWebHdfsMethods.getRemoteAddress();
         if (clientMachine == null) { //not a web client
             clientMachine = Server.getRemoteAddress();
-        }
+        }*/
         if (clientMachine == null) { //not a RPC client
             clientMachine = "";
         }

@@ -72,7 +72,7 @@ import org.apache.hadoop.hdfs.server.namenode.top.TopAuditLogger;
 import org.apache.hadoop.hdfs.server.namenode.top.TopConf;
 import org.apache.hadoop.hdfs.server.namenode.top.metrics.TopMetrics;
 import org.apache.hadoop.hdfs.server.namenode.top.window.RollingWindowManager;
-import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
+//import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
 import org.apache.hadoop.hdfs.server.protocol.*;
 import org.apache.hadoop.io.EnumSetWritable;
 import org.apache.hadoop.io.IOUtils;
@@ -3531,8 +3531,8 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
      * RPC call context even if the client exits.
      */
     boolean isExternalInvocation() {
-        return ProtobufRpcEngine.Server.isRpcInvocation() ||
-                NamenodeWebHdfsMethods.isWebHdfsInvocation();
+        return ProtobufRpcEngine.Server.isRpcInvocation();// ||
+                //NamenodeWebHdfsMethods.isWebHdfsInvocation();
     }
 
     /**
@@ -3858,7 +3858,8 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
         if (ip != null) {
             return ip;
         }
-        return NamenodeWebHdfsMethods.getRemoteIp();
+        return null;
+        //return NamenodeWebHdfsMethods.getRemoteIp();
     }
 
     // optimize ugi lookup for RPC operations to avoid a trip through
@@ -6249,7 +6250,7 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
                     sb.append(trackingId);
                 }
                 sb.append("\t").append("proto=");
-                sb.append(NamenodeWebHdfsMethods.isWebHdfsInvocation() ? "webhdfs" : "rpc");
+                //sb.append(NamenodeWebHdfsMethods.isWebHdfsInvocation() ? "webhdfs" : "rpc");
                 logAuditMessage(sb.toString());
             }
         }

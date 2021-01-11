@@ -23,7 +23,7 @@ import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
 import org.apache.hadoop.hdfs.server.common.JspHelper;
-import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
+//import org.apache.hadoop.hdfs.server.namenode.web.resources.NamenodeWebHdfsMethods;
 import org.apache.hadoop.hdfs.web.WebHdfsFileSystem;
 import org.apache.hadoop.hdfs.web.resources.Param;
 import org.apache.hadoop.net.NetUtils;
@@ -87,9 +87,9 @@ public class NameNodeHttpServer {
                 + ")");
 
         // add webhdfs packages
-        httpServer.addJerseyResourcePackage(NamenodeWebHdfsMethods.class
+        /*httpServer.addJerseyResourcePackage(NamenodeWebHdfsMethods.class
                         .getPackage().getName() + ";" + Param.class.getPackage().getName(),
-                pathSpec);
+                pathSpec);*/
     }
 
     /**
