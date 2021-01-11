@@ -106,11 +106,11 @@
             <artifactId>commons-logging</artifactId>
             <scope>compile</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>commons-daemon</groupId>
             <artifactId>commons-daemon</artifactId>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -141,16 +141,16 @@
             <artifactId>slf4j-log4j12</artifactId>
             <scope>compile</scope>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>xmlenc</groupId>
             <artifactId>xmlenc</artifactId>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
+        </dependency>-->
+        <!--<dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>

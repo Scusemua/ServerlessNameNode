@@ -135,12 +135,12 @@
       <scope>runtime</scope>
       
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-core</artifactId>
       <scope>compile</scope>
       
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-servlet</artifactId>
@@ -154,12 +154,12 @@
       <scope>compile</scope>
       
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>com.sun.jersey</groupId>
       <artifactId>jersey-server</artifactId>
       <scope>compile</scope>
       
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>commons-logging</groupId>
       <artifactId>commons-logging</artifactId>
@@ -178,12 +178,12 @@
       <scope>test</scope>
       
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>commons-beanutils</groupId>
       <artifactId>commons-beanutils</artifactId>
       <scope>compile</scope>
       
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-configuration2</artifactId>
@@ -327,11 +327,11 @@
       <scope>test</scope>
       <!---->
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-compress</artifactId>
       
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcprov-jdk15on</artifactId>
@@ -350,11 +350,11 @@
       <version>3.2.0.0-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>org.apache.kerby</groupId>
       <artifactId>kerb-simplekdc</artifactId>
       
-    </dependency>
+    </dependency>-->
     <!--<dependency>
       <groupId>org.apache.kerby</groupId>
       <artifactId>kerb-core</artifactId>
