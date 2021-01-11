@@ -55,11 +55,11 @@
   </dependencies>-->
 
   <dependencies>
-    <dependency>
+    <!--<dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
       <scope>compile</scope>
-    </dependency>
+    </dependency>-->
     <dependency>
       <groupId>org.apache.kerby</groupId>
       <artifactId>kerb-simplekdc</artifactId>

@@ -34,7 +34,7 @@ import io.hops.metadata.ndb.wrapper.HopsSession;
 import java.util.List;
 
 
-public class hdUserClusterj implements TablesDef.UsersTableDef, UserDataAccess<User>{
+public class UserClusterj implements TablesDef.UsersTableDef, UserDataAccess<User>{
   
   @PersistenceCapable(table = TABLE_NAME)
   public interface UserDTO {
