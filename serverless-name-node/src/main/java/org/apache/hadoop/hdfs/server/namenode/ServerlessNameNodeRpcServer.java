@@ -582,10 +582,10 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
     }
 
     private static String getClientMachine() {
-        /*String clientMachine = NamenodeWebHdfsMethods.getRemoteAddress();
+        String clientMachine = null; //NamenodeWebHdfsMethods.getRemoteAddress();
         if (clientMachine == null) { //not a web client
             clientMachine = Server.getRemoteAddress();
-        }*/
+        }
         if (clientMachine == null) { //not a RPC client
             clientMachine = "";
         }
