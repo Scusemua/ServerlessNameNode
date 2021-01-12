@@ -33,31 +33,31 @@
         <dependency>
             <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
             <artifactId>hadoop-annotations</artifactId>
-            <scope>provided</scope>
+            <scope>compile</scope>
             <version>3.2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.gmail.benrcarver.ServerlessNameNode.metadata</groupId>
             <artifactId>hops-metadata-dal</artifactId>
             <version>3.2.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
             <artifactId>hadoop-common</artifactId>
             <version>3.2.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>io.hops</groupId>
             <artifactId>hops-leader-election</artifactId>
             <version>3.2.0.0-SNAPSHOT</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
             <artifactId>hadoop-hdfs-client</artifactId>
-            <scope>provided</scope>
+            <scope>compile</scope>
             <version>3.2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
