@@ -1191,6 +1191,7 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-server</artifactId>
                 <version>${jetty.version}</version>
+                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
                 <exclusions>
                     <exclusion>
                         <groupId>org.eclipse.jetty</groupId>
@@ -1202,21 +1203,25 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-util</artifactId>
                 <version>${jetty.version}</version>
+                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-servlet</artifactId>
                 <version>${jetty.version}</version>
+                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-webapp</artifactId>
                 <version>${jetty.version}</version>
+                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-util-ajax</artifactId>
                 <version>${jetty.version}</version>
+                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>javax.servlet.jsp</groupId>
