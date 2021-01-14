@@ -271,6 +271,8 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
     }
 
     public static JsonObject main(JsonObject args) {
+        System.out.println("Function execution started.");
+
         String[] commandLineArguments;
 
         // Attempt to extract the command-line arguments, which will be passed as a single string parameter.
