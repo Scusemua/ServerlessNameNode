@@ -53,7 +53,6 @@ import io.nuclio.Context;
 import io.nuclio.Event;
 import io.nuclio.EventHandler;
 import io.nuclio.Response;
-import org.eclipse.jetty.http.HttpParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -272,11 +271,24 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
     }
 
     public static JsonObject main(JsonObject args) {
-        String name = "stranger";
-        if (args.has("name"))
-            name = args.getAsJsonPrimitive("name").getAsString();
+        String[] commandLineArguments;
+
+        // Attempt to extract the command-line arguments, which will be passed as a single string parameter.
+        if (args.has("command-line-arguments"))
+            commandLineArguments = args.getAsJsonPrimitive("command-line-arguments").getAsString().split("\\s+");
+        else
+            commandLineArguments = new String[0];
+
         JsonObject response = new JsonObject();
-        response.addProperty("greeting", "Hello " + name + "!");
+        try {
+            startServerlessNameNode(commandLineArguments);
+
+            response.addProperty("RESULT", "Success");
+        }
+        catch (Exception ex) {
+            response.addProperty("EXCEPTION", ex.toString());
+        }
+
         return response;
     }
 
@@ -286,14 +298,16 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
      * @param commandLineArgs Command-line arguments formatted as if the NameNode was being executed from the commandline.
      * @throws Exception
      */
-    public void startServerlessNameNode(String[] commandLineArgs) throws Exception {
+    public static void startServerlessNameNode(String[] commandLineArgs) throws Exception {
         if (DFSUtil.parseHelpArgument(commandLineArgs, ServerlessNameNode.USAGE, System.out, true)) {
             System.exit(0);
         }
 
         try {
             StringUtils.startupShutdownMessage(ServerlessNameNode.class, commandLineArgs, LOG);
-            ServerlessNameNode namenode = createNameNode(commandLineArgs, null);
+            ServerlessNameNode nameNode = createNameNode(commandLineArgs, null);
+
+            System.out.println("nameNode == null: " + (nameNode == null));
 
             // Now we perform the desired/specified operation.
         } catch (Throwable e) {
