@@ -299,9 +299,13 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
      * @throws Exception
      */
     public static void startServerlessNameNode(String[] commandLineArgs) throws Exception {
+        System.out.println("Attempting to parse help argument now...");
+
         if (DFSUtil.parseHelpArgument(commandLineArgs, ServerlessNameNode.USAGE, System.out, true)) {
             System.exit(0);
         }
+
+        System.out.println("Attempting to create the name node object now...");
 
         try {
             StringUtils.startupShutdownMessage(ServerlessNameNode.class, commandLineArgs, LOG);
