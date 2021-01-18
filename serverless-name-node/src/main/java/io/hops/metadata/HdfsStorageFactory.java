@@ -81,9 +81,6 @@ public class HdfsStorageFactory {
  	    HdfsVariables.registerDefaultValues(conf);
             addToClassPath(conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE,
                     DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE_DEFAULT));
-            dStorageFactory = DalDriver.load(
-                    conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS,
-                            DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS_DEFAULT));
 
             File folder = new File("/metadata-dal/");
             File[] listOfFiles = folder.listFiles();
@@ -95,6 +92,10 @@ public class HdfsStorageFactory {
                     System.out.println("Directory " + listOfFiles[i].getName());
                 }
             }
+
+            dStorageFactory = DalDriver.load(
+                    conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS,
+                            DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS_DEFAULT));
 
             System.out.println("Loaded Storage Factory from DAL Driver successfully.");
             dStorageFactory.setConfiguration(getMetadataClusterConfiguration(conf));
