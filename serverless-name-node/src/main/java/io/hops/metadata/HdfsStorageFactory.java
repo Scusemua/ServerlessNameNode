@@ -84,6 +84,18 @@ public class HdfsStorageFactory {
             dStorageFactory = DalDriver.load(
                     conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS,
                             DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS_DEFAULT));
+
+            File folder = new File("/metadata-dal/");
+            File[] listOfFiles = folder.listFiles();
+
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    System.out.println("File " + listOfFiles[i].getName());
+                } else if (listOfFiles[i].isDirectory()) {
+                    System.out.println("Directory " + listOfFiles[i].getName());
+                }
+            }
+
             System.out.println("Loaded Storage Factory from DAL Driver successfully.");
             dStorageFactory.setConfiguration(getMetadataClusterConfiguration(conf));
             initDataAccessWrappers();
