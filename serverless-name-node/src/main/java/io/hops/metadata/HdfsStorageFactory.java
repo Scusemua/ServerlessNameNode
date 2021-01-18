@@ -84,6 +84,7 @@ public class HdfsStorageFactory {
             dStorageFactory = DalDriver.load(
                     conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS,
                             DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS_DEFAULT));
+            System.out.println("Loaded Storage Factory from DAL Driver successfully.");
             dStorageFactory.setConfiguration(getMetadataClusterConfiguration(conf));
             initDataAccessWrappers();
             EntityManager.addContextInitializer(getContextInitializer());
@@ -105,6 +106,8 @@ public class HdfsStorageFactory {
             throws IOException {
         String configFile = conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_CONFIG_FILE,
                 DFSConfigKeys.DFS_STORAGE_DRIVER_CONFIG_FILE_DEFAULT);
+        System.out.println("Attempting to read in configuration file for metadata cluster now...");
+        System.out.println("Filepath: " + configFile);
         Properties clusterConf = new Properties();
         InputStream inStream =
                 StorageConnector.class.getClassLoader().getResourceAsStream(configFile);
