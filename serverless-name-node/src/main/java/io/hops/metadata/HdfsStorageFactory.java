@@ -123,7 +123,8 @@ public class HdfsStorageFactory {
         System.out.println("Filepath: " + configFile);
         Properties clusterConf = new Properties();
         InputStream inStream =
-                StorageConnector.class.getClassLoader().getResourceAsStream(configFile);
+                HdfsStorageFactory.class.getClassLoader().getResourceAsStream(configFile);
+                //StorageConnector.class.getClassLoader().getResourceAsStream(configFile);
         if (inStream == null)
             throw new FileNotFoundException("Unable to load database configuration file");
         System.out.println("Successfully loaded database configuration file.");
