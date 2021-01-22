@@ -99,6 +99,7 @@ public class HdfsStorageFactory {
 
             System.out.println("Loaded Storage Factory from DAL Driver successfully.");
             System.out.println("java.library.path = " + System.getProperty("java.library.path"));
+            System.loadLibrary("ndbclient");
             dStorageFactory.setConfiguration(getMetadataClusterConfiguration(conf));
             initDataAccessWrappers();
             EntityManager.addContextInitializer(getContextInitializer());
