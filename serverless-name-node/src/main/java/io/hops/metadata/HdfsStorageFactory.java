@@ -98,6 +98,7 @@ public class HdfsStorageFactory {
                             DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS_DEFAULT));
 
             System.out.println("Loaded Storage Factory from DAL Driver successfully.");
+            System.out.println("java.library.path = " + System.getProperty("java.library.path"));
             dStorageFactory.setConfiguration(getMetadataClusterConfiguration(conf));
             initDataAccessWrappers();
             EntityManager.addContextInitializer(getContextInitializer());
@@ -123,6 +124,7 @@ public class HdfsStorageFactory {
         System.out.println("Filepath: " + configFile);
         Properties clusterConf = new Properties();
         InputStream inStream =
+                // Use HdfsStorageFactor class loader as this source file is from the main JAR.
                 HdfsStorageFactory.class.getClassLoader().getResourceAsStream(configFile);
                 //StorageConnector.class.getClassLoader().getResourceAsStream(configFile);
         if (inStream == null)
