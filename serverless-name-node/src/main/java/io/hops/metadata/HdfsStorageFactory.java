@@ -82,9 +82,12 @@ public class HdfsStorageFactory {
             addToClassPath(conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE,
                     DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE_DEFAULT));
 
-            dStorageFactory = DalDriver.load(
-                    conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS,
-                            DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS_DEFAULT));
+            String dfsStorageDriverClassName = conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS,
+                                                    DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS_DEFAULT);
+
+            System.out.println("Attempting to load DFS storage driver class: " + dfsStorageDriverClassName);
+
+            dStorageFactory = DalDriver.load(dfsStorageDriverClassName);
 
             System.out.println("Loaded Storage Factory from DAL Driver successfully.");
             //System.out.println("java.library.path = " + System.getProperty("java.library.path"));
