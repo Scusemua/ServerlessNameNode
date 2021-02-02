@@ -78,29 +78,18 @@ public class HdfsStorageFactory {
                                 DFSConfigKeys.DFS_TRANSACTION_STATS_DETAILED_ENABLED_DEFAULT));
         if (!isDALInitialized) {
             System.out.println("Initializing DAL now...");
- 	    HdfsVariables.registerDefaultValues(conf);
+ 	        HdfsVariables.registerDefaultValues(conf);
             addToClassPath(conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE,
                     DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE_DEFAULT));
-
-            File folder = new File("/metadata-dal/");
-            File[] listOfFiles = folder.listFiles();
-
-            for (int i = 0; i < listOfFiles.length; i++) {
-                if (listOfFiles[i].isFile()) {
-                    System.out.println("File " + listOfFiles[i].getName());
-                } else if (listOfFiles[i].isDirectory()) {
-                    System.out.println("Directory " + listOfFiles[i].getName());
-                }
-            }
 
             dStorageFactory = DalDriver.load(
                     conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS,
                             DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS_DEFAULT));
 
             System.out.println("Loaded Storage Factory from DAL Driver successfully.");
-            System.out.println("java.library.path = " + System.getProperty("java.library.path"));
+            //System.out.println("java.library.path = " + System.getProperty("java.library.path"));
             //System.loadLibrary("ndbclient");
-            System.load("/usr/lib64/libndbclient.so");
+            //System.load("/usr/lib64/libndbclient.so");
             dStorageFactory.setConfiguration(getMetadataClusterConfiguration(conf));
             initDataAccessWrappers();
             EntityManager.addContextInitializer(getContextInitializer());
@@ -141,7 +130,7 @@ public class HdfsStorageFactory {
             throws StorageInitializtionException {
         try {
             System.out.println("Attempting to add the following to classpath: \"" + s + "\"");
-	    File f = new File(s);
+	        File f = new File(s);
             URL u = f.toURI().toURL();
             URLClassLoader urlClassLoader =
                     (URLClassLoader) ClassLoader.getSystemClassLoader();
