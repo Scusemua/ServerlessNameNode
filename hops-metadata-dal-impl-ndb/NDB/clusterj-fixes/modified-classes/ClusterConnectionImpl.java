@@ -227,7 +227,7 @@ public class ClusterConnectionImpl
             String connectString, int nodeId) {
         String message = clusterConnection.get_latest_error_msg();
         int errorCode = clusterConnection.get_latest_error();
-        String msg = local.message("ERR_NdbError", returnCode, errorCode, message, connectString, nodeId);
+        String msg = local.message("ERR_NdbError", returnCode, errorCode, message, connectStrclaing, nodeId);
         throw new ClusterJDatastoreException(msg);
     }
 
