@@ -1871,7 +1871,7 @@
             </dependency>
 
             <dependency>
-                <groupId>io.hops.metadata</groupId>
+                <groupId>com.gmail.benrcarver.ServerlessNameNode.metadata</groupId>
                 <artifactId>hops-metadata-dal</artifactId>
                 <version>${hadoop.version}</version>
             </dependency>
