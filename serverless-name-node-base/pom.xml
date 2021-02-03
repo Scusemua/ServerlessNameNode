@@ -21,6 +21,8 @@
     <properties>
         <!-- Set the Release year during release -->
         <release-year>2019</release-year>
+        
+        <dependency-scope>provided</dependency-scope>
 
         <hadoop.version>3.2.0.0-SNAPSHOT</hadoop.version>
 
@@ -1138,13 +1140,13 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-math3</artifactId>
                 <version>3.1.1</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-compress</artifactId>
                 <version>1.4.1</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>xmlenc</groupId>
@@ -1155,7 +1157,7 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-csv</artifactId>
                 <version>1.0</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.apache.httpcomponents</groupId>
@@ -1191,7 +1193,7 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-server</artifactId>
                 <version>${jetty.version}</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
                 <exclusions>
                     <exclusion>
                         <groupId>org.eclipse.jetty</groupId>
@@ -1203,25 +1205,25 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-util</artifactId>
                 <version>${jetty.version}</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-servlet</artifactId>
                 <version>${jetty.version}</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-webapp</artifactId>
                 <version>${jetty.version}</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-util-ajax</artifactId>
                 <version>${jetty.version}</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>javax.servlet.jsp</groupId>
@@ -1490,7 +1492,7 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-configuration2</artifactId>
                 <version>2.1.1</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
                 <exclusions>
                     <exclusion>
                         <groupId>org.apache.commons</groupId>
@@ -1502,13 +1504,13 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>3.7</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-text</artifactId>
                 <version>1.4</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.slf4j</groupId>
@@ -1645,13 +1647,13 @@
                 <groupId>org.apache.htrace</groupId>
                 <artifactId>htrace-core</artifactId>
                 <version>3.1.0-incubating</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.apache.htrace</groupId>
                 <artifactId>htrace-core4</artifactId>
                 <version>4.1.0-incubating</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.jdom</groupId>
@@ -1816,25 +1818,25 @@
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
                 <version>${curator.version}</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-client</artifactId>
                 <version>${curator.version}</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-framework</artifactId>
                 <version>${curator.version}</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-test</artifactId>
                 <version>${curator.version}</version>
-                <scope>provided</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+                <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
             </dependency>
             <dependency>
                 <groupId>org.bouncycastle</groupId>
