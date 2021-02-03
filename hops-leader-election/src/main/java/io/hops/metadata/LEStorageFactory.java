@@ -34,7 +34,7 @@ import io.hops.metadata.election.dal.YarnLeDescriptorDataAccess;
 import io.hops.metadata.election.entity.LeDescriptor;
 import io.hops.metadata.hdfs.dal.VariableDataAccess;
 import io.hops.transaction.EntityManager;
-import io.hops.transaction.context.ContextInitializer;
+import io.hops.transaction.context.HopsContextInitializer;
 import io.hops.transaction.context.EntityContext;
 import io.hops.transaction.context.LeSnapshot;
 import io.hops.transaction.context.VariableContext;
@@ -117,8 +117,8 @@ public class LEStorageFactory {
     dataAccessAdaptors.clear();
   }
 
-  private static ContextInitializer getContextInitializer() {
-    return new ContextInitializer() {
+  private static HopsContextInitializer getContextInitializer() {
+    return new HopsContextInitializer() {
       @Override
       public Map<Class, EntityContext> createEntityContexts() {
         Map<Class, EntityContext> entityContexts =

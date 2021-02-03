@@ -19,7 +19,7 @@ import io.hops.StorageConnector;
 
 import java.util.Map;
 
-public interface ContextInitializer {
+public interface HopsContextInitializer {
 
   public Map<Class, EntityContext> createEntityContexts();
 

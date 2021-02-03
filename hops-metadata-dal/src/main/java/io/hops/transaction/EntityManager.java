@@ -19,7 +19,7 @@ import io.hops.exception.StorageException;
 import io.hops.exception.TransactionContextException;
 import io.hops.metadata.common.CounterType;
 import io.hops.metadata.common.FinderType;
-import io.hops.transaction.context.ContextInitializer;
+import io.hops.transaction.context.HopsContextInitializer;
 import io.hops.transaction.context.EntityContext;
 import io.hops.transaction.context.EntityContextStat;
 import io.hops.transaction.context.TransactionContext;
@@ -38,11 +38,11 @@ public class EntityManager {
   }
 
   private static ThreadLocal<TransactionContext> threadContext = new ThreadLocal();
-  private static CopyOnWriteArrayList<ContextInitializer> contextInitializers =
+  private static CopyOnWriteArrayList<HopsContextInitializer> contextInitializers =
       new CopyOnWriteArrayList<>();
   private static boolean initialized = false;
 
-  public static void addContextInitializer(ContextInitializer ci) {
+  public static void addContextInitializer(HopsContextInitializer ci) {
     contextInitializers.add(ci);
     if (!initialized) {
       initialized = true;
@@ -146,7 +146,7 @@ public class EntityManager {
     
   private static TransactionContext addContext() {
     Map<Class, EntityContext> storageMap = new HashMap<>();
-    for (ContextInitializer initializer : contextInitializers) {
+    for (HopsContextInitializer initializer : contextInitializers) {
       Map<Class, EntityContext> tmp = initializer.createEntityContexts();
       for (Class clzz : tmp.keySet()) {
         storageMap.put(clzz, tmp.get(clzz));

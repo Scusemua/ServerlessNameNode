@@ -172,8 +172,8 @@ public class HdfsStorageFactory {
                 (CachePoolDataAccess) getDataAccess(CachePoolDataAccess.class)));
     }
 
-    private static ContextInitializer getContextInitializer() {
-        return new ContextInitializer() {
+    private static HopsContextInitializer getContextInitializer() {
+        return new HopsContextInitializer() {
             @Override
             public Map<Class, EntityContext> createEntityContexts() {
                 Map<Class, EntityContext> entityContexts =
