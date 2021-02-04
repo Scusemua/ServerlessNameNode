@@ -62,18 +62,14 @@
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.4</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.7.8</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
       <artifactId>maven-shade-plugin</artifactId>
-      <!--<version>${maven-shade-plugin.version}</version>-->
-      <version>3.2.0</version>
       <scope>provided</scope>
       <exclusions>
         <!-- shade conflicts with itself and other maven internals so we simply
