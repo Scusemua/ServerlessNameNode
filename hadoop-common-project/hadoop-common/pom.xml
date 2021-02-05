@@ -349,6 +349,7 @@
       <artifactId>hops-metadata-dal</artifactId>
       <version>3.2.0.0-SNAPSHOT</version>
       <type>jar</type>
+      <scope>${dependency-scope}</scope>
     </dependency>
     <!--<dependency>
       <groupId>org.apache.kerby</groupId>
