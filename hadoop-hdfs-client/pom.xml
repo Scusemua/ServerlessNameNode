@@ -50,6 +50,10 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <scope>compile</scope>
     </dependency>
     <dependency>
+      <groupId>javax.ws.rs</groupId>
+      <artifactId>jsr311-api</artifactId>
+    </dependency>
+    <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
