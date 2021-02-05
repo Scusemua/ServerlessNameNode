@@ -79,8 +79,8 @@ public class HdfsStorageFactory {
         if (!isDALInitialized) {
             System.out.println("Initializing DAL now...");
  	        HdfsVariables.registerDefaultValues(conf);
-            addToClassPath(conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE,
-                    DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE_DEFAULT));
+            //addToClassPath(conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE,
+            //        DFSConfigKeys.DFS_STORAGE_DRIVER_JAR_FILE_DEFAULT));
 
             String dfsStorageDriverClassName = conf.get(DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS,
                                                     DFSConfigKeys.DFS_STORAGE_DRIVER_CLASS_DEFAULT);
