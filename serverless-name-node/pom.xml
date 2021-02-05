@@ -65,6 +65,12 @@
             <version>3.1.0</version>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>${jetty.version}</version>
+            <scope>${dependency-scope}</scope> <!-- Added this to decease JAR size for serverless deployment. We embed this dependency in the Docker image. -->
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <scope>${dependency-scope}</scope>
