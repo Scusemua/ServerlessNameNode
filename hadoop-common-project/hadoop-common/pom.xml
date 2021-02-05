@@ -405,7 +405,7 @@
       <groupId>com.logicalclocks</groupId>
       <artifactId>service-discovery-client</artifactId>
       <version>0.4</version>
-      <scope>${dependency-scope}</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
