@@ -961,7 +961,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
         startCommonServices(conf);
 
-        if(isLeader()){ //if the newly started namenode is the leader then it means
+        if (isLeader()) { //if the newly started namenode is the leader then it means
             //that is cluster was restarted and we can reset the number of default
             // concurrent block reports
             HdfsVariables.setMaxConcurrentBrs(maxConcurrentBRs, null);
@@ -970,7 +970,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
         // in case of cluster upgrade the retry cache epoch is set to 0
         // update the epoch to correct value
-        if (HdfsVariables.getRetryCacheCleanerEpoch() == 0){
+        if (HdfsVariables.getRetryCacheCleanerEpoch() == 0) {
             // -1 to ensure the entries in the current epoch are delete by the cleaner
             HdfsVariables.setRetryCacheCleanerEpoch(System.currentTimeMillis()/1000 - 1);
         }

@@ -54,6 +54,10 @@
       <scope>test</scope>
       <version>4.11</version>
     </dependency>
+      <dependency>
+          <groupId>com.gmail.benrcarver.ServerlessNameNode.metadata</groupId>
+          <artifactId>hops-metadata-dal</artifactId>
+      </dependency>
   </dependencies>
   <build>
     <plugins>
