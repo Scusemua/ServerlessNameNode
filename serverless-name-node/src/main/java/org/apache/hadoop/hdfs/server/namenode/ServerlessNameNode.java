@@ -1,16 +1,21 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
+import org.apache.commons.codec.binary.Base64;
 import io.hops.exception.StorageException;
 import io.hops.leaderElection.HdfsLeDescriptorFactory;
 import io.hops.leaderElection.LeaderElection;
 import io.hops.metadata.HdfsStorageFactory;
 import io.hops.metadata.HdfsVariables;
 import io.hops.metadata.hdfs.dal.LeaseCreationLocksDataAccess;
+import io.hops.metadata.hdfs.entity.EncodingPolicy;
 import io.hops.transaction.handler.LightWeightRequestHandler;
 import io.hops.transaction.handler.RequestHandler;
 import com.google.gson.JsonObject;
 import org.apache.hadoop.classification.InterfaceAudience;
+import org.apache.hadoop.crypto.CryptoProtocolVersion;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
+import org.apache.hadoop.fs.CreateFlag;
+import org.apache.hadoop.fs.permission.FsPermission;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
@@ -34,6 +39,7 @@ import org.apache.hadoop.ha.ServiceFailedException;
 import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgress;
 import org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgressMetrics;
+import org.apache.hadoop.io.EnumSetWritable;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.metrics2.lib.DefaultMetricsSystem;
 import org.apache.hadoop.metrics2.util.MBeans;
@@ -57,13 +63,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.management.ObjectName;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.security.PrivilegedExceptionAction;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -281,9 +287,19 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
         else
             commandLineArguments = new String[0];
 
+        String op = null;
+        JsonObject fsArgs = null;
+
+        if (args.has("op"))
+            op = args.getAsJsonPrimitive("op").getAsString();
+
+        // JSON dictionary containing the arguments/parameters for the specified filesystem operation.
+        if (args.has("fsArgs"))
+            fsArgs = args.getAsJsonObject("fsArgs");
+
         JsonObject response = new JsonObject();
         try {
-            startServerlessNameNode(commandLineArguments);
+            startServerlessNameNode(commandLineArguments, op, fsArgs);
 
             response.addProperty("RESULT", "Success");
         }
@@ -300,7 +316,9 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
      * @param commandLineArgs Command-line arguments formatted as if the NameNode was being executed from the commandline.
      * @throws Exception
      */
-    public static void startServerlessNameNode(String[] commandLineArgs) throws Exception {
+    public static void startServerlessNameNode(String[] commandLineArgs, String op, JsonObject fsArgs) throws Exception {
+        System.out.println("Specified operation: " + op);
+
         System.out.println("Attempting to parse help argument now...");
 
         if (DFSUtil.parseHelpArgument(commandLineArgs, ServerlessNameNode.USAGE, System.out, true)) {
@@ -315,11 +333,86 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
             System.out.println("nameNode == null: " + (nameNode == null));
 
+            if (op == null) {
+                System.out.println("User did not specify an operation.");
+                return;
+            }
+
+            assert nameNode != null;
+
             // Now we perform the desired/specified operation.
+            switch(op) {
+                case "append":
+                    nameNode.appendOperation(fsArgs);
+                    break;
+                case "concat":
+                    nameNode.concatOperation(fsArgs);
+                    break;
+                case "create":
+                    nameNode.createOperation(fsArgs);
+                    break;
+                case "delete":
+                    nameNode.deleteOperation(fsArgs);
+                    break;
+                case "rename":
+                    nameNode.renameOperation(fsArgs);
+                    break;
+                default:
+                    System.out.println("Unknown operation: " + op);
+            }
         } catch (Throwable e) {
             LOG.error("Failed to start namenode.", e);
             terminate(1, e);
         }
+    }
+
+    private void appendOperation(JsonObject fsArgs) {
+
+    }
+
+    private void concatOperation(JsonObject fsArgs) {
+
+    }
+
+    /**
+     (String src, FsPermission masked,
+     String clientName, EnumSetWritable<CreateFlag> flag, boolean createParent,
+     short replication, long blockSize, CryptoProtocolVersion[] supportedVersions, EncodingPolicy policy)
+     */
+
+    private void createOperation(JsonObject fsArgs) throws IOException {
+        String src = fsArgs.getAsJsonPrimitive("src").getAsString();
+        short permissionAsShort = fsArgs.getAsJsonPrimitive("masked").getAsShort();
+        FsPermission masked = new FsPermission(permissionAsShort);
+        String clientName = fsArgs.getAsJsonPrimitive("clientName").getAsString();
+
+        byte[] enumSetSerialized = Base64.decodeBase64(fsArgs.getAsJsonPrimitive("enumSetBase64").getAsString());
+
+        EnumSetWritable<CreateFlag> flag = new EnumSetWritable(EnumSet.noneOf(CreateFlag.class));
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(enumSetSerialized);
+        DataInput dataInput = new ObjectInputStream(byteArrayInputStream);
+        flag.readFields(dataInput);
+
+        boolean createParent = fsArgs.getAsJsonPrimitive("createParent").getAsBoolean();
+        short replication = fsArgs.getAsJsonPrimitive("replication").getAsShort();
+        long blockSize = fsArgs.getAsJsonPrimitive("blockSize").getAsLong();
+        CryptoProtocolVersion[] supportedVersions = CryptoProtocolVersion.supported();
+        String codec = fsArgs.getAsJsonPrimitive("codec").getAsString();
+        short targetReplication = fsArgs.getAsJsonPrimitive("targetReplication").getAsShort();
+        EncodingPolicy policy = new EncodingPolicy(codec, targetReplication);
+
+        System.out.println("Create Arguments:\nsrc = " + src + "\nclientName = "+ clientName + "\ncreateParent = " +
+                createParent + "\nreplication = " + replication + "\nblockSize = " + blockSize);
+
+
+    }
+
+    private void deleteOperation(JsonObject fsArgs) {
+
+    }
+
+    private void renameOperation(JsonObject fsArgs) {
+
     }
 
     public static void main(String[] args) throws Exception {
