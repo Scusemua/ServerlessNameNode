@@ -125,8 +125,7 @@ import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.MD5Hash;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.retry.LossyRetryInvocationHandler;
-import org.apache.hadoop.ipc.RPC;
-import org.apache.hadoop.ipc.RemoteException;
+import org.apache.hadoop.ipc.*;
 import org.apache.hadoop.net.DNS;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.security.AccessControlException;
@@ -167,8 +166,6 @@ import org.apache.hadoop.hdfs.protocol.datatransfer.sasl.DataTransferSaslUtil;
 import org.apache.hadoop.hdfs.protocol.datatransfer.sasl.SaslDataTransferClient;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
 import org.apache.hadoop.hdfs.server.protocol.DatanodeStorageReport;
-import org.apache.hadoop.ipc.Client;
-import org.apache.hadoop.ipc.ProtocolTranslator;
 import org.apache.hadoop.util.Daemon;
 import org.apache.htrace.core.TraceScope;
 import org.apache.htrace.core.Tracer;
@@ -190,6 +187,9 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
     public static final Log LOG = LogFactory.getLog(DFSClient.class);
     public static final long SERVER_DEFAULTS_VALIDITY_PERIOD = 60 * 60 * 1000L; // 1 hour
     static final int TCP_WINDOW_SIZE = 128 * 1024; // 128 KB
+
+    // We issue invocations to this endpoint...
+    public InetSocketAddress openWhiskEndpoint;
 
     private final Configuration conf;
     private final Tracer tracer;
@@ -249,27 +249,27 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
     }
 
     public DFSClient(InetSocketAddress address, Configuration conf) throws IOException {
-        this(ServerlessNameNode.getUri(address), conf);
+        this(address, null, conf, null);
+        //this(ServerlessNameNode.getUri(address), conf);
     }
 
     /**
      * Same as this(nameNodeUri, conf, null);
      * @see #DFSClient(URI, Configuration, FileSystem.Statistics)
      */
-    public DFSClient(URI nameNodeUri, Configuration conf
+    /*public DFSClient(URI nameNodeUri, Configuration conf
     ) throws IOException {
         this(nameNodeUri, conf, null);
-    }
+    }*/
 
     /**
      * Same as this(nameNodeUri, null, conf, stats);
-     * @see #DFSClient(URI, ClientProtocol, Configuration, FileSystem.Statistics)
      */
-    public DFSClient(URI nameNodeUri, Configuration conf,
+    /*public DFSClient(URI nameNodeUri, Configuration conf,
                      FileSystem.Statistics stats)
             throws IOException {
         this(nameNodeUri, null, conf, stats);
-    }
+    }*/
 
     /**
      * Create a new DFSClient connected to the given nameNodeUri or rpcNamenode.
@@ -280,7 +280,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
      * must be null.
      */
     @VisibleForTesting
-    public DFSClient(URI nameNodeUri, ClientProtocol rpcNamenode,
+    public DFSClient(InetSocketAddress openWhiskEndpoint, ClientProtocol rpcNamenode,
                      Configuration conf, FileSystem.Statistics stats)
             throws IOException {
         // Copy only the required DFSClient configuration
@@ -294,6 +294,9 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
         this.dtpReplaceDatanodeOnFailure = ReplaceDatanodeOnFailure.get(conf);
 
         this.ugi = UserGroupInformation.getCurrentUser();
+
+        this.openWhiskEndpoint = openWhiskEndpoint;
+        URI nameNodeUri = ServerlessNameNode.getUri(openWhiskEndpoint);
 
         this.authority = nameNodeUri == null? "null": nameNodeUri.getAuthority();
 
@@ -945,7 +948,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
 
     /**
      * Get block location information about a list of {@link HdfsBlockLocation}.
-     * Used by {@link DistributedFileSystem#getFileBlockStorageLocations(List)} to
+     * Used by DistributedFileSystem.getFileBlockStorageLocations(List) to
      * get {@link BlockStorageLocation}s for blocks returned by
      * {@link DistributedFileSystem#getFileBlockLocations(org.apache.hadoop.fs.FileStatus, long, long)}
      * .
@@ -1236,8 +1239,8 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
     }
 
     /**
-     * Call {@link #create(String, FsPermission, EnumSet, short, long,
-     * Progressable, int, ChecksumOpt)} with default <code>permission</code>
+     * Call create(String, FsPermission, EnumSet, short, long,
+     * Progressable, int, ChecksumOpt) with default <code>permission</code>
      * {@link FsPermission#getFileDefault()}.
      *
      * @param src File name
@@ -1390,8 +1393,8 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
     }
 
     /**
-     * Same as {{@link #create(String, FsPermission, EnumSet, short, long,
-     *  Progressable, int, ChecksumOpt)} except that the permission
+     * Same as create(String, FsPermission, EnumSet, short, long,
+     *  Progressable, int, ChecksumOpt) except that the permission
      *  is absolute (ie has already been masked with umask.
      */
     public DFSOutputStream primitiveCreate(String src,

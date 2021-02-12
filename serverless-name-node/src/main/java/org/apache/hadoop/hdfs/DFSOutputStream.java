@@ -1,6 +1,9 @@
 package org.apache.hadoop.hdfs;
 
 import com.google.common.base.Preconditions;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
 import org.apache.hadoop.hdfs.protocol.QuotaByStorageTypeExceededException;
 import org.apache.hadoop.hdfs.protocol.UnresolvedPathException;
@@ -34,10 +37,17 @@ import org.apache.hadoop.util.Progressable;
 import org.apache.hadoop.util.StringUtils;
 import org.apache.hadoop.util.Time;
 import org.apache.htrace.core.TraceScope;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InterruptedIOException;
+import java.io.*;
 import java.nio.channels.ClosedChannelException;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -209,10 +219,54 @@ public class DFSOutputStream extends FSOutputSummer
             int retryCount = CREATE_RETRY_COUNT;
             while (shouldRetry) {
                 shouldRetry = false;
+
+                CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+
                 try {
-                    stat = dfsClient.namenode.create(src, masked, dfsClient.clientName,
+                    // Instead of using RPC to call the create() function, we perform a serverless invocation.
+                    HttpPost request = new HttpPost(dfsClient.openWhiskEndpoint.toString());
+                    JsonObject parameters = new JsonObject();
+
+                    parameters.addProperty("src", src);
+                    parameters.addProperty("masked", masked.toShort());
+                    parameters.addProperty("clientName", dfsClient.clientName);
+
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+                    objectOutputStream.writeObject(stat);
+                    objectOutputStream.flush();
+
+                    byte[] objectBytes = byteArrayOutputStream.toByteArray();
+                    String enumSetBase64 = Base64.encodeBase64String(objectBytes);
+
+                    parameters.addProperty("enumSetBase64", enumSetBase64);
+                    parameters.addProperty("createParent", createParent);
+                    parameters.addProperty("replication", replication);
+                    parameters.addProperty("blockSize", blockSize);
+                    parameters.addProperty("codec", policy.getCodec());
+                    parameters.addProperty("targetReplication", policy.getTargetReplication());
+
+                    request.addHeader("content-type", "application/json");
+                    StringEntity params = new StringEntity(parameters.toString());
+                    request.setEntity(params);
+                    HttpResponse response = httpClient.execute(request);
+
+                    String json = EntityUtils.toString(response.getEntity(), "UTF-8");
+                    Gson gson = new Gson();
+                    JsonObject responseJson = gson.fromJson(json, JsonObject.class);
+
+                    System.out.println("responseJson = " + responseJson);
+
+                    String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonObject("base64result").getAsString();
+                    byte[] resultSerialized = Base64.decodeBase64(resultBase64);
+
+                    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultSerialized);
+                    ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+                    stat = (HdfsFileStatus)objectInputStream.readObject();
+
+                    /*stat = dfsClient.namenode.create(src, masked, dfsClient.clientName,
                             new EnumSetWritable<CreateFlag>(flag), createParent, replication,
-                            blockSize, SUPPORTED_CRYPTO_VERSIONS, policy);
+                            blockSize, SUPPORTED_CRYPTO_VERSIONS, policy);*/
                     break;
                 } catch (RemoteException re) {
                     IOException e = re.unwrapRemoteException(
@@ -237,6 +291,10 @@ public class DFSOutputStream extends FSOutputSummer
                     } else {
                         throw e;
                     }
+                } catch (ClassNotFoundException re) {
+                    re.printStackTrace();
+                } finally {
+                    httpClient.close();
                 }
             }
             Preconditions.checkNotNull(stat, "HdfsFileStatus should not be null!");
