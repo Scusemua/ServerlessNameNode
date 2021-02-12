@@ -59,6 +59,7 @@ import io.nuclio.Context;
 import io.nuclio.Event;
 import io.nuclio.EventHandler;
 import io.nuclio.Response;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -301,9 +302,9 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
         JsonObject response = new JsonObject();
         try {
-            startServerlessNameNode(commandLineArguments, op, fsArgs);
+            JsonObject result = startServerlessNameNode(commandLineArguments, op, fsArgs);
 
-            response.addProperty("RESULT", "Success");
+            response.add("RESULT", result);
         }
         catch (Exception ex) {
             response.addProperty("EXCEPTION", ex.toString());
@@ -324,7 +325,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
      * @param commandLineArgs Command-line arguments formatted as if the NameNode was being executed from the commandline.
      * @throws Exception
      */
-    public static void startServerlessNameNode(String[] commandLineArgs, String op, JsonObject fsArgs) throws Exception {
+    public static JsonObject startServerlessNameNode(String[] commandLineArgs, String op, JsonObject fsArgs) throws Exception {
         System.out.println("Specified operation: " + op);
 
         System.out.println("Attempting to parse help argument now...");
@@ -335,6 +336,9 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
         System.out.println("Attempting to create the name node object now...");
 
+        HdfsFileStatus stat = null;
+        JsonObject result = null;
+
         try {
             StringUtils.startupShutdownMessage(ServerlessNameNode.class, commandLineArgs, LOG);
             ServerlessNameNode nameNode = createNameNode(commandLineArgs, null);
@@ -343,7 +347,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
             if (op == null) {
                 System.out.println("User did not specify an operation.");
-                return;
+                return new JsonObject(); // empty
             }
 
             assert nameNode != null;
@@ -357,7 +361,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
                     nameNode.concatOperation(fsArgs);
                     break;
                 case "create":
-                    nameNode.createOperation(fsArgs);
+                    stat = nameNode.createOperation(fsArgs);
                     break;
                 case "delete":
                     nameNode.deleteOperation(fsArgs);
@@ -372,6 +376,37 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             LOG.error("Failed to start namenode.", e);
             terminate(1, e);
         }
+
+        // Serialize the resulting HdfsFileStatus object, if it exists, and encode it to Base64 so we
+        // can include it in the JSON response sent back to the invoker of this serverless function.
+        if (stat != null) {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutputStream = null;
+
+            try {
+                objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+                objectOutputStream.writeObject(stat);
+                objectOutputStream.flush();
+
+                byte[] objectBytes = byteArrayOutputStream.toByteArray();
+                String base64Object = Base64.encodeBase64String(objectBytes);
+
+                result = new JsonObject();
+                result.addProperty("base64result", base64Object);
+            } finally {
+                try {
+                    byteArrayOutputStream.close();
+                } catch (IOException ex) {
+                    // Ignore close exception.
+                }
+            }
+        }
+
+        // Create this object if it wasn't already created.
+        if (result == null)
+            result = new JsonObject(); // empty
+
+        return result;
     }
 
     private void appendOperation(JsonObject fsArgs) {
