@@ -1,5 +1,6 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
+import io.hops.metadata.hdfs.entity.EncodingStatus;
 import org.apache.commons.codec.binary.Base64;
 import io.hops.exception.StorageException;
 import io.hops.leaderElection.HdfsLeDescriptorFactory;
@@ -13,13 +14,14 @@ import io.hops.transaction.handler.RequestHandler;
 import com.google.gson.JsonObject;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.crypto.CryptoProtocolVersion;
-import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
-import org.apache.hadoop.fs.CreateFlag;
+import org.apache.hadoop.fs.*;
 import org.apache.hadoop.fs.permission.FsPermission;
+import org.apache.hadoop.fs.permission.PermissionStatus;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
 import org.apache.hadoop.hdfs.protocol.HdfsConstants;
+import org.apache.hadoop.hdfs.protocol.HdfsFileStatus;
 import org.apache.hadoop.hdfs.server.protocol.NamenodeProtocols;
 import org.apache.hadoop.hdfs.server.blockmanagement.BRTrackingService;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
@@ -33,8 +35,6 @@ import io.hops.security.UsersGroups;
 import io.hops.transaction.handler.HDFSOperationType;
 import org.apache.hadoop.HadoopIllegalArgumentException;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Trash;
 import org.apache.hadoop.ha.ServiceFailedException;
 import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgress;
@@ -74,6 +74,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
+import static org.apache.hadoop.hdfs.protocol.HdfsConstants.MAX_PATH_DEPTH;
+import static org.apache.hadoop.hdfs.protocol.HdfsConstants.MAX_PATH_LENGTH;
 import static org.apache.hadoop.util.ExitUtil.terminate;
 
 /**
@@ -310,6 +312,12 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
         return response;
     }
 
+    private boolean checkPathLength(String src) {
+        Path srcPath = new Path(src);
+        return (src.length() <= MAX_PATH_LENGTH &&
+                srcPath.depth() <= MAX_PATH_DEPTH);
+    }
+
     /**
      * Used as the entry-point into the Serverless NameNode when executing a serverless function.
      *
@@ -380,7 +388,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
      short replication, long blockSize, CryptoProtocolVersion[] supportedVersions, EncodingPolicy policy)
      */
 
-    private void createOperation(JsonObject fsArgs) throws IOException {
+    private HdfsFileStatus createOperation(JsonObject fsArgs) throws IOException {
         String src = fsArgs.getAsJsonPrimitive("src").getAsString();
         short permissionAsShort = fsArgs.getAsJsonPrimitive("masked").getAsShort();
         FsPermission masked = new FsPermission(permissionAsShort);
@@ -404,7 +412,30 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
         System.out.println("Create Arguments:\nsrc = " + src + "\nclientName = "+ clientName + "\ncreateParent = " +
                 createParent + "\nreplication = " + replication + "\nblockSize = " + blockSize);
 
+        if (!checkPathLength(src)) {
+            throw new IOException(
+                    "create: Pathname too long.  Limit " + MAX_PATH_LENGTH +
+                            " characters, " + MAX_PATH_DEPTH + " levels.");
+        }
+        // I don't know what to use for this; the RPC server has a method for it, but I don't know if it applies to serverless case...
+        String clientMachine = "";
 
+        HdfsFileStatus stat = namesystem.startFile(
+                                src, new PermissionStatus(getRemoteUser().getShortUserName(), null, masked),
+                                clientName, clientMachine, flag.get(), createParent, replication, blockSize, supportedVersions);
+
+        // Currently impossible to pass null for EncodingPolicy, but pretending it's possible for now...
+        if (policy != null) {
+            if (!namesystem.isErasureCodingEnabled()) {
+                throw new IOException("Requesting encoding although erasure coding" +
+                        " was disabled");
+            }
+            LOG.info("Create file " + src + " with policy " + policy.toString());
+            namesystem.addEncodingStatus(src, policy,
+                    EncodingStatus.Status.ENCODING_REQUESTED, false);
+        }
+
+        return stat;
     }
 
     private void deleteOperation(JsonObject fsArgs) {
