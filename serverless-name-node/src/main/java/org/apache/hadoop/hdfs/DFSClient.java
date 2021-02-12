@@ -265,11 +265,118 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
     /**
      * Same as this(nameNodeUri, null, conf, stats);
      */
-    /*public DFSClient(URI nameNodeUri, Configuration conf,
+    public DFSClient(URI nameNodeUri, Configuration conf,
                      FileSystem.Statistics stats)
             throws IOException {
-        this(nameNodeUri, null, conf, stats);
-    }*/
+
+        ClientProtocol rpcNamenode = null;
+
+        // Copy only the required DFSClient configuration
+        this.tracer = FsTracer.get(conf);
+        this.dfsClientConf = new DfsClientConf(conf);
+        this.conf = conf;
+        this.stats = stats;
+        this.socketFactory = NetUtils.getSocketFactoryFromProperty(conf,
+                conf.get(DFSConfigKeys.DFS_CLIENT_XCEIVER_SOCKET_FACTORY_CLASS_KEY,
+                        DFSConfigKeys.DEFAULT_DFS_CLIENT_XCEIVER_FACTORY_CLASS));
+        this.dtpReplaceDatanodeOnFailure = ReplaceDatanodeOnFailure.get(conf);
+
+        this.ugi = UserGroupInformation.getCurrentUser();
+
+        this.authority = nameNodeUri == null? "null": nameNodeUri.getAuthority();
+
+        String clientNamePrefix = "";
+        if(dfsClientConf.getForceClientToWriteSFToDisk()){
+            clientNamePrefix = "DFSClient";
+        }else{
+            clientNamePrefix = "HopsFS_DFSClient";
+        }
+        this.clientName = clientNamePrefix+ "_" + dfsClientConf.getTaskId() + "_" +
+                DFSUtil.getRandom().nextInt() + "_" + Thread.currentThread().getId();
+        int numResponseToDrop = conf.getInt(
+                DFSConfigKeys.DFS_CLIENT_TEST_DROP_NAMENODE_RESPONSE_NUM_KEY,
+                DFSConfigKeys.DFS_CLIENT_TEST_DROP_NAMENODE_RESPONSE_NUM_DEFAULT);
+        NameNodeProxies.ProxyAndInfo<ClientProtocol> proxyInfo = null;
+        AtomicBoolean nnFallbackToSimpleAuth = new AtomicBoolean(false);
+        if (numResponseToDrop > 0) {
+            // This case is used for testing.
+            LOG.warn(DFSConfigKeys.DFS_CLIENT_TEST_DROP_NAMENODE_RESPONSE_NUM_KEY
+                    + " is set to " + numResponseToDrop
+                    + ", this hacked client will proactively drop responses");
+            proxyInfo = NameNodeProxies.createProxyWithLossyRetryHandler(conf,
+                    nameNodeUri, ClientProtocol.class, numResponseToDrop,
+                    nnFallbackToSimpleAuth);
+        }
+
+        if (proxyInfo != null) {
+            this.dtService = proxyInfo.getDelegationTokenService();
+            this.namenode = proxyInfo.getProxy();
+            this.leaderNN = namenode; // only for testing
+        } else if (rpcNamenode != null) {
+            // This case is used for testing.
+            Preconditions.checkArgument(nameNodeUri == null);
+            this.namenode = rpcNamenode;
+            this.leaderNN = rpcNamenode;
+            dtService = null;
+        } else {
+            Preconditions.checkArgument(nameNodeUri != null,
+                    "null URI");
+            proxyInfo = NameNodeProxies.createHopsRandomStickyProxy(conf, nameNodeUri,
+                    ClientProtocol.class, nnFallbackToSimpleAuth);
+            this.dtService = proxyInfo.getDelegationTokenService();
+            this.namenode = proxyInfo.getProxy();
+
+            if(namenode != null) {
+                try {
+                    List<ActiveNode> anns = namenode.getActiveNamenodesForClient().getSortedActiveNodes();
+                    leaderNN = NameNodeProxies.createHopsLeaderProxy(conf, nameNodeUri,
+                            ClientProtocol.class, nnFallbackToSimpleAuth).getProxy();
+
+                    for (ActiveNode an : anns) {
+                        allNNs.add(NameNodeProxies.createNonHAProxy(conf, an.getRpcServerAddressForClients(),
+                                ClientProtocol.class, ugi, false, nnFallbackToSimpleAuth).getProxy());
+                    }
+                } catch (ConnectException e){
+                    LOG.warn("Namenode proxy is null");
+                    leaderNN = null;
+                    allNNs.clear();
+                }
+            }
+        }
+
+        // set epoch
+        setClientEpoch();
+
+        String localInterfaces[] =
+                conf.getTrimmedStrings(DFSConfigKeys.DFS_CLIENT_LOCAL_INTERFACES);
+        localInterfaceAddrs = getLocalInterfaceAddrs(localInterfaces);
+        if (LOG.isDebugEnabled() && 0 != localInterfaces.length) {
+            LOG.debug("Using local interfaces [" +
+                    Joiner.on(',').join(localInterfaces)+ "] with addresses [" +
+                    Joiner.on(',').join(localInterfaceAddrs) + "]");
+        }
+
+        Boolean readDropBehind = (conf.get(DFS_CLIENT_CACHE_DROP_BEHIND_READS) == null) ?
+                null : conf.getBoolean(DFS_CLIENT_CACHE_DROP_BEHIND_READS, false);
+        Long readahead = (conf.get(DFS_CLIENT_CACHE_READAHEAD) == null) ?
+                null : conf.getLong(DFS_CLIENT_CACHE_READAHEAD, 0);
+        Boolean writeDropBehind = (conf.get(DFS_CLIENT_CACHE_DROP_BEHIND_WRITES) == null) ?
+                null : conf.getBoolean(DFS_CLIENT_CACHE_DROP_BEHIND_WRITES, false);
+        this.defaultReadCachingStrategy =
+                new CachingStrategy(readDropBehind, readahead);
+        this.defaultWriteCachingStrategy =
+                new CachingStrategy(writeDropBehind, readahead);
+        this.clientContext = ClientContext.get(
+                conf.get(DFS_CLIENT_CONTEXT, DFS_CLIENT_CONTEXT_DEFAULT),
+                dfsClientConf);
+
+        if (dfsClientConf.getHedgedReadThreadpoolSize() > 0) {
+            this.initThreadsNumForHedgedReads(dfsClientConf.getHedgedReadThreadpoolSize());
+        }
+        this.saslClient = new SaslDataTransferClient(
+                conf, DataTransferSaslUtil.getSaslPropertiesResolver(conf),
+                TrustedChannelResolver.getInstance(conf), nnFallbackToSimpleAuth);
+    }
 
     /**
      * Create a new DFSClient connected to the given nameNodeUri or rpcNamenode.

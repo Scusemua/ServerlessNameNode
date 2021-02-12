@@ -52,8 +52,7 @@ public class DistributedFileSystem extends FileSystem {
 
     }
 
-    @Override
-    public void initialize(URI uri, Configuration conf) throws IOException {
+    public void initialize(URI uri, Configuration conf, InetSocketAddress openWhiskEndpoint) throws IOException {
         super.initialize(uri, conf);
         getAlternativeSchemeStatistics(getAlternativeScheme(), AlternativeDistributedFileSystem.class, statistics);
         setConf(conf);
@@ -66,9 +65,14 @@ public class DistributedFileSystem extends FileSystem {
                 DFSConfigKeys.DFS_USER_HOME_DIR_PREFIX_KEY,
                 DFSConfigKeys.DFS_USER_HOME_DIR_PREFIX_DEFAULT);
 
-        this.dfs = new DFSClient(uri, conf, statistics);
+        this.dfs = new DFSClient(openWhiskEndpoint, null, conf, statistics);
         this.uri = URI.create(uri.getScheme()+"://"+uri.getAuthority());
         this.workingDir = getHomeDirectory();
+    }
+
+    @Override
+    public void initialize(URI uri, Configuration conf) throws IOException {
+        this.initialize(uri, conf, null);
     }
 
     @Override
