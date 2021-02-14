@@ -223,6 +223,8 @@ public class DFSOutputStream extends FSOutputSummer
                 CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
                 try {
+                    System.out.println("Creating HTTP Post request to invoke NameNode now...");
+
                     // Instead of using RPC to call the create() function, we perform a serverless invocation.
                     HttpPost request = new HttpPost(dfsClient.openWhiskEndpoint.toString());
                     JsonObject parameters = new JsonObject();
@@ -249,6 +251,9 @@ public class DFSOutputStream extends FSOutputSummer
                     request.addHeader("content-type", "application/json");
                     StringEntity params = new StringEntity(parameters.toString());
                     request.setEntity(params);
+
+                    System.out.println("Invoking serverless namenode now...");
+
                     HttpResponse response = httpClient.execute(request);
 
                     String json = EntityUtils.toString(response.getEntity(), "UTF-8");
