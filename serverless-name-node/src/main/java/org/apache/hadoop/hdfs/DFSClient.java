@@ -405,6 +405,8 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
         this.openWhiskEndpoint = openWhiskEndpoint;
         URI nameNodeUri = ServerlessNameNode.getUri(openWhiskEndpoint);
 
+        System.out.println("DFSClient Constructor #1");
+
         this.authority = nameNodeUri == null? "null": nameNodeUri.getAuthority();
 
         String clientNamePrefix = "";
@@ -429,6 +431,8 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
                     nameNodeUri, ClientProtocol.class, numResponseToDrop,
                     nnFallbackToSimpleAuth);
         }
+
+        System.out.println("DFSClient Constructor #2");
 
         if (proxyInfo != null) {
             this.dtService = proxyInfo.getDelegationTokenService();
@@ -466,6 +470,8 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
             }
         }
 
+        System.out.println("DFSClient Constructor #4");
+
         // set epoch
         setClientEpoch();
 
@@ -477,6 +483,8 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
                     Joiner.on(',').join(localInterfaces)+ "] with addresses [" +
                     Joiner.on(',').join(localInterfaceAddrs) + "]");
         }
+
+        System.out.println("DFSClient Constructor #5");
 
         Boolean readDropBehind = (conf.get(DFS_CLIENT_CACHE_DROP_BEHIND_READS) == null) ?
                 null : conf.getBoolean(DFS_CLIENT_CACHE_DROP_BEHIND_READS, false);
@@ -492,12 +500,16 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
                 conf.get(DFS_CLIENT_CONTEXT, DFS_CLIENT_CONTEXT_DEFAULT),
                 dfsClientConf);
 
+        System.out.println("DFSClient Constructor #6");
+
         if (dfsClientConf.getHedgedReadThreadpoolSize() > 0) {
             this.initThreadsNumForHedgedReads(dfsClientConf.getHedgedReadThreadpoolSize());
         }
         this.saslClient = new SaslDataTransferClient(
                 conf, DataTransferSaslUtil.getSaslPropertiesResolver(conf),
                 TrustedChannelResolver.getInstance(conf), nnFallbackToSimpleAuth);
+
+        System.out.println("DFSClient Constructor #7");
     }
 
     /**
