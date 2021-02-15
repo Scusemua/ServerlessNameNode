@@ -194,7 +194,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
     private final Configuration conf;
     private final Tracer tracer;
     private final DfsClientConf dfsClientConf;
-    final ClientProtocol namenode;
+    ClientProtocol namenode;
     ClientProtocol leaderNN;
     final List<ClientProtocol> allNNs = new ArrayList<ClientProtocol>();
     /* The service used for delegation tokens */
