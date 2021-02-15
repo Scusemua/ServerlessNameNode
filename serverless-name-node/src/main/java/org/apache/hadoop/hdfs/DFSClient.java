@@ -450,18 +450,16 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
             this.leaderNN = rpcNamenode;
             dtService = null;
         } else {
-            Preconditions.checkArgument(nameNodeUri != null,
+            // Since our NameNodes are serverless, we do not need to create a connection to the name node.
+
+            /*Preconditions.checkArgument(nameNodeUri != null,
                     "null URI");
-            System.out.println("DFSClient Constructor #2m");
             proxyInfo = NameNodeProxies.createHopsRandomStickyProxy(conf, nameNodeUri,
                     ClientProtocol.class, nnFallbackToSimpleAuth);
-            System.out.println("DFSClient Constructor #2n");
             this.dtService = proxyInfo.getDelegationTokenService();
-            System.out.println("DFSClient Constructor #2l");
-            this.namenode = proxyInfo.getProxy();
-            System.out.println("DFSClient Constructor #2");
+            this.namenode = proxyInfo.getProxy();*/
 
-            if(namenode != null) {
+            /*if(namenode != null) {
                 try {
                     List<ActiveNode> anns = namenode.getActiveNamenodesForClient().getSortedActiveNodes();
                     leaderNN = NameNodeProxies.createHopsLeaderProxy(conf, nameNodeUri,
@@ -476,10 +474,8 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
                     leaderNN = null;
                     allNNs.clear();
                 }
-            }
+            }*/
         }
-
-        System.out.println("DFSClient Constructor #4");
 
         // set epoch
         setClientEpoch();
