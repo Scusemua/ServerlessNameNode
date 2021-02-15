@@ -30,15 +30,6 @@
             <artifactId>json</artifactId>
             <version>20140107</version>
         </dependency>
-        <!-- Previously, woodstock-core was only in hadoop-common (and serverless-name-node-base). However,
-             I get the following error when attempting to run a test program to create and write to a file:
-             java.lang.NoClassDefFoundError: com/ctc/wstx/io/InputBootstrapper
-             So I am including this dependency in the main JAR file to hopefully prevent that error... -->
-        <dependency>
-            <groupId>com.fasterxml.woodstox</groupId>
-            <artifactId>woodstox-core</artifactId>
-            <version>5.0.3</version>
-        </dependency>
         <dependency>
             <groupId>com.gmail.benrcarver.ServerlessNameNode</groupId>
             <artifactId>hadoop-annotations</artifactId>
