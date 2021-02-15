@@ -610,6 +610,7 @@ public abstract class FileSystem extends Configured
    * from this FileSystem.
    */
   public Path makeQualified(Path path) {
+    System.out.println("makeQualified(): path = \"" + path + "\"");
     checkPath(path);
     return path.makeQualified(this.getUri(), this.getWorkingDirectory());
   }
