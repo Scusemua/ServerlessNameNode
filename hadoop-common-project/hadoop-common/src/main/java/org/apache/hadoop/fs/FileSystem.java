@@ -284,6 +284,7 @@ public abstract class FileSystem extends Configured
    * @throws IllegalArgumentException if the URI is considered invalid.
    */
   public void initialize(URI name, Configuration conf) throws IOException {
+    System.out.println("Calling FileSystem.initialize() now...");
     final String scheme;
     if (name.getScheme() == null || name.getScheme().isEmpty()) {
       scheme = getDefaultUri(conf).getScheme();
