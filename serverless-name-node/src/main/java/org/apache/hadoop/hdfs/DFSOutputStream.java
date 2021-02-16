@@ -230,12 +230,16 @@ public class DFSOutputStream extends FSOutputSummer
                     String uri = dfsClient.openWhiskEndpoint.toString();
                     System.out.println("OpenWhisk URI: \"" + uri + "\"");
                     HttpPost request = new HttpPost(uri);
-                    JsonObject requestArgs = new JsonObject();
-                    JsonObject parameters = new JsonObject();
 
-                    parameters.addProperty("src", src);
-                    parameters.addProperty("masked", masked.toShort());
-                    parameters.addProperty("clientName", dfsClient.clientName);
+                    // Arguments for the NameNode program itself.
+                    JsonObject namenodeArgs = new JsonObject();
+
+                    // Arguments for the particular operation we're performing.
+                    JsonObject opArguments = new JsonObject();
+
+                    opArguments.addProperty("src", src);
+                    opArguments.addProperty("masked", masked.toShort());
+                    opArguments.addProperty("clientName", dfsClient.clientName);
 
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
@@ -245,27 +249,34 @@ public class DFSOutputStream extends FSOutputSummer
                     byte[] objectBytes = byteArrayOutputStream.toByteArray();
                     String enumSetBase64 = Base64.encodeBase64String(objectBytes);
 
-                    parameters.addProperty("enumSetBase64", enumSetBase64);
-                    parameters.addProperty("createParent", createParent);
-                    parameters.addProperty("replication", replication);
-                    parameters.addProperty("blockSize", blockSize);
+                    opArguments.addProperty("enumSetBase64", enumSetBase64);
+                    opArguments.addProperty("createParent", createParent);
+                    opArguments.addProperty("replication", replication);
+                    opArguments.addProperty("blockSize", blockSize);
 
                     // Include a flag to indicate whether or not the policy is non-null.
-                    parameters.addProperty("policyExists", policy != null);
+                    opArguments.addProperty("policyExists", policy != null);
 
                     // Only include these if the policy is non-null.
                     if (policy != null) {
-                        parameters.addProperty("codec", policy.getCodec());
-                        parameters.addProperty("targetReplication", policy.getTargetReplication());
+                        opArguments.addProperty("codec", policy.getCodec());
+                        opArguments.addProperty("targetReplication", policy.getTargetReplication());
                     }
 
                     request.addHeader("content-type", "application/json");
 
                     // Add the function arguments to the invocation request arguments.
-                    requestArgs.add("fsArgs", parameters);
-                    requestArgs.addProperty("command-line-arguments", "-regular");
+                    namenodeArgs.add("fsArgs", opArguments);
+                    namenodeArgs.addProperty("op", "create");
+                    namenodeArgs.addProperty("command-line-arguments", "-regular");
 
-                    StringEntity params = new StringEntity(requestArgs.toString());
+                    JsonObject requestArguments = new JsonObject();
+
+                    // It looks like OpenWhisk expects the arguments for the serverless
+                    // function to be stored with the key/property "value".
+                    requestArguments.add("value", namenodeArgs);
+
+                    StringEntity params = new StringEntity(requestArguments.toString());
                     request.setEntity(params);
                     request.setHeader("Content-type", "application/json");
 
