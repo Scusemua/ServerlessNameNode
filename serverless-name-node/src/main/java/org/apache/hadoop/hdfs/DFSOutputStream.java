@@ -230,6 +230,7 @@ public class DFSOutputStream extends FSOutputSummer
                     String uri = dfsClient.openWhiskEndpoint.toString();
                     System.out.println("OpenWhisk URI: \"" + uri + "\"");
                     HttpPost request = new HttpPost(uri);
+                    JsonObject requestArgs = new JsonObject();
                     JsonObject parameters = new JsonObject();
 
                     parameters.addProperty("src", src);
@@ -259,8 +260,14 @@ public class DFSOutputStream extends FSOutputSummer
                     }
 
                     request.addHeader("content-type", "application/json");
-                    StringEntity params = new StringEntity(parameters.toString());
+
+                    // Add the function arguments to the invocation request arguments.
+                    requestArgs.add("fsArgs", parameters);
+                    requestArgs.addProperty("command-line-arguments", "-regular");
+
+                    StringEntity params = new StringEntity(requestArgs.toString());
                     request.setEntity(params);
+                    request.setHeader("Content-type", "application/json");
 
                     System.out.println("Invoking serverless namenode now...");
 
@@ -269,16 +276,16 @@ public class DFSOutputStream extends FSOutputSummer
                     String json = EntityUtils.toString(response.getEntity(), "UTF-8");
                     System.out.println("json = " + json);
                     Gson gson = new Gson();
-                    JsonPrimitive responseJson = gson.fromJson(json, JsonPrimitive.class);
+                    JsonObject responseJson = gson.fromJson(json, JsonObject.class);
 
                     System.out.println("responseJson = " + responseJson.toString());
 
-                    /*String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonObject("base64result").getAsString();
+                    String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonObject("base64result").getAsString();
                     byte[] resultSerialized = Base64.decodeBase64(resultBase64);
 
                     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultSerialized);
                     ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-                    stat = (HdfsFileStatus)objectInputStream.readObject();*/
+                    stat = (HdfsFileStatus)objectInputStream.readObject();
 
                     /*stat = dfsClient.namenode.create(src, masked, dfsClient.clientName,
                             new EnumSetWritable<CreateFlag>(flag), createParent, replication,
@@ -307,9 +314,9 @@ public class DFSOutputStream extends FSOutputSummer
                     } else {
                         throw e;
                     }
-                } /*catch (ClassNotFoundException re) {
+                } catch (ClassNotFoundException re) {
                     re.printStackTrace();
-                } */finally {
+                } finally {
                     httpClient.close();
                 }
             }
