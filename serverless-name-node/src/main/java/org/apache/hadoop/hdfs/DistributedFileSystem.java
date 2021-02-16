@@ -54,11 +54,8 @@ public class DistributedFileSystem extends FileSystem {
 
     public void initialize(URI uri, Configuration conf, InetSocketAddress openWhiskEndpoint) throws IOException {
         super.initialize(uri, conf);
-        System.out.println("Calling DistributedFileSystem.initialize() now...");
         getAlternativeSchemeStatistics(getAlternativeScheme(), AlternativeDistributedFileSystem.class, statistics);
-        System.out.println("Setting configuration now...");
         setConf(conf);
-        System.out.println("Calling uri.getHost() now...");
         String host = uri.getHost();
         if (host == null) {
             throw new IOException("Incomplete HDFS URI, no host: "+ uri);
@@ -69,8 +66,8 @@ public class DistributedFileSystem extends FileSystem {
 
         System.out.println("Creating DFSClient now...");
         this.dfs = new DFSClient(openWhiskEndpoint, null, conf, statistics);
+        System.out.println("Successfully created DFSClient.");
         this.uri = URI.create(uri.getScheme()+"://"+uri.getAuthority());
-        System.out.println("Getting home directory now...");
         this.workingDir = getHomeDirectory();
     }
 
@@ -91,9 +88,7 @@ public class DistributedFileSystem extends FileSystem {
 
     @Override
     public Path getHomeDirectory() {
-        Path path = new Path(homeDirPrefix + "/" + dfs.ugi.getShortUserName());
-        System.out.println("Calling makeQualified with path = \"" + path.toString() + "\"");
-        return makeQualified(path);
+        return makeQualified(new Path(homeDirPrefix + "/" + dfs.ugi.getShortUserName()));
     }
 
     @Override

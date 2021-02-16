@@ -235,7 +235,7 @@ public class DFSOutputStream extends FSOutputSummer
 
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-                    objectOutputStream.writeObject(stat);
+                    objectOutputStream.writeObject(flag);
                     objectOutputStream.flush();
 
                     byte[] objectBytes = byteArrayOutputStream.toByteArray();
