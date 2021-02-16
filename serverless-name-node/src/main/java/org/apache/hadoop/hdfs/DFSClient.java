@@ -405,7 +405,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
         this.openWhiskEndpoint = openWhiskEndpoint;
         URI nameNodeUri = ServerlessNameNode.getUri(openWhiskEndpoint);
 
-        System.out.println("DFSClient Constructor #1");
+        //System.out.println("DFSClient Constructor #1");
 
         this.authority = nameNodeUri == null? "null": nameNodeUri.getAuthority();
 
@@ -432,20 +432,15 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
                     nnFallbackToSimpleAuth);
         }
 
-        System.out.println("DFSClient Constructor #2");
+        //System.out.println("DFSClient Constructor #2");
 
         if (proxyInfo != null) {
-            System.out.println("DFSClient Constructor #2a");
             this.dtService = proxyInfo.getDelegationTokenService();
-            System.out.println("DFSClient Constructor #2b");
             this.namenode = proxyInfo.getProxy();
-            System.out.println("DFSClient Constructor #2c");
             this.leaderNN = namenode; // only for testing
         } else if (rpcNamenode != null) {
-            System.out.println("DFSClient Constructor #2x");
             // This case is used for testing.
             Preconditions.checkArgument(nameNodeUri == null);
-            System.out.println("DFSClient Constructor #y");
             this.namenode = rpcNamenode;
             this.leaderNN = rpcNamenode;
             dtService = null;
@@ -489,8 +484,6 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
                     Joiner.on(',').join(localInterfaceAddrs) + "]");
         }
 
-        System.out.println("DFSClient Constructor #5");
-
         Boolean readDropBehind = (conf.get(DFS_CLIENT_CACHE_DROP_BEHIND_READS) == null) ?
                 null : conf.getBoolean(DFS_CLIENT_CACHE_DROP_BEHIND_READS, false);
         Long readahead = (conf.get(DFS_CLIENT_CACHE_READAHEAD) == null) ?
@@ -505,16 +498,12 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory,
                 conf.get(DFS_CLIENT_CONTEXT, DFS_CLIENT_CONTEXT_DEFAULT),
                 dfsClientConf);
 
-        System.out.println("DFSClient Constructor #6");
-
         if (dfsClientConf.getHedgedReadThreadpoolSize() > 0) {
             this.initThreadsNumForHedgedReads(dfsClientConf.getHedgedReadThreadpoolSize());
         }
         this.saslClient = new SaslDataTransferClient(
                 conf, DataTransferSaslUtil.getSaslPropertiesResolver(conf),
                 TrustedChannelResolver.getInstance(conf), nnFallbackToSimpleAuth);
-
-        System.out.println("DFSClient Constructor #7");
     }
 
     /**
