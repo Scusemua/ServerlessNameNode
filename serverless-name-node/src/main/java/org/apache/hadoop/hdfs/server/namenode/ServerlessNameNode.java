@@ -328,13 +328,11 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
     public static JsonObject startServerlessNameNode(String[] commandLineArgs, String op, JsonObject fsArgs) throws Exception {
         System.out.println("Specified operation: " + op);
 
-        System.out.println("Attempting to parse help argument now...");
-
         if (DFSUtil.parseHelpArgument(commandLineArgs, ServerlessNameNode.USAGE, System.out, true)) {
             System.exit(0);
         }
 
-        System.out.println("Attempting to create the name node object now...");
+        System.out.println("Creating and initializing Serverless NameNode now...");
 
         HdfsFileStatus stat = null;
         JsonObject result = null;
@@ -343,7 +341,12 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             StringUtils.startupShutdownMessage(ServerlessNameNode.class, commandLineArgs, LOG);
             ServerlessNameNode nameNode = createNameNode(commandLineArgs, null);
 
-            System.out.println("nameNode == null: " + (nameNode == null));
+            if (nameNode == null)
+                System.out.println("Successfully created and initialized Serverless NameNode.");
+            else {
+                System.out.println("ERROR: NameNode is null. Failed to create and/or initialize the Serverless NameNode.");
+                terminate(1);
+            }
 
             if (op == null) {
                 System.out.println("User did not specify an operation.");
@@ -424,6 +427,8 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
      */
 
     private HdfsFileStatus createOperation(JsonObject fsArgs) throws IOException {
+        System.out.println("Unpacking arguments for the CREATE operation now...");
+
         String src = fsArgs.getAsJsonPrimitive("src").getAsString();
         short permissionAsShort = fsArgs.getAsJsonPrimitive("masked").getAsShort();
         FsPermission masked = new FsPermission(permissionAsShort);
