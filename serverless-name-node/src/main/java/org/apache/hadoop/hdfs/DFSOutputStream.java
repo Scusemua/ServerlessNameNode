@@ -3,6 +3,7 @@ package org.apache.hadoop.hdfs;
 import com.google.common.base.Preconditions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
 import org.apache.hadoop.hdfs.protocol.QuotaByStorageTypeExceededException;
@@ -267,16 +268,16 @@ public class DFSOutputStream extends FSOutputSummer
 
                     String json = EntityUtils.toString(response.getEntity(), "UTF-8");
                     Gson gson = new Gson();
-                    JsonObject responseJson = gson.fromJson(json, JsonObject.class);
+                    JsonPrimitive responseJson = gson.fromJson(json, JsonPrimitive.class);
 
                     System.out.println("responseJson = " + responseJson);
 
-                    String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonObject("base64result").getAsString();
+                    /*String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonObject("base64result").getAsString();
                     byte[] resultSerialized = Base64.decodeBase64(resultBase64);
 
                     ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultSerialized);
                     ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-                    stat = (HdfsFileStatus)objectInputStream.readObject();
+                    stat = (HdfsFileStatus)objectInputStream.readObject();*/
 
                     /*stat = dfsClient.namenode.create(src, masked, dfsClient.clientName,
                             new EnumSetWritable<CreateFlag>(flag), createParent, replication,
