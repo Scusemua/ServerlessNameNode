@@ -226,7 +226,9 @@ public class DFSOutputStream extends FSOutputSummer
                     System.out.println("Creating HTTP Post request to invoke NameNode now...");
 
                     // Instead of using RPC to call the create() function, we perform a serverless invocation.
-                    HttpPost request = new HttpPost(dfsClient.openWhiskEndpoint.toString());
+                    String uri = dfsClient.openWhiskEndpoint.toString();
+                    System.out.println("OpenWhisk URI: \"" + uri + "\"");
+                    HttpPost request = new HttpPost(uri);
                     JsonObject parameters = new JsonObject();
 
                     parameters.addProperty("src", src);
