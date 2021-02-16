@@ -440,9 +440,14 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
         short replication = fsArgs.getAsJsonPrimitive("replication").getAsShort();
         long blockSize = fsArgs.getAsJsonPrimitive("blockSize").getAsLong();
         CryptoProtocolVersion[] supportedVersions = CryptoProtocolVersion.supported();
-        String codec = fsArgs.getAsJsonPrimitive("codec").getAsString();
-        short targetReplication = fsArgs.getAsJsonPrimitive("targetReplication").getAsShort();
-        EncodingPolicy policy = new EncodingPolicy(codec, targetReplication);
+
+        EncodingPolicy policy = null;
+        boolean policyExists = fsArgs.getAsJsonPrimitive("policyExists").getAsBoolean();
+        if (policyExists) {
+            String codec = fsArgs.getAsJsonPrimitive("codec").getAsString();
+            short targetReplication = fsArgs.getAsJsonPrimitive("targetReplication").getAsShort();
+            policy = new EncodingPolicy(codec, targetReplication);
+        }
 
         System.out.println("Create Arguments:\nsrc = " + src + "\nclientName = "+ clientName + "\ncreateParent = " +
                 createParent + "\nreplication = " + replication + "\nblockSize = " + blockSize);

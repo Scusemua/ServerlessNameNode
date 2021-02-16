@@ -245,8 +245,15 @@ public class DFSOutputStream extends FSOutputSummer
                     parameters.addProperty("createParent", createParent);
                     parameters.addProperty("replication", replication);
                     parameters.addProperty("blockSize", blockSize);
-                    parameters.addProperty("codec", policy.getCodec());
-                    parameters.addProperty("targetReplication", policy.getTargetReplication());
+
+                    // Include a flag to indicate whether or not the policy is non-null.
+                    parameters.addProperty("policyExists", policy != null);
+
+                    // Only include these if the policy is non-null.
+                    if (policy != null) {
+                        parameters.addProperty("codec", policy.getCodec());
+                        parameters.addProperty("targetReplication", policy.getTargetReplication());
+                    }
 
                     request.addHeader("content-type", "application/json");
                     StringEntity params = new StringEntity(parameters.toString());
