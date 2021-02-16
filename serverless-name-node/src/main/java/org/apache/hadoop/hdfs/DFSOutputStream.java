@@ -306,9 +306,9 @@ public class DFSOutputStream extends FSOutputSummer
                     } else {
                         throw e;
                     }
-                } catch (ClassNotFoundException re) {
+                } /*catch (ClassNotFoundException re) {
                     re.printStackTrace();
-                } finally {
+                } */finally {
                     httpClient.close();
                 }
             }
