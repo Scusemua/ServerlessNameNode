@@ -91,8 +91,9 @@ public class DistributedFileSystem extends FileSystem {
 
     @Override
     public Path getHomeDirectory() {
-        return makeQualified(new Path(homeDirPrefix + "/"
-                + dfs.ugi.getShortUserName()));
+        Path path = new Path(homeDirPrefix + "/" + dfs.ugi.getShortUserName());
+        System.out.println("Calling makeQualified with path = \"" + path.toString() + "\"");
+        return makeQualified(path);
     }
 
     @Override
@@ -158,7 +159,7 @@ public class DistributedFileSystem extends FileSystem {
 
     @Override
     public URI getUri() {
-        return null;
+        return uri;
     }
 
     /**
