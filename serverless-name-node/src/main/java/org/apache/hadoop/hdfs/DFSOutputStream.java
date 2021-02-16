@@ -267,10 +267,11 @@ public class DFSOutputStream extends FSOutputSummer
                     HttpResponse response = httpClient.execute(request);
 
                     String json = EntityUtils.toString(response.getEntity(), "UTF-8");
+                    System.out.println("json = " + json);
                     Gson gson = new Gson();
                     JsonPrimitive responseJson = gson.fromJson(json, JsonPrimitive.class);
 
-                    System.out.println("responseJson = " + responseJson);
+                    System.out.println("responseJson = " + responseJson.toString());
 
                     /*String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonObject("base64result").getAsString();
                     byte[] resultSerialized = Base64.decodeBase64(resultBase64);
