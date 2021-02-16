@@ -341,11 +341,11 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             StringUtils.startupShutdownMessage(ServerlessNameNode.class, commandLineArgs, LOG);
             ServerlessNameNode nameNode = createNameNode(commandLineArgs, null);
 
-            if (nameNode == null)
-                System.out.println("Successfully created and initialized Serverless NameNode.");
-            else {
+            if (nameNode == null) {
                 System.out.println("ERROR: NameNode is null. Failed to create and/or initialize the Serverless NameNode.");
                 terminate(1);
+            } else {
+                System.out.println("Successfully created and initialized Serverless NameNode.");
             }
 
             if (op == null) {
