@@ -291,12 +291,18 @@ public class DFSOutputStream extends FSOutputSummer
 
                     System.out.println("responseJson = " + responseJson.toString());
 
-                    String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonObject("base64result").getAsString();
-                    byte[] resultSerialized = Base64.decodeBase64(resultBase64);
+                    if (responseJson.has("RESULT")) {
+                        String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonObject("base64result").getAsString();
+                        byte[] resultSerialized = Base64.decodeBase64(resultBase64);
 
-                    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultSerialized);
-                    ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-                    stat = (HdfsFileStatus)objectInputStream.readObject();
+                        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultSerialized);
+                        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+                        stat = (HdfsFileStatus) objectInputStream.readObject();
+                    } else if (responseJson.has("EXCEPTION")) {
+                        String exception = responseJson.getAsJsonPrimitive("EXCEPTION").getAsString();
+                        LOG.error("ERROR: Exception encountered during Serverless NameNode execution.");
+                        LOG.error(exception);
+                    }
 
                     /*stat = dfsClient.namenode.create(src, masked, dfsClient.clientName,
                             new EnumSetWritable<CreateFlag>(flag), createParent, replication,

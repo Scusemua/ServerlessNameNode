@@ -40,6 +40,7 @@ import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgress;
 import org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgressMetrics;
 import org.apache.hadoop.io.EnumSetWritable;
+import org.apache.hadoop.io.ObjectWritable;
 import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.metrics2.lib.DefaultMetricsSystem;
 import org.apache.hadoop.metrics2.util.MBeans;
@@ -436,10 +437,9 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
         byte[] enumSetSerialized = Base64.decodeBase64(fsArgs.getAsJsonPrimitive("enumSetBase64").getAsString());
 
-        EnumSetWritable<CreateFlag> flag = new EnumSetWritable(EnumSet.noneOf(CreateFlag.class));
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(enumSetSerialized);
         DataInput dataInput = new ObjectInputStream(byteArrayInputStream);
-        flag.readFields(dataInput);
+        EnumSet<CreateFlag> flag = ((EnumSetWritable<CreateFlag>) ObjectWritable.readObject(dataInput, null)).get();
 
         boolean createParent = fsArgs.getAsJsonPrimitive("createParent").getAsBoolean();
         short replication = fsArgs.getAsJsonPrimitive("replication").getAsShort();
