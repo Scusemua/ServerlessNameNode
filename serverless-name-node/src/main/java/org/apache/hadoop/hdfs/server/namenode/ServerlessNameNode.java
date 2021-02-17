@@ -1528,7 +1528,8 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
      * Returns the id of this namenode
      */
     public long getId() {
-        return leaderElection.getCurrentId();
+        //return leaderElection.getCurrentId();
+        return 0L;
     }
 
     /**
