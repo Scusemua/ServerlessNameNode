@@ -1503,7 +1503,8 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
     }
 
     public SortedActiveNodeList getActiveNameNodes() {
-        return leaderElection.getActiveNamenodes();
+        //return leaderElection.getActiveNamenodes();
+        return null;
     }
 
     /**
