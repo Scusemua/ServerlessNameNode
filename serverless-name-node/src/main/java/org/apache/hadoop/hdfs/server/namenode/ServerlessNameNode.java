@@ -39,6 +39,7 @@ import org.apache.hadoop.ha.ServiceFailedException;
 import org.apache.hadoop.hdfs.server.namenode.metrics.NameNodeMetrics;
 import org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgress;
 import org.apache.hadoop.hdfs.server.namenode.startupprogress.StartupProgressMetrics;
+import org.apache.hadoop.io.DataInputBuffer;
 import org.apache.hadoop.io.EnumSetWritable;
 import org.apache.hadoop.io.ObjectWritable;
 import org.apache.hadoop.ipc.Server;
@@ -437,8 +438,10 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
         byte[] enumSetSerialized = Base64.decodeBase64(fsArgs.getAsJsonPrimitive("enumSetBase64").getAsString());
 
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(enumSetSerialized);
-        DataInput dataInput = new ObjectInputStream(byteArrayInputStream);
+        DataInputBuffer dataInput = new DataInputBuffer();
+        dataInput.reset(enumSetSerialized, enumSetSerialized.length);
+        /*ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(enumSetSerialized);
+        DataInput dataInput = new ObjectInputStream(byteArrayInputStream);*/
         EnumSet<CreateFlag> flag = ((EnumSetWritable<CreateFlag>) ObjectWritable.readObject(dataInput, null)).get();
 
         boolean createParent = fsArgs.getAsJsonPrimitive("createParent").getAsBoolean();
