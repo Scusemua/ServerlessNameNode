@@ -243,8 +243,9 @@ public class DFSOutputStream extends FSOutputSummer
                     opArguments.addProperty("masked", masked.toShort());
                     opArguments.addProperty("clientName", dfsClient.clientName);
 
+                    EnumSetWritable<CreateFlag> flagWritable = new EnumSetWritable<CreateFlag>(flag, CreateFlag.class);
                     DataOutputBuffer out = new DataOutputBuffer();
-                    ObjectWritable.writeObject(out, flag, flag.getClass(), null);
+                    ObjectWritable.writeObject(out, flagWritable, flagWritable.getClass(), null);
 
                     /*ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
