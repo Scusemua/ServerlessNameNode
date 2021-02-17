@@ -467,7 +467,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
         HdfsFileStatus stat = namesystem.startFile(
                                 src, new PermissionStatus(getRemoteUser().getShortUserName(), null, masked),
-                                clientName, clientMachine, flag.get(), createParent, replication, blockSize, supportedVersions);
+                                clientName, clientMachine, flag, createParent, replication, blockSize, supportedVersions);
 
         // Currently impossible to pass null for EncodingPolicy, but pretending it's possible for now...
         if (policy != null) {
