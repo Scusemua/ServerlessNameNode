@@ -2301,7 +2301,7 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
                 LockFactory lf = getInstance();
                 INodeLock il = lf.getINodeLock(INodeLockType.WRITE_ON_TARGET_AND_PARENT, INodeResolveType.PATH, src)
                         .setNameNodeID(nameNode.getId())
-                        .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes())
+                        //.setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes())
                         .skipReadingQuotaAttr(!dir.isQuotaEnabled());
                 locks.add(il).add(lf.getBlockLock());
                 LeaseLock leaseLock = (LeaseLock)lf.getLeaseLockSinglePath(LockType.WRITE, holder,
