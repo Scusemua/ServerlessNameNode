@@ -149,8 +149,8 @@ public class LeaseManager {
                     LockFactory lf = LockFactory.getInstance();
                     INodeLock il = lf.getINodeLock(INodeLockType.READ, INodeResolveType.PATH_AND_IMMEDIATE_CHILDREN,
                             leasePaths.toArray(new String[leasePaths.size()]))
-                            .setNameNodeID(fsnamesystem.getNameNode().getId())
-                            .setActiveNameNodes(fsnamesystem.getNameNode().getActiveNameNodes().getActiveNodes());
+                            .setNameNodeID(fsnamesystem.getNameNode().getId());
+                            //.setActiveNameNodes(fsnamesystem.getNameNode().getActiveNameNodes().getActiveNodes());
                     locks.add(il).add(lf.getLeaseLockAllPaths(LockType.READ, holder,
                             fsnamesystem.getLeaseCreationLockRows()))
                             .add(lf.getLeasePathLock(LockType.READ)).add(lf.getBlockLock())
@@ -536,8 +536,8 @@ public class LeaseManager {
                         LockFactory lf = getInstance();
                         INodeLock il = lf.getINodeLock(INodeLockType.WRITE,
                                 INodeResolveType.PATH,
-                                leasePaths.toArray(new String[leasePaths.size()])).setNameNodeID(fsnamesystem.getNameNode().getId())
-                                .setActiveNameNodes(fsnamesystem.getNameNode().getActiveNameNodes().getActiveNodes());
+                                leasePaths.toArray(new String[leasePaths.size()])).setNameNodeID(fsnamesystem.getNameNode().getId());
+                                //.setActiveNameNodes(fsnamesystem.getNameNode().getActiveNameNodes().getActiveNodes());
 
                         locks.add(il).add(lf.getNameNodeLeaseLock(LockType.WRITE))
                                 .add(lf.getLeaseLockAllPaths(LockType.WRITE, holder,
