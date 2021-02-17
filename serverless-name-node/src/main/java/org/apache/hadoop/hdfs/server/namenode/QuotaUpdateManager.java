@@ -225,9 +225,10 @@ public class QuotaUpdateManager {
                         getInodeId());
 
                 if (dir != null && SubtreeLockHelper
-                        .isSTOLocked(dir.isSTOLocked(), dir.getSTOLockOwner(),
-                                namesystem.getNameNode().getActiveNameNodes()
-                                        .getActiveNodes()) && dir.getSTOLockOwner() != namesystem.getNamenodeId()) {
+                        .isSTOLocked(dir.isSTOLocked(), dir.getSTOLockOwner(), null
+                                /*namesystem.getNameNode().getActiveNameNodes()
+                                        .getActiveNodes()*/)
+                        && dir.getSTOLockOwner() != namesystem.getNamenodeId()) {
                     LOG.warn("Ignoring updates as the subtree lock is set");
                     /*
                      * We cannot process updates to keep move operations consistent. Otherwise the calculated size of the subtree
