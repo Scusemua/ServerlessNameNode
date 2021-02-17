@@ -29,7 +29,9 @@ import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
 import org.apache.hadoop.hdfs.server.namenode.RetryStartFileException;
 import org.apache.hadoop.hdfs.server.namenode.SafeModeException;
 import org.apache.hadoop.hdfs.util.ByteArrayManager;
+import org.apache.hadoop.io.DataOutputBuffer;
 import org.apache.hadoop.io.EnumSetWritable;
+import org.apache.hadoop.io.ObjectWritable;
 import org.apache.hadoop.ipc.RemoteException;
 import org.apache.hadoop.security.AccessControlException;
 import org.apache.hadoop.security.token.Token;
@@ -241,12 +243,15 @@ public class DFSOutputStream extends FSOutputSummer
                     opArguments.addProperty("masked", masked.toShort());
                     opArguments.addProperty("clientName", dfsClient.clientName);
 
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    DataOutputBuffer out = new DataOutputBuffer();
+                    ObjectWritable.writeObject(out, flag, flag.getClass(), null);
+
+                    /*ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                     ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
                     objectOutputStream.writeObject(flag);
-                    objectOutputStream.flush();
+                    objectOutputStream.flush();*/
 
-                    byte[] objectBytes = byteArrayOutputStream.toByteArray();
+                    byte[] objectBytes = out.getData();
                     String enumSetBase64 = Base64.encodeBase64String(objectBytes);
 
                     opArguments.addProperty("enumSetBase64", enumSetBase64);
