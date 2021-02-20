@@ -306,7 +306,7 @@ public class DFSOutputStream extends FSOutputSummer
                         stat = (HdfsFileStatus) objectInputStream.readObject();
                     } else if (responseJson.has("EXCEPTION")) {
                         String exception = responseJson.getAsJsonPrimitive("EXCEPTION").getAsString();
-                        LOG.error("ERROR: Exception encountered during Serverless NameNode execution.");
+                        LOG.error("Exception encountered during Serverless NameNode execution.");
                         LOG.error(exception);
                     }
 

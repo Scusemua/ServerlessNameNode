@@ -398,6 +398,9 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
                 result = new JsonObject();
                 result.addProperty("base64result", base64Object);
+            } catch (Exception ex) {
+                LOG.error("Exception encountered whilst serializing result of file system operation.");
+                ex.printStackTrace();
             } finally {
                 try {
                     byteArrayOutputStream.close();
@@ -457,8 +460,8 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             policy = new EncodingPolicy(codec, targetReplication);
         }
 
-        System.out.println("Create Arguments:\nsrc = " + src + "\nclientName = "+ clientName + "\ncreateParent = " +
-                createParent + "\nreplication = " + replication + "\nblockSize = " + blockSize);
+        LOG.info("Create Arguments:\n\tsrc = " + src + "\n\tclientName = "+ clientName + "\n\tcreateParent = " +
+                createParent + "\n\treplication = " + replication + "\n\tblockSize = " + blockSize);
 
         if (!checkPathLength(src)) {
             throw new IOException(
