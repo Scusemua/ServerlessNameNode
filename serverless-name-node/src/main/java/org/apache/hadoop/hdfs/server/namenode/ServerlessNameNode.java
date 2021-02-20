@@ -283,6 +283,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
     public static JsonObject main(JsonObject args) {
         System.out.println("Function execution started.");
+        System.setProperty("sun.io.serialization.extendedDebugInfo", "true");
 
         String[] commandLineArguments;
 
