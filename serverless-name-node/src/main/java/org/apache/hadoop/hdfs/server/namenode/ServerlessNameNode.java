@@ -309,6 +309,8 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             response.add("RESULT", result);
         }
         catch (Exception ex) {
+            LOG.error("Exception encountered during execution of Serverless NameNode.");
+            ex.printStackTrace();
             response.addProperty("EXCEPTION", ex.toString());
         }
 
