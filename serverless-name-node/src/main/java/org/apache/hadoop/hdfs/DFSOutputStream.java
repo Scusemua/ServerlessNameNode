@@ -298,7 +298,7 @@ public class DFSOutputStream extends FSOutputSummer
                     System.out.println("responseJson = " + responseJson.toString());
 
                     if (responseJson.has("RESULT")) {
-                        String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonObject("base64result").getAsString();
+                        String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonPrimitive("base64result").getAsString();
                         byte[] resultSerialized = Base64.decodeBase64(resultBase64);
 
                         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultSerialized);
