@@ -392,6 +392,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             ObjectOutputStream objectOutputStream = null;
 
             try {
+                LOG.info("stat instanceof Serializable: " + (stat instanceof Serializable));
                 objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
                 objectOutputStream.writeObject(stat);
                 objectOutputStream.flush();
