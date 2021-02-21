@@ -404,6 +404,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             } catch (Exception ex) {
                 LOG.error("Exception encountered whilst serializing result of file system operation.");
                 ex.printStackTrace();
+                result.addProperty("EXCEPTION", ex.toString());
             } finally {
                 try {
                     byteArrayOutputStream.close();

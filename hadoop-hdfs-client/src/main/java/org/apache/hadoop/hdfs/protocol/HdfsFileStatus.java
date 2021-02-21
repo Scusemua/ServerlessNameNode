@@ -46,12 +46,12 @@ public class HdfsFileStatus implements Serializable {
   private long blocksize;
   private long modification_time;
   private long access_time;
-  private transient FsPermission permission;
+  private FsPermission permission;
   private String owner;
   private String group;
   private long fileId;
   
-  private final transient FileEncryptionInfo feInfo;
+  private final FileEncryptionInfo feInfo;
   
   // Used by dir, not including dot and dotdot. Always zero for a regular file.
   private int childrenNum;
