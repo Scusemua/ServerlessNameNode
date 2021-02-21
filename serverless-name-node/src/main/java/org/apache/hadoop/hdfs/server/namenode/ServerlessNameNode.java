@@ -392,6 +392,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             ObjectOutputStream objectOutputStream = null;
 
             try {
+                LOG.info("stat.getClass() = " + stat.getClass() + ", class name = " + stat.getClass().getName());
                 LOG.info("stat instanceof Serializable: " + (stat instanceof Serializable));
                 objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
                 objectOutputStream.writeObject(stat);
@@ -405,6 +406,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             } catch (Exception ex) {
                 LOG.error("Exception encountered whilst serializing result of file system operation.");
                 ex.printStackTrace();
+                result = new JsonObject();
                 result.addProperty("EXCEPTION", ex.toString());
             } finally {
                 try {
