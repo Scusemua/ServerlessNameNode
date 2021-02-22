@@ -505,6 +505,7 @@ public class ServerlessNameNodeRpcServer implements NamenodeProtocols {
     @Override // ClientProtocol
     public LocatedBlock addBlock(String src, String clientName,
                                  ExtendedBlock previous, DatanodeInfo[] excludedNodes, long fileId, String[] favoredNodes) throws IOException {
+        LOG.info("addBlock() function of ServerlessNameNodeRpcServer called.");
         checkNNStartup();
         if (stateChangeLog.isDebugEnabled()) {
             stateChangeLog.debug(
