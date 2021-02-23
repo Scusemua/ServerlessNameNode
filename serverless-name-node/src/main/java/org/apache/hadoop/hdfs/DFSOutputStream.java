@@ -226,7 +226,7 @@ public class DFSOutputStream extends FSOutputSummer
                 CloseableHttpClient httpClient = HttpClientBuilder.create().build();
 
                 try {
-                    System.out.println("Creating HTTP Post request to invoke NameNode now...");
+                    System.out.println("Creating HTTP Post req to invoke NN for CREATE op now...");
 
                     // Instead of using RPC to call the create() function, we perform a serverless invocation.
                     String uri = dfsClient.openWhiskEndpoint.toString();
@@ -246,11 +246,6 @@ public class DFSOutputStream extends FSOutputSummer
                     EnumSetWritable<CreateFlag> flagWritable = new EnumSetWritable<CreateFlag>(flag, CreateFlag.class);
                     DataOutputBuffer out = new DataOutputBuffer();
                     ObjectWritable.writeObject(out, flagWritable, flagWritable.getClass(), null);
-
-                    /*ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-                    objectOutputStream.writeObject(flag);
-                    objectOutputStream.flush();*/
 
                     byte[] objectBytes = out.getData();
                     String enumSetBase64 = Base64.encodeBase64String(objectBytes);
@@ -291,7 +286,7 @@ public class DFSOutputStream extends FSOutputSummer
                     HttpResponse response = httpClient.execute(request);
 
                     String json = EntityUtils.toString(response.getEntity(), "UTF-8");
-                    System.out.println("json = " + json);
+                    //System.out.println("json = " + json);
                     Gson gson = new Gson();
                     JsonObject responseJson = gson.fromJson(json, JsonObject.class);
 

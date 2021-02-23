@@ -321,7 +321,7 @@ public class FSDirectory implements Closeable {
         newiip = addINode(existing, newNode);
 
         if (newiip == null) {
-            ServerlessNameNode.stateChangeLog.info("DIR* addFile: failed to add " +
+            ServerlessNameNode.stateChangeLog.info("DIR* addFile: failed to addD " +
                     existing.getPath() + "/" + localName);
             return null;
         }

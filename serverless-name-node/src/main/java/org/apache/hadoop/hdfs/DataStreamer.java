@@ -17,6 +17,10 @@
  */
 package org.apache.hadoop.hdfs;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.hadoop.hdfs.client.impl.DfsClientConf;
 import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos;
 import org.apache.hadoop.hdfs.protocol.HdfsConstants;
@@ -37,8 +41,10 @@ import org.apache.hadoop.fs.StorageType;
 import org.apache.hadoop.hdfs.client.HdfsClientConfigKeys;
 import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
+import org.apache.hadoop.io.DataOutputBuffer;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.MultipleIOException;
+import org.apache.hadoop.io.ObjectWritable;
 import org.apache.hadoop.ipc.RemoteException;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.net.StandardSocketFactory;
@@ -52,6 +58,12 @@ import org.apache.htrace.core.Span;
 import org.apache.htrace.core.SpanId;
 import org.apache.htrace.core.TraceScope;
 import org.apache.htrace.core.Tracer;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
 import javax.net.SocketFactory;
 import java.io.*;
@@ -1658,7 +1670,92 @@ class DataStreamer extends Daemon {
     while (true) {
       long localstart = Time.monotonicNow();
       while (true) {
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+
         try {
+          System.out.println("Creating HTTP Post req to invoke NN for addBlock op now...");
+
+          // Instead of using RPC to call the create() function, we perform a serverless invocation.
+          String uri = dfsClient.openWhiskEndpoint.toString();
+          System.out.println("OpenWhisk URI: \"" + uri + "\"");
+          HttpPost request = new HttpPost(uri);
+
+          // Arguments for the NameNode program itself.
+          JsonObject namenodeArgs = new JsonObject();
+
+          // Arguments for the particular operation we're performing.
+          JsonObject opArguments = new JsonObject();
+
+          // public LocatedBlock addBlock(String src, String clientName, ExtendedBlock previous, DatanodeInfo[] excludeNodes, long fileId, String[] favoredNodes)
+          opArguments.addProperty("src", src);
+          opArguments.addProperty("clientName", dfsClient.clientName);
+          opArguments.addProperty("fileId", stat.getFileId());
+
+          // Add the favoredNodes array.
+          JsonArray favoredNodesArr = new JsonArray();
+          for (String favoredNode : favoredNodes) {
+            favoredNodesArr.add(favoredNode);
+          }
+          opArguments.add("favoredNodes", favoredNodesArr);
+
+          // Serialize the DataNodeInfo array.
+          DataOutputBuffer excludeNodesBuffer = new DataOutputBuffer();
+          ObjectOutputStream excludeNodesStream = new ObjectOutputStream(excludeNodesBuffer);
+          excludeNodesStream.writeObject(excludedNodes);
+          byte[] excludedNodesBytes = excludeNodesBuffer.getData();
+          String excludeNodesBase64 = Base64.encodeBase64String(excludedNodesBytes);
+          opArguments.addProperty("excludeNodesBase64", excludeNodesBase64);
+
+          // Serialize the ExcludedBlock's block property.
+          DataOutputBuffer blockBuffer = new DataOutputBuffer();
+          ObjectOutputStream blockStream = new ObjectOutputStream(blockBuffer);
+          block.getLocalBlock().write(blockStream);
+          byte[] blockBytes = blockBuffer.getData();
+          String blockBase64 = Base64.encodeBase64String(blockBytes);
+
+          // Add the ExcludedBlock's poolID and block itself to the payload...
+          opArguments.addProperty("block.poolId", block.getBlockPoolId());
+          opArguments.addProperty("blockBase64", blockBase64);
+
+          namenodeArgs.add("fsArgs", opArguments);
+          namenodeArgs.addProperty("op", "addBlock");
+          namenodeArgs.addProperty("command-line-arguments", "-regular");
+
+          JsonObject requestArguments = new JsonObject();
+
+          // It looks like OpenWhisk expects the arguments for the serverless
+          // function to be stored with the key/property "value".
+          requestArguments.add("value", namenodeArgs);
+
+          StringEntity params = new StringEntity(requestArguments.toString());
+          request.setEntity(params);
+          request.setHeader("Content-type", "application/json");
+
+          System.out.println("Invoking serverless namenode now...");
+
+          HttpResponse response = httpClient.execute(request);
+
+          String json = EntityUtils.toString(response.getEntity(), "UTF-8");
+
+          Gson gson = new Gson();
+          JsonObject responseJson = gson.fromJson(json, JsonObject.class);
+          System.out.println("responseJson = " + responseJson.toString());
+
+          if (responseJson.has("RESULT")) {
+            String resultBase64 = responseJson.getAsJsonObject("RESULT").getAsJsonPrimitive("base64result").getAsString();
+            byte[] resultSerialized = Base64.decodeBase64(resultBase64);
+
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(resultSerialized);
+            ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+            LocatedBlock locatedBlock = (LocatedBlock) objectInputStream.readObject();
+
+            return locatedBlock;
+          } else if (responseJson.has("EXCEPTION")) {
+            String exception = responseJson.getAsJsonPrimitive("EXCEPTION").getAsString();
+            LOG.error("Exception encountered during Serverless NameNode execution.");
+            LOG.error(exception);
+          }
+
           return dfsClient.namenode.addBlock(src, dfsClient.clientName,
               block, excludedNodes, stat.getFileId(), favoredNodes);
         } catch (RemoteException e) {
@@ -1699,6 +1796,10 @@ class DataStreamer extends Daemon {
             throw e;
           }
 
+        } catch (ClassNotFoundException e) {
+          e.printStackTrace();
+        } finally {
+          httpClient.close();
         }
       }
     }

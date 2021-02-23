@@ -1,5 +1,6 @@
 package org.apache.hadoop.hdfs.server.namenode;
 
+import com.google.gson.JsonArray;
 import io.hops.metadata.hdfs.entity.EncodingStatus;
 import org.apache.commons.codec.binary.Base64;
 import io.hops.exception.StorageException;
@@ -20,8 +21,7 @@ import org.apache.hadoop.fs.permission.PermissionStatus;
 import org.apache.hadoop.hdfs.DFSConfigKeys;
 import org.apache.hadoop.hdfs.DFSUtil;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
-import org.apache.hadoop.hdfs.protocol.HdfsConstants;
-import org.apache.hadoop.hdfs.protocol.HdfsFileStatus;
+import org.apache.hadoop.hdfs.protocol.*;
 import org.apache.hadoop.hdfs.server.protocol.NamenodeProtocols;
 import org.apache.hadoop.hdfs.server.blockmanagement.BRTrackingService;
 import org.apache.hadoop.hdfs.server.common.HdfsServerConstants;
@@ -46,6 +46,7 @@ import org.apache.hadoop.ipc.Server;
 import org.apache.hadoop.metrics2.lib.DefaultMetricsSystem;
 import org.apache.hadoop.metrics2.util.MBeans;
 import org.apache.hadoop.net.NetUtils;
+import org.apache.hadoop.net.Node;
 import org.apache.hadoop.security.SecurityUtil;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.security.ssl.RevocationListFetcherService;
@@ -70,10 +71,7 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.security.PrivilegedExceptionAction;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.apache.hadoop.hdfs.DFSConfigKeys.*;
@@ -339,7 +337,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
         System.out.println("Creating and initializing Serverless NameNode now...");
 
-        HdfsFileStatus stat = null;
+        Object returnValue = null;
         JsonObject result = null;
 
         try {
@@ -362,6 +360,9 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
             // Now we perform the desired/specified operation.
             switch(op) {
+                case "addBlock":
+                    returnValue = nameNode.addBlockOperation(fsArgs);
+                    break;
                 case "append":
                     nameNode.appendOperation(fsArgs);
                     break;
@@ -369,7 +370,7 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
                     nameNode.concatOperation(fsArgs);
                     break;
                 case "create":
-                    stat = nameNode.createOperation(fsArgs);
+                    returnValue = nameNode.createOperation(fsArgs);
                     break;
                 case "delete":
                     nameNode.deleteOperation(fsArgs);
@@ -385,17 +386,17 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             terminate(1, e);
         }
 
-        // Serialize the resulting HdfsFileStatus object, if it exists, and encode it to Base64 so we
+        // Serialize the resulting HdfsFileStatus/LocatedBlock/etc. object, if it exists, and encode it to Base64 so we
         // can include it in the JSON response sent back to the invoker of this serverless function.
-        if (stat != null) {
+        if (returnValue != null) {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             ObjectOutputStream objectOutputStream = null;
 
             try {
-                LOG.info("stat.getClass() = " + stat.getClass());
-                LOG.info("stat instanceof Serializable: " + (stat instanceof Serializable));
+                LOG.info("returnValue.getClass() = " + returnValue.getClass());
+                LOG.info("returnValue instanceof Serializable: " + (returnValue instanceof Serializable));
                 objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
-                objectOutputStream.writeObject(stat);
+                objectOutputStream.writeObject(returnValue);
                 objectOutputStream.flush();
 
                 byte[] objectBytes = byteArrayOutputStream.toByteArray();
@@ -422,6 +423,59 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             result = new JsonObject(); // empty
 
         return result;
+    }
+
+    private LocatedBlock addBlockOperation(JsonObject fsArgs) throws IOException, ClassNotFoundException {
+        String src = fsArgs.getAsJsonPrimitive("src").getAsString();
+        String clientName = fsArgs.getAsJsonPrimitive("clientName").getAsString();
+
+        long fileId = fsArgs.getAsJsonPrimitive("fileId").getAsLong();
+
+        JsonArray favoredNodesJsonArray = fsArgs.getAsJsonArray("favoredNodes");
+        String[] favoredNodes = new String[favoredNodesJsonArray.size()];
+
+        for (int i = 0; i < favoredNodesJsonArray.size(); i++) {
+            favoredNodes[i] = favoredNodesJsonArray.get(i).getAsString();
+        }
+
+        String blockPoolId = fsArgs.getAsJsonPrimitive("block.poolId").getAsString();
+
+        // Decode and deserialize the block.
+        String blockBase64 = fsArgs.getAsJsonPrimitive("blockBase64").getAsString();
+        byte[] blockBytes = Base64.decodeBase64(blockBase64);
+        DataInputBuffer dataInput = new DataInputBuffer();
+        dataInput.reset(blockBytes, blockBytes.length);
+        Block block = (Block) ObjectWritable.readObject(dataInput, null);
+        ExtendedBlock previous = new ExtendedBlock(blockPoolId, block);
+
+        // Decode and deserialize the DatanodeInfo[].
+        String datanodeInfoBase64 = fsArgs.getAsJsonPrimitive("excludeNodesBase64").getAsString();
+        byte[] datanodeInfoBytes = Base64.decodeBase64(datanodeInfoBase64);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(datanodeInfoBytes);
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        DatanodeInfo[] excludedNodes = (DatanodeInfo[]) objectInputStream.readObject();
+
+        LOG.info("addBlock() function of ServerlessNameNodeRpcServer called.");
+        if (stateChangeLog.isDebugEnabled()) {
+            stateChangeLog.debug(
+                    "*BLOCK* NameNode.addBlock: file " + src + " fileId=" + fileId + " for " + clientName);
+        }
+        HashSet<Node> excludedNodesSet = null;
+
+        if (excludedNodes != null) {
+            excludedNodesSet = new HashSet<>(excludedNodes.length);
+            for (Node node : excludedNodes) {
+                excludedNodesSet.add(node);
+            }
+        }
+        List<String> favoredNodesList = (favoredNodes == null) ? null
+                : Arrays.asList(favoredNodes);
+        LocatedBlock locatedBlock = namesystem
+                .getAdditionalBlock(src, fileId, clientName, previous, excludedNodesSet, favoredNodesList);
+        /*if (locatedBlock != null) {
+            metrics.incrAddBlockOps();
+        }*/
+        return locatedBlock;
     }
 
     private void appendOperation(JsonObject fsArgs) {
@@ -513,12 +567,6 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             StringUtils.startupShutdownMessage(ServerlessNameNode.class, args, LOG);
             ServerlessNameNode namenode = createNameNode(args, null);
             System.out.println("NameNode == null: " + (namenode == null));
-            // The NameNode's join method simply joins on the RPC server, which runs "forever". But we don't have an
-            // RPC server, and we should generally just have been assigned one operation to perform here. So we'll
-            // just perform our operation and then return.
-            /*if (namenode != null) {
-                namenode.join();
-            }*/
         } catch (Throwable e) {
             LOG.error("Failed to start namenode.", e);
             terminate(1, e);
