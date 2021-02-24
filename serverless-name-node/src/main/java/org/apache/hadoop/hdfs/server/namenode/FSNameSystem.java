@@ -1092,14 +1092,14 @@ public class FSNameSystem implements NameSystem, FSNameSystemMBean, NameNodeMXBe
                     // In this case, we have to try to resolve the path and hope it
                     // hasn't changed or been deleted since the file was opened for write.
                     INodeLock il = lf.getINodeLock(INodeLockType.WRITE, INodeResolveType.PATH, src)
-                            .setNameNodeID(nameNode.getId())
-                            .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes());
+                            .setNameNodeID(nameNode.getId());
+                            //.setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes());
                     locks.add(il)
                             .add(lf.getLastTwoBlocksLock(src));
                 } else {
                     INodeLock il = lf.getINodeLock(INodeLockType.WRITE, INodeResolveType.PATH, fileId)
-                            .setNameNodeID(nameNode.getId())
-                            .setActiveNameNodes(nameNode.getActiveNameNodes().getActiveNodes());
+                            .setNameNodeID(nameNode.getId());
+                            //.setActiveNameNodes(nameNode.geActiveNameNodes().getActiveNodes());
                     locks.add(il)
                             .add(lf.getLastTwoBlocksLock(fileId));
                 }
