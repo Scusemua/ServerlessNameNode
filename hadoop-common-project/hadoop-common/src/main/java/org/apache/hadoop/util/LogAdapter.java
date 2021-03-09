@@ -52,6 +52,14 @@ class LogAdapter {
     }
   }
 
+  public void warn(String msg) {
+    if (LOG != null) {
+      LOG.warn(msg);
+    } else if (LOGGER != null) {
+      LOGGER.warn(msg);
+    }
+  }
+
   public void warn(String msg, Throwable t) {
     if (LOG != null) {
       LOG.warn(msg, t);

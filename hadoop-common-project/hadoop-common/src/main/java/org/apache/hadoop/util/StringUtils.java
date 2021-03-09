@@ -44,6 +44,7 @@ import org.apache.hadoop.net.NetUtils;
 
 import com.google.common.base.Preconditions;
 import com.google.common.net.InetAddresses;
+import sun.misc.Signal;
 
 /**
  * General string utils
@@ -716,7 +717,11 @@ public class StringUtils {
     if (SystemUtils.IS_OS_UNIX) {
       try {
         SignalLogger.INSTANCE.register(LOG);
-      } catch (Throwable t) {
+      }
+      catch (IllegalStateException exception) {
+        LOG.warn("Obtained IllegalStateException while trying to register the LOG. This is fine if this is a warm container.");
+      }
+      catch (Throwable t) {
         LOG.warn("failed to register any UNIX signal loggers: ", t);
       }
     }

@@ -108,6 +108,9 @@ public class JvmMetrics implements MetricsSource {
 
   public static JvmMetrics create(String processName, String sessionId,
                                   MetricsSystem ms) {
+    // Since this may be a warm container, try unregistering this first.
+    ms.unregisterSource(JvmMetrics.name());
+
     return ms.register(JvmMetrics.name(), JvmMetrics.description(),
                        new JvmMetrics(processName, sessionId));
   }
