@@ -369,13 +369,13 @@
     <dependency>
       <groupId>org.codehaus.woodstox</groupId>
       <artifactId>stax2-api</artifactId>
-      <scope>${dependency-scope}</scope>
+      <scope>compile</scope>
       
     </dependency>
     <dependency>
       <groupId>com.fasterxml.woodstox</groupId>
       <artifactId>woodstox-core</artifactId>
-      <scope>${dependency-scope}</scope>
+      <scope>compile</scope>
       
     </dependency>
     <dependency>
