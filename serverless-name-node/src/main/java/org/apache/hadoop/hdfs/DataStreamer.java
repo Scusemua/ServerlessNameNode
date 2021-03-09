@@ -1708,22 +1708,27 @@ class DataStreamer extends Daemon {
           String excludeNodesBase64 = Base64.encodeBase64String(excludedNodesBytes);
           opArguments.addProperty("excludeNodesBase64", excludeNodesBase64);
 
-          LOG.debug("DataStreamer block is null: " + (block == null));
+          LOG.info("DataStreamer block is null: " + (block == null));
 
           if (block != null) {
-            LOG.debug("DataStreamer block.getLocalBlock() is null: " + (block.getLocalBlock() == null));
+            LOG.info("DataStreamer block.getLocalBlock() is null: " + (block.getLocalBlock() == null));
           }
 
-          // Serialize the ExcludedBlock's block property.
-          DataOutputBuffer blockBuffer = new DataOutputBuffer();
-          ObjectOutputStream blockStream = new ObjectOutputStream(blockBuffer);
-          block.getLocalBlock().write(blockStream);
-          byte[] blockBytes = blockBuffer.getData();
-          String blockBase64 = Base64.encodeBase64String(blockBytes);
+          if (block != null && block.getLocalBlock() != null) {
+            // Serialize the ExcludedBlock's block property.
+            DataOutputBuffer blockBuffer = new DataOutputBuffer();
+            ObjectOutputStream blockStream = new ObjectOutputStream(blockBuffer);
+            block.getLocalBlock().write(blockStream);
+            byte[] blockBytes = blockBuffer.getData();
+            String blockBase64 = Base64.encodeBase64String(blockBytes);
+            opArguments.addProperty("blockBase64", blockBase64);
+          }
+          else {
+            LOG.warn("The ExtendedBlock variable or its internal block field is null... Not including in invocation payload.");
+          }
 
           // Add the ExcludedBlock's poolID and block itself to the payload...
           opArguments.addProperty("block.poolId", block.getBlockPoolId());
-          opArguments.addProperty("blockBase64", blockBase64);
 
           namenodeArgs.add("fsArgs", opArguments);
           namenodeArgs.addProperty("op", "addBlock");

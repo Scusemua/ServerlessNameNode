@@ -438,15 +438,22 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             favoredNodes[i] = favoredNodesJsonArray.get(i).getAsString();
         }
 
+        ExtendedBlock previous = null;
+
         String blockPoolId = fsArgs.getAsJsonPrimitive("block.poolId").getAsString();
 
         // Decode and deserialize the block.
-        String blockBase64 = fsArgs.getAsJsonPrimitive("blockBase64").getAsString();
-        byte[] blockBytes = Base64.decodeBase64(blockBase64);
-        DataInputBuffer dataInput = new DataInputBuffer();
-        dataInput.reset(blockBytes, blockBytes.length);
-        Block block = (Block) ObjectWritable.readObject(dataInput, null);
-        ExtendedBlock previous = new ExtendedBlock(blockPoolId, block);
+        if (fsArgs.getAsJsonPrimitive("blockBase64") != null) {
+            String blockBase64 = fsArgs.getAsJsonPrimitive("blockBase64").getAsString();
+            byte[] blockBytes = Base64.decodeBase64(blockBase64);
+            DataInputBuffer dataInput = new DataInputBuffer();
+            dataInput.reset(blockBytes, blockBytes.length);
+            Block block = (Block) ObjectWritable.readObject(dataInput, null);
+            previous = new ExtendedBlock(blockPoolId, block);
+        } else {
+            LOG.warn("Creating ExtendedBlock with null for the internal block field...");
+            previous = new ExtendedBlock(blockPoolId, null);
+        }
 
         // Decode and deserialize the DatanodeInfo[].
         String datanodeInfoBase64 = fsArgs.getAsJsonPrimitive("excludeNodesBase64").getAsString();
