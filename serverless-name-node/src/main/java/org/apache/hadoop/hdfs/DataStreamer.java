@@ -1708,6 +1708,12 @@ class DataStreamer extends Daemon {
           String excludeNodesBase64 = Base64.encodeBase64String(excludedNodesBytes);
           opArguments.addProperty("excludeNodesBase64", excludeNodesBase64);
 
+          LOG.debug("DataStreamer block is null: " + (block == null));
+
+          if (block != null) {
+            LOG.debug("DataStreamer block.getLocalBlock() is null: " + (block.getLocalBlock() == null));
+          }
+
           // Serialize the ExcludedBlock's block property.
           DataOutputBuffer blockBuffer = new DataOutputBuffer();
           ObjectOutputStream blockStream = new ObjectOutputStream(blockBuffer);
