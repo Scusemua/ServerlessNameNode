@@ -1708,13 +1708,16 @@ class DataStreamer extends Daemon {
           String excludeNodesBase64 = Base64.encodeBase64String(excludedNodesBytes);
           opArguments.addProperty("excludeNodesBase64", excludeNodesBase64);
 
-          LOG.info("DataStreamer block is null: " + (block == null));
+          if (block == null) {
+            LOG.warn("The ExtendedBlock variable or its internal block field is null... Not including in invocation payload.");
 
-          if (block != null) {
-            LOG.info("DataStreamer block.getLocalBlock() is null: " + (block.getLocalBlock() == null));
+            // Since we did not include the block, we include this property with a value of false so we know
+            // NOT to look for it when unpacking the invocation payload within the serverless namenode.
+            opArguments.addProperty("blockIncluded", false);
           }
+          else {
+            LOG.info("The ExtendedBlock variable is NOT null. Including in invocation payload.");
 
-          if (block != null && block.getLocalBlock() != null) {
             // Serialize the ExcludedBlock's block property.
             DataOutputBuffer blockBuffer = new DataOutputBuffer();
             ObjectOutputStream blockStream = new ObjectOutputStream(blockBuffer);
@@ -1722,13 +1725,14 @@ class DataStreamer extends Daemon {
             byte[] blockBytes = blockBuffer.getData();
             String blockBase64 = Base64.encodeBase64String(blockBytes);
             opArguments.addProperty("blockBase64", blockBase64);
-          }
-          else {
-            LOG.warn("The ExtendedBlock variable or its internal block field is null... Not including in invocation payload.");
-          }
 
-          // Add the ExcludedBlock's poolID and block itself to the payload...
-          opArguments.addProperty("block.poolId", block.getBlockPoolId());
+            // Add the ExcludedBlock's poolID and block itself to the payload...
+            opArguments.addProperty("block.poolId", block.getBlockPoolId());
+
+            // Since we included the block, we include this property with a value of true so we know
+            // to look for it when unpacking the invocation payload within the serverless namenode.
+            opArguments.addProperty("blockIncluded", true);
+          }
 
           namenodeArgs.add("fsArgs", opArguments);
           namenodeArgs.addProperty("op", "addBlock");
