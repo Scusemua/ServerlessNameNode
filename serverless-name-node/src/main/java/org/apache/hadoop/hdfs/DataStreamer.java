@@ -1693,8 +1693,10 @@ class DataStreamer extends Daemon {
 
           // Add the favoredNodes array.
           JsonArray favoredNodesArr = new JsonArray();
-          for (String favoredNode : favoredNodes) {
-            favoredNodesArr.add(favoredNode);
+          if (favoredNodes != null) {
+            for (String favoredNode : favoredNodes) {
+              favoredNodesArr.add(favoredNode);
+            }
           }
           opArguments.add("favoredNodes", favoredNodesArr);
 
