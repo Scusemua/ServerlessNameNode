@@ -129,6 +129,20 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
     private Thread emptier;
 
+    /**
+     * Indicates whether the initialization process has taken place yet. This will be true for warm function
+     * containers, and in that sense it also serves as a flag indicating whether or not this is running
+     * within a warm container or a new/cold container.
+     */
+    private static boolean initialized = false;
+
+    /**
+     * The single instance of the NameNode created by the serverless function.
+     *
+     * This is cached for future invocations.
+     */
+    private static ServerlessNameNode nameNodeInstance = null;
+
     static NameNodeMetrics metrics;
     private static final StartupProgress startupProgress = new StartupProgress();
 
@@ -302,8 +316,28 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             fsArgs = args.getAsJsonObject("fsArgs");
 
         JsonObject response = new JsonObject();
+
+        // Check if we need to initialize the namenode.
+        if (!initialized || (initialized && nameNodeInstance == null)) {
+            try {
+                nameNodeInstance = startServerlessNameNode(commandLineArguments);
+            } catch (Exception ex) {
+                LOG.error("Encountered exception wihle initializing the name node.", ex);
+                response.addProperty("EXCEPTION", ex.toString());
+            }
+        }
+        else {
+            LOG.debug("NameNode is already initialized. Skipping initialization step.");
+        }
+
+        if (nameNodeInstance == null) {
+            LOG.error("NameNodeInstance is null despite having been initialized.");
+            response.addProperty("EXCEPTION", "Failed to initialize NameNode. Unknown error. Review logs for details.");
+            return response;
+        }
+
         try {
-            JsonObject result = startServerlessNameNode(commandLineArguments, op, fsArgs);
+            JsonObject result = nameNodeInstance.performOperation(op, fsArgs);
 
             response.add("RESULT", result);
         }
@@ -322,68 +356,39 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
                 srcPath.depth() <= MAX_PATH_DEPTH);
     }
 
-    /**
-     * Used as the entry-point into the Serverless NameNode when executing a serverless function.
-     *
-     * @param commandLineArgs Command-line arguments formatted as if the NameNode was being executed from the commandline.
-     * @throws Exception
-     */
-    public static JsonObject startServerlessNameNode(String[] commandLineArgs, String op, JsonObject fsArgs) throws Exception {
+    public JsonObject performOperation(String op, JsonObject fsArgs) throws IOException, ClassNotFoundException {
         System.out.println("Specified operation: " + op);
 
-        if (DFSUtil.parseHelpArgument(commandLineArgs, ServerlessNameNode.USAGE, System.out, true)) {
-            System.exit(0);
+        if (op == null) {
+            System.out.println("User did not specify an operation.");
+            return new JsonObject(); // empty
         }
-
-        System.out.println("Creating and initializing Serverless NameNode now...");
 
         Object returnValue = null;
         JsonObject result = null;
 
-        try {
-            StringUtils.startupShutdownMessage(ServerlessNameNode.class, commandLineArgs, LOG);
-            ServerlessNameNode nameNode = createNameNode(commandLineArgs, null);
-
-            if (nameNode == null) {
-                System.out.println("ERROR: NameNode is null. Failed to create and/or initialize the Serverless NameNode.");
-                terminate(1);
-            } else {
-                System.out.println("Successfully created and initialized Serverless NameNode.");
-            }
-
-            if (op == null) {
-                System.out.println("User did not specify an operation.");
-                return new JsonObject(); // empty
-            }
-
-            assert nameNode != null;
-
-            // Now we perform the desired/specified operation.
-            switch(op) {
-                case "addBlock":
-                    returnValue = nameNode.addBlockOperation(fsArgs);
-                    break;
-                case "append":
-                    nameNode.appendOperation(fsArgs);
-                    break;
-                case "concat":
-                    nameNode.concatOperation(fsArgs);
-                    break;
-                case "create":
-                    returnValue = nameNode.createOperation(fsArgs);
-                    break;
-                case "delete":
-                    nameNode.deleteOperation(fsArgs);
-                    break;
-                case "rename":
-                    nameNode.renameOperation(fsArgs);
-                    break;
-                default:
-                    System.out.println("Unknown operation: " + op);
-            }
-        } catch (Throwable e) {
-            LOG.error("Failed to start namenode.", e);
-            terminate(1, e);
+        // Now we perform the desired/specified operation.
+        switch(op) {
+            case "addBlock":
+                returnValue = addBlockOperation(fsArgs);
+                break;
+            case "append":
+                appendOperation(fsArgs);
+                break;
+            case "concat":
+                concatOperation(fsArgs);
+                break;
+            case "create":
+                returnValue = createOperation(fsArgs);
+                break;
+            case "delete":
+                deleteOperation(fsArgs);
+                break;
+            case "rename":
+                renameOperation(fsArgs);
+                break;
+            default:
+                System.out.println("Unknown operation: " + op);
         }
 
         // Serialize the resulting HdfsFileStatus/LocatedBlock/etc. object, if it exists, and encode it to Base64 so we
@@ -423,6 +428,41 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
             result = new JsonObject(); // empty
 
         return result;
+    }
+
+    /**
+     * Used as the entry-point into the Serverless NameNode when executing a serverless function.
+     *
+     * @param commandLineArgs Command-line arguments formatted as if the NameNode was being executed from the commandline.
+     * @throws Exception
+     */
+    public static ServerlessNameNode startServerlessNameNode(String[] commandLineArgs) throws Exception {
+        if (DFSUtil.parseHelpArgument(commandLineArgs, ServerlessNameNode.USAGE, System.out, true)) {
+            System.exit(0);
+        }
+
+        System.out.println("Creating and initializing Serverless NameNode now...");
+
+        try {
+            StringUtils.startupShutdownMessage(ServerlessNameNode.class, commandLineArgs, LOG);
+            ServerlessNameNode nameNode = createNameNode(commandLineArgs, null);
+
+            if (nameNode == null) {
+                System.out.println("ERROR: NameNode is null. Failed to create and/or initialize the Serverless NameNode.");
+                terminate(1);
+            } else {
+                System.out.println("Successfully created and initialized Serverless NameNode.");
+            }
+
+            initialized = true;
+            return nameNode;
+        } catch (Throwable e) {
+            LOG.error("Failed to start namenode.", e);
+            terminate(1, e);
+        }
+
+        initialized = false;
+        return null;
     }
 
     private LocatedBlock addBlockOperation(JsonObject fsArgs) throws IOException, ClassNotFoundException {
