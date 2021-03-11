@@ -480,12 +480,14 @@ public class ServerlessNameNode implements NameNodeStatusMXBean, EventHandler {
 
         ExtendedBlock previous = null;
 
-        String blockPoolId = fsArgs.getAsJsonPrimitive("block.poolId").getAsString();
-
         boolean blockIncluded = fsArgs.getAsJsonPrimitive("blockIncluded").getAsBoolean();
 
         if (blockIncluded) {
             LOG.info("Block variable WAS included in payload. Extracting now...");
+
+            // First the block poolID (the order we extract doesn't matter).
+            String blockPoolId = fsArgs.getAsJsonPrimitive("block.poolId").getAsString();
+
             // Decode and deserialize the block.
             String blockBase64 = fsArgs.getAsJsonPrimitive("blockBase64").getAsString();
             byte[] blockBytes = Base64.decodeBase64(blockBase64);
