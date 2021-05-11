@@ -7,10 +7,17 @@ import io.hops.exception.StorageException;
 import io.hops.metadata.hdfs.TablesDef;
 import io.hops.metadata.hdfs.dal.DataNodeDataAccess;
 import io.hops.metadata.hdfs.entity.DataNode;
+import io.hops.metadata.hdfs.entity.User;
 import io.hops.metadata.ndb.ClusterjConnector;
+import io.hops.metadata.ndb.wrapper.HopsQuery;
+import io.hops.metadata.ndb.wrapper.HopsQueryBuilder;
+import io.hops.metadata.ndb.wrapper.HopsQueryDomainType;
 import io.hops.metadata.ndb.wrapper.HopsSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import javax.xml.crypto.Data;
+import java.util.List;
 
 public class DataNodeClusterJ implements TablesDef.DataNodesTableDef, DataNodeDataAccess<DataNode> {
     private static final Log LOG = LogFactory.getLog(EncodingStatusClusterj.class);
@@ -45,14 +52,44 @@ public class DataNodeClusterJ implements TablesDef.DataNodesTableDef, DataNodeDa
 
     private ClusterjConnector connector = ClusterjConnector.getInstance();
 
+    /**
+     * Retrieve a given DataNode from the intermediate storage.
+     * @param uuid The UUID of the DataNode to retrieve.
+     */
     @Override
-    public DataNode getDataNode(String uuid) throws StorageException {
-        return null;
+    public DataNode getDataNode(final String uuid) throws StorageException {
+        LOG.info("GET DataNode " + uuid);
+        HopsSession session = connector.obtainSession();
+
+        HopsQueryBuilder queryBuilder = session.getQueryBuilder();
+        HopsQueryDomainType<DataNodeDTO> domainType = queryBuilder.createQueryDefinition(DataNodeDTO.class);
+        domainType.where(domainType.get("name").equal(domainType.param("param")));
+        HopsQuery<DataNodeDTO> query = session.createQuery(domainType);
+        query.setParameter("param", uuid);
+        List<DataNodeDTO> results = query.getResultList();
+
+        DataNode dataNode = null;
+
+        if (results.size() == 1) {
+            DataNodeDTO dataNodeDTO = results.get(0);
+            dataNode = new DataNode(dataNodeDTO.getDatanodeUuid(), dataNodeDTO.getHostname(), dataNodeDTO.getIpAddress(),
+                    dataNodeDTO.getXferPort(), dataNodeDTO.getInfoPort(), dataNodeDTO.getIpcPort());
+        }
+
+        session.release(results);
+        return dataNode;
     }
 
+    /**
+     * Remove a given DataNode from the intermediate storage.
+     * @param uuid The UUID of the DataNode to remove.
+     */
     @Override
     public void removeDataNode(String uuid) throws StorageException {
+        LOG.info("REMOVE DataNode " + uuid);
+        HopsSession session = connector.obtainSession();
 
+        session.deletePersistent(DataNodeDTO.class, uuid);
     }
 
     /**
@@ -61,7 +98,7 @@ public class DataNodeClusterJ implements TablesDef.DataNodesTableDef, DataNodeDa
      */
     @Override
     public void addDataNode(DataNode dataNode) throws StorageException {
-        LOG.info("ADD " + dataNode.toString());
+        LOG.info("ADD DataNode " + dataNode.toString());
         DataNodeDTO dataNodeDTO = null;
         HopsSession session = connector.obtainSession();
 
